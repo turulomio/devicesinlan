@@ -98,7 +98,7 @@ class Host:
 ##############################################
 ##Parse arguments
 parser=argparse.ArgumentParser(prog='devicesinlan', description=_('Show devices in a LAN'),  epilog=_("Developed by Mariano Muñoz 2015 ©"))
-parser.add_argument('-v', '--version', action='version', version="0.1.0")
+parser.add_argument('-v', '--version', action='version', version="0.2.0")
 parser.add_argument('-i',  '--interface', help='Net interface name',  default='eth0')
 args=parser.parse_args()
 

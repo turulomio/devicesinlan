@@ -3,7 +3,7 @@ devicesinlan 0.1.0 20150519
 - Basic funcionality
 - Spanish translation
 
-devicesinlan 0.2.0 XXXXXXXX
+devicesinlan 0.2.0 20150519
 ===========================
 - Improved class developing
 - Add argument to select net interfaz
