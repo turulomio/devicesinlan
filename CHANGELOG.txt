@@ -1,0 +1,5 @@
+devicesinlan 0.1 XXXXXXXX
+=========================
+- Basic funcionality
+- Spanish translation
+

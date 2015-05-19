@@ -1,0 +1,16 @@
+Nueva release
+=============
+1) Modificar la version en devicesinlan.py
+2) Modificar todos los ficheros RELEASE CHANGELOG con num subversion +1 y versión nueva
+4) Actualizar po/*.po
+4) Crear el fichero (con release.sh que pone la version automatico) y subirlo a sourceforge
+5) Subir al subversion y comprobar que queda subversion +1
+6) Crear un nuevo ebuild con la nueva versión
+8) Subirlo al subversion del portage
+9) Modificar la pagina web
+   - Actualizar svn update myweb
+   - Crear objeto de Noticia
+   - Modificar la fecha en los enlaces y el r21 de la versíón
+   - Subirla a internet con bash publicar.sh
+   - Subir al subervsion los cambios 3en la web
+10) Comprobar enlaces
