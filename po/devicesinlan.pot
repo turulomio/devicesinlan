@@ -8,14 +8,35 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-19 14:32+0200\n"
+"POT-Creation-Date: 2015-05-19 15:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+msgid "Show devices in a LAN"
+msgstr ""
+
+msgid "Developed by Mariano Muñoz 2015 ©"
+msgstr ""
+
+msgid "I couldn't find /usr/bin/arp-scan."
+msgstr ""
+
+msgid "Please install it."
+msgstr ""
+
+msgid "I couldn't find /etc/devicesinlan/known.txt."
+msgstr ""
+
+msgid "I copied distribution file to it."
+msgstr ""
+
+msgid "Add your macs to detect strage devices in your lan"
+msgstr ""
 
 msgid "Error parsing {}"
 msgstr ""

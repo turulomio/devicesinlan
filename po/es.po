@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: devicesinlan\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-19 14:28+0200\n"
+"POT-Creation-Date: 2015-05-19 15:21+0200\n"
 "PO-Revision-Date: 2015-03-22 18:51+0100\n"
 "Last-Translator: root <turulomio@yahoo.es>\n"
 "Language-Team: Spanish\n"
@@ -17,6 +17,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Show devices in a LAN"
+msgstr "Muestra dispositivo en una LAN"
+
+msgid "Developed by Mariano Muñoz 2015 ©"
+msgstr "Desarrollado por Mariano Muñoz 2015 ©"
+
+msgid "I couldn't find /usr/bin/arp-scan."
+msgstr "No se ha encontrado /usr/bin/arp-scan."
+
+msgid "Please install it."
+msgstr "Por favor instálelo."
+
+msgid "I couldn't find /etc/devicesinlan/known.txt."
+msgstr "No he podido encontrar /etc/devicesinlan/known.txt."
+
+msgid "I copied distribution file to it."
+msgstr "Se ha copiado el del fichero de la distribución."
+
+msgid "Add your macs to detect strage devices in your lan"
+msgstr "Añada sus maca para detectar dispositivos extraños en tu red"
 
 msgid "Error parsing {}"
 msgstr "Error al tratar: {}"

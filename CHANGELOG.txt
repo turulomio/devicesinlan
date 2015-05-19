@@ -1,5 +1,5 @@
-devicesinlan 0.1 XXXXXXXX
-=========================
+devicesinlan 0.1.0 20150519
+===========================
 - Basic funcionality
 - Spanish translation
 

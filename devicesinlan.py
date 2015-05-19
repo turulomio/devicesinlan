@@ -1,7 +1,10 @@
 #!/usr/bin/python3
+import argparse
 import subprocess
 import datetime
 import gettext
+import os
+import sys
 
 # I had a lot of problems with UTF-8. LANG must be es_ES.UTF-8 to work
 gettext.textdomain('devicesinlan')
@@ -54,12 +57,31 @@ class Host:
                 self.alias=v
         return self
 
-output=subprocess.check_output(["arp-scan", "--interface", "eth0", "-l", "--ignoredups"]).decode('UTF-8')
 
+
+parser=argparse.ArgumentParser(prog='devicesinlan', description=_('Show devices in a LAN'),  epilog=_("Developed by Mariano Muñoz 2015 ©"))
+parser.add_argument('--version', action='version', version="0.1.0")
+args=parser.parse_args()
+
+
+
+if os.path.exists("/usr/bin/arp-scan")==False:
+    print(_("I couldn't find /usr/bin/arp-scan.") + " " + _("Please install it."))
+    sys.exit(1)
+
+output=subprocess.check_output(["arp-scan", "--interface", "eth0", "-l", "--ignoredups"]).decode('UTF-8')
 
 
 #Loading arps
 arps={}
+
+if os.path.exists("/etc/devicesinlan/known.txt")==False:
+    p=subprocess.check_output(["cp","/etc/devicesinlan/known.txt.dist","/etc/devicesinlan/known.txt"])
+    print (p)
+    print(_("I couldn't find /etc/devicesinlan/known.txt.") + " " + _("I copied distribution file to it.") + " "+ _("Add your macs to detect strage devices in your lan"))
+    sys.exit(1)
+
+
 f=open("/etc/devicesinlan/known.txt","r")
 for l in f.readlines():
     arr=l.split("=")
@@ -95,3 +117,4 @@ for h in set.arr:
         mac=red(h.mac)
         alias=""
     print ("{}  {}  {}  {}".format(h.ip.ljust(15), mac, bold(alias.ljust(maxalias)), h.hwname.ljust(maxhwname)))
+sys.exit(0)

@@ -9,6 +9,7 @@ PREFIXLOCALE=$(DESTDIR)/usr/share/locale/
 install:
 	install -o root -d $(PREFIXBIN)
 	install -o root -d $(PREFIXSHARE)
+	install -o root -d $(PREFIXETC)
 
 	install -m 755 -o root devicesinlan.py $(PREFIXBIN)/devicesinlan
 	install -m 644 -o root GPL-3.txt CHANGELOG.txt AUTHORS.txt RELEASES.txt INSTALL.txt $(PREFIXSHARE)
