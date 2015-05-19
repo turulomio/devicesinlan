@@ -8,3 +8,8 @@ devicesinlan 0.2.0 20150519
 - Improved class developing
 - Add argument to select net interfaz
 - MAC address matching is now case insensitive
+
+devicesinlan 0.3.0 20150519
+===========================
+- Catched exception with arp-scan
+
