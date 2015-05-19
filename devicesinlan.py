@@ -44,7 +44,11 @@ class SetHosts:
         
     def load_arpscan(self):
         """Load Hosts from arpscan output"""
-        output=subprocess.check_output(["arp-scan", "--interface", args.interface, "-l", "--ignoredups"]).decode('UTF-8')
+        try:
+            output=subprocess.check_output(["arp-scan", "--interface", args.interface, "-l", "--ignoredups"]).decode('UTF-8')
+        except:
+            print (_("There was an error executing arp-scan.")+" "+_("Is the interface argument correct?."))
+            sys.exit(2)
         for line in output.split("\n"):
             if line.find("\t")!=-1:
                 h=Host()
