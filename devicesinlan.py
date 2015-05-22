@@ -99,11 +99,18 @@ class Host:
         self.alias=None
 
 
+def validate_mac(s):
+    return True
+    
+
+
 ##############################################
 ##Parse arguments
 parser=argparse.ArgumentParser(prog='devicesinlan', description=_('Show devices in a LAN'),  epilog=_("Developed by Mariano Muñoz 2015 ©"))
 parser.add_argument('-v', '--version', action='version', version="0.3.0")
-parser.add_argument('-i',  '--interface', help='Net interface name',  default='eth0')
+parser.add_argument('-i',  '--interface', help=_('Net interface name'),  default='eth0')
+parser.add_argument('-a',  '--add', help=_('Add a known device'), action='store_true')
+parser.add_argument('-r',  '--remove', help=_('Remove a known device'), action='store_true')
 args=parser.parse_args()
 
 
@@ -115,6 +122,22 @@ if os.path.exists("/usr/bin/arp-scan")==False:
 if os.path.exists("/etc/devicesinlan/known.txt")==False:
     subprocess.check_output(["cp","/etc/devicesinlan/known.txt.dist","/etc/devicesinlan/known.txt"])
     print(_("I couldn't find /etc/devicesinlan/known.txt.") + " " + _("I copied distribution file to it.") + " "+ _("Add your mac addresses to detect strage devices in your LAN."))
+
+if args.add:
+    while validate_mac(input(_("Input the MAC of the known device")))==False:
+        print (_("You need to insert a mac with the next format: 2a:3b:4c:5d:6e:7a"))
+    
+    while True:
+        alias=input(_("Input an alias of the known device"))
+        if len(alias)>0:
+            break
+        else:
+            print (_("You need to add an alias"))
+    print (_("Known host inserted"))
+    sys.exit(0)
+    
+if args.remove:
+    sys.exit(0)
 
 ## Load hosts
 set=SetHosts()

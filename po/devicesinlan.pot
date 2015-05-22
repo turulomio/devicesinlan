@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-19 18:49+0200\n"
+"POT-Creation-Date: 2015-05-22 14:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,6 +35,15 @@ msgstr ""
 msgid "Developed by Mariano Muñoz 2015 ©"
 msgstr ""
 
+msgid "Net interface name"
+msgstr ""
+
+msgid "Add a known device"
+msgstr ""
+
+msgid "Remove a known device"
+msgstr ""
+
 msgid "I couldn't find /usr/bin/arp-scan."
 msgstr ""
 
@@ -48,4 +57,19 @@ msgid "I copied distribution file to it."
 msgstr ""
 
 msgid "Add your mac addresses to detect strage devices in your LAN."
+msgstr ""
+
+msgid "Input the MAC of the known device"
+msgstr ""
+
+msgid "You need to insert a mac with the next format: 2a:3b:4c:5d:6e:7a"
+msgstr ""
+
+msgid "Input an alias of the known device"
+msgstr ""
+
+msgid "You need to add an alias"
+msgstr ""
+
+msgid "Known host inserted"
 msgstr ""
