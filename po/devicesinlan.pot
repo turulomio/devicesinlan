@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-22 14:18+0200\n"
+"POT-Creation-Date: 2015-05-23 08:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,9 +17,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "Error parsing {}"
-msgstr ""
-
 msgid "There was an error executing arp-scan."
 msgstr ""
 
@@ -27,6 +24,21 @@ msgid "Is the interface argument correct?."
 msgstr ""
 
 msgid "DEVICES IN LAN FROM {} INTERFACE AT {}"
+msgstr ""
+
+msgid "Input the MAC of the known device (xx:xx:xx:xx:xx:xx): "
+msgstr ""
+
+msgid "You need to insert a mac with the next format: 2a:3b:4c:5d:6e:7a"
+msgstr ""
+
+msgid "Input an alias of the known device: "
+msgstr ""
+
+msgid "You need to add an alias"
+msgstr ""
+
+msgid "Error parsing {}"
 msgstr ""
 
 msgid "Show devices in a LAN"
@@ -59,17 +71,11 @@ msgstr ""
 msgid "Add your mac addresses to detect strage devices in your LAN."
 msgstr ""
 
-msgid "Input the MAC of the known device"
-msgstr ""
-
-msgid "You need to insert a mac with the next format: 2a:3b:4c:5d:6e:7a"
-msgstr ""
-
-msgid "Input an alias of the known device"
-msgstr ""
-
-msgid "You need to add an alias"
-msgstr ""
-
 msgid "Known host inserted"
+msgstr ""
+
+msgid "Mac removed"
+msgstr ""
+
+msgid "I couldn't find the mac"
 msgstr ""

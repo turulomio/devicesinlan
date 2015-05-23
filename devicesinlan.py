@@ -4,6 +4,7 @@ import subprocess
 import datetime
 import gettext
 import os
+import re
 import sys
 
 # I had a lot of problems with UTF-8. LANG must be es_ES.UTF-8 to work
@@ -24,23 +25,9 @@ class SetHosts:
     def __init__(self):
         """This constructor load /etc/devicesinlan/known.txt and executes arp-scan and parses its result"""
         self.arr=[]
-        self.known={} #Dictionary with knows macs and its alias
-        self.load_known()#From etc
+        self.known=SetKnownHosts()
         self.load_arpscan()#From arp_scan
-    
-    def load_known(self):
-        f=open("/etc/devicesinlan/known.txt","r")
-        for l in f.readlines():
-            ar=l.split("=")
-            if len(ar)==2:
-                try:
-                    ar=l.split("=")
-                    mac=ar[0].strip()
-                    alias=ar[1].strip()
-                    self.known[mac]=alias
-                except:
-                    print(_("Error parsing {}").format(l))
-        f.close()
+
         
     def load_arpscan(self):
         """Load Hosts from arpscan output"""
@@ -99,10 +86,87 @@ class Host:
         self.alias=None
 
 
-def validate_mac(s):
-    return True
-    
 
+    
+class KnownHost:
+    def __init__(self):
+        self.mac=None
+        self.alias=None
+
+    def validate_mac(self, s):
+        if len(s)!=17:
+            return False
+
+        if re.match(r'([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})', s):
+            return True
+        return False
+
+    def validate_alias(self, s):
+        if len(s)>40:
+            return False
+        if len(s)==0:
+            return False
+        return True
+        
+    def insert_mac(self):
+        validated=False
+        while  validated==False:
+            self.mac=input(Color.bold(_("Input the MAC of the known device (xx:xx:xx:xx:xx:xx): ")))
+            if self.validate_mac(self.mac):
+                validated=True
+            else:
+                print (Color.red(_("You need to insert a mac with the next format: 2a:3b:4c:5d:6e:7a")))
+
+    def insert_alias(self):
+        validated=False
+        while validated==False:
+            self.alias=input(Color.bold(_("Input an alias of the known device: ")))
+            if self.validate_alias(self.alias):
+                validated=True
+            else:
+                print (Color.red(_("You need to add an alias")))
+
+class SetKnownHosts:
+    def __init__(self):
+        self.arr=[]
+        self.load()
+        
+    
+    def remove_mac(self, mac):
+        """Returns a boolean if is deleted"""
+        todelete=[]
+        for k in self.arr:
+            if k.mac==mac:
+                todelete.append(k)
+        
+        for k in todelete:
+            self.arr.remove(k)
+            return True
+        
+        return False
+    
+    def load(self):
+        f=open("/etc/devicesinlan/known.txt","r")
+        for l in f.readlines():
+            ar=l.split("=")
+            if len(ar)==2:
+                try:
+                    k=KnownHost()
+                    ar=l.split("=")
+                    k.mac=ar[0].strip()
+                    k.alias=ar[1].strip()
+                    self.arr.append(k)
+                except:
+                    print(_("Error parsing {}").format(l))
+        f.close()        
+        
+    def save(self):
+        """Save etc file"""
+        f=open("/etc/devicesinlan/known.txt","w")
+        for k in self.arr:
+            f.write("{} = {}\n".format(k.mac.lower(), k.alias))
+        f.close()        
+    
 
 ##############################################
 ##Parse arguments
@@ -123,20 +187,25 @@ if os.path.exists("/etc/devicesinlan/known.txt")==False:
     subprocess.check_output(["cp","/etc/devicesinlan/known.txt.dist","/etc/devicesinlan/known.txt"])
     print(_("I couldn't find /etc/devicesinlan/known.txt.") + " " + _("I copied distribution file to it.") + " "+ _("Add your mac addresses to detect strage devices in your LAN."))
 
+known=SetKnownHosts()
+
 if args.add:
-    while validate_mac(input(_("Input the MAC of the known device")))==False:
-        print (_("You need to insert a mac with the next format: 2a:3b:4c:5d:6e:7a"))
-    
-    while True:
-        alias=input(_("Input an alias of the known device"))
-        if len(alias)>0:
-            break
-        else:
-            print (_("You need to add an alias"))
-    print (_("Known host inserted"))
+    k=KnownHost()
+    k.insert_mac()
+    k.insert_alias()
+    known.arr.append(k)
+    known.save()    
+    print (Color.green(_("Known host inserted")))
     sys.exit(0)
     
 if args.remove:
+    k=KnownHost()
+    k.insert_mac()
+    if known.remove_mac(k.mac):
+        known.save()
+        print (Color.green(_("Mac removed")))
+    else:
+        print (Color.red(_("I couldn't find the mac")))
     sys.exit(0)
 
 ## Load hosts
