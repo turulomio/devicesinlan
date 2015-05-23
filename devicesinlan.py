@@ -97,7 +97,7 @@ class KnownHost:
         if len(s)!=17:
             return False
 
-        if re.match(r'([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})', s):
+        if re.match(r'([0-9a-f]{2}[:-]){5}([0-9a-f]{2})', s):
             return True
         return False
 
@@ -111,7 +111,7 @@ class KnownHost:
     def insert_mac(self):
         validated=False
         while  validated==False:
-            self.mac=input(Color.bold(_("Input the MAC of the known device (xx:xx:xx:xx:xx:xx): ")))
+            self.mac=input(Color.bold(_("Input the MAC of the known device (xx:xx:xx:xx:xx:xx): "))).lower()
             if self.validate_mac(self.mac):
                 validated=True
             else:
@@ -131,6 +131,11 @@ class SetKnownHosts:
         self.arr=[]
         self.load()
         
+    def append(self, k):
+        if self.exists(k):
+            self.remove_mac(k.mac)#Sustitute it
+            print ("Mac already exists, overwriting it")
+        self.arr.append(k)
     
     def remove_mac(self, mac):
         """Returns a boolean if is deleted"""
@@ -141,8 +146,16 @@ class SetKnownHosts:
         
         for k in todelete:
             self.arr.remove(k)
+        if len(todelete)>0:    
             return True
         
+        return False
+        
+    def exists(self, kh):
+        """Only checks mac, so only need mac to be checked"""
+        for k in self.arr:
+            if k.mac==kh.mac:
+                return True
         return False
     
     def load(self):
@@ -193,7 +206,7 @@ if args.add:
     k=KnownHost()
     k.insert_mac()
     k.insert_alias()
-    known.arr.append(k)
+    known.append(k)
     known.save()    
     print (Color.green(_("Known host inserted")))
     sys.exit(0)
