@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: devicesinlan\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-24 08:08+0200\n"
-"PO-Revision-Date: 2015-05-19 18:49+0100\n"
+"POT-Creation-Date: 2015-05-24 08:19+0200\n"
+"PO-Revision-Date: 2015-05-24 08:14+0100\n"
 "Last-Translator: Mariano Muñoz <turulomio@yahoo.es>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -29,19 +29,19 @@ msgid "DEVICES IN LAN FROM {} INTERFACE AT {}"
 msgstr "DISPOSITIVOS EN LA RED DESDE EL INTERFAZ {} A LAS {}"
 
 msgid "Input the MAC of the known device (xx:xx:xx:xx:xx:xx): "
-msgstr ""
+msgstr "Introduce la dirección MAC del dispositivo conocido (xx:xx:xx:xx:xx:xx): "
 
 msgid "You need to insert a mac with the next format: 2a:3b:4c:5d:6e:7a"
-msgstr ""
+msgstr "Necesita insertar una MAC con el siguiente formato: 2a:3b:4c:5d:6e:7a"
 
 msgid "Input an alias of the known device: "
-msgstr ""
+msgstr "Introduzca un alias para el dispositivo conocido: "
 
 msgid "You need to add an alias"
-msgstr ""
+msgstr "Necesita introducir un alias"
 
 msgid "KNOWN DEVICES BY USER AT {}"
-msgstr ""
+msgstr "DISPOSITIVOS CONOCIDOS POR EL USUARIO A LAS {}"
 
 msgid "Error parsing {}"
 msgstr "Error al tratar: {}"
@@ -53,16 +53,16 @@ msgid "Developed by Mariano Muñoz 2015 ©"
 msgstr "Desarrollado por Mariano Muñoz 2015 ©"
 
 msgid "Net interface name"
-msgstr ""
+msgstr "Nombre del interfaz de red"
 
 msgid "Add a known device"
-msgstr ""
+msgstr "Añada un dispositivo conocido"
 
 msgid "Remove a known device"
-msgstr ""
+msgstr "Borre un dispositivo desconocido"
 
 msgid "List known device"
-msgstr ""
+msgstr "Listado de dispositivos desconocidos"
 
 msgid "I couldn't find /usr/bin/arp-scan."
 msgstr "No se ha encontrado /usr/bin/arp-scan."
@@ -79,14 +79,17 @@ msgstr "Se ha copiado el fichero de la distribución."
 msgid "Add your mac addresses to detect strage devices in your LAN."
 msgstr "Añada sus direcciones MAC para detectar dispositivos extraños en su LAN"
 
-msgid "Known host inserted"
+msgid "Known device inserted"
 msgstr ""
 
 msgid "Mac removed"
-msgstr ""
+msgstr "Dirección MAC borrada"
 
 msgid "I couldn't find the mac"
-msgstr ""
+msgstr "No pude encontrar la dirección MAC"
+
+#~ msgid "Known host inserted"
+#~ msgstr "Dispositivo conocido añadido"
 
 #~ msgid "Is the interface argument correct?"
 #~ msgstr "¿Está bien configurado el argumento del interfaz de red?"

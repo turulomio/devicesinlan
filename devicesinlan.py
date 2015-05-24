@@ -21,16 +21,16 @@ class Color:
     def bold(s):
        return "\033[1m{}\033[0m".format(s)
 
-class SetHosts:
+class SetDevices:
     def __init__(self):
         """This constructor load /etc/devicesinlan/known.txt and executes arp-scan and parses its result"""
         self.arr=[]
-        self.known=SetKnownHosts()
+        self.known=SetKnownDevices()
         self.load_arpscan()#From arp_scan
 
         
     def load_arpscan(self):
-        """Load Hosts from arpscan output"""
+        """Load Devices from arpscan output"""
         try:
             output=subprocess.check_output(["arp-scan", "--interface", args.interface, "-l", "--ignoredups"]).decode('UTF-8')
         except:
@@ -38,7 +38,7 @@ class SetHosts:
             sys.exit(2)
         for line in output.split("\n"):
             if line.find("\t")!=-1:
-                h=Host()
+                h=Device()
                 arr=line.split("\t")
                 h.ip=arr[0]
                 h.mac=arr[1]
@@ -61,9 +61,13 @@ class SetHosts:
                     l=le
         return l
         
+    def order_by_ip(self):
+        self.arr=sorted(self.arr, key=lambda k: (int(k.ip.split(".")[0]), int(k.ip.split(".")[1]), int(k.ip.split(".")[2]), int(k.ip.split(".")[3])))
+        
     def print(self):
         maxalias=self.max_len_alias()
         maxhwname=self.max_len_hwname()
+        self.order_by_ip()
         print (Color.bold(_("DEVICES IN LAN FROM {} INTERFACE AT {}").format(args.interface.upper(), str(datetime.datetime.now())[:-7]).center (6+15+17+maxalias+maxhwname)))
         print ()
         print (Color.bold("{}  {}  {}  {}".format(" IP ".center(15,'=')," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxhwname,'='))))
@@ -78,7 +82,7 @@ class SetHosts:
 
 
 
-class Host:
+class Device:
     def __init__(self):
         self.ip=None
         self.mac=None
@@ -88,7 +92,7 @@ class Host:
 
 
     
-class KnownHost:
+class KnownDevice:
     def __init__(self):
         self.mac=None
         self.alias=None
@@ -126,7 +130,7 @@ class KnownHost:
             else:
                 print (Color.red(_("You need to add an alias")))
 
-class SetKnownHosts:
+class SetKnownDevices:
     def __init__(self):
         self.arr=[]
         self.load()
@@ -172,7 +176,7 @@ class SetKnownHosts:
             ar=l.split("=")
             if len(ar)==2:
                 try:
-                    k=KnownHost()
+                    k=KnownDevice()
                     ar=l.split("=")
                     k.mac=ar[0].strip()
                     k.alias=ar[1].strip()
@@ -221,19 +225,19 @@ if os.path.exists("/etc/devicesinlan/known.txt")==False:
     subprocess.check_output(["cp","/etc/devicesinlan/known.txt.dist","/etc/devicesinlan/known.txt"])
     print(_("I couldn't find /etc/devicesinlan/known.txt.") + " " + _("I copied distribution file to it.") + " "+ _("Add your mac addresses to detect strage devices in your LAN."))
 
-known=SetKnownHosts()
+known=SetKnownDevices()
 
 if args.add:
-    k=KnownHost()
+    k=KnownDevice()
     k.insert_mac()
     k.insert_alias()
     known.append(k)
     known.save()    
-    print (Color.green(_("Known host inserted")))
+    print (Color.green(_("Known device inserted")))
     sys.exit(0)
     
 if args.remove:
-    k=KnownHost()
+    k=KnownDevice()
     k.insert_mac()
     if known.remove_mac(k.mac):
         known.save()
@@ -247,7 +251,7 @@ if args.list:
     sys.exit(0)
         
 
-## Load hosts
-set=SetHosts()
+## Load devices
+set=SetDevices()
 set.print()
 
