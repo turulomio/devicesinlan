@@ -13,3 +13,9 @@ devicesinlan 0.3.0 20150519
 ===========================
 - Catched exception with arp-scan
 
+devicesinlan 0.4.0 20150524
+===========================
+- Known devices are now sorted by alias and listed
+- Net devices are now sorted by IP address
+- You can add and remove Known devices from command line
+- Net devices list doesn't show duplicates

@@ -13,6 +13,7 @@ cp      Makefile \
         INSTALL.txt \
         RELEASES.txt \
         devicesinlan.py \
+        devicesinlan.jpg \
         known.txt.dist \
         $DIR
 
