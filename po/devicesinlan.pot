@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-23 09:41+0200\n"
+"POT-Creation-Date: 2015-05-24 08:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,6 +38,9 @@ msgstr ""
 msgid "You need to add an alias"
 msgstr ""
 
+msgid "KNOWN DEVICES BY USER AT {}"
+msgstr ""
+
 msgid "Error parsing {}"
 msgstr ""
 
@@ -54,6 +57,9 @@ msgid "Add a known device"
 msgstr ""
 
 msgid "Remove a known device"
+msgstr ""
+
+msgid "List known device"
 msgstr ""
 
 msgid "I couldn't find /usr/bin/arp-scan."

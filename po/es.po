@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: devicesinlan\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-23 08:55+0200\n"
+"POT-Creation-Date: 2015-05-24 08:08+0200\n"
 "PO-Revision-Date: 2015-05-19 18:49+0100\n"
 "Last-Translator: Mariano Muñoz <turulomio@yahoo.es>\n"
 "Language-Team: Spanish\n"
@@ -40,6 +40,9 @@ msgstr ""
 msgid "You need to add an alias"
 msgstr ""
 
+msgid "KNOWN DEVICES BY USER AT {}"
+msgstr ""
+
 msgid "Error parsing {}"
 msgstr "Error al tratar: {}"
 
@@ -56,6 +59,9 @@ msgid "Add a known device"
 msgstr ""
 
 msgid "Remove a known device"
+msgstr ""
+
+msgid "List known device"
 msgstr ""
 
 msgid "I couldn't find /usr/bin/arp-scan."

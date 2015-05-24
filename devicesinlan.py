@@ -43,9 +43,9 @@ class SetHosts:
                 h.ip=arr[0]
                 h.mac=arr[1]
                 h.hwname=arr[2]
-                for k,v in self.known.items():
-                    if k.upper()==h.mac.upper():
-                        h.alias=v
+                for k in self.known.arr:
+                    if k.mac.upper()==h.mac.upper():
+                        h.alias=k.alias
                 self.arr.append(h)
                 
 
@@ -136,7 +136,15 @@ class SetKnownHosts:
             self.remove_mac(k.mac)#Sustitute it
             print ("Mac already exists, overwriting it")
         self.arr.append(k)
-    
+    def print(self):
+        maxalias=self.max_len_alias()     
+        print (Color.bold(_("KNOWN DEVICES BY USER AT {}").format( str(datetime.datetime.now())[:-7]).center (17+2+maxalias)))
+        print ()
+        print (Color.bold("{}  {}".format(" MAC ".center(17,'='), " ALIAS ".center(maxalias,'='))))
+        known.order_by_alias()
+        for k in known.arr:
+            print ("{} {}".format(Color.green(k.mac), Color.bold(k.alias)))
+
     def remove_mac(self, mac):
         """Returns a boolean if is deleted"""
         todelete=[]
@@ -172,6 +180,15 @@ class SetKnownHosts:
                 except:
                     print(_("Error parsing {}").format(l))
         f.close()        
+    
+    def max_len_alias(self):
+        l=0
+        for h in self.arr:
+            if h.alias:
+                le=len(h.alias)
+                if l<le:
+                    l=le
+        return l
         
     def save(self):
         """Save etc file"""
@@ -179,15 +196,19 @@ class SetKnownHosts:
         for k in self.arr:
             f.write("{} = {}\n".format(k.mac.lower(), k.alias))
         f.close()        
-    
+        
+    def order_by_alias(self):
+        self.arr=sorted(self.arr, key=lambda k: k.alias)
 
 ##############################################
 ##Parse arguments
 parser=argparse.ArgumentParser(prog='devicesinlan', description=_('Show devices in a LAN'),  epilog=_("Developed by Mariano Muñoz 2015 ©"))
 parser.add_argument('-v', '--version', action='version', version="0.3.0")
-parser.add_argument('-i',  '--interface', help=_('Net interface name'),  default='eth0')
-parser.add_argument('-a',  '--add', help=_('Add a known device'), action='store_true')
-parser.add_argument('-r',  '--remove', help=_('Remove a known device'), action='store_true')
+group = parser.add_mutually_exclusive_group()
+group.add_argument('-i',  '--interface', help=_('Net interface name'),  default='eth0')
+group.add_argument('-a',  '--add', help=_('Add a known device'), action='store_true')
+group.add_argument('-r',  '--remove', help=_('Remove a known device'), action='store_true')
+group.add_argument('-l',  '--list', help=_('List known device'), action='store_true')
 args=parser.parse_args()
 
 
@@ -220,6 +241,11 @@ if args.remove:
     else:
         print (Color.red(_("I couldn't find the mac")))
     sys.exit(0)
+    
+if args.list:
+    known.print()
+    sys.exit(0)
+        
 
 ## Load hosts
 set=SetHosts()
