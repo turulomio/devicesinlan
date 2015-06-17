@@ -210,7 +210,7 @@ class SetKnownDevices:
 ##############################################
 ##Parse arguments
 parser=argparse.ArgumentParser(prog='devicesinlan', description=_('Show devices in a LAN'),  epilog=_("Developed by Mariano Muñoz 2015 ©"))
-parser.add_argument('-v', '--version', action='version', version="0.4.0")
+parser.add_argument('-v', '--version', action='version', version="0.5.0")
 group = parser.add_mutually_exclusive_group()
 group.add_argument('-i',  '--interface', help=_('Net interface name'),  default='eth0')
 group.add_argument('-a',  '--add', help=_('Add a known device'), action='store_true')

@@ -2,4 +2,5 @@ devicesinlan-0.1.0 <==>  svn -r 3 checkout svn://svn.code.sf.net/p/devicesinlan/
 devicesinlan-0.2.0 <==>  svn -r 5 checkout svn://svn.code.sf.net/p/devicesinlan/code/ devicesinlan
 devicesinlan-0.3.0 <==>  svn -r 7 checkout svn://svn.code.sf.net/p/devicesinlan/code/ devicesinlan
 devicesinlan-0.4.0 <==>  svn -r 13 checkout svn://svn.code.sf.net/p/devicesinlan/code/ devicesinlan
+devicesinlan-0.5.0 <==>  svn -r 15 checkout svn://svn.code.sf.net/p/devicesinlan/code/ devicesinlan
 
