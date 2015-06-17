@@ -19,3 +19,7 @@ devicesinlan 0.4.0 20150524
 - Net devices are now sorted by IP address
 - You can add and remove Known devices from command line
 - Net devices list doesn't show duplicates
+
+devicesinlan 0.5.0 20150617
+===========================
+- Console output shows the number of devices in the lan

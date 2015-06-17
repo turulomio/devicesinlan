@@ -28,6 +28,9 @@ class SetDevices:
         self.known=SetKnownDevices()
         self.load_arpscan()#From arp_scan
 
+    def length(self):
+        """Number of devices in the set"""
+        return len(self.arr)
         
     def load_arpscan(self):
         """Load Devices from arpscan output"""
@@ -68,7 +71,7 @@ class SetDevices:
         maxalias=self.max_len_alias()
         maxhwname=self.max_len_hwname()
         self.order_by_ip()
-        print (Color.bold(_("DEVICES IN LAN FROM {} INTERFACE AT {}").format(args.interface.upper(), str(datetime.datetime.now())[:-7]).center (6+15+17+maxalias+maxhwname)))
+        print (Color.bold(_("{} DEVICES IN LAN FROM {} INTERFACE AT {}").format(self.length(), args.interface.upper(), str(datetime.datetime.now())[:-7]).center (6+15+17+maxalias+maxhwname)))
         print ()
         print (Color.bold("{}  {}  {}  {}".format(" IP ".center(15,'=')," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxhwname,'='))))
         for h in self.arr:
