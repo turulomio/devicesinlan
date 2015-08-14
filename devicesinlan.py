@@ -78,18 +78,17 @@ class ArpRequest:
         # Envois de 5 requêtes ARP
 #        for _ in range(5):
         self.init=datetime.datetime.now()
-        self.socket.setblocking(3)
+#        self.socket.setblocking(3)
         self._send_arp_request()
         
+        # Puis attente de la réponse
         for i in range(3):
+            self._wait_response()
             if self.finished==True:
                 break
             time.sleep(1)
-        # Puis attente de la réponse
-        if timeout(self._wait_response, 3):
-            return True
-        else:
-            return False
+        self.finished==True
+            
 
     def _send_arp_request(self):
         '''Envois une requête ARP pour la machine'''
@@ -130,40 +129,42 @@ class ArpRequest:
     
     def _wait_response(self):
         '''Attend la réponse de la machine'''
-        while 0xBeef:
-            # Récupération de la trame :
-            frame = self.socket.recv(1024)
-            
-            # Récupération du protocole sous forme d'entier :
-            proto_type = val2int(unpack('!2s', frame[12:14])[0])
-            if proto_type != 0x0806: # On passe le traitement si ce
-                continue             # n'est pas de l'arp
+#        while 0xBeef:
+        # Récupération de la trame :
+        frame = self.socket.recv(1024)
+        
+        # Récupération du protocole sous forme d'entier :
+        proto_type = val2int(unpack('!2s', frame[12:14])[0])
+        if proto_type != 0x0806: # On passe le traitement si ce
+            return False             # n'est pas de l'arp
 
-            # Récupération du type d'opération sous forme d'entier :
-            op = val2int(unpack('!2s', frame[20:22])[0])
-            if op != 2:  # On passe le traitement pour tout ce qui n'est
-                continue # pas une réponse ARP
+        # Récupération du type d'opération sous forme d'entier :
+        op = val2int(unpack('!2s', frame[20:22])[0])
+        if op != 2:  # On passe le traitement pour tout ce qui n'est
+            return False # pas une réponse ARP
 
-            # Récupération des différentes addresses de la trame :
-            arp_headers = frame[18:20]
-            arp_headers_values = unpack('!1s1s', arp_headers)
-            hw_size, pt_size = [val2int(v) for v in arp_headers_values]
-            total_addresses_byte = hw_size * 2 + pt_size * 2
-            arp_addrs = frame[22:22 + total_addresses_byte]
-            
-            src_hw, src_pt, dst_hw, dst_pt = unpack('!%ss%ss%ss%ss' % (hw_size, pt_size, hw_size, pt_size), arp_addrs)
-            
-            # Get MAC
-            self.mac=""
-            for b in src_hw:
-                self.mac=self.mac+str(hex(b))[2:]+":"
-            self.mac=self.mac[:-1]
-            print (self.mac)
-            
-            # Comparaison de l'adresse recherchée avec l'adresse trouvée dans la trame :
-            if src_pt == pack('!4B', *[int(x) for x in self.ipaddr.split('.')]):
-                self.finished=True
-                return True # Quand on a trouvé, on arrete de chercher ! Et oui, c'est mal de faire un retour dans une boucle, je sais :)
+        # Récupération des différentes addresses de la trame :
+        arp_headers = frame[18:20]
+        arp_headers_values = unpack('!1s1s', arp_headers)
+        hw_size, pt_size = [val2int(v) for v in arp_headers_values]
+        total_addresses_byte = hw_size * 2 + pt_size * 2
+        arp_addrs = frame[22:22 + total_addresses_byte]
+        
+        src_hw, src_pt, dst_hw, dst_pt = unpack('!%ss%ss%ss%ss' % (hw_size, pt_size, hw_size, pt_size), arp_addrs)
+        
+        # Get MAC
+        self.mac=""
+        for b in src_hw:
+            strhex=str(hex(b))[2:]#Cuts hexadecimal expression
+            if len(strhex)==1:
+                strhex="0"+strhex
+            self.mac=self.mac+strhex+":"
+        self.mac=self.mac[:-1]
+        
+        # Comparaison de l'adresse recherchée avec l'adresse trouvée dans la trame :
+        if src_pt == pack('!4B', *[int(x) for x in self.ipaddr.split('.')]):
+            self.finished=True
+            return True # Quand on a trouvé, on arrete de chercher ! Et oui, c'est mal de faire un retour dans une boucle, je sais :)
 
 
 class Color:
@@ -189,56 +190,46 @@ class SetDevices:
         
     def load_arpscan(self):
         """Load Devices from arpscan output"""
-        
-        ##With arp-scan
-#        try:
-#            output=subprocess.check_output(["arp-scan", "--interface", args.interface, "-l", "--ignoredups"]).decode('UTF-8')
-#        except:
-#            print (_("There was an error executing arp-scan.")+" "+_("Is the interface argument correct?."))
-#            sys.exit(2)
-#        for line in output.split("\n"):
-#            if line.find("\t")!=-1:
-#                h=Device()
-#                arr=line.split("\t")
-#                h.ip=arr[0]
-#                h.mac=arr[1]
-#                h.hwname=arr[2]
-#                for k in self.known.arr:
-#                    if k.mac.upper()==h.mac.upper():
-#                        h.alias=k.alias
-#                self.arr.append(h)
+        if args.my==False:
+            ##With arp-scan
+            try:
+                output=subprocess.check_output(["arp-scan", "--interface", args.interface, "-l", "--ignoredups"]).decode('UTF-8')
+            except:
+                print (_("There was an error executing arp-scan.")+" "+_("Is the interface argument correct?."))
+                sys.exit(2)
+            for line in output.split("\n"):
+                if line.find("\t")!=-1:
+                    h=Device()
+                    arr=line.split("\t")
+                    h.ip=arr[0]
+                    h.mac=arr[1]
+                    h.hwname=arr[2]
+                    for k in self.known.arr:
+                        if k.mac.upper()==h.mac.upper():
+                            h.alias=k.alias
+                    self.arr.append(h)
+        else:#args.my=True
+            ##With arprequest code
+            print (_("MY OWN ARP SCANNER IS IN DEVELOPING. RESULTS ARE NOT GOOD."))
+            
+            threads=[]
+            for addr in ipaddress.IPv4Network('192.168.1.0/24'):
+                t=TRequest(str(addr), args.interface)
+                t.start()
+                threads.append(t)
                 
-        ##With arprequest code
-        threads=[]
-        for addr in ipaddress.IPv4Network('192.168.1.0/24'):
-            t=TRequest(str(addr), args.interface)
-            t.start()
-            
-        for t in threads:
-            t.join()
-            if t.request.mac!=None:
-                h=Device()
-                h.ip=t.request.ipaddr
-                h.mac=t.request.mac
-                h.hwname=""
-                for k in self.known.arr:
-                    if k.mac.upper()==h.mac.upper():
-                        h.alias=k.alias
-                self.arr.append(h)
-#                
-        ##With arprequest code f8:8e:85:c3:6d:7f
-#        ar=ArpRequest("192.168.1.1", args.interface)
-#        res=ar.request()
-#        if res==True:
-#            h=Device()
-#            h.ip="192.168.1.1"
-#            h.mac=ar.mac
-#            h.hwname=""
-#            for k in self.known.arr:
-#                if k.mac.upper()==h.mac.upper():
-#                    h.alias=k.alias
-#            self.arr.append(h)
-            
+            for t in threads:
+                t.join()
+                if t.request.mac!=None:
+                    h=Device()
+                    h.ip=t.request.ipaddr
+                    h.mac=t.request.mac
+                    h.hwname=""
+                    for k in self.known.arr:
+                        if k.mac.upper()==h.mac.upper():
+                            h.alias=k.alias
+                    self.arr.append(h)
+
     def max_len_hwname(self):
         return  max(len(h.hwname) for h in self.arr)
 
@@ -256,7 +247,7 @@ class SetDevices:
         
     def print(self):
         maxalias=self.max_len_alias()
-        maxhwname=self.max_len_hwname()
+        maxhwname=10#self.max_len_hwname()
         self.order_by_ip()
         print (Color.bold(_("{} DEVICES IN LAN FROM {} INTERFACE AT {}").format(self.length(), args.interface.upper(), str(datetime.datetime.now())[:-7]).center (6+15+17+maxalias+maxhwname)))
         print ()
@@ -405,54 +396,63 @@ class SetKnownDevices:
 
 ##############################################
 ##Parse arguments
-parser=argparse.ArgumentParser(prog='devicesinlan', description=_('Show devices in a LAN'),  epilog=_("Developed by Mariano Muñoz 2015 ©"))
-parser.add_argument('-v', '--version', action='version', version="0.5.0")
-group = parser.add_mutually_exclusive_group()
-group.add_argument('-i',  '--interface', help=_('Net interface name'),  default='eth0')
-group.add_argument('-a',  '--add', help=_('Add a known device'), action='store_true')
-group.add_argument('-r',  '--remove', help=_('Remove a known device'), action='store_true')
-group.add_argument('-l',  '--list', help=_('List known device'), action='store_true')
-args=parser.parse_args()
 
-
-##Make system checks
-if os.path.exists("/usr/bin/arp-scan")==False:
-    print(_("I couldn't find /usr/bin/arp-scan.") + " " + _("Please install it."))
-    sys.exit(1)
-
-if os.path.exists("/etc/devicesinlan/known.txt")==False:
-    subprocess.check_output(["cp","/etc/devicesinlan/known.txt.dist","/etc/devicesinlan/known.txt"])
-    print(_("I couldn't find /etc/devicesinlan/known.txt.") + " " + _("I copied distribution file to it.") + " "+ _("Add your mac addresses to detect strage devices in your LAN."))
-
-known=SetKnownDevices()
-
-if args.add:
-    k=KnownDevice()
-    k.insert_mac()
-    k.insert_alias()
-    known.append(k)
-    known.save()    
-    print (Color.green(_("Known device inserted")))
-    sys.exit(0)
+def main():
+    parser=argparse.ArgumentParser(prog='devicesinlan', description=_('Show devices in a LAN'),  epilog=_("Developed by Mariano Muñoz 2015 ©"))
+    parser.add_argument('-v', '--version', action='version', version="0.5.0")
+    parser.add_argument('-m', '--my', help=_('Use my own arp scanner'), action='store_true')
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('-i',  '--interface', help=_('Net interface name'),  default='eth0')
+    group.add_argument('-a',  '--add', help=_('Add a known device'), action='store_true')
+    group.add_argument('-r',  '--remove', help=_('Remove a known device'), action='store_true')
+    group.add_argument('-l',  '--list', help=_('List known device'), action='store_true')
+    global args
+    args=parser.parse_args()
     
-if args.remove:
-    k=KnownDevice()
-    k.insert_mac()
-    if known.remove_mac(k.mac):
-        known.save()
-        print (Color.green(_("Mac removed")))
-    else:
-        print (Color.red(_("I couldn't find the mac")))
-    sys.exit(0)
     
-if args.list:
-    known.print()
-    sys.exit(0)
+    ##Make system checks
+    if os.path.exists("/usr/bin/arp-scan")==False:
+        print(_("I couldn't find /usr/bin/arp-scan.") + " " + _("Please install it."))
+        sys.exit(1)
+    
+    if os.path.exists("/etc/devicesinlan/known.txt")==False:
+        subprocess.check_output(["cp","/etc/devicesinlan/known.txt.dist","/etc/devicesinlan/known.txt"])
+        print(_("I couldn't find /etc/devicesinlan/known.txt.") + " " + _("I copied distribution file to it.") + " "+ _("Add your mac addresses to detect strage devices in your LAN."))
+    
+    global known
+    known=SetKnownDevices()
+    
+    if args.add:
+        k=KnownDevice()
+        k.insert_mac()
+        k.insert_alias()
+        known.append(k)
+        known.save()    
+        print (Color.green(_("Known device inserted")))
+        sys.exit(0)
         
+    if args.remove:
+        k=KnownDevice()
+        k.insert_mac()
+        if known.remove_mac(k.mac):
+            known.save()
+            print (Color.green(_("Mac removed")))
+        else:
+            print (Color.red(_("I couldn't find the mac")))
+        sys.exit(0)
+        
+    if args.list:
+        known.print()
+        sys.exit(0)
+            
+    
+    ## Load devices
+    inicio=datetime.datetime.now()
+    set=SetDevices()
+    set.print()
+    print ("Took {}".format (datetime.datetime.now()-inicio))
 
-## Load devices
-inicio=datetime.datetime.now()
-set=SetDevices()
-set.print()
-print ("Took {}".format (datetime.datetime.now()-inicio))
-
+args=None
+known=None
+if __name__ == "__main__":
+    main()
