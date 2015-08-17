@@ -11,6 +11,8 @@ import re
 import sys
 import socket
 import time
+import fcntl
+import struct
 
 """
     To see information of the ARP protocol, look into doc/devicesinlan.odt
@@ -100,7 +102,7 @@ class SetDevices:
             
             threads=[]
             for addr in ipaddress.IPv4Network('192.168.1.0/24'):
-                t=TRequest(str(addr), args.interface,  TypesARP.Gratuitous)
+                t=TRequest(str(addr), args.interface,  TypesARP.Standard)
                 t.start()
                 threads.append(t)
                 
@@ -159,25 +161,45 @@ class Device:
 class TRequest(threading.Thread):
     def __init__(self, ip, if_name, arp_type):
         threading.Thread.__init__(self)
+        self.if_name=if_name
         self.arp_type = arp_type
-        self.if_ipaddr = socket.gethostbyname(socket.gethostname())
+        self.if_ipaddr = self.get_if_ipaddr() 
         self.socket = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.SOCK_RAW)
         self.socket.bind((if_name, socket.SOCK_RAW)) 
         self.ipaddr = ip
         self.mac=None#Mac address string
         self.hwname=None#String hardware name
+        self.sent_frame=None
         self.received_frame=None
+
+
+    def get_if_ipaddr(self):
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        return socket.inet_ntoa(fcntl.ioctl(
+            s.fileno(),
+            0x8915,  # SIOCGIFADDR
+            self.if_name.encode('utf-8')+b'\x00'*(256-len(self.if_name))#            struct.pack('256s', self.if_name[:15])
+        )[20:24])
+    
 
     def run(self):    
         self.arp_send()
-        for i in range(4):
-            time.sleep(.3)
-            if self.arp_receive():
-                break
+        time.sleep(.3)
+        self.arp_receive()
+#        for i in range(4):
+#            time.sleep(.3)
+#            if self.arp_receive():
+#                break
             
             
-#        if self.ipaddr in ("192.168.1.10", "192.168.1.1"):
-#            print (self.ipaddr, self.received_frame, self.bytes2mac(self.received_frame[0:6]),self.bytes2mac(self.received_frame[6:12]), self.bytes2mac(self.received_frame[22:28]),   self.bytes2mac(self.received_frame[32:38]))
+        if self.ipaddr in ("192.168.1.12", "192.168.1.102"):
+            print ("""-------------------------------------------- {} from interface {}
+Sent frame:
+{}
+Received frame:
+{}
+Macs: {}   {}   {}   {}
+--------------------------------------------""".format(self.ipaddr,  self.if_ipaddr, self.sent_frame,  self.received_frame, self.bytes2mac(self.received_frame[0:6]),self.bytes2mac(self.received_frame[6:12]), self.bytes2mac(self.received_frame[22:28]),   self.bytes2mac(self.received_frame[32:38])))
 
         
         
@@ -196,10 +218,10 @@ class TRequest(threading.Thread):
         32:38 Hardware address of target 00 00 00 00 00 00
         38:42 Ip del objetivo        
         """
-        if self.arp_type == TypesARP.Standard: 
-            saddr = self.ip2bytes(self.if_ipaddr)
-        else:
-            saddr = self.ip2bytes(self.ipaddr)
+#        if self.arp_type == TypesARP.Standard: 
+#            saddr = self.ip2bytes(self.if_ipaddr)
+#        else:
+#            saddr = self.ip2bytes(self.ipaddr)
             
         frame2=b"\xff\xff\xff\xff\xff\xff"+ \
             self.socket.getsockname()[4] + \
@@ -210,9 +232,11 @@ class TRequest(threading.Thread):
             b"\x04" + \
             b"\x00\x01" + \
             self.socket.getsockname()[4] + \
-            saddr + \
+            self.ip2bytes(self.if_ipaddr) + \
             b"\x00\x00\x00\x00\x00\x00" + \
             self.ip2bytes(self.ipaddr)
+#        print( self.bytes2mac(self.socket.getsockname()[4]), self.if_ipaddr, self.ip2bytes(self.if_ipaddr), self.ipaddr, self.ip2bytes(self.ipaddr))
+        self.sent_frame=frame2
         self.socket.send(frame2)
 
     def bytes2mac(self, bytes):     
@@ -230,7 +254,7 @@ class TRequest(threading.Thread):
         return s[:-1]
     
     def ip2bytes(self, ipstr):
-        arr=[int(x) for x in self.ipaddr.split('.')]
+        arr=[int(x) for x in ipstr.split('.')]
         s=b""
         for a in arr:
             s=s+bytes([a]) #To be treated as an byte of integer
