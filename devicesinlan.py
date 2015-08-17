@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import argparse
+import codecs
 import subprocess
 import datetime
 import gettext
@@ -10,161 +11,47 @@ import re
 import sys
 import socket
 import time
-from struct import pack, unpack
-import signal
+
+"""
+    To see information of the ARP protocol, look into doc/devicesinlan.odt
+"""
 
 # I had a lot of problems with UTF-8. LANG must be es_ES.UTF-8 to work
 gettext.textdomain('devicesinlan')
 _=gettext.gettext
 
-ARP_GRATUITOUS = 1
-ARP_STANDARD = 2
+
+class TypesARP:
+    Gratuitous = 1
+    Standard = 2
 
 
-def int2hex(int):
-    pass
-
-def val2int(val):
-    '''Retourne une valeur sous forme d'octet en valeur sous forme d'entier.'''
-    s=""
-    for v in val:
-        s=s+"{0:0=2d}".format(v)
-    return int(s, 16)
-    #return int(''.join(['%02d'%ord(c) for c in val]), 16)
     
 
-class TimeoutError(Exception):
-    '''Exception levée après un timeout.'''
-    pass
+#class TimeoutError(Exception):
+#    '''Exception levée après un timeout.'''
+#    pass
+#
+#def timeout(function, timeout=10):
+#    '''Exécute la fonction function (référence) et stoppe son exécution au bout d'un certain temps déterminé par timeout.
+#       Retourne None si la fonction à été arretée par le timeout, et la valeur retournée par la fonction si son exécution se termine.'''
+#
+#    def raise_timeout(num, frame):
+#        raise TimeoutError
+#    
+#    # On mappe la fonction à notre signal
+#    signal.signal(signal.SIGALRM, raise_timeout)
+#    # Et on définie le temps à attendre avant de lancer le signal
+#    signal.alarm(timeout)
+#    try:
+#        retvalue = function()
+#    except TimeoutError: # = Fonction quittée à cause du timeout
+#        return None
+#    else: # = Fonction quittée avant le timeout
+#        # On annule le signal
+#        signal.alarm(0)
+#        return retvalue
 
-def timeout(function, timeout=10):
-    '''Exécute la fonction function (référence) et stoppe son exécution au bout d'un certain temps déterminé par timeout.
-       Retourne None si la fonction à été arretée par le timeout, et la valeur retournée par la fonction si son exécution se termine.'''
-
-    def raise_timeout(num, frame):
-        raise TimeoutError
-    
-    # On mappe la fonction à notre signal
-    signal.signal(signal.SIGALRM, raise_timeout)
-    # Et on définie le temps à attendre avant de lancer le signal
-    signal.alarm(timeout)
-    try:
-        retvalue = function()
-    except TimeoutError: # = Fonction quittée à cause du timeout
-        return None
-    else: # = Fonction quittée avant le timeout
-        # On annule le signal
-        signal.alarm(0)
-        return retvalue
-
-
-class ArpRequest:
-    '''Génère une requête ARP et attend la réponse'''
-    
-    def __init__(self, ipaddr, if_name, arp_type=ARP_GRATUITOUS):
-        # Initialisation du socket (socket brut, donc besoin d'ê root)
-        self.arp_type = arp_type
-        self.if_ipaddr = socket.gethostbyname(socket.gethostname())
-        self.socket = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.SOCK_RAW)
-        self.socket.bind((if_name, socket.SOCK_RAW))
-        self.ipaddr = ipaddr
-        self.mac=None#Mac address string
-        self.hwname=None#String hardware name
-        self.init=None
-        self.finished=False
-        
-    def request(self):
-        '''Envois une requête arp et attend la réponse'''
-        # Envois de 5 requêtes ARP
-#        for _ in range(5):
-        self.init=datetime.datetime.now()
-#        self.socket.setblocking(3)
-        self._send_arp_request()
-        
-        # Puis attente de la réponse
-        for i in range(3):
-            self._wait_response()
-            if self.finished==True:
-                break
-            time.sleep(1)
-        self.finished==True
-            
-
-    def _send_arp_request(self):
-        '''Envois une requête ARP pour la machine'''
-        # Adresse logicielle de l'émetteur :
-        if self.arp_type == ARP_STANDARD: 
-            saddr = pack('!4B',*[int(x) for x in self.if_ipaddr.split('.')])
-        else:
-            saddr = pack('!4B',*[int(x) for x in self.ipaddr.split('.')])
-
-        # Forge de la trame :
-        frame = [
-            ### Partie ETHERNET ###
-            # Adresse mac destination (=broadcast) :
-            pack('!6B', *(0xFF,) * 6),
-            # Adresse mac source :
-            self.socket.getsockname()[4],
-            # Type de protocole (=ARP) :
-            pack('!H', 0x0806),
-            
-            ### Partie ARP ###
-            # Type de protocole matériel/logiciel (=Ethernet/IP) :
-            pack('!HHBB', 0x0001, 0x0800, 0x0006, 0x0004),
-            # Type d'opération (=ARP Request) :
-            pack('!H', 0x0001),
-            # Adresse matériel de l'émetteur :
-            self.socket.getsockname()[4],
-            # Adresse logicielle de l'émetteur :
-            saddr,
-            # Adresse matérielle de la cible (=00*6) :
-            pack('!6B', *(0,) * 6),
-            # Adresse logicielle de la cible (=adresse fournie au
-            # constructeur) :
-            pack('!4B', *[int(x) for x in self.ipaddr.split('.')])
-        ]
-        
-        self.socket.send(b''.join(frame)) # Envois de la trame sur le réseau
-        
-    
-    def _wait_response(self):
-        '''Attend la réponse de la machine'''
-#        while 0xBeef:
-        # Récupération de la trame :
-        frame = self.socket.recv(1024)
-        
-        # Récupération du protocole sous forme d'entier :
-        proto_type = val2int(unpack('!2s', frame[12:14])[0])
-        if proto_type != 0x0806: # On passe le traitement si ce
-            return False             # n'est pas de l'arp
-
-        # Récupération du type d'opération sous forme d'entier :
-        op = val2int(unpack('!2s', frame[20:22])[0])
-        if op != 2:  # On passe le traitement pour tout ce qui n'est
-            return False # pas une réponse ARP
-
-        # Récupération des différentes addresses de la trame :
-        arp_headers = frame[18:20]
-        arp_headers_values = unpack('!1s1s', arp_headers)
-        hw_size, pt_size = [val2int(v) for v in arp_headers_values]
-        total_addresses_byte = hw_size * 2 + pt_size * 2
-        arp_addrs = frame[22:22 + total_addresses_byte]
-        
-        src_hw, src_pt, dst_hw, dst_pt = unpack('!%ss%ss%ss%ss' % (hw_size, pt_size, hw_size, pt_size), arp_addrs)
-        
-        # Get MAC
-        self.mac=""
-        for b in src_hw:
-            strhex=str(hex(b))[2:]#Cuts hexadecimal expression
-            if len(strhex)==1:
-                strhex="0"+strhex
-            self.mac=self.mac+strhex+":"
-        self.mac=self.mac[:-1]
-        
-        # Comparaison de l'adresse recherchée avec l'adresse trouvée dans la trame :
-        if src_pt == pack('!4B', *[int(x) for x in self.ipaddr.split('.')]):
-            self.finished=True
-            return True # Quand on a trouvé, on arrete de chercher ! Et oui, c'est mal de faire un retour dans une boucle, je sais :)
 
 
 class Color:
@@ -182,18 +69,18 @@ class SetDevices:
         """This constructor load /etc/devicesinlan/known.txt and executes arp-scan and parses its result"""
         self.arr=[]
         self.known=SetKnownDevices()
-        self.load_arpscan()#From arp_scan
+        self.arp_scanner()#From arp_scan
 
     def length(self):
         """Number of devices in the set"""
         return len(self.arr)
         
-    def load_arpscan(self):
+    def arp_scanner(self):
         """Load Devices from arpscan output"""
         if args.my==False:
             ##With arp-scan
             try:
-                output=subprocess.check_output(["arp-scan", "--interface", args.interface, "-l", "--ignoredups"]).decode('UTF-8')
+                output=subprocess.check_output(["arp-scan", "--interface", args.interface, "--localnet", "--ignoredups"]).decode('UTF-8')
             except:
                 print (_("There was an error executing arp-scan.")+" "+_("Is the interface argument correct?."))
                 sys.exit(2)
@@ -209,22 +96,21 @@ class SetDevices:
                             h.alias=k.alias
                     self.arr.append(h)
         else:#args.my=True
-            ##With arprequest code
-            print (_("MY OWN ARP SCANNER IS IN DEVELOPING. RESULTS ARE NOT GOOD."))
+            print (_("MY OWN ARP SCANNER IS IN DEVELOPING. RESULTS ARE NOT ENOUGH GOOD YET."))
             
             threads=[]
             for addr in ipaddress.IPv4Network('192.168.1.0/24'):
-                t=TRequest(str(addr), args.interface)
+                t=TRequest(str(addr), args.interface,  TypesARP.Gratuitous)
                 t.start()
                 threads.append(t)
                 
             for t in threads:
                 t.join()
-                if t.request.mac!=None:
+                if t.mac!=None:
                     h=Device()
-                    h.ip=t.request.ipaddr
-                    h.mac=t.request.mac
-                    h.hwname=""
+                    h.ip=t.ipaddr
+                    h.mac=t.mac
+                    h.hwname=t.hwname
                     for k in self.known.arr:
                         if k.mac.upper()==h.mac.upper():
                             h.alias=k.alias
@@ -271,17 +157,146 @@ class Device:
         self.alias=None
 
 class TRequest(threading.Thread):
-    def __init__(self, ip, interface):
+    def __init__(self, ip, if_name, arp_type):
         threading.Thread.__init__(self)
-        self.init=datetime.datetime.now()
-        self.request=ArpRequest(ip, interface)
+        self.arp_type = arp_type
+        self.if_ipaddr = socket.gethostbyname(socket.gethostname())
+        self.socket_arp = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.SOCK_RAW)
+        self.socket_arp.bind((if_name, socket.SOCK_RAW))
+        self.socket_icmp=socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.getprotobyname('icmp'))      
+        self.ipaddr = ip
+        self.mac=None#Mac address string
+        self.hwname=None#String hardware name
+        self.received_frame=None
 
-    
     def run(self):    
-        self.request.request()
+        self.arp_send()
+        for i in range(4):
+            time.sleep(.3)
+            if self.arp_receive():
+                break
+            
+            
+#        if self.ipaddr in ("192.168.1.10", "192.168.1.1"):
+#            print (self.ipaddr, self.received_frame, self.bytes2mac(self.received_frame[0:6]),self.bytes2mac(self.received_frame[6:12]), self.bytes2mac(self.received_frame[22:28]),   self.bytes2mac(self.received_frame[32:38]))
+
+        
+        
+    def arp_send(self):
+        if self.arp_type == TypesARP.Standard: 
+            saddr = self.ip2bytes(self.if_ipaddr)
+        else:
+            saddr = self.ip2bytes(self.ipaddr)
+
+#        # Creaci´on de la trama:
+#        frame = [
+#            pack('!6B', *(0xFF,) * 6), #HW address destination FF:FF:FF:FF:FF:FF, broadcast
+#            self.socket_arp.getsockname()[4],# HW address of interface
+#            
+#            pack('!H', 0x0806),#Tipo de protocolo (ARP), H unsigned short (2 bytes)
+#            # Type de protocole matériel/logiciel (=Ethernet/IP) :
+#            pack('!HHBB', 0x0001, 0x0800, 0x0006, 0x0004), #Ethernet, IPv4, HW MAC length bytes, Protocol address length IPv4 es 4
+#            pack('!H', 0x0001), #Tipo de operaci´on es un ARP Request 1
+#            self.socket_arp.getsockname()[4],# HW address of interface, sender
+#            saddr, # IP del interface
+#            pack('!6B', *(0,) * 6), # Dirección hardware del objetivo (=00*6)
+#            pack('!4B', *[int(x) for x in self.ipaddr.split('.')]) # Ip del objetivo
+#        ]
+#        print (b''.join(frame))
+        """
+        00:06 HW address destination (broadcast)
+        06:12 HW address of interface
+        12:14 Protocolo type \x08\x06
+        14:16 Protocolo Ethernet \x00\x01
+        16:18 IPv4 que es \x08\x00
+        18:19 HW MAC length bytes 6
+        19:20 Protocol address length IPv4 es 4
+        20:22 Arp operation request 00 01
+        22:28 HW address of interface seender
+        28:32 Ip del Interface
+        32:38 Hardware address of target 00 00 00 00 00 00
+        38:42 Ip del objetivo        
+        """
+        frame2=b"\xff\xff\xff\xff\xff\xff"+ \
+            self.socket_arp.getsockname()[4] + \
+            b"\x08\x06" + \
+            b"\x00\x01" + \
+            b"\x08\x00" + \
+            b"\x06" + \
+            b"\x04" + \
+            b"\x00\x01" + \
+            self.socket_arp.getsockname()[4] + \
+            saddr + \
+            b"\x00\x00\x00\x00\x00\x00" + \
+            self.ip2bytes(self.ipaddr)
+        self.socket_arp.send(frame2)
         
 
+        
+    def bytes2mac(self, bytes):     
+        """Bytes to mac address"""   
+        b=codecs.encode(bytes, 'hex_codec') #Obtenemos b'008cfa7019b7'
+        s=b.decode('utf-8')
+        arr=[s[i:i+2] for i in range(0, len(s), 2)]
+        return "{0[0]}:{0[1]}:{0[2]}:{0[3]}:{0[4]}:{0[5]}".format(arr)
+        
+    def bytes2ip(self, bytes):
+        """Bytes to ip address"""
+        s=""
+        for b in bytes:#b is an int
+            s=s+"{}.".format(b)
+        return s[:-1]
     
+    def ip2bytes(self, ipstr):
+        arr=[int(x) for x in self.ipaddr.split('.')]
+        s=b""
+        for a in arr:
+            s=s+bytes([a]) #To be treated as an byte of integer
+        return s
+        
+
+    def bytes2text(self, bytes):
+        """Bytes to string"""
+        s=""
+        for b in bytes:
+            try:
+                if b>32:
+                    s=s+chr(b)
+            except:
+                pass
+        return s
+
+    def arp_receive(self):
+        '''Recuperaci´on de la trama
+        Unpack convierte un string en una tupla
+        Rangos en bytes
+        00:06 Mac Destination FF:FF:FF:FF:FF:FF
+        06:12 MAC Origin 
+        12:14 Protocolo type \x08\x06
+        18:19 Hardware size 6 b'\x06'
+        19:20 IP size 4 b'\x04'
+        20:22 ARP operation \x00\x02, request es 1, reverse 3y 4
+        22:28 Returned MAC
+        28:32 Returned IP
+        32:38 Original MAC
+        38:42 Original IP
+        '''
+        frame = self.socket_arp.recv(1024)    
+        self.received_frame=frame
+        
+        if frame[12:14] != b'\x08\x06': # Checks ARP protocol
+            return False
+
+        if frame[20:22] != b'\x00\x02': #Checks ARP Answer
+            return False
+
+        #Compare ip whith ip of the trame
+        if self.ipaddr==self.bytes2ip(frame[28:32]):    
+            self.mac=self.bytes2mac(frame[22:28])
+            self.hwname=""
+            return True
+        return False
+
 class KnownDevice:
     def __init__(self):
         self.mac=None
