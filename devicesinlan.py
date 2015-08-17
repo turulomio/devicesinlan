@@ -161,9 +161,8 @@ class TRequest(threading.Thread):
         threading.Thread.__init__(self)
         self.arp_type = arp_type
         self.if_ipaddr = socket.gethostbyname(socket.gethostname())
-        self.socket_arp = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.SOCK_RAW)
-        self.socket_arp.bind((if_name, socket.SOCK_RAW))
-        self.socket_icmp=socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.getprotobyname('icmp'))      
+        self.socket = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.SOCK_RAW)
+        self.socket.bind((if_name, socket.SOCK_RAW)) 
         self.ipaddr = ip
         self.mac=None#Mac address string
         self.hwname=None#String hardware name
@@ -183,26 +182,6 @@ class TRequest(threading.Thread):
         
         
     def arp_send(self):
-        if self.arp_type == TypesARP.Standard: 
-            saddr = self.ip2bytes(self.if_ipaddr)
-        else:
-            saddr = self.ip2bytes(self.ipaddr)
-
-#        # Creaci´on de la trama:
-#        frame = [
-#            pack('!6B', *(0xFF,) * 6), #HW address destination FF:FF:FF:FF:FF:FF, broadcast
-#            self.socket_arp.getsockname()[4],# HW address of interface
-#            
-#            pack('!H', 0x0806),#Tipo de protocolo (ARP), H unsigned short (2 bytes)
-#            # Type de protocole matériel/logiciel (=Ethernet/IP) :
-#            pack('!HHBB', 0x0001, 0x0800, 0x0006, 0x0004), #Ethernet, IPv4, HW MAC length bytes, Protocol address length IPv4 es 4
-#            pack('!H', 0x0001), #Tipo de operaci´on es un ARP Request 1
-#            self.socket_arp.getsockname()[4],# HW address of interface, sender
-#            saddr, # IP del interface
-#            pack('!6B', *(0,) * 6), # Dirección hardware del objetivo (=00*6)
-#            pack('!4B', *[int(x) for x in self.ipaddr.split('.')]) # Ip del objetivo
-#        ]
-#        print (b''.join(frame))
         """
         00:06 HW address destination (broadcast)
         06:12 HW address of interface
@@ -212,27 +191,30 @@ class TRequest(threading.Thread):
         18:19 HW MAC length bytes 6
         19:20 Protocol address length IPv4 es 4
         20:22 Arp operation request 00 01
-        22:28 HW address of interface seender
+        22:28 HW address of interface sender
         28:32 Ip del Interface
         32:38 Hardware address of target 00 00 00 00 00 00
         38:42 Ip del objetivo        
         """
+        if self.arp_type == TypesARP.Standard: 
+            saddr = self.ip2bytes(self.if_ipaddr)
+        else:
+            saddr = self.ip2bytes(self.ipaddr)
+            
         frame2=b"\xff\xff\xff\xff\xff\xff"+ \
-            self.socket_arp.getsockname()[4] + \
+            self.socket.getsockname()[4] + \
             b"\x08\x06" + \
             b"\x00\x01" + \
             b"\x08\x00" + \
             b"\x06" + \
             b"\x04" + \
             b"\x00\x01" + \
-            self.socket_arp.getsockname()[4] + \
+            self.socket.getsockname()[4] + \
             saddr + \
             b"\x00\x00\x00\x00\x00\x00" + \
             self.ip2bytes(self.ipaddr)
-        self.socket_arp.send(frame2)
-        
+        self.socket.send(frame2)
 
-        
     def bytes2mac(self, bytes):     
         """Bytes to mac address"""   
         b=codecs.encode(bytes, 'hex_codec') #Obtenemos b'008cfa7019b7'
@@ -253,7 +235,6 @@ class TRequest(threading.Thread):
         for a in arr:
             s=s+bytes([a]) #To be treated as an byte of integer
         return s
-        
 
     def bytes2text(self, bytes):
         """Bytes to string"""
@@ -267,9 +248,7 @@ class TRequest(threading.Thread):
         return s
 
     def arp_receive(self):
-        '''Recuperaci´on de la trama
-        Unpack convierte un string en una tupla
-        Rangos en bytes
+        '''
         00:06 Mac Destination FF:FF:FF:FF:FF:FF
         06:12 MAC Origin 
         12:14 Protocolo type \x08\x06
@@ -281,7 +260,7 @@ class TRequest(threading.Thread):
         32:38 Original MAC
         38:42 Original IP
         '''
-        frame = self.socket_arp.recv(1024)    
+        frame = self.socket.recv(1024)    
         self.received_frame=frame
         
         if frame[12:14] != b'\x08\x06': # Checks ARP protocol
