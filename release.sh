@@ -15,6 +15,7 @@ cp      Makefile \
         devicesinlan.py \
         devicesinlan.jpg \
         known.txt.dist \
+        ieee-oui.txt \
         $DIR
 
 cp      po/es.po \
