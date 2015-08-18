@@ -28,3 +28,4 @@ devicesinlan 0.6.0 XXXXXXXX
 ===========================
 - Added ping search support
 - Made my own arp-scanner
+- Added ieee-oui.txt database with get-oui from arp-scan

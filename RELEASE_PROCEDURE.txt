@@ -1,6 +1,7 @@
 Nueva release
 =============
 1) Modificar la version en devicesinlan.py
+) Update ieee-oui with get-oui
 2) Modificar todos los ficheros RELEASE CHANGELOG con num subversion +1 y versión nueva
 4) Actualizar po/*.po
 4) Crear el fichero (con release.sh que pone la version automatico) y subirlo a sourceforge

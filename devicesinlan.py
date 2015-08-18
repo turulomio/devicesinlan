@@ -163,7 +163,7 @@ class TRequest(threading.Thread):
 
     def ping_works(self):
         try: 
-            output=subprocess.call(["ping", "-c", "1", "-W", "1", self.ip], shell=False, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+            output=subprocess.call(["ping", "-c", "1", "-W", "2", self.ip], shell=False, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
             if output==0:
                 return True
             return False
@@ -255,7 +255,17 @@ class TRequest(threading.Thread):
         return s
 
     def get_oui(self, mac):
-        return "Unknown MAC address"
+        mac=mac.replace(":", "").upper()[:-6]
+        f=open("/usr/share/devicesinlan/ieee-oui.txt", "rb")
+        for line in f.readlines():
+            if line.find(mac.encode())!=-1:
+                return line.decode('utf-8').split("\t")[1][:-1].upper()
+                
+#            pass
+#            if line.find(mac)!=-1:
+#                print (line)
+#                return mac + " "+ line.encode('utf-8')
+        return "Unknown MAC address"+mac
 
     def arp_receive(self):
         '''
@@ -282,8 +292,7 @@ class TRequest(threading.Thread):
         #Compare ip whith ip of the trame
         if self.ip==self.bytes2ip(frame[28:32]):    
             self.mac=self.bytes2mac(frame[22:28])
-            if oui_command():
-                self.oui=self.get_oui(self.mac)
+            self.oui=self.get_oui(self.mac)
             return True
         return False
 
@@ -462,10 +471,6 @@ def ping_command():
     if os.path.exists("/bin/ping"):
         return "ping"
     return None
-    
-def oui_command():
-    """If detects oui database, it uses it"""
-    return False
     
 def get_if_ip(name):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
