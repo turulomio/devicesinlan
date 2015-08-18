@@ -36,6 +36,8 @@ class Color:
     def bold(s):
        return "\033[1m{}\033[0m".format(s)
 
+    def pink(s):
+        return "\033[95m{}\033[0m".format(s)
 class SetDevices:
     def __init__(self):
         """This constructor load /etc/devicesinlan/known.txt and executes arp-scan and parses its result"""
@@ -68,14 +70,13 @@ class SetDevices:
                         if k.mac.upper()==h.mac.upper():
                             h.alias=k.alias
                     self.arr.append(h)
-        else:#args.my=True
-            print (_("MY OWN ARP SCANNER IS IN DEVELOPING. RESULTS ARE NOT ENOUGH GOOD YET."))
-            
+        else:#args.my=True            
             threads=[]
             for addr in ipaddress.IPv4Network('192.168.1.0/24'):
                 t=TRequest(str(addr), args.interface,  TypesARP.Standard)
                 t.start()
                 threads.append(t)
+                time.sleep(0.01)
                 
             for t in threads:
                 t.join()
@@ -92,10 +93,13 @@ class SetDevices:
                     self.arr.append(h)
 
     def max_len_oui(self):
-        return  max(len(h.oui) for h in self.arr)
+        ma=max(len(h.oui) for h in self.arr)
+        if ma==0:
+            return 14
+        return ma
 
     def max_len_alias(self):
-        l=0
+        l=14
         for h in self.arr:
             if h.alias:
                 le=len(h.alias)
@@ -107,15 +111,16 @@ class SetDevices:
         self.arr=sorted(self.arr, key=lambda k: (int(k.ip.split(".")[0]), int(k.ip.split(".")[1]), int(k.ip.split(".")[2]), int(k.ip.split(".")[3])))
         
     def print(self):
+        if_ip=get_if_ip(args.interface)
         maxalias=self.max_len_alias()
         maxoui=self.max_len_oui()
         self.order_by_ip()
         print (Color.bold(_("{} DEVICES IN LAN FROM {} INTERFACE AT {}").format(self.length(), args.interface.upper(), str(datetime.datetime.now())[:-7]).center (6+15+17+maxalias+maxoui)))
         print ()
-        print (Color.bold("{}  P  {}  {}  {}".format(" IP ".center(15,'=')," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'='))))
+        print (Color.bold("{}  {}  = Ping =  {}  {}".format(" IP ".center(15,'=')," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'='))))
         for h in self.arr:
             if h.mac==None:
-                mac=""
+                mac="                 "
             else:
                 mac=h.mac
             if h.alias:
@@ -123,12 +128,15 @@ class SetDevices:
                 alias=h.alias
             else:
                 mac=Color.red(mac)
-                alias=""
+                alias=" "
             if h.pinged==True:
-                pinged="*"
+                pinged="**"
             else:
                 pinged=""
-            print ("{}  {}  {}  {}  {}".format(h.ip.ljust(15), pinged.ljust(1),  mac, Color.bold(alias.ljust(maxalias)), h.oui.ljust(maxoui)))        
+            if h.ip==if_ip:
+                print ("{}  {}  {}  {}  {}".format(Color.pink(h.ip.ljust(15)), Color.pink(mac.center(17)),  pinged.center(8), Color.pink(Color.bold(_("This device").ljust(maxalias))), h.oui.ljust(maxoui)))    
+            else:        
+                print ("{}  {}  {}  {}  {}".format(h.ip.ljust(15), mac.center(17),  pinged.center(8), Color.bold(alias.ljust(maxalias)), h.oui.ljust(maxoui)))    
 
 class Device:
     def __init__(self):
@@ -163,12 +171,7 @@ class TRequest(threading.Thread):
             return False
 
     def get_if_ip(self):
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        return socket.inet_ntoa(fcntl.ioctl(
-            s.fileno(),
-            0x8915,  # SIOCGIFADDR
-            self.if_name.encode('utf-8')+b'\x00'*(256-len(self.if_name))#            struct.pack('256s', self.if_name[:15])
-        )[20:24])
+        return get_if_ip(self.if_name)
     
 
     def run(self):    
@@ -463,7 +466,15 @@ def ping_command():
 def oui_command():
     """If detects oui database, it uses it"""
     return False
-
+    
+def get_if_ip(name):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    r=socket.inet_ntoa(fcntl.ioctl(
+        s.fileno(),
+        0x8915,  # SIOCGIFADDR
+        name.encode('utf-8')+b'\x00'*(256-len(name))#            struct.pack('256s', self.if_name[:15])
+    )[20:24])
+    return r
 ##############################################
 
 args=None
