@@ -79,15 +79,16 @@ class SetDevices:
                 
             for t in threads:
                 t.join()
-                if t.mac!=None:
+                if t.mac!=None or t.pinged==True:
                     h=Device()
                     h.ip=t.ip
                     h.mac=t.mac
                     h.oui=t.oui
                     h.pinged=t.pinged
                     for k in self.known.arr:
-                        if k.mac.upper()==h.mac.upper():
-                            h.alias=k.alias
+                        if h.mac:
+                            if k.mac.upper()==h.mac.upper():
+                                h.alias=k.alias
                     self.arr.append(h)
 
     def max_len_oui(self):
@@ -113,11 +114,15 @@ class SetDevices:
         print ()
         print (Color.bold("{}  P  {}  {}  {}".format(" IP ".center(15,'=')," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'='))))
         for h in self.arr:
+            if h.mac==None:
+                mac=""
+            else:
+                mac=h.mac
             if h.alias:
-                mac=Color.green(h.mac)
+                mac=Color.green(mac)
                 alias=h.alias
             else:
-                mac=Color.red(h.mac)
+                mac=Color.red(mac)
                 alias=""
             if h.pinged==True:
                 pinged="*"
@@ -148,6 +153,14 @@ class TRequest(threading.Thread):
         self.received_frame=None
         self.pinged=False
 
+    def ping_works(self):
+        try: 
+            output=subprocess.call(["ping", "-c", "1", "-W", "1", self.ip], shell=False, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+            if output==0:
+                return True
+            return False
+        except: #if exit is not 0
+            return False
 
     def get_if_ip(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -162,6 +175,7 @@ class TRequest(threading.Thread):
         self.arp_send()
         time.sleep(.3)
         self.arp_receive()
+        self.pinged=self.ping_works()
 
 #        if self.ip in ("192.168.1.12", "192.168.1.102"):
 #            print ("""-------------------------------------------- {} from interface {}
@@ -265,7 +279,7 @@ class TRequest(threading.Thread):
         #Compare ip whith ip of the trame
         if self.ip==self.bytes2ip(frame[28:32]):    
             self.mac=self.bytes2mac(frame[22:28])
-            if use_oui():
+            if oui_command():
                 self.oui=self.get_oui(self.mac)
             return True
         return False
@@ -438,11 +452,15 @@ def main():
     set.print()
     print ("Took {}".format (datetime.datetime.now()-inicio))
 
-def use_ping():
-    """If detects OS ping, it uses it"""
-    return False
+def ping_command():
+    """If detects OS ping, it uses it
+    None: Not found
+    String Comand to use"""
+    if os.path.exists("/bin/ping"):
+        return "ping"
+    return None
     
-def use_oui():
+def oui_command():
     """If detects oui database, it uses it"""
     return False
 
