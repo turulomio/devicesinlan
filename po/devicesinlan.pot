@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-19 13:43+0200\n"
+"POT-Creation-Date: 2015-08-19 14:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,6 +57,9 @@ msgid "Error parsing {}"
 msgstr ""
 
 msgid "Show devices in a LAN making an ARP and a ICMP request to find them"
+msgstr ""
+
+msgid "If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/)."
 msgstr ""
 
 msgid "Developed by Mariano Muñoz 2015 ©"

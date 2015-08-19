@@ -430,7 +430,10 @@ class SetKnownDevices:
 
 
 def main():
-    parser=argparse.ArgumentParser(prog='devicesinlan', description=_('Show devices in a LAN making an ARP and a ICMP request to find them'),  epilog=_("Developed by Mariano Muñoz 2015 ©"))
+    parser=argparse.ArgumentParser(prog='devicesinlan', description=_('Show devices in a LAN making an ARP and a ICMP request to find them'),  
+    epilog=_("If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).")+"\n"
+          +_("Developed by Mariano Muñoz 2015 ©")
+    , formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('-v', '--version', action='version', version="0.6.0")
     parser.add_argument('-m', '--my', help=_('Use my own arp scanner'), action='store_true')
     group = parser.add_mutually_exclusive_group()
