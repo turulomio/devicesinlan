@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-19 10:21+0200\n"
+"POT-Creation-Date: 2015-08-19 12:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,10 +29,13 @@ msgstr ""
 msgid "Please install it or use the -m option."
 msgstr ""
 
+msgid "This device"
+msgstr ""
+
 msgid "{} DEVICES IN LAN FROM {} INTERFACE AT {}"
 msgstr ""
 
-msgid "This device"
+msgid "I've made a ping to IP address with '*' ({} pings)."
 msgstr ""
 
 msgid "Input the MAC of the known device (xx:xx:xx:xx:xx:xx): "
@@ -90,4 +93,7 @@ msgid "Mac removed"
 msgstr ""
 
 msgid "I couldn't find the mac"
+msgstr ""
+
+msgid "It took {} with {} scanner."
 msgstr ""

@@ -38,6 +38,9 @@ class Color:
 
     def pink(s):
         return "\033[95m{}\033[0m".format(s)
+        
+    def yellow(s):
+        return "\033[93m{}\033[0m".format(s)
 class SetDevices:
     def __init__(self):
         """This constructor load /etc/devicesinlan/known.txt and executes arp-scan and parses its result"""
@@ -73,6 +76,14 @@ class SetDevices:
                         if k.mac.upper()==h.mac.upper():
                             h.alias=k.alias
                     self.arr.append(h)
+            h=Device()
+            h.ip=get_if_ip(args.interface)
+            h.alias=_("This device")
+            h.oui=""
+            self.arr.append(h)
+            
+            
+            
         else:#args.my=True            
             threads=[]
             for addr in ipaddress.IPv4Network('192.168.1.0/24'):
@@ -114,13 +125,14 @@ class SetDevices:
         self.arr=sorted(self.arr, key=lambda k: (int(k.ip.split(".")[0]), int(k.ip.split(".")[1]), int(k.ip.split(".")[2]), int(k.ip.split(".")[3])))
         
     def print(self):
+        numpings=0
         if_ip=get_if_ip(args.interface)
         maxalias=self.max_len_alias()
         maxoui=self.max_len_oui()
         self.order_by_ip()
+        print (Color.bold("="*(16+2+17+2+maxalias+2+maxoui)))
         print (Color.bold(_("{} DEVICES IN LAN FROM {} INTERFACE AT {}").format(self.length(), args.interface.upper(), str(datetime.datetime.now())[:-7]).center (6+15+17+maxalias+maxoui)))
-        print ()
-        print (Color.bold("{}  {}  = Ping =  {}  {}".format(" IP ".center(15,'=')," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'='))))
+        print (Color.bold("{}  {}  {}  {}".format(" IP ".center(16,'=')," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'='))))
         for h in self.arr:
             if h.mac==None:
                 mac="                 "
@@ -133,13 +145,17 @@ class SetDevices:
                 mac=Color.red(mac)
                 alias=" "
             if h.pinged==True:
-                pinged="**"
+                numpings=numpings+1
+                pinged="*"
             else:
-                pinged=""
+                pinged=" "
             if h.ip==if_ip:
-                print ("{}  {}  {}  {}  {}".format(Color.pink(h.ip.ljust(15)), Color.pink(mac.center(17)),  pinged.center(8), Color.pink(Color.bold(_("This device").ljust(maxalias))), h.oui.ljust(maxoui)))    
+                print ("{}  {}  {}  {}".format(Color.pink((pinged+h.ip).ljust(16)), Color.pink(mac.center(17)),   Color.pink(_("This device").ljust(maxalias)), h.oui.ljust(maxoui)))    
             else:        
-                print ("{}  {}  {}  {}  {}".format(h.ip.ljust(15), mac.center(17),  pinged.center(8), Color.bold(alias.ljust(maxalias)), h.oui.ljust(maxoui)))    
+                print ("{}  {}  {}  {}".format((pinged+h.ip).ljust(16), mac.center(17),   Color.yellow(alias.ljust(maxalias)), h.oui.ljust(maxoui)))    
+        print (Color.bold("="*(16+2+17+2+maxalias+2+maxoui)))        
+        if args.my:
+            print (_("I've made a ping to IP address with '*' ({} pings).").format(numpings))
 
 class Device:
     def __init__(self):
@@ -152,36 +168,38 @@ class Device:
 class TRequest(threading.Thread):
     def __init__(self, ip, if_name, arp_type):
         threading.Thread.__init__(self)
-        self.if_name=if_name
         self.arp_type = arp_type
+        self.if_name=if_name
         self.if_ip = self.get_if_ip() 
-        self.socket = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.SOCK_RAW)
-        self.socket.bind((if_name, socket.SOCK_RAW)) 
         self.ip = ip
         self.mac=None#Mac address string
         self.oui=""#String hardware name
-        self.sent_frame=None
-        self.received_frame=None
+        self.arp_sent_frame=None
+        self.arp_received_frame=None
+        self.icmp_sent_frame=None
+        self.icmp_received_frame=None
         self.pinged=False
 
-    def ping_works(self):
-        try: 
-            output=subprocess.call(["ping", "-c", "1", "-W", "2", self.ip], shell=False, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
-            if output==0:
-                return True
-            return False
-        except: #if exit is not 0
-            return False
+    def ping_process(self):
+        for i in range(1):
+            if self.pinged==False:
+                try: 
+                    output=subprocess.call(["ping", "-c", "1", "-W", "1", self.ip], shell=False, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+                    if output==0:
+                        self.pinged=True
+                except: #if exit is not 0
+                    pass
+                time.sleep(.1*i)
+            else:
+                break
 
     def get_if_ip(self):
         return get_if_ip(self.if_name)
     
 
     def run(self):    
-        self.arp_send()
-        time.sleep(.3)
-        self.arp_receive()
-        self.pinged=self.ping_works()
+        self.arp_process()
+        self.ping_process()
 
 #        if self.ip in ("192.168.1.12", "192.168.1.102"):
 #            print ("""-------------------------------------------- {} from interface {}
@@ -190,40 +208,77 @@ class TRequest(threading.Thread):
 #Received frame:
 #{}
 #Macs: {}   {}   {}   {}
-#--------------------------------------------""".format(self.ip,  self.if_ip, self.sent_frame,  self.received_frame, self.bytes2mac(self.received_frame[0:6]),self.bytes2mac(self.received_frame[6:12]), self.bytes2mac(self.received_frame[22:28]),   self.bytes2mac(self.received_frame[32:38])))
+#--------------------------------------------""".format(self.ip,  self.if_ip, self.arp_sent_frame,  self.arp_received_frame, self.bytes2mac(self.arp_received_frame[0:6]),self.bytes2mac(self.arp_received_frame[6:12]), self.bytes2mac(self.arp_received_frame[22:28]),   self.bytes2mac(self.arp_received_frame[32:38])))
 
-        
-        
-    def arp_send(self):
-        """
-        00:06 HW address destination (broadcast)
-        06:12 HW address of interface
-        12:14 Protocolo type \x08\x06
-        14:16 Protocolo Ethernet \x00\x01
-        16:18 IPv4 que es \x08\x00
-        18:19 HW MAC length bytes 6
-        19:20 Protocol address length IPv4 es 4
-        20:22 Arp operation request 00 01
-        22:28 HW address of interface sender
-        28:32 Ip del Interface
-        32:38 Hardware address of target 00 00 00 00 00 00
-        38:42 Ip del objetivo        
-        """
 
-        frame2=b"\xff\xff\xff\xff\xff\xff"+ \
-            self.socket.getsockname()[4] + \
-            b"\x08\x06" + \
-            b"\x00\x01" + \
-            b"\x08\x00" + \
-            b"\x06" + \
-            b"\x04" + \
-            b"\x00\x01" + \
-            self.socket.getsockname()[4] + \
-            self.ip2bytes(self.if_ip) + \
-            b"\x00\x00\x00\x00\x00\x00" + \
-            self.ip2bytes(self.ip)
-        self.sent_frame=frame2
-        self.socket.send(frame2)
+    def arp_process(self):        
+        def arp_send():
+            """
+            00:06 HW address destination (broadcast)
+            06:12 HW address of interface
+            12:14 Protocolo type \x08\x06
+            14:16 Protocolo Ethernet \x00\x01
+            16:18 IPv4 que es \x08\x00
+            18:19 HW MAC length bytes 6
+            19:20 Protocol address length IPv4 es 4
+            20:22 Arp operation request 00 01
+            22:28 HW address of interface sender
+            28:32 Ip del Interface
+            32:38 Hardware address of target 00 00 00 00 00 00
+            38:42 Ip del objetivo        
+            """
+    
+            frame2=b"\xff\xff\xff\xff\xff\xff"+ \
+                socket_arp.getsockname()[4] + \
+                b"\x08\x06" + \
+                b"\x00\x01" + \
+                b"\x08\x00" + \
+                b"\x06" + \
+                b"\x04" + \
+                b"\x00\x01" + \
+                socket_arp.getsockname()[4] + \
+                self.ip2bytes(self.if_ip) + \
+                b"\x00\x00\x00\x00\x00\x00" + \
+                self.ip2bytes(self.ip)
+            self.arp_sent_frame=frame2
+            socket_arp.send(frame2)
+        def arp_receive():
+            '''
+            00:06 Mac Destination FF:FF:FF:FF:FF:FF
+            06:12 MAC Origin 
+            12:14 Protocolo type \x08\x06
+            18:19 Hardware size 6 b'\x06'
+            19:20 IP size 4 b'\x04'
+            20:22 ARP operation \x00\x02, request es 1, reverse 3y 4
+            22:28 Returned MAC
+            28:32 Returned IP
+            32:38 Original MAC
+            38:42 Original IP
+            '''
+            frame = socket_arp.recv(1024)    
+            self.arp_received_frame=frame
+            
+            if frame[12:14] != b'\x08\x06': # Checks ARP protocol
+                return False
+    
+            if frame[20:22] != b'\x00\x02': #Checks ARP Answer
+                return False
+    
+            #Compare ip whith ip of the trame
+            if self.ip==self.bytes2ip(frame[28:32]):    
+                self.mac=self.bytes2mac(frame[22:28])
+                self.oui=self.get_oui(self.mac)
+                return True
+            return False
+        ##############################################
+        for i in range(5):
+            if self.mac==None:
+                socket_arp = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.SOCK_RAW)
+                socket_arp.bind((self.if_name, socket.SOCK_RAW)) 
+                arp_send()
+                time.sleep(.1*i)
+                arp_receive()
+                socket_arp.close()
 
     def bytes2mac(self, bytes):     
         """Bytes to mac address"""   
@@ -270,34 +325,6 @@ class TRequest(threading.Thread):
 #                return mac + " "+ line.encode('utf-8')
         return "Unknown MAC address"+mac
 
-    def arp_receive(self):
-        '''
-        00:06 Mac Destination FF:FF:FF:FF:FF:FF
-        06:12 MAC Origin 
-        12:14 Protocolo type \x08\x06
-        18:19 Hardware size 6 b'\x06'
-        19:20 IP size 4 b'\x04'
-        20:22 ARP operation \x00\x02, request es 1, reverse 3y 4
-        22:28 Returned MAC
-        28:32 Returned IP
-        32:38 Original MAC
-        38:42 Original IP
-        '''
-        frame = self.socket.recv(1024)    
-        self.received_frame=frame
-        
-        if frame[12:14] != b'\x08\x06': # Checks ARP protocol
-            return False
-
-        if frame[20:22] != b'\x00\x02': #Checks ARP Answer
-            return False
-
-        #Compare ip whith ip of the trame
-        if self.ip==self.bytes2ip(frame[28:32]):    
-            self.mac=self.bytes2mac(frame[22:28])
-            self.oui=self.get_oui(self.mac)
-            return True
-        return False
 
 class KnownDevice:
     def __init__(self):
@@ -459,7 +486,12 @@ def main():
     inicio=datetime.datetime.now()
     set=SetDevices()
     set.print()
-    print ("Took {}".format (datetime.datetime.now()-inicio))
+    if args.my==True:
+        scanner="DeviceInLAN"
+    else:
+        scanner="arp-scan"
+    print ("")
+    print (_("It took {} with {} scanner.").format (datetime.datetime.now()-inicio, Color.yellow(scanner)))
 
 def ping_command():
     """If detects OS ping, it uses it
