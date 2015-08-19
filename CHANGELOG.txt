@@ -24,7 +24,7 @@ devicesinlan 0.5.0 20150617
 ===========================
 - Console output shows the number of devices in the lan
 
-devicesinlan 0.6.0 XXXXXXXX
+devicesinlan 0.6.0 20150819
 ===========================
 - Added ping search support
 - Made my own arp-scanner

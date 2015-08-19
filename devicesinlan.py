@@ -62,7 +62,7 @@ class SetDevices:
                 print (Color.red(_("There was an error executing arp-scan.")))
                 print ("  * "+_("Is the interface argument correct?."))    
                 if os.path.exists("/usr/bin/arp-scan")==False:
-                    print("  * "+_("I couldn't find /usr/bin/arp-scan.") + " " + _("Please install it or use the -m option."))
+                    print("  * "+_("I couldn't find /usr/bin/arp-scan.") + " " + _("Please install it or add -m option to use DevicesInLAN scanner."))
                 sys.exit(2)
             for line in output.split("\n"):
                 if line.find("\t")!=-1:
@@ -431,7 +431,7 @@ class SetKnownDevices:
 
 def main():
     parser=argparse.ArgumentParser(prog='devicesinlan', description=_('Show devices in a LAN making an ARP and a ICMP request to find them'),  epilog=_("Developed by Mariano Muñoz 2015 ©"))
-    parser.add_argument('-v', '--version', action='version', version="0.5.0")
+    parser.add_argument('-v', '--version', action='version', version="0.6.0")
     parser.add_argument('-m', '--my', help=_('Use my own arp scanner'), action='store_true')
     group = parser.add_mutually_exclusive_group()
     group.add_argument('-i',  '--interface', help=_('Net interface name'),  default='eth0')
