@@ -56,7 +56,10 @@ class SetDevices:
             try:
                 output=subprocess.check_output(["arp-scan", "--interface", args.interface, "--localnet", "--ignoredups"]).decode('UTF-8')
             except:
-                print (_("There was an error executing arp-scan.")+" "+_("Is the interface argument correct?."))
+                print (Color.red(_("There was an error executing arp-scan.")))
+                print ("  * "+_("Is the interface argument correct?."))    
+                if os.path.exists("/usr/bin/arp-scan")==False:
+                    print("  * "+_("I couldn't find /usr/bin/arp-scan.") + " " + _("Please install it or use the -m option."))
                 sys.exit(2)
             for line in output.split("\n"):
                 if line.find("\t")!=-1:
@@ -410,7 +413,7 @@ class SetKnownDevices:
 
 
 def main():
-    parser=argparse.ArgumentParser(prog='devicesinlan', description=_('Show devices in a LAN'),  epilog=_("Developed by Mariano Muñoz 2015 ©"))
+    parser=argparse.ArgumentParser(prog='devicesinlan', description=_('Show devices in a LAN making an ARP and a ICMP request to find them'),  epilog=_("Developed by Mariano Muñoz 2015 ©"))
     parser.add_argument('-v', '--version', action='version', version="0.5.0")
     parser.add_argument('-m', '--my', help=_('Use my own arp scanner'), action='store_true')
     group = parser.add_mutually_exclusive_group()
@@ -420,13 +423,7 @@ def main():
     group.add_argument('-l',  '--list', help=_('List known device'), action='store_true')
     global args
     args=parser.parse_args()
-    
-    
-    ##Make system checks
-    if os.path.exists("/usr/bin/arp-scan")==False:
-        print(_("I couldn't find /usr/bin/arp-scan.") + " " + _("Please install it."))
-        sys.exit(1)
-    
+      
     if os.path.exists("/etc/devicesinlan/known.txt")==False:
         subprocess.check_output(["cp","/etc/devicesinlan/known.txt.dist","/etc/devicesinlan/known.txt"])
         print(_("I couldn't find /etc/devicesinlan/known.txt.") + " " + _("I copied distribution file to it.") + " "+ _("Add your mac addresses to detect strage devices in your LAN."))
