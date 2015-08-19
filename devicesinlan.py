@@ -487,10 +487,9 @@ def main():
     set=SetDevices()
     set.print()
     if args.my==True:
-        scanner="DeviceInLAN"
+        scanner="DevicesInLAN"
     else:
         scanner="arp-scan"
-    print ("")
     print (_("It took {} with {} scanner.").format (datetime.datetime.now()-inicio, Color.yellow(scanner)))
 
 def ping_command():
