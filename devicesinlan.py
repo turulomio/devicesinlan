@@ -79,14 +79,21 @@ class SetDevices:
             h=Device()
             h.ip=get_if_ip(args.interface)
             h.alias=_("This device")
-            h.oui=""
+            h.mac=get_if_mac(args.interface)
+            h.oui=get_oui(h.mac)
             self.arr.append(h)
-            
-            
-            
         else:#args.my=True            
             threads=[]
+            if_ip=get_if_ip(args.interface)
             for addr in ipaddress.IPv4Network('192.168.1.0/24'):
+                if str(addr)==if_ip :#Adds device if ip is interface ip and jumps it
+                    h=Device()
+                    h.ip=str(addr)
+                    h.mac=get_if_mac(args.interface)
+                    h.oui=get_oui(h.mac)
+                    h.pinged=True     
+                    self.arr.append(h)
+                    continue
                 t=TRequest(str(addr), args.interface,  TypesARP.Standard)
                 t.start()
                 threads.append(t)
@@ -138,24 +145,24 @@ class SetDevices:
                 mac="                 "
             else:
                 mac=h.mac
-            if h.alias:
-                mac=Color.green(mac)
-                alias=h.alias
-            else:
-                mac=Color.red(mac)
-                alias=" "
             if h.pinged==True:
                 numpings=numpings+1
                 pinged="*"
             else:
                 pinged=" "
             if h.ip==if_ip:
-                print ("{}  {}  {}  {}".format(Color.pink((pinged+h.ip).ljust(16)), Color.pink(mac.center(17)),   Color.pink(_("This device").ljust(maxalias)), h.oui.ljust(maxoui)))    
-            else:        
+                print ("{}  {}  {}  {}".format(Color.pink((pinged+h.ip).ljust(16)), Color.pink(mac.center(17)),   Color.pink(_("This device").ljust(maxalias)), Color.pink(h.oui.ljust(maxoui))))
+            else:
+                if h.alias:
+                    mac=Color.green(mac)
+                    alias=h.alias
+                else:
+                    mac=Color.red(mac)
+                    alias=" "     
                 print ("{}  {}  {}  {}".format((pinged+h.ip).ljust(16), mac.center(17),   Color.yellow(alias.ljust(maxalias)), h.oui.ljust(maxoui)))    
         print (Color.bold("="*(16+2+17+2+maxalias+2+maxoui)))        
         if args.my:
-            print (_("I've made a ping to IP address with '*' ({} pings).").format(numpings))
+            print (_("There was reply to a ping from IP address with '*' ({} pings).").format(numpings))
 
 class Device:
     def __init__(self):
@@ -170,7 +177,7 @@ class TRequest(threading.Thread):
         threading.Thread.__init__(self)
         self.arp_type = arp_type
         self.if_name=if_name
-        self.if_ip = self.get_if_ip() 
+        self.if_ip = get_if_ip(self.if_name) 
         self.ip = ip
         self.mac=None#Mac address string
         self.oui=""#String hardware name
@@ -191,11 +198,7 @@ class TRequest(threading.Thread):
                     pass
                 time.sleep(.1*i)
             else:
-                break
-
-    def get_if_ip(self):
-        return get_if_ip(self.if_name)
-    
+                break    
 
     def run(self):    
         self.arp_process()
@@ -267,11 +270,12 @@ class TRequest(threading.Thread):
             #Compare ip whith ip of the trame
             if self.ip==self.bytes2ip(frame[28:32]):    
                 self.mac=self.bytes2mac(frame[22:28])
-                self.oui=self.get_oui(self.mac)
+                self.oui=get_oui(self.mac)
                 return True
+                
             return False
         ##############################################
-        for i in range(5):
+        for i in range(3):
             if self.mac==None:
                 socket_arp = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.SOCK_RAW)
                 socket_arp.bind((self.if_name, socket.SOCK_RAW)) 
@@ -311,20 +315,6 @@ class TRequest(threading.Thread):
             except:
                 pass
         return s
-
-    def get_oui(self, mac):
-        mac=mac.replace(":", "").upper()[:-6]
-        f=open("/usr/share/devicesinlan/ieee-oui.txt", "rb")
-        for line in f.readlines():
-            if line.find(mac.encode())!=-1:
-                return line.decode('utf-8').split("\t")[1][:-1].upper()
-                
-#            pass
-#            if line.find(mac)!=-1:
-#                print (line)
-#                return mac + " "+ line.encode('utf-8')
-        return "Unknown MAC address"+mac
-
 
 class KnownDevice:
     def __init__(self):
@@ -500,6 +490,15 @@ def ping_command():
         return "ping"
     return None
     
+def get_oui(mac):
+    mac=mac.replace(":", "").upper()[:-6]
+    if len(mac)!=6:#No tiene los 3 primeros n´umeros de la mac
+        return ""
+    f=open("/usr/share/devicesinlan/ieee-oui.txt", "rb")
+    for line in f.readlines():
+        if line.find(mac.encode())!=-1:
+            return line.decode('utf-8').split("\t")[1][:-1].upper()
+            
 def get_if_ip(name):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     r=socket.inet_ntoa(fcntl.ioctl(
@@ -508,6 +507,12 @@ def get_if_ip(name):
         name.encode('utf-8')+b'\x00'*(256-len(name))#            struct.pack('256s', self.if_name[:15])
     )[20:24])
     return r
+    
+def get_if_mac(name):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    info = fcntl.ioctl(s.fileno(), 0x8927,  name.encode('utf-8')+b'\x00'*(256-len(name)))
+    return ''.join(['%02x:' % b for b in info[18:24]])[:-1]
+    
 ##############################################
 
 args=None
