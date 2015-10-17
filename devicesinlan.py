@@ -3,15 +3,16 @@ import argparse
 import codecs
 import subprocess
 import datetime
+import platform
 import gettext
 import threading
 import ipaddress
 import os
+import shutil
 import re
 import sys
 import socket
 import time
-import fcntl
 
 """
     To see information of the ARP protocol, look into doc/devicesinlan.odt
@@ -395,7 +396,10 @@ class SetKnownDevices:
         return False
     
     def load(self):
-        f=open("/etc/devicesinlan/known.txt","r")
+        if platform.system()=="Windows":
+            f=open("known.txt","r")
+        elif platform.system()=="Linux":
+            f=open("/etc/devicesinlan/known.txt","r")
         for l in f.readlines():
             ar=l.split("=")
             if len(ar)==2:
@@ -443,10 +447,18 @@ def main():
     group.add_argument('-l',  '--list', help=_('List known device'), action='store_true')
     global args
     args=parser.parse_args()
-      
-    if os.path.exists("/etc/devicesinlan/known.txt")==False:
-        subprocess.check_output(["cp","/etc/devicesinlan/known.txt.dist","/etc/devicesinlan/known.txt"])
-        print(_("I couldn't find /etc/devicesinlan/known.txt.") + " " + _("I copied distribution file to it.") + " "+ _("Add your mac addresses to detect strage devices in your LAN."))
+
+    if platform.system()=="Windows":
+        if os.path.exists("known.txt")==False:
+            shutil.copy("known.txt.dist","known.txt")
+            print(_("I couldn't find /etc/devicesinlan/known.txt.") + " " + _("I copied distribution file to it.") + " "+ _("Add your mac addresses to detect strage devices in your LAN."))
+
+
+    elif platform.system()=="Linux":
+        if os.path.exists("/etc/devicesinlan/known.txt")==False:
+            subprocess.check_output(["cp","/etc/devicesinlan/known.txt.dist","/etc/devicesinlan/known.txt"])
+            print(_("I couldn't find /etc/devicesinlan/known.txt.") + " " + _("I copied distribution file to it.") + " "+ _("Add your mac addresses to detect strage devices in your LAN."))
+
     
     global known
     known=SetKnownDevices()
@@ -503,6 +515,7 @@ def get_oui(mac):
             return line.decode('utf-8').split("\t")[1][:-1].upper()
             
 def get_if_ip(name):
+    import fcntl
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     r=socket.inet_ntoa(fcntl.ioctl(
         s.fileno(),
@@ -512,6 +525,7 @@ def get_if_ip(name):
     return r
     
 def get_if_mac(name):
+    import fcntl
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     info = fcntl.ioctl(s.fileno(), 0x8927,  name.encode('utf-8')+b'\x00'*(256-len(name)))
     return ''.join(['%02x:' % b for b in info[18:24]])[:-1]
