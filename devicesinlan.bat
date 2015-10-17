@@ -1,3 +1,4 @@
-ipconfig /a
-C:/Python34/python.exe devicesinlan.py 
+PYTHON=/root/.winedevelop/drive_c/Python34/python.exe
+$PYTHON
+$PYTHON /home/keko/Proyectos/devicesinlan/devicesinlan.py
 pause

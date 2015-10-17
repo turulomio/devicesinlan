@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: devicesinlan\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-19 14:16+0200\n"
+"POT-Creation-Date: 2015-10-17 08:37+0200\n"
 "PO-Revision-Date: 2015-08-19 13:44+0200\n"
 "Last-Translator: Mariano Muñoz <turulomio@yahoo.es>\n"
 "Language-Team: Spanish\n"
@@ -69,6 +69,9 @@ msgstr "Desarrollado por Mariano Muñoz 2015 ©"
 
 msgid "Use my own arp scanner"
 msgstr "Usa mi propio arp escáner"
+
+msgid "Use console app"
+msgstr ""
 
 msgid "Net interface name"
 msgstr "Nombre del interfaz de red"

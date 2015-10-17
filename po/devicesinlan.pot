@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-19 14:22+0200\n"
+"POT-Creation-Date: 2015-10-17 08:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -66,6 +66,9 @@ msgid "Developed by Mariano Muñoz 2015 ©"
 msgstr ""
 
 msgid "Use my own arp scanner"
+msgstr ""
+
+msgid "Use console app"
 msgstr ""
 
 msgid "Net interface name"

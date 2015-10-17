@@ -440,6 +440,7 @@ def main():
     , formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('-v', '--version', action='version', version="0.6.0")
     parser.add_argument('-m', '--my', help=_('Use my own arp scanner'), action='store_true')
+    parser.add_argument('-c',  '--console', help=_('Use console app'), action='store_true',  default=False)
     group = parser.add_mutually_exclusive_group()
     group.add_argument('-i',  '--interface', help=_('Net interface name'),  default='eth0')
     group.add_argument('-a',  '--add', help=_('Add a known device'), action='store_true')
@@ -463,39 +464,59 @@ def main():
     global known
     known=SetKnownDevices()
     
-    if args.add:
-        k=KnownDevice()
-        k.insert_mac()
-        k.insert_alias()
-        known.append(k)
-        known.save()    
-        print (Color.green(_("Known device inserted")))
-        sys.exit(0)
+    if args.console==False:
+        sys.path.append("/usr/lib/devicesinlan")
         
-    if args.remove:
-        k=KnownDevice()
-        k.insert_mac()
-        if known.remove_mac(k.mac):
-            known.save()
-            print (Color.green(_("Mac removed")))
-        else:
-            print (Color.red(_("I couldn't find the mac")))
-        sys.exit(0)
+        import PyQt5.QtCore
+        import PyQt5.QtGui
+        import PyQt5.QtWidgets
+        import frmMain 
+
         
-    if args.list:
-        known.print()
-        sys.exit(0)
+        app = PyQt5.QtWidgets.QApplication(sys.argv)
+        app.setApplicationName("devicesinlan {0}".format(str(datetime.datetime.now())))
+        app.setQuitOnLastWindowClosed(True)
+
+        frmMain = frmMain.frmMain() 
+        frmMain.show()
+        sys.exit(app.exec_())
+
+    else:##Console
+        
+        
+        if args.add:
+            k=KnownDevice()
+            k.insert_mac()
+            k.insert_alias()
+            known.append(k)
+            known.save()    
+            print (Color.green(_("Known device inserted")))
+            sys.exit(0)
             
-    
-    ## Load devices
-    inicio=datetime.datetime.now()
-    set=SetDevices()
-    set.print()
-    if args.my==True:
-        scanner="DevicesInLAN"
-    else:
-        scanner="arp-scan"
-    print (_("It took {} with {} scanner.").format (datetime.datetime.now()-inicio, Color.yellow(scanner)))
+        if args.remove:
+            k=KnownDevice()
+            k.insert_mac()
+            if known.remove_mac(k.mac):
+                known.save()
+                print (Color.green(_("Mac removed")))
+            else:
+                print (Color.red(_("I couldn't find the mac")))
+            sys.exit(0)
+            
+        if args.list:
+            known.print()
+            sys.exit(0)
+                
+        
+        ## Load devices
+        inicio=datetime.datetime.now()
+        set=SetDevices()
+        set.print()
+        if args.my==True:
+            scanner="DevicesInLAN"
+        else:
+            scanner="arp-scan"
+        print (_("It took {} with {} scanner.").format (datetime.datetime.now()-inicio, Color.yellow(scanner)))
 
 def ping_command():
     """If detects OS ping, it uses it
