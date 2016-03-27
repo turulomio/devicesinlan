@@ -10,23 +10,25 @@
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{3849730B-2375-4F76-B4A5-A6677A23AB9B}
+AppId={{3849730B-2375-4F76-B4A5-A6677456AB9B}
 AppName={#MyAppName}
 AppVersion={#VERSION_NAME}
 AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={pf}\glparchis
+DefaultDirName={pf}\devicensinlan
 DisableDirPage=yes
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 LicenseFile=GPL-3.txt
 OutputDir=dist
-OutputBaseFilename=devicesinlan-bin-windows-{#VERSION_NAME}
-SetupIconFile=images\ficharoja.ico
+OutputBaseFilename={#FILENAME}
+SetupIconFile=devicesinlan.ico
 Compression=lzma
-SolidCompression=yes
+SolidCompression=yes    
+VersionInfoVersion={#VERSION_NAME}
+UninstallDisplayIcon={uninstallexe}
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -39,13 +41,15 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "glparchis.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "*.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "i18n/*.qm"; DestDir: "{app}"; Flags: ignoreversion
-Source: "sounds/*.wav"; DestDir: "{app}"; Flags: ignoreversion
+Source: "devicesinlan.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "*.pyd"; DestDir: "{app}"; Flags: ignoreversion  
+Source: "po/es/devicesinlan.mo"; DestDir: "{app}/es/LC_MESSAGES/"; Flags: ignoreversion    
+Source: "known.txt.dist"; DestDir: "{app}"; Flags: ignoreversion
+Source: "ieee-oui.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "*.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "library.zip"; DestDir: "{app}"; Flags: ignoreversion
-Source: "phonon_backend\*"; DestDir: "{app}\phonon_backend\"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "library.zip"; DestDir: "{app}"; Flags: ignoreversion        
+Source: "platforms\*"; DestDir: "{app}\platforms\"; Flags: ignoreversion recursesubdirs createallsubdirs   
+Source: "imageformats\*"; DestDir: "{app}\imageformats\"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

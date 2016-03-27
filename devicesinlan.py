@@ -20,6 +20,7 @@ import time
 
 # I had a lot of problems with UTF-8. LANG must be es_ES.UTF-8 to work
 gettext.textdomain('devicesinlan')
+gettext.bindtextdomain('devicesinlan', "./")
 _=gettext.gettext
 
 
@@ -397,7 +398,7 @@ class SetKnownDevices:
     
     def load(self):
         if platform.system()=="Windows":
-            f=open("known.txt","r")
+            f=open(os.path.expanduser("~/.devicesinlan/known.txt"),"r")
         elif platform.system()=="Linux":
             f=open("/etc/devicesinlan/known.txt","r")
         for l in f.readlines():
@@ -424,7 +425,10 @@ class SetKnownDevices:
         
     def save(self):
         """Save etc file"""
-        f=open("/etc/devicesinlan/known.txt","w")
+        if platform.system()=="Windows":
+            f=open(os.path.expanduser("~/.devicesinlan/known.txt"),"w")
+        elif platform.system()=="Linux":
+            f=open("/etc/devicesinlan/known.txt","w")
         for k in self.arr:
             f.write("{} = {}\n".format(k.mac.lower(), k.alias))
         f.close()        
@@ -450,12 +454,19 @@ def main():
     args=parser.parse_args()
 
     if platform.system()=="Windows":
-        if os.path.exists("known.txt")==False:
-            shutil.copy("known.txt.dist","known.txt")
-            print(_("I couldn't find /etc/devicesinlan/known.txt.") + " " + _("I copied distribution file to it.") + " "+ _("Add your mac addresses to detect strage devices in your LAN."))
+        sys.path.append("ui")
+        sys.path.append("images")
+        if os.path.exists(os.path.expanduser("~/.devicesinlan/"))==False:
+            try:
+                os.makedirs(os.path.expanduser("~/.devicesinlan/"))
+            except:
+                pass
+            shutil.copy("known.txt.dist",os.path.expanduser("~/.devicesinlan/known.txt"))
+            print(_("I couldn't find .devicesinlan/known.txt.") + " " + _("I copied distribution file to it.") + " "+ _("Add your mac addresses to detect strage devices in your LAN."))
 
 
     elif platform.system()=="Linux":
+        sys.path.append("/usr/lib/devicesinlan")
         if os.path.exists("/etc/devicesinlan/known.txt")==False:
             subprocess.check_output(["cp","/etc/devicesinlan/known.txt.dist","/etc/devicesinlan/known.txt"])
             print(_("I couldn't find /etc/devicesinlan/known.txt.") + " " + _("I copied distribution file to it.") + " "+ _("Add your mac addresses to detect strage devices in your LAN."))
@@ -465,7 +476,6 @@ def main():
     known=SetKnownDevices()
     
     if args.console==False:
-        sys.path.append("/usr/lib/devicesinlan")
         
         import PyQt5.QtCore
         import PyQt5.QtGui
