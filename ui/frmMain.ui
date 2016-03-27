@@ -18,7 +18,7 @@
    <cursorShape>PointingHandCursor</cursorShape>
   </property>
   <property name="windowTitle">
-   <string>glParchis 2010-2014. GNU General Public License</string>
+   <string/>
   </property>
   <property name="windowIcon">
    <iconset resource="../images/devicesinlan.qrc">
@@ -44,7 +44,6 @@
      <string>A&amp;yuda</string>
     </property>
     <addaction name="actionHelp"/>
-    <addaction name="separator"/>
     <addaction name="separator"/>
     <addaction name="actionAcercaDe"/>
    </widget>
@@ -77,19 +76,13 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="separator"/>
-   <addaction name="separator"/>
-   <addaction name="separator"/>
-   <addaction name="separator"/>
-   <addaction name="separator"/>
-   <addaction name="actionAcercaDe"/>
    <addaction name="actionSalir"/>
   </widget>
   <widget class="QStatusBar" name="status"/>
   <action name="actionSalir">
    <property name="icon">
-    <iconset>
-     <normaloff>:/glparchis/exit.png</normaloff>:/glparchis/exit.png</iconset>
+    <iconset resource="../images/devicesinlan.qrc">
+     <normaloff>:/exit.png</normaloff>:/exit.png</iconset>
    </property>
    <property name="text">
     <string>S&amp;alir</string>
@@ -100,8 +93,8 @@
   </action>
   <action name="actionAcercaDe">
    <property name="icon">
-    <iconset>
-     <normaloff>:/glparchis/ficharoja.png</normaloff>:/glparchis/ficharoja.png</iconset>
+    <iconset resource="../images/devicesinlan.qrc">
+     <normaloff>:/devicesinlan.jpg</normaloff>:/devicesinlan.jpg</iconset>
    </property>
    <property name="text">
     <string>Acerca de</string>
@@ -109,8 +102,8 @@
   </action>
   <action name="actionSettings">
    <property name="icon">
-    <iconset>
-     <normaloff>:/glparchis/configure.png</normaloff>:/glparchis/configure.png</iconset>
+    <iconset resource="../images/devicesinlan.qrc">
+     <normaloff>:/configure.png</normaloff>:/configure.png</iconset>
    </property>
    <property name="text">
     <string>Preferencias</string>
@@ -118,8 +111,8 @@
   </action>
   <action name="actionHelp">
    <property name="icon">
-    <iconset>
-     <normaloff>:/glparchis/help.png</normaloff>:/glparchis/help.png</iconset>
+    <iconset resource="../images/devicesinlan.qrc">
+     <normaloff>:/help.png</normaloff>:/help.png</iconset>
    </property>
    <property name="text">
     <string>Ayuda del juego</string>

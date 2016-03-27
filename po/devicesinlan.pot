@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-17 08:49+0200\n"
+"POT-Creation-Date: 2016-03-27 09:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,57 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+msgid "I couldn't find .devicesinlan/known.txt."
+msgstr ""
+
+msgid "I copied distribution file to it."
+msgstr ""
+
+msgid "Add your mac addresses to detect strage devices in your LAN."
+msgstr ""
+
+msgid "Show devices in a LAN making an ARP and a ICMP request to find them"
+msgstr ""
+
+msgid "If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/)."
+msgstr ""
+
+msgid "Developed by Mariano Muñoz 2015 ©"
+msgstr ""
+
+msgid "Use my own arp scanner"
+msgstr ""
+
+msgid "Use console app"
+msgstr ""
+
+msgid "Net interface name"
+msgstr ""
+
+msgid "Add a known device"
+msgstr ""
+
+msgid "Remove a known device"
+msgstr ""
+
+msgid "List known device"
+msgstr ""
+
+msgid "I couldn't find /etc/devicesinlan/known.txt."
+msgstr ""
+
+msgid "Known device inserted"
+msgstr ""
+
+msgid "Mac removed"
+msgstr ""
+
+msgid "I couldn't find the mac"
+msgstr ""
+
+msgid "It took {} with {} scanner."
+msgstr ""
 
 msgid "There was an error executing arp-scan."
 msgstr ""
@@ -54,52 +105,4 @@ msgid "KNOWN DEVICES BY USER AT {}"
 msgstr ""
 
 msgid "Error parsing {}"
-msgstr ""
-
-msgid "Show devices in a LAN making an ARP and a ICMP request to find them"
-msgstr ""
-
-msgid "If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/)."
-msgstr ""
-
-msgid "Developed by Mariano Muñoz 2015 ©"
-msgstr ""
-
-msgid "Use my own arp scanner"
-msgstr ""
-
-msgid "Use console app"
-msgstr ""
-
-msgid "Net interface name"
-msgstr ""
-
-msgid "Add a known device"
-msgstr ""
-
-msgid "Remove a known device"
-msgstr ""
-
-msgid "List known device"
-msgstr ""
-
-msgid "I couldn't find /etc/devicesinlan/known.txt."
-msgstr ""
-
-msgid "I copied distribution file to it."
-msgstr ""
-
-msgid "Add your mac addresses to detect strage devices in your LAN."
-msgstr ""
-
-msgid "Known device inserted"
-msgstr ""
-
-msgid "Mac removed"
-msgstr ""
-
-msgid "I couldn't find the mac"
-msgstr ""
-
-msgid "It took {} with {} scanner."
 msgstr ""

@@ -1,5 +1,15 @@
 <RCC>
   <qresource>
+    <file>configure.png</file>
+    <file>update.png</file>
+    <file>exit.png</file>
+    <file>help.png</file>
+    <file>open.png</file>
+    <file>save.png</file>
     <file>devicesinlan.jpg</file>
+  </qresource>
+  <qresource prefix="flags">
+    <file>spain.png</file>
+    <file>uk.png</file>
   </qresource>
 </RCC>
