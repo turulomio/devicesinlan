@@ -32,7 +32,19 @@ if platform.system()=="Windows":
             pass
         shutil.copy("known.txt.dist",os.path.expanduser("~/.devicesinlan/known.txt"))
         print(_("I couldn't find .devicesinlan/known.txt.") + " " + _("I copied distribution file to it.") + " "+ _("Add your mac addresses to detect strage devices in your LAN."))
+    import PyQt5.QtCore
+    import PyQt5.QtGui
+    import PyQt5.QtWidgets
+    import frmMain 
 
+    
+    app = PyQt5.QtWidgets.QApplication(sys.argv)
+    app.setApplicationName("devicesinlan {0}".format(str(datetime.datetime.now())))
+    app.setQuitOnLastWindowClosed(True)
+
+    frmMain = frmMain.frmMain() 
+    frmMain.show()
+    sys.exit(app.exec_())
 
 elif platform.system()=="Linux":
     sys.path.append("/usr/lib/devicesinlan")
@@ -56,60 +68,60 @@ elif platform.system()=="Linux":
         print(_("I couldn't find /etc/devicesinlan/known.txt.") + " " + _("I copied distribution file to it.") + " "+ _("Add your mac addresses to detect strage devices in your LAN."))
 
 
-global known
-known=SetKnownDevices()
+    global known
+    known=SetKnownDevices()
 
-if args.console==False:
-    
-    import PyQt5.QtCore
-    import PyQt5.QtGui
-    import PyQt5.QtWidgets
-    import frmMain 
-
-    
-    app = PyQt5.QtWidgets.QApplication(sys.argv)
-    app.setApplicationName("devicesinlan {0}".format(str(datetime.datetime.now())))
-    app.setQuitOnLastWindowClosed(True)
-
-    frmMain = frmMain.frmMain() 
-    frmMain.show()
-    sys.exit(app.exec_())
-
-else:##Console
-    
-    
-    if args.add:
-        k=KnownDevice()
-        k.insert_mac()
-        k.insert_alias()
-        known.append(k)
-        known.save()    
-        print (Color.green(_("Known device inserted")))
-        sys.exit(0)
+    if args.console==False:
         
-    if args.remove:
-        k=KnownDevice()
-        k.insert_mac()
-        if known.remove_mac(k.mac):
-            known.save()
-            print (Color.green(_("Mac removed")))
-        else:
-            print (Color.red(_("I couldn't find the mac")))
-        sys.exit(0)
+        import PyQt5.QtCore
+        import PyQt5.QtGui
+        import PyQt5.QtWidgets
+        import frmMain 
+
         
-    if args.list:
-        known.print()
-        sys.exit(0)
+        app = PyQt5.QtWidgets.QApplication(sys.argv)
+        app.setApplicationName("devicesinlan {0}".format(str(datetime.datetime.now())))
+        app.setQuitOnLastWindowClosed(True)
+
+        frmMain = frmMain.frmMain() 
+        frmMain.show()
+        sys.exit(app.exec_())
+
+    else:##Console
+        
+        
+        if args.add:
+            k=KnownDevice()
+            k.insert_mac()
+            k.insert_alias()
+            known.append(k)
+            known.save()    
+            print (Color.green(_("Known device inserted")))
+            sys.exit(0)
             
-    
-    ## Load devices
-    inicio=datetime.datetime.now()
-    set=SetDevices()
-    set.print()
-    if args.my==True:
-        scanner="DevicesInLAN"
-    else:
-        scanner="arp-scan"
-    print (_("It took {} with {} scanner.").format (datetime.datetime.now()-inicio, Color.yellow(scanner)))
+        if args.remove:
+            k=KnownDevice()
+            k.insert_mac()
+            if known.remove_mac(k.mac):
+                known.save()
+                print (Color.green(_("Mac removed")))
+            else:
+                print (Color.red(_("I couldn't find the mac")))
+            sys.exit(0)
+            
+        if args.list:
+            known.print()
+            sys.exit(0)
+                
+        
+        ## Load devices
+        inicio=datetime.datetime.now()
+        set=SetDevices()
+        set.print()
+        if args.my==True:
+            scanner="DevicesInLAN"
+        else:
+            scanner="arp-scan"
+        print (_("It took {} with {} scanner.").format (datetime.datetime.now()-inicio, Color.yellow(scanner)))
 
 
