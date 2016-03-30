@@ -70,6 +70,7 @@ class SetDevices:
         self.arr=[]
         self.known=SetKnownDevices(self.mem)
         self.arp_scanner()#From arp_scan
+        self.selected=None
 
     def length(self):
         """Number of devices in the set"""

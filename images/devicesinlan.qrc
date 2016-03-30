@@ -1,5 +1,7 @@
 <RCC>
   <qresource>
+    <file>cancel.png</file>
+    <file>add.png</file>
     <file>configure.png</file>
     <file>update.png</file>
     <file>exit.png</file>

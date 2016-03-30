@@ -136,13 +136,37 @@
   <action name="actionScan">
    <property name="icon">
     <iconset resource="../images/devicesinlan.qrc">
-     <normaloff>:/devicesinlan.png</normaloff>:/devicesinlan.png</iconset>
+     <normaloff>:/update.png</normaloff>:/update.png</iconset>
    </property>
    <property name="text">
     <string>New scan</string>
    </property>
    <property name="toolTip">
     <string>New scan</string>
+   </property>
+  </action>
+  <action name="actionDeviceLink">
+   <property name="icon">
+    <iconset resource="../images/devicesinlan.qrc">
+     <normaloff>:/save.png</normaloff>:/save.png</iconset>
+   </property>
+   <property name="text">
+    <string>Link device</string>
+   </property>
+   <property name="toolTip">
+    <string>Link device</string>
+   </property>
+  </action>
+  <action name="actionDeviceUnlink">
+   <property name="icon">
+    <iconset resource="../images/devicesinlan.qrc">
+     <normaloff>:/cancel.png</normaloff>:/cancel.png</iconset>
+   </property>
+   <property name="text">
+    <string>Unlink device</string>
+   </property>
+   <property name="toolTip">
+    <string>Unlink device</string>
    </property>
   </action>
  </widget>

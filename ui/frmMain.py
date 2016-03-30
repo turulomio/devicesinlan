@@ -18,8 +18,12 @@ class frmMain(QMainWindow, Ui_frmMain):#
         self.showMaximized()
         self.setWindowTitle("DevicesInLan 2015-{}. GNU General Public License".format(dateversion.year))
         self.mem=mem
+        self.sets=[]#Array of sets
+        self.tables=[]#Array of tables
         self.tabWidget = QTabWidget(self.wdg)
         self.horizontalLayout.addWidget(self.tabWidget)
+        self.showMaximized()
+        self.repaint()
         self.on_actionScan_triggered()
 
         
@@ -56,6 +60,10 @@ class frmMain(QMainWindow, Ui_frmMain):#
         horizontalLayout_2 = QVBoxLayout(self.tab)
         table.setColumnCount(0)
         table.setRowCount(0)
+        table.setContextMenuPolicy(Qt.CustomContextMenu)
+        table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        table.setSelectionMode(QAbstractItemView.SingleSelection)
+        table.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
         horizontalLayout_2.addWidget(table)        
         table.setAlternatingRowColors(True)
         
@@ -68,8 +76,25 @@ class frmMain(QMainWindow, Ui_frmMain):#
         horizontalLayout_2.addWidget(label)
 #        table.resizeRowsToContents()
         table.resizeColumnsToContents()
+        table.customContextMenuRequested.connect(self.on_customContextMenuRequested)
+        table.itemSelectionChanged.connect(self.on_itemSelectionChanged)
         self.tabWidget.setCurrentWidget(self.tab)
-        
-        
-        
-        
+        self.sets.append(set)
+        self.tables.append(table)
+
+    def on_customContextMenuRequested(self, pos):
+        menu=QMenu()
+        menu.addAction(self.actionDeviceLink)
+        menu.addAction(self.actionDeviceUnlink)
+        menu.exec_(self.mapToGlobal(pos))
+
+
+    def on_itemSelectionChanged(self):
+        set=self.sets[self.tabWidget.currentIndex()]
+        table=self.tables[self.tabWidget.currentIndex()]
+        try:
+            for i in table.selectedItems():#itera por cada item no rowse.
+                set.selected=set.arr[i.row()]
+        except:
+            set.selected=None
+        print ("selected: " +  str(set.selected))        
