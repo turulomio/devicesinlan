@@ -3,67 +3,67 @@
 <context>
     <name>devicesinlan</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="84"/>
+        <location filename="../libdevicesinlan.py" line="85"/>
         <source>There was an error executing arp-scan.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="85"/>
+        <location filename="../libdevicesinlan.py" line="86"/>
         <source>Is the interface argument correct?.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="87"/>
+        <location filename="../libdevicesinlan.py" line="88"/>
         <source>I couldn&apos;t find /usr/bin/arp-scan.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="87"/>
+        <location filename="../libdevicesinlan.py" line="88"/>
         <source>Please install it or add -m option to use DevicesInLAN scanner.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="176"/>
+        <location filename="../libdevicesinlan.py" line="177"/>
         <source>This device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="163"/>
+        <location filename="../libdevicesinlan.py" line="164"/>
         <source>{} DEVICES IN LAN FROM {} INTERFACE AT {}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="187"/>
+        <location filename="../libdevicesinlan.py" line="188"/>
         <source>There was reply to a ping from IP address with &apos;*&apos; ({} pings).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="395"/>
+        <location filename="../libdevicesinlan.py" line="406"/>
         <source>Input the MAC of the known device (xx:xx:xx:xx:xx:xx): </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="399"/>
+        <location filename="../libdevicesinlan.py" line="410"/>
         <source>You need to insert a mac with the next format: 2a:3b:4c:5d:6e:7a</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="404"/>
+        <location filename="../libdevicesinlan.py" line="415"/>
         <source>Input an alias of the known device: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="408"/>
+        <location filename="../libdevicesinlan.py" line="419"/>
         <source>You need to add an alias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="423"/>
+        <location filename="../libdevicesinlan.py" line="434"/>
         <source>KNOWN DEVICES BY USER AT {}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="466"/>
+        <location filename="../libdevicesinlan.py" line="477"/>
         <source>Error parsing {}</source>
         <translation type="unfinished"></translation>
     </message>
@@ -78,37 +78,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="195"/>
+        <location filename="../libdevicesinlan.py" line="196"/>
         <source>IP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="196"/>
+        <location filename="../libdevicesinlan.py" line="197"/>
         <source>MAC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="197"/>
+        <location filename="../libdevicesinlan.py" line="198"/>
         <source>Alias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="198"/>
+        <location filename="../libdevicesinlan.py" line="199"/>
         <source>Hardware</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="199"/>
+        <location filename="../libdevicesinlan.py" line="200"/>
         <source>Ping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="531"/>
+        <location filename="../libdevicesinlan.py" line="542"/>
         <source>True</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="534"/>
+        <location filename="../libdevicesinlan.py" line="545"/>
         <source>False</source>
         <translation type="unfinished"></translation>
     </message>
@@ -237,8 +237,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="68"/>
-        <source>It took {}</source>
+        <location filename="../ui/frmMain.py" line="54"/>
+        <source>Scanned at {}</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/frmMain.py" line="67"/>
+        <source>It took {} to detect {} devices</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

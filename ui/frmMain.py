@@ -50,9 +50,8 @@ class frmMain(QMainWindow, Ui_frmMain):#
         
     @pyqtSlot()      
     def on_actionScan_triggered(self):
-        self.actionScan.setEnabled(False)
         self.tab = QWidget()
-        self.tabWidget.addTab(self.tab, "Scanned at {}".format(datetime.datetime.now()))
+        self.tabWidget.addTab(self.tab, QIcon(":/open.png"),self.tr("Scanned at {}").format(str(datetime.datetime.now()).split(".")[0]))
         table=QTableWidget(self.tabWidget)
         horizontalLayout_2 = QVBoxLayout(self.tab)
         table.setColumnCount(0)
@@ -65,11 +64,11 @@ class frmMain(QMainWindow, Ui_frmMain):#
         set=SetDevices(self.mem)
         set.qtablewidget(table)
         label=QLabel()
-        label.setText(self.tr("It took {}".format(datetime.datetime.now()-inicio)))
+        label.setText(self.tr("It took {} to detect {} devices".format(datetime.datetime.now()-inicio, set.length())))
         horizontalLayout_2.addWidget(label)
 #        table.resizeRowsToContents()
         table.resizeColumnsToContents()
-        self.actionScan.setEnabled(True)
+        self.tabWidget.setCurrentWidget(self.tab)
         
         
         

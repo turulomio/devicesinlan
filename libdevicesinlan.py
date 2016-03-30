@@ -11,6 +11,7 @@ import re
 import socket
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
 import ipaddress
 version="0.6.0.1"
 dateversion=datetime.date(2016, 3, 27)
@@ -186,30 +187,39 @@ class SetDevices:
         if self.mem.args.my:
             print (QApplication.translate("devicesinlan","There was reply to a ping from IP address with '*' ({} pings).").format(numpings))
             
-    def qtablewidget(self, tabla):
+    def qtablewidget(self, table):
         numpings=0
 #        if_ip=get_if_ip(self.mem.args.interface)
         self.order_by_ip() 
         ##HEADERS
-        tabla.setColumnCount(5)
-        tabla.setHorizontalHeaderItem(0, QTableWidgetItem(QApplication.translate("devicesinlan","IP" )))
-        tabla.setHorizontalHeaderItem(1, QTableWidgetItem(QApplication.translate("devicesinlan","MAC" )))
-        tabla.setHorizontalHeaderItem(2,  QTableWidgetItem(QApplication.translate("devicesinlan","Alias" )))
-        tabla.setHorizontalHeaderItem(3, QTableWidgetItem(QApplication.translate("devicesinlan","Hardware" )))
-        tabla.setHorizontalHeaderItem(4, QTableWidgetItem(QApplication.translate("devicesinlan","Ping" )))
+        table.setColumnCount(5)
+        table.setHorizontalHeaderItem(0, QTableWidgetItem(QApplication.translate("devicesinlan","IP" )))
+        table.setHorizontalHeaderItem(1, QTableWidgetItem(QApplication.translate("devicesinlan","MAC" )))
+        table.setHorizontalHeaderItem(2,  QTableWidgetItem(QApplication.translate("devicesinlan","Alias" )))
+        table.setHorizontalHeaderItem(3, QTableWidgetItem(QApplication.translate("devicesinlan","Hardware" )))
+        table.setHorizontalHeaderItem(4, QTableWidgetItem(QApplication.translate("devicesinlan","Ping" )))
         ##DATA 
-#        tabla.applySettings()
-        tabla.clearContents()   
-        tabla.setRowCount(self.length())
+#        table.applySettings()
+        table.clearContents()   
+        table.setRowCount(self.length())
 #        self.sort()
         for rownumber, h in enumerate(self.arr):
-            tabla.setItem(rownumber, 0, qleft(h.ip))
-            tabla.setItem(rownumber, 1, qleft(h.mac))
-            tabla.setItem(rownumber, 2, qleft(h.alias))
-            tabla.setItem(rownumber, 3, qleft(h.oui))
-            tabla.setItem(rownumber, 4,  qbool(h.pinged))
+            alias=""
+            if h.alias!=None:
+                alias=h.alias
+            table.setItem(rownumber, 0, qleft(h.ip))
+            table.setItem(rownumber, 1, qleft(h.mac))
+            table.setItem(rownumber, 2, qleft(alias))
+            table.setItem(rownumber, 3, qleft(h.oui))
+            table.setItem(rownumber, 4,  qbool(h.pinged))
             if h.pinged==True:
                 numpings=numpings+1
+            if h.alias!=None:
+                for i in range(0, table.columnCount()):
+                    table.item(rownumber, i).setBackground( QColor(182, 255, 182))       
+            else:
+                for i in range(0, table.columnCount()):
+                    table.item(rownumber, i).setBackground( QColor(255, 182, 182))       
 
 
 class Device:
