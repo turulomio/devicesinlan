@@ -6,7 +6,7 @@
     <file>help.png</file>
     <file>open.png</file>
     <file>save.png</file>
-    <file>devicesinlan.jpg</file>
+    <file>devicesinlan.png</file>
   </qresource>
   <qresource prefix="flags">
     <file>rusia.png</file>

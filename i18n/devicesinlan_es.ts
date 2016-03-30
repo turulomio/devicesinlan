@@ -1,29 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="2.0" language="es" sourcelanguage="">
 <context>
-    <name>Core</name>
-    <message>
-        <location filename="../libdevicesinlan.py" line="195"/>
-        <source>IP</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../libdevicesinlan.py" line="196"/>
-        <source>MAC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../libdevicesinlan.py" line="197"/>
-        <source>Alias</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../libdevicesinlan.py" line="198"/>
-        <source>Hardware</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>devicesinlan</name>
     <message>
         <location filename="../libdevicesinlan.py" line="84"/>
@@ -61,32 +38,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="393"/>
+        <location filename="../libdevicesinlan.py" line="395"/>
         <source>Input the MAC of the known device (xx:xx:xx:xx:xx:xx): </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="397"/>
+        <location filename="../libdevicesinlan.py" line="399"/>
         <source>You need to insert a mac with the next format: 2a:3b:4c:5d:6e:7a</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="402"/>
+        <location filename="../libdevicesinlan.py" line="404"/>
         <source>Input an alias of the known device: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="406"/>
+        <location filename="../libdevicesinlan.py" line="408"/>
         <source>You need to add an alias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="421"/>
+        <location filename="../libdevicesinlan.py" line="423"/>
         <source>KNOWN DEVICES BY USER AT {}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="464"/>
+        <location filename="../libdevicesinlan.py" line="466"/>
         <source>Error parsing {}</source>
         <translation type="unfinished"></translation>
     </message>
@@ -99,6 +76,41 @@
         <location filename="../ui/frmSettings.py" line="43"/>
         <source>Francais</source>
         <translation>Français</translation>
+    </message>
+    <message>
+        <location filename="../libdevicesinlan.py" line="195"/>
+        <source>IP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../libdevicesinlan.py" line="196"/>
+        <source>MAC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../libdevicesinlan.py" line="197"/>
+        <source>Alias</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../libdevicesinlan.py" line="198"/>
+        <source>Hardware</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../libdevicesinlan.py" line="199"/>
+        <source>Ping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../libdevicesinlan.py" line="531"/>
+        <source>True</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../libdevicesinlan.py" line="534"/>
+        <source>False</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -165,63 +177,68 @@
 <context>
     <name>frmMain</name>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="82"/>
+        <location filename="../ui/Ui_frmMain.py" line="83"/>
         <source>toolBar</source>
         <translation>toolBar</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="85"/>
+        <location filename="../ui/Ui_frmMain.py" line="86"/>
         <source>Esc</source>
         <translation>Esc</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="89"/>
+        <location filename="../ui/Ui_frmMain.py" line="90"/>
         <source>Muestra la ayuda del juego</source>
         <translation>Muestra la ayuda del juego</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="90"/>
+        <location filename="../ui/Ui_frmMain.py" line="91"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="80"/>
+        <location filename="../ui/Ui_frmMain.py" line="81"/>
         <source>&amp;Help</source>
         <translation>&amp;Ayuda</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="81"/>
+        <location filename="../ui/Ui_frmMain.py" line="82"/>
         <source>Configuration</source>
         <translation>Settings</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="86"/>
+        <location filename="../ui/Ui_frmMain.py" line="87"/>
         <source>About</source>
         <translation>Acerca de</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="87"/>
+        <location filename="../ui/Ui_frmMain.py" line="88"/>
         <source>Settings</source>
         <translation>Configuración</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="88"/>
+        <location filename="../ui/Ui_frmMain.py" line="89"/>
         <source>Help</source>
         <translation>Ayuda</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="83"/>
+        <location filename="../ui/Ui_frmMain.py" line="84"/>
         <source>&amp;Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="84"/>
+        <location filename="../ui/Ui_frmMain.py" line="85"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="92"/>
+        <location filename="../ui/Ui_frmMain.py" line="93"/>
         <source>New scan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/frmMain.py" line="68"/>
+        <source>It took {}</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

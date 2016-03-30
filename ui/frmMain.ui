@@ -22,7 +22,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../images/devicesinlan.qrc">
-    <normaloff>:/devicesinlan.jpg</normaloff>:/devicesinlan.jpg</iconset>
+    <normaloff>:/devicesinlan.png</normaloff>:/devicesinlan.png</iconset>
   </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonTextUnderIcon</enum>
@@ -99,7 +99,7 @@
   <action name="actionAbout">
    <property name="icon">
     <iconset resource="../images/devicesinlan.qrc">
-     <normaloff>:/devicesinlan.jpg</normaloff>:/devicesinlan.jpg</iconset>
+     <normaloff>:/devicesinlan.png</normaloff>:/devicesinlan.png</iconset>
    </property>
    <property name="text">
     <string>About</string>
@@ -130,6 +130,10 @@
    </property>
   </action>
   <action name="actionScan">
+   <property name="icon">
+    <iconset resource="../images/devicesinlan.qrc">
+     <normaloff>:/devicesinlan.png</normaloff>:/devicesinlan.png</iconset>
+   </property>
    <property name="text">
     <string>New scan</string>
    </property>

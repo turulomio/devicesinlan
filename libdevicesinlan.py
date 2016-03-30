@@ -191,21 +191,23 @@ class SetDevices:
 #        if_ip=get_if_ip(self.mem.args.interface)
         self.order_by_ip() 
         ##HEADERS
-        tabla.setColumnCount(4)
-        tabla.setHorizontalHeaderItem(0, QTableWidgetItem(QApplication.translate("Core","IP" )))
-        tabla.setHorizontalHeaderItem(1, QTableWidgetItem(QApplication.translate("Core","MAC" )))
-        tabla.setHorizontalHeaderItem(2,  QTableWidgetItem(QApplication.translate("Core","Alias" )))
-        tabla.setHorizontalHeaderItem(3, QTableWidgetItem(QApplication.translate("Core","Hardware" )))
+        tabla.setColumnCount(5)
+        tabla.setHorizontalHeaderItem(0, QTableWidgetItem(QApplication.translate("devicesinlan","IP" )))
+        tabla.setHorizontalHeaderItem(1, QTableWidgetItem(QApplication.translate("devicesinlan","MAC" )))
+        tabla.setHorizontalHeaderItem(2,  QTableWidgetItem(QApplication.translate("devicesinlan","Alias" )))
+        tabla.setHorizontalHeaderItem(3, QTableWidgetItem(QApplication.translate("devicesinlan","Hardware" )))
+        tabla.setHorizontalHeaderItem(4, QTableWidgetItem(QApplication.translate("devicesinlan","Ping" )))
         ##DATA 
 #        tabla.applySettings()
         tabla.clearContents()   
         tabla.setRowCount(self.length())
 #        self.sort()
         for rownumber, h in enumerate(self.arr):
-            tabla.setItem(rownumber, 0, QTableWidgetItem(h.ip))
-            tabla.setItem(rownumber, 1, QTableWidgetItem(h.mac))
-            tabla.setItem(rownumber, 2, QTableWidgetItem(h.alias))
-            tabla.setItem(rownumber, 3, QTableWidgetItem(h.oui))
+            tabla.setItem(rownumber, 0, qleft(h.ip))
+            tabla.setItem(rownumber, 1, qleft(h.mac))
+            tabla.setItem(rownumber, 2, qleft(h.alias))
+            tabla.setItem(rownumber, 3, qleft(h.oui))
+            tabla.setItem(rownumber, 4,  qbool(h.pinged))
             if h.pinged==True:
                 numpings=numpings+1
 
@@ -513,3 +515,21 @@ def get_if_mac(name):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     info = fcntl.ioctl(s.fileno(), 0x8927,  name.encode('utf-8')+b'\x00'*(256-len(name)))
     return ''.join(['%02x:' % b for b in info[18:24]])[:-1]
+    
+def qbool(bool):
+    """Prints bool and check. Is read only and enabled"""
+    a=QTableWidgetItem()
+    a.setFlags( Qt.ItemIsSelectable |  Qt.ItemIsEnabled )#Set no editable
+    if bool:
+        a.setCheckState(Qt.Checked);
+        a.setText(QApplication.translate("devicesinlan","True"))
+    else:
+        a.setCheckState(Qt.Unchecked);
+        a.setText(QApplication.translate("devicesinlan","False"))
+    a.setTextAlignment(Qt.AlignVCenter|Qt.AlignCenter)
+    return a
+    
+def qleft(string):
+    a=QTableWidgetItem(str(string))
+    a.setTextAlignment(Qt.AlignVCenter|Qt.AlignLeft)
+    return a

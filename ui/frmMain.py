@@ -32,7 +32,12 @@ class frmMain(QMainWindow, Ui_frmMain):#
 
     @pyqtSlot()      
     def on_actionAbout_triggered(self):
-        fr=frmAbout(self,"frmabout")
+        fr=frmAbout(self,"frmAbout")
+        fr.open()
+        
+    @pyqtSlot()      
+    def on_actionHelp_triggered(self):
+        fr=frmHelp(self,"frmHelp")
         fr.open()
         
                 
@@ -49,20 +54,21 @@ class frmMain(QMainWindow, Ui_frmMain):#
         self.tab = QWidget()
         self.tabWidget.addTab(self.tab, "Scanned at {}".format(datetime.datetime.now()))
         table=QTableWidget(self.tabWidget)
-        horizontalLayout_2 = QHBoxLayout(self.tab)
+        horizontalLayout_2 = QVBoxLayout(self.tab)
         table.setColumnCount(0)
         table.setRowCount(0)
         horizontalLayout_2.addWidget(table)        
+        table.setAlternatingRowColors(True)
         
         
         inicio=datetime.datetime.now()
         set=SetDevices(self.mem)
         set.qtablewidget(table)
-#        if args.my==True:
-#            scanner="DevicesInLAN"
-#        else:
-#            scanner="arp-scan"
-#        print (QApplication.translate("devicesinlan","It took {} with {} scanner.").format (datetime.datetime.now()-inicio, Color.yellow(scanner)))
+        label=QLabel()
+        label.setText(self.tr("It took {}".format(datetime.datetime.now()-inicio)))
+        horizontalLayout_2.addWidget(label)
+#        table.resizeRowsToContents()
+        table.resizeColumnsToContents()
         self.actionScan.setEnabled(True)
         
         
