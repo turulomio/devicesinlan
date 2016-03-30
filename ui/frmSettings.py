@@ -1,11 +1,10 @@
  
-import libglparchis
+import libdevicesinlan
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
 from Ui_frmSettings import *
-from wdgQT import *
 
 class Language:
     def __init__(self, id, name):
@@ -74,26 +73,23 @@ class SetLanguages:
 
     def cambiar(self, id):  
         """language es un string"""
-        self.mem.qtranslator.load("/usr/lib/xulpymoney/xulpymoney_" + id + ".qm")
+        self.mem.qtranslator.load("/usr/lib/devicesinlan/devicesinlan" + id + ".qm")
         qApp.installTranslator(self.mem.qtranslator);
         
         
 class frmSettings(QDialog, Ui_frmSettings):
-    def __init__(self, settings, translator, parent = None, name = None, modal = False):
-        QDialog.__init__(self, parent)
-        self.settings=settings
-        self.translator=translator
+    def __init__(self, mem, parent = None, name = None, modal = False):
+        QDialog.__init_QApplication.translate("devicesinlan",self, parent)
+        self.mem=mem
         self.setupUi(self)
         self.languages=SetLanguages()
-        self.languages.qcombobox(self.cmbLanguage, self.settings.value("frmSettings/language", "en"))            
-        self.spinAutosaves.setValue(int(self.settings.value("frmSettings/autosaves", 15)))
+        self.languages.qcombobox(self.cmbLanguage, self.mem.settings.value("frmSettings/language", "en"))            
 
     @pyqtSlot(str)      
     def on_cmbLanguage_currentIndexChanged(self, stri):        
         self.languages.selected=self.languages.find_by_name(stri)
-        libglparchis.cargarQTranslator(self.translator, self.languages.selected.id)
+        libdevicesinlan.cargarQTranslator(self.translator, self.languages.selected.id)
         self.retranslateUi(self)
         
     def on_buttonBox_accepted(self):
-        self.settings.setValue("frmSettings/language", self.languages.selected.id)
-        self.settings.setValue("frmSettings/autosaves", self.spinAutosaves.value())
+        self.mem.settings.setValue("frmSettings/language", self.languages.selected.id)

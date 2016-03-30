@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>416</width>
-    <height>233</height>
+    <width>398</width>
+    <height>186</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Configuracion de glParchis</string>
+   <string>DevicesInLan settings</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../images/glparchis.qrc">
+   <iconset>
     <normaloff>:/glparchis/configure.png</normaloff>:/glparchis/configure.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -30,7 +30,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Configuracion de glParchis</string>
+        <string>DevicesInLan settings</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -73,7 +73,7 @@
           </size>
          </property>
          <property name="pixmap">
-          <pixmap resource="../images/glparchis.qrc">:/glparchis/configure.png</pixmap>
+          <pixmap resource="../images/devicesinlan.qrc">:/configure.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -102,10 +102,13 @@
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <layout class="QFormLayout" name="formLayout">
+         <property name="fieldGrowthPolicy">
+          <enum>QFormLayout::ExpandingFieldsGrow</enum>
+         </property>
          <item row="0" column="0">
           <widget class="QLabel" name="label_2">
            <property name="text">
-            <string>Selecciona un idioma</string>
+            <string>Select a language</string>
            </property>
           </widget>
          </item>
@@ -116,29 +119,6 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="nMeroDeAutoguardadosLabel">
-           <property name="text">
-            <string>Numero de autoguardados</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QSpinBox" name="spinAutosaves">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="toolTip">
-            <string>Si quiere autoguardado seleccione un numero mayor que 0</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
            </property>
           </widget>
          </item>
@@ -161,7 +141,8 @@
   </layout>
  </widget>
  <resources>
-  <include location="../images/glparchis.qrc"/>
+  <include location="../images/devicesinlan.qrc"/>
+  <include location="../images/devicesinlan.qrc"/>
  </resources>
  <connections>
   <connection>

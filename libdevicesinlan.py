@@ -9,6 +9,7 @@ import sys
 import time
 import re
 import socket
+from PyQt5.QtCore import *
 import ipaddress
 version="0.6.0"
 dateversion=datetime.date(2016, 3, 27)
@@ -39,11 +40,17 @@ class Color:
     def yellow(s):
         return "\033[93m{}\033[0m".format(s)
 
+class Mem:
+    def __init__(self, args):
+        self.args=args
+        self.known=SetKnownDevices(self)
+
 class SetDevices:
-    def __init__(self):
+    def __init__(self, mem):
         """This constructor load /etc/devicesinlan/known.txt and executes arp-scan and parses its result"""
+        self.mem=mem
         self.arr=[]
-        self.known=SetKnownDevices()
+        self.known=SetKnownDevices(self.mem)
         self.arp_scanner()#From arp_scan
 
     def length(self):
@@ -52,15 +59,15 @@ class SetDevices:
         
     def arp_scanner(self):
         """Load Devices from arpscan output"""
-        if args.my==False:
+        if self.mem.args.my==False:
             ##With arp-scan
             try:
-                output=subprocess.check_output(["arp-scan", "--interface", args.interface, "--localnet", "--ignoredups"]).decode('UTF-8')
+                output=subprocess.check_output(["arp-scan", "--interface", self.mem.args.interface, "--localnet", "--ignoredups"]).decode('UTF-8')
             except:
-                print (Color.red(_("There was an error executing arp-scan.")))
-                print ("  * "+_("Is the interface argument correct?."))    
+                print (Color.red(QApplication.translate("devicesinlan","There was an error executing arp-scan.")))
+                print ("  * "+QApplication.translate("devicesinlan","Is the interface argument correct?."))    
                 if os.path.exists("/usr/bin/arp-scan")==False:
-                    print("  * "+_("I couldn't find /usr/bin/arp-scan.") + " " + _("Please install it or add -m option to use DevicesInLAN scanner."))
+                    print("  * "+QApplication.translate("devicesinlan","I couldn't find /usr/bin/arp-scan.") + " " + QApplication.translate("devicesinlan","Please install it or add -m option to use DevicesInLAN scanner."))
                 sys.exit(2)
             for line in output.split("\n"):
                 if line.find("\t")!=-1:
@@ -75,24 +82,24 @@ class SetDevices:
                             h.alias=k.alias
                     self.arr.append(h)
             h=Device()
-            h.ip=get_if_ip(args.interface)
-            h.alias=_("This device")
-            h.mac=get_if_mac(args.interface)
+            h.ip=get_if_ip(self.mem.args.interface)
+            h.alias=QApplication.translate("devicesinlan","This device")
+            h.mac=get_if_mac(self.mem.args.interface)
             h.oui=get_oui(h.mac)
             self.arr.append(h)
         else:#args.my=True            
             threads=[]
-            if_ip=get_if_ip(args.interface)
+            if_ip=get_if_ip(self.mem.args.interface)
             for addr in ipaddress.IPv4Network('192.168.1.0/24'):
                 if str(addr)==if_ip :#Adds device if ip is interface ip and jumps it
                     h=Device()
                     h.ip=str(addr)
-                    h.mac=get_if_mac(args.interface)
+                    h.mac=get_if_mac(self.mem.args.interface)
                     h.oui=get_oui(h.mac)
                     h.pinged=True     
                     self.arr.append(h)
                     continue
-                t=TRequest(str(addr), args.interface,  TypesARP.Standard)
+                t=TRequest(str(addr), self.mem.args.interface,  TypesARP.Standard)
                 t.start()
                 threads.append(t)
                 time.sleep(0.01)
@@ -131,12 +138,12 @@ class SetDevices:
         
     def print(self):
         numpings=0
-        if_ip=get_if_ip(args.interface)
+        if_ip=get_if_ip(self.mem.args.interface)
         maxalias=self.max_len_alias()
         maxoui=self.max_len_oui()
         self.order_by_ip()
         print (Color.bold("="*(16+2+17+2+maxalias+2+maxoui)))
-        print (Color.bold(_("{} DEVICES IN LAN FROM {} INTERFACE AT {}").format(self.length(), args.interface.upper(), str(datetime.datetime.now())[:-7]).center (6+15+17+maxalias+maxoui)))
+        print (Color.bold(QApplication.translate("devicesinlan","{} DEVICES IN LAN FROM {} INTERFACE AT {}").format(self.length(), self.mem.args.interface.upper(), str(datetime.datetime.now())[:-7]).center (6+15+17+maxalias+maxoui)))
         print (Color.bold("{}  {}  {}  {}".format(" IP ".center(16,'=')," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'='))))
         for h in self.arr:
             if h.mac==None:
@@ -149,7 +156,7 @@ class SetDevices:
             else:
                 pinged=" "
             if h.ip==if_ip:
-                print ("{}  {}  {}  {}".format(Color.pink((pinged+h.ip).ljust(16)), Color.pink(mac.center(17)),   Color.pink(_("This device").ljust(maxalias)), Color.pink(h.oui.ljust(maxoui))))
+                print ("{}  {}  {}  {}".format(Color.pink((pinged+h.ip).ljust(16)), Color.pink(mac.center(17)),   Color.pink(QApplication.translate("devicesinlan","This device").ljust(maxalias)), Color.pink(h.oui.ljust(maxoui))))
             else:
                 if h.alias:
                     mac=Color.green(mac)
@@ -159,8 +166,8 @@ class SetDevices:
                     alias=" "     
                 print ("{}  {}  {}  {}".format((pinged+h.ip).ljust(16), mac.center(17),   Color.yellow(alias.ljust(maxalias)), h.oui.ljust(maxoui)))    
         print (Color.bold("="*(16+2+17+2+maxalias+2+maxoui)))        
-        if args.my:
-            print (_("There was reply to a ping from IP address with '*' ({} pings).").format(numpings))
+        if self.mem.args.my:
+            print (QApplication.translate("devicesinlan","There was reply to a ping from IP address with '*' ({} pings).").format(numpings))
 
 class Device:
     def __init__(self):
@@ -172,7 +179,7 @@ class Device:
 
 class TRequest(threading.Thread):
     def __init__(self, ip, if_name, arp_type):
-        threading.Thread.__init__(self)
+        threading.Thread.__init_QApplication.translate("devicesinlan",self)
         self.arp_type = arp_type
         self.if_name=if_name
         self.if_ip = get_if_ip(self.if_name) 
@@ -337,23 +344,24 @@ class KnownDevice:
     def insert_mac(self):
         validated=False
         while  validated==False:
-            self.mac=input(Color.bold(_("Input the MAC of the known device (xx:xx:xx:xx:xx:xx): "))).lower()
+            self.mac=input(Color.bold(QApplication.translate("devicesinlan","Input the MAC of the known device (xx:xx:xx:xx:xx:xx): "))).lower()
             if self.validate_mac(self.mac):
                 validated=True
             else:
-                print (Color.red(_("You need to insert a mac with the next format: 2a:3b:4c:5d:6e:7a")))
+                print (Color.red(QApplication.translate("devicesinlan","You need to insert a mac with the next format: 2a:3b:4c:5d:6e:7a")))
 
     def insert_alias(self):
         validated=False
         while validated==False:
-            self.alias=input(Color.bold(_("Input an alias of the known device: ")))
+            self.alias=input(Color.bold(QApplication.translate("devicesinlan","Input an alias of the known device: ")))
             if self.validate_alias(self.alias):
                 validated=True
             else:
-                print (Color.red(_("You need to add an alias")))
+                print (Color.red(QApplication.translate("devicesinlan","You need to add an alias")))
 
 class SetKnownDevices:
-    def __init__(self):
+    def __init__(self, mem):
+        self.mem=mem
         self.arr=[]
         self.load()
         
@@ -364,11 +372,11 @@ class SetKnownDevices:
         self.arr.append(k)
     def print(self):
         maxalias=self.max_len_alias()     
-        print (Color.bold(_("KNOWN DEVICES BY USER AT {}").format( str(datetime.datetime.now())[:-7]).center (17+2+maxalias)))
+        print (Color.bold(QApplication.translate("devicesinlan","KNOWN DEVICES BY USER AT {}").format( str(datetime.datetime.now())[:-7]).center (17+2+maxalias)))
         print ()
         print (Color.bold("{}  {}".format(" MAC ".center(17,'='), " ALIAS ".center(maxalias,'='))))
-        known.order_by_alias()
-        for k in known.arr:
+        self.mem.known.order_by_alias()
+        for k in self.mem.known.arr:
             print ("{} {}".format(Color.green(k.mac), Color.bold(k.alias)))
 
     def remove_mac(self, mac):
@@ -407,7 +415,7 @@ class SetKnownDevices:
                     k.alias=ar[1].strip()
                     self.arr.append(k)
                 except:
-                    print(_("Error parsing {}").format(l))
+                    print(QApplication.translate("devicesinlan","Error parsing {}").format(l))
         f.close()        
     
     def max_len_alias(self):

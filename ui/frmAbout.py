@@ -13,13 +13,13 @@ class frmAbout(QDialog, Ui_frmAbout):
         @param name The name of this dialog. (QString)
         @param modal Flag indicating a modal dialog. (boolean)
         """
-        QDialog.__init__(self, parent)
+        QDialog.__init_QApplication.translate("devicesinlan",self, parent)
         if name:
             self.setObjectName(name)
         self.setupUi(self)
         self.lblVersion.setText(self.trUtf8("Versión {0}".format(libglparchis.version)))
         self.textBrowser.setHtml(
-            self.trUtf8("La página del proyecto se encuentra en <a href=\"http://glparchis.sourceforge.net\">http://glparchis.sourceforge.net</a><p> <p>")+
+            self.trUtf8("La página del proyecto se encuentra en <a href=\"http://devicesinlan.sourceforge.net\">http://glparchis.sourceforge.net</a><p> <p>")+
             self.trUtf8("Este programa ha sido desarrollado por Mariano Muñoz.<p>")+
             self.trUtf8("Ha sido traducido por:")+
             "<ul><li>Mariano Muñoz</li><li>Nadejda Adam</li></ul><p>\n"+

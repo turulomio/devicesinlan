@@ -45,7 +45,7 @@
     </property>
     <addaction name="actionHelp"/>
     <addaction name="separator"/>
-    <addaction name="actionAcercaDe"/>
+    <addaction name="actionAbout"/>
    </widget>
    <widget class="QMenu" name="menuConfiguraci_n">
     <property name="title">
@@ -91,7 +91,7 @@
     <string>Esc</string>
    </property>
   </action>
-  <action name="actionAcercaDe">
+  <action name="actionAbout">
    <property name="icon">
     <iconset resource="../images/devicesinlan.qrc">
      <normaloff>:/devicesinlan.jpg</normaloff>:/devicesinlan.jpg</iconset>
