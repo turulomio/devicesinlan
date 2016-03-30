@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=DevicesInLAN
+GenericName=DevicesInLAN
+GenericName[en]=DevicesInLAN
+Type=Application
+Comment=DevicesInLAN
+Comment[en]=DevicesInLAN
+Exec=devicesinlan
+TryExec=devicesinlan
+Icon=/usr/share/pixmaps/devicesinlan.png
+Categories=Utils
