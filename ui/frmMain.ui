@@ -53,6 +53,8 @@
     </property>
     <addaction name="separator"/>
     <addaction name="actionSettings"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
    </widget>
    <addaction name="menuConfiguraci_n"/>
    <addaction name="menuAyuda"/>
@@ -63,8 +65,8 @@
    </property>
    <property name="iconSize">
     <size>
-     <width>36</width>
-     <height>36</height>
+     <width>24</width>
+     <height>24</height>
     </size>
    </property>
    <property name="toolButtonStyle">
@@ -77,6 +79,8 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionScan"/>
+   <addaction name="separator"/>
+   <addaction name="actionSettings"/>
    <addaction name="separator"/>
    <addaction name="actionExit"/>
   </widget>

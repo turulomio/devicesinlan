@@ -80,37 +80,37 @@
     <message>
         <location filename="../libdevicesinlan.py" line="195"/>
         <source>IP</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="196"/>
         <source>MAC</source>
-        <translation type="unfinished"></translation>
+        <translation>MAC</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="197"/>
         <source>Alias</source>
-        <translation type="unfinished"></translation>
+        <translation>Alias</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="198"/>
         <source>Hardware</source>
-        <translation type="unfinished"></translation>
+        <translation>Hardware</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="199"/>
         <source>Ping</source>
-        <translation type="unfinished"></translation>
+        <translation>Ping</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="531"/>
         <source>True</source>
-        <translation type="unfinished"></translation>
+        <translation>Sí</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="534"/>
         <source>False</source>
-        <translation type="unfinished"></translation>
+        <translation>No</translation>
     </message>
 </context>
 <context>
@@ -125,121 +125,121 @@
         <source>a los siguientes idiomas&lt;p&gt;</source>
         <translation>a los siguientes idiomas&lt;p&gt;</translation>
     </message>
-    <message encoding="UTF-8">
-        <location filename="../ui/frmAbout.py" line="21"/>
-        <source>Versión {0}</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message encoding="UTF-8">
-        <location filename="../ui/frmAbout.py" line="22"/>
-        <source>La página del proyecto se encuentra en &lt;a href=&quot;http://devicesinlan.sourceforge.net&quot;&gt;http://devicesinlan.sourceforge.net&lt;/a&gt;&lt;p&gt; &lt;p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message encoding="UTF-8">
-        <location filename="../ui/frmAbout.py" line="22"/>
-        <source>Este programa ha sido desarrollado por Mariano Muñoz.&lt;p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../ui/Ui_frmAbout.py" line="215"/>
         <source>About DevicesInLan</source>
-        <translation type="unfinished"></translation>
+        <translation>Acerca de DevicesInLan</translation>
     </message>
     <message>
         <location filename="../ui/Ui_frmAbout.py" line="216"/>
         <source>DevicesInLan</source>
-        <translation type="unfinished"></translation>
+        <translation>DevicesInLan</translation>
     </message>
     <message>
         <location filename="../ui/Ui_frmAbout.py" line="217"/>
         <source>Credits</source>
-        <translation type="unfinished"></translation>
+        <translation>Créditos</translation>
     </message>
     <message>
         <location filename="../ui/Ui_frmAbout.py" line="218"/>
         <source>License</source>
+        <translation>Licencia</translation>
+    </message>
+    <message>
+        <location filename="../ui/frmAbout.py" line="21"/>
+        <source>Versi&#xc3;&#xb3;n {0}</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/frmAbout.py" line="22"/>
+        <source>La p&#xc3;&#xa1;gina del proyecto se encuentra en &lt;a href=&quot;http://devicesinlan.sourceforge.net&quot;&gt;http://devicesinlan.sourceforge.net&lt;/a&gt;&lt;p&gt; &lt;p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/frmAbout.py" line="22"/>
+        <source>Este programa ha sido desarrollado por Mariano Mu&#xc3;&#xb1;oz.&lt;p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>frmHelp</name>
     <message>
-        <location filename="../ui/Ui_frmHelp.py" line="60"/>
-        <source>Ayuda de glParchis</source>
-        <translation>glParchis help</translation>
-    </message>
-    <message>
         <location filename="../ui/frmHelp.py" line="20"/>
         <source>&lt;h2&gt;Documentation&lt;/h2&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h2&gt;Documentación&lt;/h2&gt;</translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmHelp.py" line="60"/>
+        <source>DevicesInLan help</source>
+        <translation>Ayuda de DevicesInLan</translation>
     </message>
 </context>
 <context>
     <name>frmMain</name>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="83"/>
+        <location filename="../ui/Ui_frmMain.py" line="87"/>
         <source>toolBar</source>
         <translation>toolBar</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="86"/>
+        <location filename="../ui/Ui_frmMain.py" line="90"/>
         <source>Esc</source>
         <translation>Esc</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="90"/>
+        <location filename="../ui/Ui_frmMain.py" line="94"/>
         <source>Muestra la ayuda del juego</source>
         <translation>Muestra la ayuda del juego</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="91"/>
+        <location filename="../ui/Ui_frmMain.py" line="95"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="81"/>
+        <location filename="../ui/Ui_frmMain.py" line="85"/>
         <source>&amp;Help</source>
         <translation>&amp;Ayuda</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="82"/>
+        <location filename="../ui/Ui_frmMain.py" line="86"/>
         <source>Configuration</source>
         <translation>Settings</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="87"/>
+        <location filename="../ui/Ui_frmMain.py" line="91"/>
         <source>About</source>
         <translation>Acerca de</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="88"/>
+        <location filename="../ui/Ui_frmMain.py" line="92"/>
         <source>Settings</source>
         <translation>Configuración</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="89"/>
+        <location filename="../ui/Ui_frmMain.py" line="93"/>
         <source>Help</source>
         <translation>Ayuda</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="84"/>
+        <location filename="../ui/Ui_frmMain.py" line="88"/>
         <source>&amp;Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Salir</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="85"/>
+        <location filename="../ui/Ui_frmMain.py" line="89"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Salir</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="93"/>
+        <location filename="../ui/Ui_frmMain.py" line="97"/>
         <source>New scan</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuevo escaneo</translation>
     </message>
     <message>
         <location filename="../ui/frmMain.py" line="68"/>
         <source>It took {}</source>
-        <translation type="unfinished"></translation>
+        <translation>Tardó {}</translation>
     </message>
 </context>
 <context>

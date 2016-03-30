@@ -12,7 +12,7 @@ import socket
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import ipaddress
-version="0.6.0"
+version="0.6.0.1"
 dateversion=datetime.date(2016, 3, 27)
 
 

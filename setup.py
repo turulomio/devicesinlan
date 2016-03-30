@@ -5,6 +5,7 @@ import subprocess
 import platform
 sys.path.append('ui')
 sys.path.append('images')
+from libdevicesinlan import version
 
 
 def build_dir():
@@ -47,13 +48,16 @@ name="devicesinlan"
 
 
 #Add files
-include_files=[ 'devicesinlan.ico', 'GPL-3.txt', 'ieee-oui.txt']
+include_files=[ 'images/devicesinlan.ico', 'GPL-3.txt', 'ieee-oui.txt']
+include_files.append(("i18n/devicesinlan_es.qm", "i18n/devicesinlan_es.qm"))
+include_files.append(("i18n/devicesinlan_fr.qm", "i18n/devicesinlan_fr.qm"))
+include_files.append(("i18n/devicesinlan_ro.qm", "i18n/devicesinlan_ro.qm"))
+include_files.append(("i18n/devicesinlan_ru.qm", "i18n/devicesinlan_ru.qm"))
+include_files.append("known.txt.dist")
 
 #Build options
 if sys.platform=='win32':
       base = 'Win32GUI'
-      version=winversion()
-      include_files.append(("po/devicesinlan.mo", "po/es/devicesinlan.mo"))
       include_files.append("known.txt.dist")
       include_files.append("devicesinlan.iss")
       build_msi_options = {

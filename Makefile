@@ -7,6 +7,7 @@ PREFIXSHARE=$(DESTDIR)/usr/share/devicesinlan
 PREFIXLOCALE=$(DESTDIR)/usr/share/locale/
 
 
+
 install:
 
 	pyuic5 ui/frmAbout.ui > ui/Ui_frmAbout.py
@@ -25,6 +26,8 @@ install:
 	install -o root -d $(PREFIXETC)
 	install -m 644 -o root ui/*.py $(PREFIXLIB)
 	install -m 644 -o root images/*.py $(PREFIXLIB)
+	install -m 644 -o root images/devicesinlan.png $(DESTDIR)/usr/share/pixmaps/
+	install -m 644 -o root devicesinlan.desktop $(DESTDIR)/usr/share/applications/
 
 	install -m 755 -o root devicesinlan.py $(PREFIXBIN)/devicesinlan
 	install -m 755 -o root libdevicesinlan.py $(PREFIXLIB)
@@ -35,6 +38,8 @@ install:
 uninstall:
 	rm $(PREFIXBIN)/devicesinlan
 	rm $(PREFIXETC)/known.txt.dist
+	rm $(DESTDIR)/usr/share/applications/devicesinlan.desktop
+	rm $(DESTDIR)/usr/share/pixmaps/devicesinlan.png
 	rm -Rf $(PREFIXLIB)
 	rm -Rf $(PREFIXSHARE)
 

@@ -164,75 +164,75 @@
 <context>
     <name>frmHelp</name>
     <message>
-        <location filename="../ui/Ui_frmHelp.py" line="60"/>
-        <source>Ayuda de glParchis</source>
+        <location filename="../ui/frmHelp.py" line="20"/>
+        <source>&lt;h2&gt;Documentation&lt;/h2&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmHelp.py" line="20"/>
-        <source>&lt;h2&gt;Documentation&lt;/h2&gt;</source>
+        <location filename="../ui/Ui_frmHelp.py" line="60"/>
+        <source>DevicesInLan help</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>frmMain</name>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="83"/>
+        <location filename="../ui/Ui_frmMain.py" line="87"/>
         <source>toolBar</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="86"/>
+        <location filename="../ui/Ui_frmMain.py" line="90"/>
         <source>Esc</source>
         <translation>Esc</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="90"/>
+        <location filename="../ui/Ui_frmMain.py" line="94"/>
         <source>Muestra la ayuda del juego</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="91"/>
+        <location filename="../ui/Ui_frmMain.py" line="95"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="81"/>
+        <location filename="../ui/Ui_frmMain.py" line="85"/>
         <source>&amp;Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="82"/>
+        <location filename="../ui/Ui_frmMain.py" line="86"/>
         <source>Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="87"/>
+        <location filename="../ui/Ui_frmMain.py" line="91"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="88"/>
+        <location filename="../ui/Ui_frmMain.py" line="92"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="89"/>
+        <location filename="../ui/Ui_frmMain.py" line="93"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="84"/>
+        <location filename="../ui/Ui_frmMain.py" line="88"/>
         <source>&amp;Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="85"/>
+        <location filename="../ui/Ui_frmMain.py" line="89"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="93"/>
+        <location filename="../ui/Ui_frmMain.py" line="97"/>
         <source>New scan</source>
         <translation type="unfinished"></translation>
     </message>

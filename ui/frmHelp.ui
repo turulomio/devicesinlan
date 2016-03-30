@@ -14,11 +14,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Ayuda de glParchis</string>
+   <string>DevicesInLan help</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/glparchis/help.png</normaloff>:/glparchis/help.png</iconset>
+   <iconset resource="../images/devicesinlan.qrc">
+    <normaloff>:/help.png</normaloff>:/help.png</iconset>
   </property>
   <property name="sizeGripEnabled">
    <bool>true</bool>
@@ -39,7 +39,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Ayuda de glParchis</string>
+        <string>DevicesInLan help</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -70,7 +70,7 @@
           </size>
          </property>
          <property name="pixmap">
-          <pixmap resource="../images/devicesinlan.qrc">:/devicesinlan.jpg</pixmap>
+          <pixmap resource="../images/devicesinlan.qrc">:/devicesinlan.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
