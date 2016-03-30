@@ -30,19 +30,13 @@ install:
 	install -m 755 -o root libdevicesinlan.py $(PREFIXLIB)
 	install -m 644 -o root GPL-3.txt CHANGELOG.txt AUTHORS.txt RELEASES.txt INSTALL.txt ieee-oui.txt $(PREFIXSHARE)
 	install -m 644 -o root known.txt.dist $(PREFIXETC)
-
-#es
-	install -o root -d $(PREFIXLOCALE)/es/LC_MESSAGES/
-	xgettext -L Python --no-wrap --no-location --from-code='UTF-8' -o po/devicesinlan.pot *.py
-	msgmerge -N --no-wrap -U po/es.po po/devicesinlan.pot
-	msgfmt -cv -o $(PREFIXLOCALE)/es/LC_MESSAGES/devicesinlan.mo po/es.po
+	install -m 644 -o root i18n/*.qm $(PREFIXLIB)
 
 uninstall:
 	rm $(PREFIXBIN)/devicesinlan
 	rm $(PREFIXETC)/known.txt.dist
 	rm -Rf $(PREFIXLIB)
 	rm -Rf $(PREFIXSHARE)
-	rm $(PREFIXLOCALE)/es/LC_MESSAGES/devicesinlan.mo
 
 
 

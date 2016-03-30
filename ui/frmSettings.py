@@ -39,8 +39,8 @@ class SetLanguages:
         
     def load_all(self):
         self.append(Language("en","English" ))
-        self.append(Language("es",QApplication.translate("glparchis","Espanol" )))
-        self.append(Language("fr",QApplication.translate("glparchis","Francais" )))
+        self.append(Language("es",QApplication.translate("devicesinlan","Espanol" )))
+        self.append(Language("fr",QApplication.translate("devicesinlan","Francais" )))
         self.append(Language("ro","Rom\xe2n" ))
         self.append(Language("ru",'\u0420\u0443\u0441\u0441\u043a\u0438\u0439' ))
 
@@ -69,17 +69,11 @@ class SetLanguages:
         for l in self.arr:
             combo.addItem(l.qicon(), l.name, l.id)
         if selected!=None:
-                combo.setCurrentIndex(combo.findData(selected))
-
-    def cambiar(self, id):  
-        """language es un string"""
-        self.mem.qtranslator.load("/usr/lib/devicesinlan/devicesinlan" + id + ".qm")
-        qApp.installTranslator(self.mem.qtranslator);
-        
+                combo.setCurrentIndex(combo.findData(selected))        
         
 class frmSettings(QDialog, Ui_frmSettings):
     def __init__(self, mem, parent = None, name = None, modal = False):
-        QDialog.__init_QApplication.translate("devicesinlan",self, parent)
+        QDialog.__init__(self, parent)
         self.mem=mem
         self.setupUi(self)
         self.languages=SetLanguages()
@@ -88,7 +82,7 @@ class frmSettings(QDialog, Ui_frmSettings):
     @pyqtSlot(str)      
     def on_cmbLanguage_currentIndexChanged(self, stri):        
         self.languages.selected=self.languages.find_by_name(stri)
-        libdevicesinlan.cargarQTranslator(self.translator, self.languages.selected.id)
+        self.mem.change_language( self.languages.selected.id)
         self.retranslateUi(self)
         
     def on_buttonBox_accepted(self):

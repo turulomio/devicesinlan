@@ -13,10 +13,10 @@ class frmHelp(QDialog, Ui_frmHelp):
         @param name The name of this dialog. (QString)
         @param modal Flag indicating a modal dialog. (boolean)
         """
-        QDialog.__init_QApplication.translate("devicesinlan",self, parent)
+        QDialog.__init__(self, parent)
         if name:
             self.setObjectName(name)
         self.setupUi(self)
         self.browser.setHtml(
-            self.trUtf8("<h2>Documentation</h2>")
+            self.tr("<h2>Documentation</h2>")
         )

@@ -37,7 +37,7 @@ def filename_output():
             pl="x86_64"
         else:
             pl="x86"
-    return "glparchis-{}-{}.{}".format(so,  version, pl)
+    return "devicesinlan-{}-{}.{}".format(so,  version, pl)
 
 def winversion():
     return "0.1"

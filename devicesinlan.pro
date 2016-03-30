@@ -14,7 +14,7 @@ FORMS           = ui/frmAbout.ui \
                   ui/frmSettings.ui
 
 
-TRANSLATIONS    = i18n/glparchis_es.ts \
-                  i18n/glparchis_fr.ts \
-                  i18n/glparchis_ro.ts \
-                  i18n/glparchis_ru.ts
+TRANSLATIONS    = i18n/devicesinlan_es.ts \
+                  i18n/devicesinlan_fr.ts \
+                  i18n/devicesinlan_ro.ts \
+                  i18n/devicesinlan_ru.ts

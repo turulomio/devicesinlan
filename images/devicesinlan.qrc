@@ -9,6 +9,9 @@
     <file>devicesinlan.jpg</file>
   </qresource>
   <qresource prefix="flags">
+    <file>rusia.png</file>
+    <file>rumania.png</file>
+    <file>france.png</file>
     <file>spain.png</file>
     <file>uk.png</file>
   </qresource>

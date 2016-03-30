@@ -10,6 +10,7 @@ import time
 import re
 import socket
 from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
 import ipaddress
 version="0.6.0"
 dateversion=datetime.date(2016, 3, 27)
@@ -41,9 +42,25 @@ class Color:
         return "\033[93m{}\033[0m".format(s)
 
 class Mem:
-    def __init__(self, args):
-        self.args=args
+    def __init__(self):
         self.known=SetKnownDevices(self)
+        self.settings=QSettings()
+        self.translator=QTranslator()
+        self.myscanner=True 
+        self.interface="eth0"
+        
+    def change_language(self, language):  
+        """language es un string"""  
+        urls= ["i18n/devicesinlan_" + language + ".qm","/usr/share/devicesinlan/devicesinlan_" + language + ".qm"]
+        for url in urls:
+            if os.path.exists(url)==True:
+                print ("Found {} from {}".format(url,  os.getcwd()))
+                break
+            else:
+                print ("Not found {} from {}".format(url,  os.getcwd()))        
+            
+        self.translator.load(url)
+        QCoreApplication.installTranslator(self.translator);
 
 class SetDevices:
     def __init__(self, mem):
@@ -59,7 +76,7 @@ class SetDevices:
         
     def arp_scanner(self):
         """Load Devices from arpscan output"""
-        if self.mem.args.my==False:
+        if self.mem.myscanner==False:
             ##With arp-scan
             try:
                 output=subprocess.check_output(["arp-scan", "--interface", self.mem.args.interface, "--localnet", "--ignoredups"]).decode('UTF-8')
@@ -89,17 +106,17 @@ class SetDevices:
             self.arr.append(h)
         else:#args.my=True            
             threads=[]
-            if_ip=get_if_ip(self.mem.args.interface)
+            if_ip=get_if_ip(self.mem.interface)
             for addr in ipaddress.IPv4Network('192.168.1.0/24'):
                 if str(addr)==if_ip :#Adds device if ip is interface ip and jumps it
                     h=Device()
                     h.ip=str(addr)
-                    h.mac=get_if_mac(self.mem.args.interface)
+                    h.mac=get_if_mac(self.mem.interface)
                     h.oui=get_oui(h.mac)
                     h.pinged=True     
                     self.arr.append(h)
                     continue
-                t=TRequest(str(addr), self.mem.args.interface,  TypesARP.Standard)
+                t=TRequest(str(addr), self.mem.interface,  TypesARP.Standard)
                 t.start()
                 threads.append(t)
                 time.sleep(0.01)
@@ -168,6 +185,30 @@ class SetDevices:
         print (Color.bold("="*(16+2+17+2+maxalias+2+maxoui)))        
         if self.mem.args.my:
             print (QApplication.translate("devicesinlan","There was reply to a ping from IP address with '*' ({} pings).").format(numpings))
+            
+    def qtablewidget(self, tabla):
+        numpings=0
+#        if_ip=get_if_ip(self.mem.args.interface)
+        self.order_by_ip() 
+        ##HEADERS
+        tabla.setColumnCount(4)
+        tabla.setHorizontalHeaderItem(0, QTableWidgetItem(QApplication.translate("Core","IP" )))
+        tabla.setHorizontalHeaderItem(1, QTableWidgetItem(QApplication.translate("Core","MAC" )))
+        tabla.setHorizontalHeaderItem(2,  QTableWidgetItem(QApplication.translate("Core","Alias" )))
+        tabla.setHorizontalHeaderItem(3, QTableWidgetItem(QApplication.translate("Core","Hardware" )))
+        ##DATA 
+#        tabla.applySettings()
+        tabla.clearContents()   
+        tabla.setRowCount(self.length())
+#        self.sort()
+        for rownumber, h in enumerate(self.arr):
+            tabla.setItem(rownumber, 0, QTableWidgetItem(h.ip))
+            tabla.setItem(rownumber, 1, QTableWidgetItem(h.mac))
+            tabla.setItem(rownumber, 2, QTableWidgetItem(h.alias))
+            tabla.setItem(rownumber, 3, QTableWidgetItem(h.oui))
+            if h.pinged==True:
+                numpings=numpings+1
+
 
 class Device:
     def __init__(self):
@@ -179,7 +220,7 @@ class Device:
 
 class TRequest(threading.Thread):
     def __init__(self, ip, if_name, arp_type):
-        threading.Thread.__init_QApplication.translate("devicesinlan",self)
+        threading.Thread.__init__(self)
         self.arp_type = arp_type
         self.if_name=if_name
         self.if_ip = get_if_ip(self.if_name) 

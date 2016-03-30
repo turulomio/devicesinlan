@@ -142,7 +142,6 @@
  </widget>
  <resources>
   <include location="../images/devicesinlan.qrc"/>
-  <include location="../images/devicesinlan.qrc"/>
  </resources>
  <connections>
   <connection>
