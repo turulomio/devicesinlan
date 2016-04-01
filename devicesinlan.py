@@ -13,6 +13,7 @@ if platform.system()=="Windows":
 elif platform.system()=="Linux":
     sys.path.append("/usr/lib/devicesinlan")
 from libdevicesinlan import *
+
     
 
 """
@@ -40,9 +41,14 @@ if platform.system()=="Windows":
         shutil.copy("known.txt.dist",os.path.expanduser("~/.devicesinlan/known.txt"))
         print(QApplication.translate("devicesinlan","I couldn't find .devicesinlan/known.txt.") + " " + QApplication.translate("devicesinlan","I copied distribution file to it.") + " "+ QApplication.translate("devicesinlan","Add your mac addresses to detect strage devices in your LAN."))
 
+    dev=SetInterfaces(mem)
+    dev.load_all()
+    dev.print_list()
+    sys.exit(0)
+
     mem.myscanner=True
     app.setQuitOnLastWindowClosed(True)
-
+    import frmMain
     frmMain = frmMain.frmMain(mem) 
     frmMain.show()
     sys.exit(app.execQApplication.translate("devicesinlan",))

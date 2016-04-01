@@ -15,3 +15,10 @@ Nueva release
    - Subirla a internet con bash publicar.sh
    - Subir al subervsion los cambios 3en la web
 10) Comprobar enlaces
+
+
+
+####################" WINDOWS
+Necesita python
+Necesita Pyqt
+Necesita con pip netifaces

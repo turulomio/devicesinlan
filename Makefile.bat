@@ -4,6 +4,6 @@ call c:\Python34\Lib\site-packages\PyQt5\pyuic5.bat ui/frmHelp.ui -o ui/Ui_frmHe
 call c:\Python34\Lib\site-packages\PyQt5\pyuic5.bat ui/frmMain.ui -o ui/Ui_frmMain.py
 call c:\Python34\Lib\site-packages\PyQt5\pyuic5.bat ui/frmSettings.ui -o ui/Ui_frmSettings.py
 call c:\Python34\Lib\site-packages\PyQt5\pyrcc5.exe  images/devicesinlan.qrc -o images/devicesinlan_rc.py
-
-call c:\Python34\python.exe c:\Python34\Tools\i18n\msgfmt.py -o po/devicesinlan.mo po/es.po
+call c:\Python34\Lib\site-packages\PyQt5\pylupdate5.exe -noobsolete devicesinlan.pro
+call c:\Python34\Lib\site-packages\PyQt5\lrelease.exe devicesinlan.pro
 

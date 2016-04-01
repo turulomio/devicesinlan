@@ -2,6 +2,7 @@ import codecs
 import datetime
 import threading
 import gettext
+import netifaces
 import os
 import platform
 import subprocess
@@ -62,6 +63,64 @@ class Mem:
             
         self.translator.load(url)
         QCoreApplication.installTranslator(self.translator);
+
+class Interface:
+    def __init__(self, mem):
+        self.mem=mem
+        self.id=None#Id numerico de Windows o id de Linux
+        self.name=None
+        self.ip=None
+        self.mac=None
+        self.mask=None
+        self.broadcast=None
+        
+    def init__create(self, id, name, ip, mac, mask, broadcast):
+        self.id=id
+        self.name=name
+        self.ip=ip
+        self.mac=mac
+        self.mask=mask
+        self.broadcast=broadcast
+        return self
+        
+    def __str__(self):
+        return (QApplication.translate("devicesinlan","Interface {} ({}) with ip {}/{} and mac {}".format(self.name, self.id, self.ip, self.mask, self.mac)))
+        
+class SetInterfaces:
+    def __init__(self, mem):
+        self.arr=[]
+        self.mem=mem
+        
+    def length(self):
+        return len(self.arr)
+        
+    def append(self, o):
+        self.arr.append(o)
+        
+    def load_all(self):   
+        for iface in netifaces.interfaces():
+            try:
+                for i, ifa in enumerate(netifaces.ifaddresses(iface)[netifaces.AF_INET]):#Puede haber varias IP en interfaz: Af_inet ES PARA IPV4
+                    if netifaces.ifaddresses(iface)[netifaces.AF_INET][i]["addr"]!="127.0.0.1":
+                        self.append(Interface(self.mem).init__create(
+                            iface, 
+                            None, 
+                            netifaces.ifaddresses(iface)[netifaces.AF_INET][i]["addr"],
+                            netifaces.ifaddresses(iface)[-1000][i]["addr"], 
+                            netifaces.ifaddresses(iface)[netifaces.AF_INET][i]["netmask"],
+                            netifaces.ifaddresses(iface)[netifaces.AF_INET][i]["broadcast"]  
+                        ))
+                        print("Done")
+                    else:
+                        print ("Eliminating loopbak")
+            except:
+                print (QApplication.translate("devicesinlan", "Interface not well parsed and not selected"))
+        
+    def print_list(self):
+        for interface in self.arr:
+            print ( interface)
+    
+
 
 class SetDevices:
     def __init__(self, mem):
