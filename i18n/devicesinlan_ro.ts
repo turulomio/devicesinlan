@@ -48,12 +48,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmSettings.py" line="39"/>
+        <location filename="../ui/frmSettings.py" line="40"/>
         <source>Espanol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmSettings.py" line="40"/>
+        <location filename="../ui/frmSettings.py" line="41"/>
         <source>Francais</source>
         <translation type="unfinished"></translation>
     </message>
