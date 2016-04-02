@@ -559,10 +559,14 @@ def ping_command():
     return None
     
 def get_oui(mac):
+    if platform.system()=="Windows":
+        url="ieee-oui.txt"
+    elif platform.system()=="Linux":
+        url="/usr/share/devicesinlan/ieee-oui.txt"
     mac=mac.replace(":", "").upper()[:-6]
     if len(mac)!=6:#No tiene los 3 primeros n´umeros de la mac
         return ""
-    f=open("/usr/share/devicesinlan/ieee-oui.txt", "rb")
+    f=open(url, "rb")
     for line in f.readlines():
         if line.find(mac.encode())!=-1:
             return line.decode('utf-8').split("\t")[1][:-1].upper()

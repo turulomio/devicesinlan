@@ -83,12 +83,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="584"/>
+        <location filename="../libdevicesinlan.py" line="588"/>
         <source>True</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="587"/>
+        <location filename="../libdevicesinlan.py" line="591"/>
         <source>False</source>
         <translation type="unfinished"></translation>
     </message>
@@ -237,37 +237,37 @@
 <context>
     <name>frmInterfaceSelector</name>
     <message>
-        <location filename="../ui/Ui_frmInterfaceSelector.py" line="137"/>
+        <location filename="../ui/Ui_frmInterfaceSelector.py" line="139"/>
         <source>Interface configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmInterfaceSelector.py" line="138"/>
+        <location filename="../ui/Ui_frmInterfaceSelector.py" line="140"/>
         <source>Select an interface</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmInterfaceSelector.py" line="139"/>
+        <location filename="../ui/Ui_frmInterfaceSelector.py" line="141"/>
         <source>Interface Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmInterfaceSelector.py" line="140"/>
+        <location filename="../ui/Ui_frmInterfaceSelector.py" line="142"/>
         <source>Interface Ip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmInterfaceSelector.py" line="141"/>
+        <location filename="../ui/Ui_frmInterfaceSelector.py" line="143"/>
         <source>Interface MAC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmInterfaceSelector.py" line="142"/>
+        <location filename="../ui/Ui_frmInterfaceSelector.py" line="144"/>
         <source>Interface broadcast</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmInterfaceSelector.py" line="143"/>
+        <location filename="../ui/Ui_frmInterfaceSelector.py" line="145"/>
         <source>Interface Mask</source>
         <translation type="unfinished"></translation>
     </message>

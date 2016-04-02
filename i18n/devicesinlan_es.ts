@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="es" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.1" language="es">
 <context>
     <name>devicesinlan</name>
     <message>
@@ -83,12 +84,12 @@
         <translation>Ping</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="584"/>
+        <location filename="../libdevicesinlan.py" line="588"/>
         <source>True</source>
         <translation>Sí</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="587"/>
+        <location filename="../libdevicesinlan.py" line="591"/>
         <source>False</source>
         <translation>No</translation>
     </message>
@@ -117,10 +118,10 @@
         <source>If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../devicesinlan.py" line="51"/>
         <source>Developed by Mariano Muñoz 2015 ©</source>
-        <translation type="unfinished"></translation>
+        <translation>Developed by Mariano Muñoz 2015 ©</translation>
     </message>
     <message>
         <location filename="../devicesinlan.py" line="56"/>
@@ -130,22 +131,22 @@
     <message>
         <location filename="../devicesinlan.py" line="58"/>
         <source>Net interface name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre del interfaz de red</translation>
     </message>
     <message>
         <location filename="../devicesinlan.py" line="59"/>
         <source>Add a known device</source>
-        <translation type="unfinished"></translation>
+        <translation>Añadir un nuevo dispositivo</translation>
     </message>
     <message>
         <location filename="../devicesinlan.py" line="60"/>
         <source>Remove a known device</source>
-        <translation type="unfinished"></translation>
+        <translation>Elminar un dispositivo conocido</translation>
     </message>
     <message>
         <location filename="../devicesinlan.py" line="61"/>
         <source>List known device</source>
-        <translation type="unfinished"></translation>
+        <translation>Listado de dispositivos conocidos</translation>
     </message>
     <message>
         <location filename="../devicesinlan.py" line="67"/>
@@ -155,22 +156,22 @@
     <message>
         <location filename="../devicesinlan.py" line="82"/>
         <source>Known device inserted</source>
-        <translation type="unfinished"></translation>
+        <translation>Añadido un nuevo dispositivo conocido</translation>
     </message>
     <message>
         <location filename="../devicesinlan.py" line="90"/>
         <source>Mac removed</source>
-        <translation type="unfinished"></translation>
+        <translation>Mac eliminada</translation>
     </message>
     <message>
         <location filename="../devicesinlan.py" line="92"/>
         <source>I couldn&apos;t find the mac</source>
-        <translation type="unfinished"></translation>
+        <translation>No he podido encontrar la mac</translation>
     </message>
     <message>
         <location filename="../devicesinlan.py" line="106"/>
         <source>It took {} with DevicesInLAN scanner.</source>
-        <translation type="unfinished"></translation>
+        <translation>Duró {} con el escáner de DevicesInLAN</translation>
     </message>
 </context>
 <context>
@@ -207,17 +208,17 @@
     </message>
     <message>
         <location filename="../ui/frmAbout.py" line="21"/>
-        <source>Versi&#xc3;&#xb3;n {0}</source>
+        <source>VersiÃ³n {0}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ui/frmAbout.py" line="22"/>
-        <source>La p&#xc3;&#xa1;gina del proyecto se encuentra en &lt;a href=&quot;http://devicesinlan.sourceforge.net&quot;&gt;http://devicesinlan.sourceforge.net&lt;/a&gt;&lt;p&gt; &lt;p&gt;</source>
+        <source>La pÃ¡gina del proyecto se encuentra en &lt;a href=&quot;http://devicesinlan.sourceforge.net&quot;&gt;http://devicesinlan.sourceforge.net&lt;/a&gt;&lt;p&gt; &lt;p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ui/frmAbout.py" line="22"/>
-        <source>Este programa ha sido desarrollado por Mariano Mu&#xc3;&#xb1;oz.&lt;p&gt;</source>
+        <source>Este programa ha sido desarrollado por Mariano MuÃ±oz.&lt;p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -237,39 +238,39 @@
 <context>
     <name>frmInterfaceSelector</name>
     <message>
-        <location filename="../ui/Ui_frmInterfaceSelector.py" line="137"/>
-        <source>Interface configuration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/Ui_frmInterfaceSelector.py" line="138"/>
-        <source>Select an interface</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../ui/Ui_frmInterfaceSelector.py" line="139"/>
-        <source>Interface Id</source>
-        <translation type="unfinished"></translation>
+        <source>Interface configuration</source>
+        <translation>Configuración de la interfaz</translation>
     </message>
     <message>
         <location filename="../ui/Ui_frmInterfaceSelector.py" line="140"/>
-        <source>Interface Ip</source>
-        <translation type="unfinished"></translation>
+        <source>Select an interface</source>
+        <translation>Selecciona un interfaz</translation>
     </message>
     <message>
         <location filename="../ui/Ui_frmInterfaceSelector.py" line="141"/>
-        <source>Interface MAC</source>
-        <translation type="unfinished"></translation>
+        <source>Interface Id</source>
+        <translation>Identificador de la interfaz</translation>
     </message>
     <message>
         <location filename="../ui/Ui_frmInterfaceSelector.py" line="142"/>
-        <source>Interface broadcast</source>
-        <translation type="unfinished"></translation>
+        <source>Interface Ip</source>
+        <translation>IP de la interfaz</translation>
     </message>
     <message>
         <location filename="../ui/Ui_frmInterfaceSelector.py" line="143"/>
+        <source>Interface MAC</source>
+        <translation>MAC de la interfaz</translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmInterfaceSelector.py" line="144"/>
+        <source>Interface broadcast</source>
+        <translation>Broadcast de la interfaz</translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmInterfaceSelector.py" line="145"/>
         <source>Interface Mask</source>
-        <translation type="unfinished"></translation>
+        <translation>Máscara de la interfaz</translation>
     </message>
 </context>
 <context>
@@ -337,22 +338,22 @@
     <message>
         <location filename="../ui/frmMain.py" line="64"/>
         <source>Scanned at {}</source>
-        <translation type="unfinished"></translation>
+        <translation>Escaneado a las {}</translation>
     </message>
     <message>
         <location filename="../ui/frmMain.py" line="81"/>
         <source>It took {} to detect {} devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Duró {} detectar {} dispositivos</translation>
     </message>
     <message>
         <location filename="../ui/Ui_frmMain.py" line="111"/>
         <source>Link device</source>
-        <translation type="unfinished"></translation>
+        <translation>Vincular dispositivo</translation>
     </message>
     <message>
         <location filename="../ui/Ui_frmMain.py" line="113"/>
         <source>Unlink device</source>
-        <translation type="unfinished"></translation>
+        <translation>Desvincular dispositivo</translation>
     </message>
 </context>
 <context>

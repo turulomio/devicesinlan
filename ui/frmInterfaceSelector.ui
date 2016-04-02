@@ -6,22 +6,34 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>413</height>
+    <width>539</width>
+    <height>313</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Interface configuration</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/glparchis/configure.png</normaloff>:/glparchis/configure.png</iconset>
+   <iconset resource="../images/devicesinlan.qrc">
+    <normaloff>:/configure.png</normaloff>:/configure.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QLabel" name="lblTitulo">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>30</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <pointsize>12</pointsize>

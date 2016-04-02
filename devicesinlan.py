@@ -45,7 +45,7 @@ if platform.system()=="Windows":
     import frmMain
     frmMain = frmMain.frmMain(mem) 
     frmMain.show()
-    sys.exit(app.execQApplication.translate("devicesinlan",))
+    sys.exit(app.exec_())
 
 elif platform.system()=="Linux":
     parser=argparse.ArgumentParser(prog='devicesinlan', description=QApplication.translate("devicesinlan",'Show devices in a LAN making an ARP and a ICMP request to find them'),  
