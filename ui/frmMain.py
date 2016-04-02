@@ -77,22 +77,22 @@ class frmMain(QMainWindow, Ui_frmMain):#
         inicio=datetime.datetime.now()
         set=SetDevices(self.mem)
         set.qtablewidget(table)
+        self.sets.append(set)
+        self.tables.append(table)
         label=QLabel()
         label.setText(self.tr("It took {} to detect {} devices".format(datetime.datetime.now()-inicio, set.length())))
         horizontalLayout_2.addWidget(label)
-#        table.resizeRowsToContents()
         table.resizeColumnsToContents()
-        table.customContextMenuRequested.connect(self.on_customContextMenuRequested)
+        table.customContextMenuRequested[QPoint].connect(self.on_customContextMenuRequested)
         table.itemSelectionChanged.connect(self.on_itemSelectionChanged)
         self.tabWidget.setCurrentWidget(self.tab)
-        self.sets.append(set)
-        self.tables.append(table)
 
     def on_customContextMenuRequested(self, pos):
+        table=self.tables[self.tabWidget.currentIndex()]
         menu=QMenu()
         menu.addAction(self.actionDeviceLink)
         menu.addAction(self.actionDeviceUnlink)
-        menu.exec_(self.mapToGlobal(pos))
+        menu.exec_(table.mapToGlobal(pos))
 
 
     def on_itemSelectionChanged(self):

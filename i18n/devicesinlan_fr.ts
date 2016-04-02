@@ -340,7 +340,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="81"/>
+        <location filename="../ui/frmMain.py" line="83"/>
         <source>It took {} to detect {} devices</source>
         <translation type="unfinished"></translation>
     </message>
