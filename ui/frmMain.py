@@ -9,6 +9,7 @@ from libdevicesinlan import *
 from frmSettings import *
 from frmHelp import *
 from frmAbout import *
+from frmInterfaceSelector import *
 
             
 class frmMain(QMainWindow, Ui_frmMain):#    
@@ -24,7 +25,6 @@ class frmMain(QMainWindow, Ui_frmMain):#
         self.horizontalLayout.addWidget(self.tabWidget)
         self.showMaximized()
         self.repaint()
-        self.on_actionScan_triggered()
 
         
     @pyqtSlot(QEvent)   
@@ -54,6 +54,12 @@ class frmMain(QMainWindow, Ui_frmMain):#
         
     @pyqtSlot()      
     def on_actionScan_triggered(self):
+        f=frmInterfaceSelector(self.mem, self)
+        f.exec_()
+        if f.result()!=QDialog.Accepted:
+            return
+        
+        
         self.tab = QWidget()
         self.tabWidget.addTab(self.tab, QIcon(":/open.png"),self.tr("Scanned at {}").format(str(datetime.datetime.now()).split(".")[0]))
         table=QTableWidget(self.tabWidget)

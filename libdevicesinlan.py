@@ -6,7 +6,6 @@ import netifaces
 import os
 import platform
 import subprocess
-import sys
 import time
 import re
 import socket
@@ -48,8 +47,9 @@ class Mem:
         self.known=SetKnownDevices(self)
         self.settings=QSettings()
         self.translator=QTranslator()
-        self.myscanner=True 
-        self.interface="eth0"
+        self.interfaces=SetInterfaces(self)
+        self.interfaces.load_all()
+        self.interfaces.print()
         
     def change_language(self, language):  
         """language es un string"""  
@@ -90,6 +90,7 @@ class SetInterfaces:
     def __init__(self, mem):
         self.arr=[]
         self.mem=mem
+        self.selected=None
         
     def length(self):
         return len(self.arr)
@@ -97,7 +98,17 @@ class SetInterfaces:
     def append(self, o):
         self.arr.append(o)
         
+    def find_by_id(self, id):
+        for interface in self.arr:
+            if interface.id==id:
+                return interface
+        return None
+        
     def load_all(self):   
+        if platform.system()=="Windows":
+            idformac=-1000
+        elif platform.system()=="Linux":
+            idformac=netifaces.AF_PACKET
         for iface in netifaces.interfaces():
             try:
                 for i, ifa in enumerate(netifaces.ifaddresses(iface)[netifaces.AF_INET]):#Puede haber varias IP en interfaz: Af_inet ES PARA IPV4
@@ -106,22 +117,40 @@ class SetInterfaces:
                             iface, 
                             None, 
                             netifaces.ifaddresses(iface)[netifaces.AF_INET][i]["addr"],
-                            netifaces.ifaddresses(iface)[-1000][i]["addr"], 
+                            netifaces.ifaddresses(iface)[idformac][i]["addr"], 
                             netifaces.ifaddresses(iface)[netifaces.AF_INET][i]["netmask"],
                             netifaces.ifaddresses(iface)[netifaces.AF_INET][i]["broadcast"]  
                         ))
-                        print("Done")
-                    else:
-                        print ("Eliminating loopbak")
+#                        print("Done")
+#                    else:
+#                        print ("Eliminating loopbak")
             except:
-                print (QApplication.translate("devicesinlan", "Interface not well parsed and not selected"))
+                pass
+#                print (QApplication.translate("devicesinlan", "Interface not well parsed and not selected"))
         
-    def print_list(self):
+    def print(self):
         for interface in self.arr:
             print ( interface)
-    
 
-
+    def order_by_name(self):
+        """Orders the Set using self.arr"""
+        try:
+            self.arr=sorted(self.arr, key=lambda c: c.name,  reverse=False)       
+            return True
+        except:
+            return False       
+            
+    def qcombobox(self, combo, selected=None):
+        """Selected is id"""
+        self.order_by_name()
+        for l in self.arr:
+            if l.name==None:
+                name="Interfaz sin nombre"
+            else:
+                name=l.name
+            combo.addItem(name, l.id)
+        if selected!=None:
+                combo.setCurrentIndex(combo.findData(selected))        
 class SetDevices:
     def __init__(self, mem):
         """This constructor load /etc/devicesinlan/known.txt and executes arp-scan and parses its result"""
@@ -137,64 +166,35 @@ class SetDevices:
         
     def arp_scanner(self):
         """Load Devices from arpscan output"""
-        if self.mem.myscanner==False:
-            ##With arp-scan
-            try:
-                output=subprocess.check_output(["arp-scan", "--interface", self.mem.args.interface, "--localnet", "--ignoredups"]).decode('UTF-8')
-            except:
-                print (Color.red(QApplication.translate("devicesinlan","There was an error executing arp-scan.")))
-                print ("  * "+QApplication.translate("devicesinlan","Is the interface argument correct?."))    
-                if os.path.exists("/usr/bin/arp-scan")==False:
-                    print("  * "+QApplication.translate("devicesinlan","I couldn't find /usr/bin/arp-scan.") + " " + QApplication.translate("devicesinlan","Please install it or add -m option to use DevicesInLAN scanner."))
-                sys.exit(2)
-            for line in output.split("\n"):
-                if line.find("\t")!=-1:
-                    h=Device()
-                    arr=line.split("\t")
-                    h.ip=arr[0]
-                    h.mac=arr[1]
-                    h.oui=arr[2]
-                    h.pinged=False
-                    for k in self.known.arr:
+#            output=subprocess.check_output(["arp-scan", "--interface", self.mem.args.interface, "--localnet", "--ignoredups"]).decode('UTF-8')
+        threads=[]
+        for addr in ipaddress.IPv4Network("{}/{}".format(self.mem.interfaces.selected.ip, self.mem.interfaces.selected.mask), strict=False):
+            if str(addr)==self.mem.interfaces.selected.ip :#Adds device if ip is interface ip and jumps it
+                h=Device()
+                h.ip=str(addr)
+                h.mac=self.mem.interfaces.selected.mac
+                h.oui=get_oui(h.mac)
+                h.pinged=True     
+                self.arr.append(h)
+                continue
+            t=TRequest(str(addr), self.mem.interfaces.selected,  TypesARP.Standard)
+            t.start()
+            threads.append(t)
+            time.sleep(0.01)
+            
+        for t in threads:
+            t.join()
+            if t.mac!=None or t.pinged==True:
+                h=Device()
+                h.ip=t.ip
+                h.mac=t.mac
+                h.oui=t.oui
+                h.pinged=t.pinged
+                for k in self.known.arr:
+                    if h.mac:
                         if k.mac.upper()==h.mac.upper():
                             h.alias=k.alias
-                    self.arr.append(h)
-            h=Device()
-            h.ip=get_if_ip(self.mem.args.interface)
-            h.alias=QApplication.translate("devicesinlan","This device")
-            h.mac=get_if_mac(self.mem.args.interface)
-            h.oui=get_oui(h.mac)
-            self.arr.append(h)
-        else:#args.my=True            
-            threads=[]
-            if_ip=get_if_ip(self.mem.interface)
-            for addr in ipaddress.IPv4Network('192.168.1.0/24'):
-                if str(addr)==if_ip :#Adds device if ip is interface ip and jumps it
-                    h=Device()
-                    h.ip=str(addr)
-                    h.mac=get_if_mac(self.mem.interface)
-                    h.oui=get_oui(h.mac)
-                    h.pinged=True     
-                    self.arr.append(h)
-                    continue
-                t=TRequest(str(addr), self.mem.interface,  TypesARP.Standard)
-                t.start()
-                threads.append(t)
-                time.sleep(0.01)
-                
-            for t in threads:
-                t.join()
-                if t.mac!=None or t.pinged==True:
-                    h=Device()
-                    h.ip=t.ip
-                    h.mac=t.mac
-                    h.oui=t.oui
-                    h.pinged=t.pinged
-                    for k in self.known.arr:
-                        if h.mac:
-                            if k.mac.upper()==h.mac.upper():
-                                h.alias=k.alias
-                    self.arr.append(h)
+                self.arr.append(h)
 
     def max_len_oui(self):
         ma=max(len(h.oui) for h in self.arr)
@@ -216,12 +216,11 @@ class SetDevices:
         
     def print(self):
         numpings=0
-        if_ip=get_if_ip(self.mem.args.interface)
         maxalias=self.max_len_alias()
         maxoui=self.max_len_oui()
         self.order_by_ip()
         print (Color.bold("="*(16+2+17+2+maxalias+2+maxoui)))
-        print (Color.bold(QApplication.translate("devicesinlan","{} DEVICES IN LAN FROM {} INTERFACE AT {}").format(self.length(), self.mem.args.interface.upper(), str(datetime.datetime.now())[:-7]).center (6+15+17+maxalias+maxoui)))
+        print (Color.bold(QApplication.translate("devicesinlan","{} DEVICES IN LAN FROM {} INTERFACE AT {}").format(self.length(), self.mem.interfaces.selected.id.upper(), str(datetime.datetime.now())[:-7]).center (6+15+17+maxalias+maxoui)))
         print (Color.bold("{}  {}  {}  {}".format(" IP ".center(16,'=')," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'='))))
         for h in self.arr:
             if h.mac==None:
@@ -233,7 +232,7 @@ class SetDevices:
                 pinged="*"
             else:
                 pinged=" "
-            if h.ip==if_ip:
+            if h.ip==self.mem.interfaces.selected.ip:
                 print ("{}  {}  {}  {}".format(Color.pink((pinged+h.ip).ljust(16)), Color.pink(mac.center(17)),   Color.pink(QApplication.translate("devicesinlan","This device").ljust(maxalias)), Color.pink(h.oui.ljust(maxoui))))
             else:
                 if h.alias:
@@ -244,8 +243,7 @@ class SetDevices:
                     alias=" "     
                 print ("{}  {}  {}  {}".format((pinged+h.ip).ljust(16), mac.center(17),   Color.yellow(alias.ljust(maxalias)), h.oui.ljust(maxoui)))    
         print (Color.bold("="*(16+2+17+2+maxalias+2+maxoui)))        
-        if self.mem.args.my:
-            print (QApplication.translate("devicesinlan","There was reply to a ping from IP address with '*' ({} pings).").format(numpings))
+        print (QApplication.translate("devicesinlan","There was reply to a ping from IP address with '*' ({} pings).").format(numpings))
             
     def qtablewidget(self, table):
         numpings=0
@@ -291,11 +289,10 @@ class Device:
         self.pinged=False
 
 class TRequest(threading.Thread):
-    def __init__(self, ip, if_name, arp_type):
+    def __init__(self, ip, interface, arp_type):
         threading.Thread.__init__(self)
         self.arp_type = arp_type
-        self.if_name=if_name
-        self.if_ip = get_if_ip(self.if_name) 
+        self.interface=interface
         self.ip = ip
         self.mac=None#Mac address string
         self.oui=""#String hardware name
@@ -358,7 +355,7 @@ class TRequest(threading.Thread):
                 b"\x04" + \
                 b"\x00\x01" + \
                 socket_arp.getsockname()[4] + \
-                self.ip2bytes(self.if_ip) + \
+                self.ip2bytes(self.interface.ip) + \
                 b"\x00\x00\x00\x00\x00\x00" + \
                 self.ip2bytes(self.ip)
             self.arp_sent_frame=frame2
@@ -396,7 +393,7 @@ class TRequest(threading.Thread):
         for i in range(3):
             if self.mac==None:
                 socket_arp = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.SOCK_RAW)
-                socket_arp.bind((self.if_name, socket.SOCK_RAW)) 
+                socket_arp.bind((self.interface.id, socket.SOCK_RAW)) 
                 arp_send()
                 time.sleep(.1*i)
                 arp_receive()
@@ -569,22 +566,7 @@ def get_oui(mac):
     for line in f.readlines():
         if line.find(mac.encode())!=-1:
             return line.decode('utf-8').split("\t")[1][:-1].upper()
-            
-def get_if_ip(name):
-    import fcntl
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    r=socket.inet_ntoa(fcntl.ioctl(
-        s.fileno(),
-        0x8915,  # SIOCGIFADDR
-        name.encode('utf-8')+b'\x00'*(256-len(name))#            struct.pack('256s', self.if_name[:15])
-    )[20:24])
-    return r
-    
-def get_if_mac(name):
-    import fcntl
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    info = fcntl.ioctl(s.fileno(), 0x8927,  name.encode('utf-8')+b'\x00'*(256-len(name)))
-    return ''.join(['%02x:' % b for b in info[18:24]])[:-1]
+
     
 def qbool(bool):
     """Prints bool and check. Is read only and enabled"""

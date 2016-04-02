@@ -41,12 +41,6 @@ if platform.system()=="Windows":
         shutil.copy("known.txt.dist",os.path.expanduser("~/.devicesinlan/known.txt"))
         print(QApplication.translate("devicesinlan","I couldn't find .devicesinlan/known.txt.") + " " + QApplication.translate("devicesinlan","I copied distribution file to it.") + " "+ QApplication.translate("devicesinlan","Add your mac addresses to detect strage devices in your LAN."))
 
-    dev=SetInterfaces(mem)
-    dev.load_all()
-    dev.print_list()
-    sys.exit(0)
-
-    mem.myscanner=True
     app.setQuitOnLastWindowClosed(True)
     import frmMain
     frmMain = frmMain.frmMain(mem) 
@@ -59,7 +53,6 @@ elif platform.system()=="Linux":
           +QApplication.translate("devicesinlan","Developed by Mariano Muñoz 2015 ©")
     , formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('-v', '--version', action='version', version=version)
-    parser.add_argument('-m', '--my', help=QApplication.translate("devicesinlan",'Use my own arp scanner'), action='store_true', default=False)
     parser.add_argument('-c',  '--console', help=QApplication.translate("devicesinlan",'Use console app'), action='store_true',  default=False)
     group = parser.add_mutually_exclusive_group()
     group.add_argument('-i',  '--interface', help=QApplication.translate("devicesinlan",'Net interface name'),  default='eth0')
@@ -67,11 +60,6 @@ elif platform.system()=="Linux":
     group.add_argument('-r',  '--remove', help=QApplication.translate("devicesinlan",'Remove a known device'), action='store_true')
     group.add_argument('-l',  '--list', help=QApplication.translate("devicesinlan",'List known device'), action='store_true')
     args=parser.parse_args()        
-
-    if args.my==True:
-        mem.myscanner=True
-    else:
-        mem.myscanner=False
     
     if args.console==False:    
         if os.path.exists("/etc/devicesinlan/known.txt")==False:
@@ -110,13 +98,11 @@ elif platform.system()=="Linux":
                 
         
         ## Load devices
+        mem.interfaces.selected=mem.interfaces.find_by_id(args.interface)
+        
         inicio=datetime.datetime.now()
         set=SetDevices(mem)
         set.print()
-        if mem.myscanner==True:
-            scanner="DevicesInLAN"
-        else:
-            scanner="arp-scan"
-        print (QApplication.translate("devicesinlan","It took {} with {} scanner.").format (datetime.datetime.now()-inicio, Color.yellow(scanner)))
+        print (QApplication.translate("devicesinlan","It took {} with DevicesInLAN scanner.").format (datetime.datetime.now()-inicio))
 
 
