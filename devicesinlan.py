@@ -23,7 +23,6 @@ from libdevicesinlan import *
 ##############################################
 
 args=None
-known=None
 app = QApplication(sys.argv)
 app.setOrganizationName("DevicesInLAN")
 app.setOrganizationDomain("devicesinlan.sourceforge.net")
@@ -73,28 +72,28 @@ elif platform.system()=="Linux":
         sys.exit(app.exec_())
 
     else:##Console
-        if args.add:
-            k=KnownDevice()
-            k.insert_mac()
-            k.insert_alias()
-            known.append(k)
-            known.save()    
-            print (Color.green(QApplication.translate("devicesinlan","Known device inserted")))
-            sys.exit(0)
-            
-        if args.remove:
-            k=KnownDevice()
-            k.insert_mac()
-            if known.remove_mac(k.mac):
-                known.save()
-                print (Color.green(QApplication.translate("devicesinlan","Mac removed")))
-            else:
-                print (Color.red(QApplication.translate("devicesinlan","I couldn't find the mac")))
-            sys.exit(0)
-            
-        if args.list:
-            known.print()
-            sys.exit(0)
+#        if args.add:
+#            k=KnownDevice()
+#            k.insert_mac()
+#            k.insert_alias()
+#            known.append(k)
+#            known.save()    
+#            print (Color.green(QApplication.translate("devicesinlan","Known device inserted")))
+#            sys.exit(0)
+#            
+#        if args.remove:
+#            k=KnownDevice()
+#            k.insert_mac()
+#            if known.remove_mac(k.mac):
+#                known.save()
+#                print (Color.green(QApplication.translate("devicesinlan","Mac removed")))
+#            else:
+#                print (Color.red(QApplication.translate("devicesinlan","I couldn't find the mac")))
+#            sys.exit(0)
+#            
+#        if args.list:
+#            known.print()
+#            sys.exit(0)
                 
         
         ## Load devices

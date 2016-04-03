@@ -15,6 +15,7 @@ install:
 	pyuic5 ui/frmMain.ui > ui/Ui_frmMain.py
 	pyuic5 ui/frmSettings.ui > ui/Ui_frmSettings.py
 	pyuic5 ui/frmInterfaceSelector.ui > ui/Ui_frmInterfaceSelector.py
+	pyuic5 ui/frmDeviceCRUD.ui > ui/Ui_frmDeviceCRUD.py
 	pyrcc5 images/devicesinlan.qrc > images/devicesinlan_rc.py
 
 	pylupdate5 -noobsolete devicesinlan.pro

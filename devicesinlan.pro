@@ -4,6 +4,8 @@ SOURCES         = libdevicesinlan.py \
                   ui/Ui_frmMain.py \
                   ui/frmHelp.py \
                   ui/Ui_frmHelp.py \
+                  ui/frmDeviceCRUD.py \
+                  ui/Ui_frmDeviceCRUD.py \
                   ui/frmAbout.py \
                   ui/Ui_frmAbout.py \
                   ui/frmInterfaceSelector.py \
@@ -15,6 +17,7 @@ FORMS           = ui/frmAbout.ui \
                   ui/frmMain.ui \
                   ui/frmHelp.ui \
                   ui/frmInterfaceSelector.ui \
+                  ui/frmDeviceCRUD.ui \
                   ui/frmSettings.ui
 
 

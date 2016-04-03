@@ -7,7 +7,6 @@ import os
 import platform
 import subprocess
 import time
-import re
 import socket
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
@@ -44,12 +43,14 @@ class Color:
 
 class Mem:
     def __init__(self):
-        self.known=SetKnownDevices(self)
+#        self.known=SetKnownDevices(self)
         self.settings=QSettings()
         self.translator=QTranslator()
         self.interfaces=SetInterfaces(self)
         self.interfaces.load_all()
         self.interfaces.print()
+        self.types=SetDeviceTypes(self)
+        self.types.load_all()
         
     def change_language(self, language):  
         """language es un string"""  
@@ -64,6 +65,93 @@ class Mem:
         self.translator.load(url)
         QCoreApplication.installTranslator(self.translator);
 
+class DeviceType:
+    def __init__(self, mem):
+        self.mem=mem
+        self.id=None
+        self.name=None
+        
+    def init__create(self, id, name):
+        self.id=id
+        self.name=name
+        return self
+        
+    def qpixmap(self):
+        if self.id==0:
+            return QPixmap(":/devicesinlan.png")
+        elif self.id==1:
+            return QPixmap(":/devices/video-television.png")
+        elif self.id==2:
+            return QPixmap(":/devices/camera-photo.png")
+        elif self.id==3:
+            return QPixmap(":/devices/camera-web.png")
+        elif self.id==4:
+            return QPixmap(":/devices/computer-laptop.png")
+        elif self.id==5:
+            return QPixmap(":/devices/computer.png")
+        elif self.id==6:
+            return QPixmap(":/devices/modem.png")
+        elif self.id==7:
+            return QPixmap(":/devices/smartphone.png")
+        elif self.id==8:
+            return QPixmap(":/devices/printer.png")
+        elif self.id==9:
+            return QPixmap(":/devices/tablet.png")
+        return None
+        
+    def qicon(self):
+        ico = QIcon()
+        ico.addPixmap(self.qpixmap(), QIcon.Normal, QIcon.Off) 
+        return ico
+
+
+class SetDeviceTypes:
+    def __init__(self, mem):
+        self.mem=mem
+        self.arr=[]
+        
+    def length(self):
+        return len (self.arr)
+        
+    def find_by_id(self, id):
+        if id==None:
+            id=0
+        for type in self.arr:
+            if type.id==id:
+                return type
+        return None
+        
+    def append(self, o):
+        self.arr.append(o)
+        
+    def load_all(self):
+        self.append(DeviceType(self.mem).init__create(0, QApplication.translate("devicesinlan", "Unknown")))
+        self.append(DeviceType(self.mem).init__create(1, QApplication.translate("devicesinlan", "Television")))
+        self.append(DeviceType(self.mem).init__create(2, QApplication.translate("devicesinlan", "Digital camera")))
+        self.append(DeviceType(self.mem).init__create(3, QApplication.translate("devicesinlan", "Web camera")))
+        self.append(DeviceType(self.mem).init__create(4, QApplication.translate("devicesinlan", "Laptop")))
+        self.append(DeviceType(self.mem).init__create(5, QApplication.translate("devicesinlan", "Computer")))
+        self.append(DeviceType(self.mem).init__create(6, QApplication.translate("devicesinlan", "Modem")))
+        self.append(DeviceType(self.mem).init__create(7, QApplication.translate("devicesinlan", "Smartphone")))
+        self.append(DeviceType(self.mem).init__create(8, QApplication.translate("devicesinlan", "Printer")))
+        self.append(DeviceType(self.mem).init__create(9, QApplication.translate("devicesinlan", "Tablet")))
+
+    def order_by_name(self):
+        """Orders the Set using self.arr"""
+        try:
+            self.arr=sorted(self.arr, key=lambda c: c.name,  reverse=False)       
+            return True
+        except:
+            return False       
+    def qcombobox(self, combo, selected=None):
+        """Selected is id"""
+        self.order_by_name()
+        for l in self.arr:
+            combo.addItem(l.qicon(), l.name, l.id)
+        if selected==None:
+            selected=0
+        if selected!=None:
+                combo.setCurrentIndex(combo.findData(selected))        
 class Interface:
     def __init__(self, mem):
         self.mem=mem
@@ -156,7 +244,6 @@ class SetDevices:
         """This constructor load /etc/devicesinlan/known.txt and executes arp-scan and parses its result"""
         self.mem=mem
         self.arr=[]
-        self.known=SetKnownDevices(self.mem)
         self.arp_scanner()#From arp_scan
         self.selected=None
 
@@ -170,11 +257,13 @@ class SetDevices:
         threads=[]
         for addr in ipaddress.IPv4Network("{}/{}".format(self.mem.interfaces.selected.ip, self.mem.interfaces.selected.mask), strict=False):
             if str(addr)==self.mem.interfaces.selected.ip :#Adds device if ip is interface ip and jumps it
-                h=Device()
+                h=Device(self.mem)
                 h.ip=str(addr)
                 h.mac=self.mem.interfaces.selected.mac
                 h.oui=get_oui(h.mac)
                 h.pinged=True     
+                h.alias=self.mem.settings.value("DeviceAlias/{}".format(h.macwithout2points(h.mac.upper())), None)
+                h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
                 self.arr.append(h)
                 continue
             t=TRequest(str(addr), self.mem.interfaces.selected,  TypesARP.Standard)
@@ -185,15 +274,14 @@ class SetDevices:
         for t in threads:
             t.join()
             if t.mac!=None or t.pinged==True:
-                h=Device()
+                h=Device(self.mem)
                 h.ip=t.ip
                 h.mac=t.mac
                 h.oui=t.oui
                 h.pinged=t.pinged
-                for k in self.known.arr:
-                    if h.mac:
-                        if k.mac.upper()==h.mac.upper():
-                            h.alias=k.alias
+                if h.mac:
+                    h.alias=self.mem.settings.value("DeviceAlias/{}".format(h.macwithout2points(h.mac.upper())), None)
+                    h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
                 self.arr.append(h)
 
     def max_len_oui(self):
@@ -247,7 +335,6 @@ class SetDevices:
             
     def qtablewidget(self, table):
         numpings=0
-#        if_ip=get_if_ip(self.mem.args.interface)
         self.order_by_ip() 
         ##HEADERS
         table.setColumnCount(5)
@@ -257,10 +344,8 @@ class SetDevices:
         table.setHorizontalHeaderItem(3, QTableWidgetItem(QApplication.translate("devicesinlan","Hardware" )))
         table.setHorizontalHeaderItem(4, QTableWidgetItem(QApplication.translate("devicesinlan","Ping" )))
         ##DATA 
-#        table.applySettings()
         table.clearContents()   
         table.setRowCount(self.length())
-#        self.sort()
         for rownumber, h in enumerate(self.arr):
             alias=""
             if h.alias!=None:
@@ -278,15 +363,38 @@ class SetDevices:
             else:
                 for i in range(0, table.columnCount()):
                     table.item(rownumber, i).setBackground( QColor(255, 182, 182))       
-
+            if h.type!=None:
+                table.item(rownumber, 1).setIcon(h.type.qicon())
 
 class Device:
-    def __init__(self):
+    def __init__(self, mem):
+        self.mem=mem
         self.ip=None
         self.mac=None
         self.oui=None
         self.alias=None
         self.pinged=False
+        self.type=None
+        
+    def link(self):
+        self.mem.settings.setValue("DeviceAlias/{}".format(self.macwithout2points(self.mac.upper())), self.alias)
+        self.mem.settings.setValue("DeviceType/{}".format(self.macwithout2points(self.mac.upper())), self.type.id)
+        
+    def unlink(self):
+        self.mem.settings.remove("DeviceAlias/{}".format(self.macwithout2points(self.mac.upper())))
+        self.mem.settings.remove("DeviceType/{}".format(self.macwithout2points(self.mac.upper())))
+        self.type=None
+        self.alias=None
+        
+    def macwith2points(self, macwithout):
+        macwith=""
+        for i in range(6):
+            macwith=macwithout[i*2]+macwithout[i*2+1]+":"
+        return macwith[:-1]
+        
+    def macwithout2points(self, macwith):
+        return macwith.replace(":", "")
+        
 
 class TRequest(threading.Thread):
     def __init__(self, ip, interface, arp_type):
@@ -431,124 +539,124 @@ class TRequest(threading.Thread):
                 pass
         return s
 
-class KnownDevice:
-    def __init__(self):
-        self.mac=None
-        self.alias=None
+#class KnownDevice:
+#    def __init__(self):
+#        self.mac=None
+#        self.alias=None
+#
+#    def validate_mac(self, s):
+#        if len(s)!=17:
+#            return False
+#
+#        if re.match(r'([0-9a-f]{2}[:-]){5}([0-9a-f]{2})', s):
+#            return True
+#        return False
+#
+#    def validate_alias(self, s):
+#        if len(s)>40:
+#            return False
+#        if len(s)==0:
+#            return False
+#        return True
+#        
+#    def insert_mac(self):
+#        validated=False
+#        while  validated==False:
+#            self.mac=input(Color.bold(QApplication.translate("devicesinlan","Input the MAC of the known device (xx:xx:xx:xx:xx:xx): "))).lower()
+#            if self.validate_mac(self.mac):
+#                validated=True
+#            else:
+#                print (Color.red(QApplication.translate("devicesinlan","You need to insert a mac with the next format: 2a:3b:4c:5d:6e:7a")))
+#
+#    def insert_alias(self):
+#        validated=False
+#        while validated==False:
+#            self.alias=input(Color.bold(QApplication.translate("devicesinlan","Input an alias of the known device: ")))
+#            if self.validate_alias(self.alias):
+#                validated=True
+#            else:
+#                print (Color.red(QApplication.translate("devicesinlan","You need to add an alias")))
 
-    def validate_mac(self, s):
-        if len(s)!=17:
-            return False
-
-        if re.match(r'([0-9a-f]{2}[:-]){5}([0-9a-f]{2})', s):
-            return True
-        return False
-
-    def validate_alias(self, s):
-        if len(s)>40:
-            return False
-        if len(s)==0:
-            return False
-        return True
-        
-    def insert_mac(self):
-        validated=False
-        while  validated==False:
-            self.mac=input(Color.bold(QApplication.translate("devicesinlan","Input the MAC of the known device (xx:xx:xx:xx:xx:xx): "))).lower()
-            if self.validate_mac(self.mac):
-                validated=True
-            else:
-                print (Color.red(QApplication.translate("devicesinlan","You need to insert a mac with the next format: 2a:3b:4c:5d:6e:7a")))
-
-    def insert_alias(self):
-        validated=False
-        while validated==False:
-            self.alias=input(Color.bold(QApplication.translate("devicesinlan","Input an alias of the known device: ")))
-            if self.validate_alias(self.alias):
-                validated=True
-            else:
-                print (Color.red(QApplication.translate("devicesinlan","You need to add an alias")))
-
-class SetKnownDevices:
-    def __init__(self, mem):
-        self.mem=mem
-        self.arr=[]
-        self.load()
-        
-    def append(self, k):
-        if self.exists(k):
-            self.remove_mac(k.mac)#Sustitute it
-            print ("Mac already exists, overwriting it")
-        self.arr.append(k)
-    def print(self):
-        maxalias=self.max_len_alias()     
-        print (Color.bold(QApplication.translate("devicesinlan","KNOWN DEVICES BY USER AT {}").format( str(datetime.datetime.now())[:-7]).center (17+2+maxalias)))
-        print ()
-        print (Color.bold("{}  {}".format(" MAC ".center(17,'='), " ALIAS ".center(maxalias,'='))))
-        self.mem.known.order_by_alias()
-        for k in self.mem.known.arr:
-            print ("{} {}".format(Color.green(k.mac), Color.bold(k.alias)))
-
-    def remove_mac(self, mac):
-        """Returns a boolean if is deleted"""
-        todelete=[]
-        for k in self.arr:
-            if k.mac==mac:
-                todelete.append(k)
-        
-        for k in todelete:
-            self.arr.remove(k)
-        if len(todelete)>0:    
-            return True
-        
-        return False
-        
-    def exists(self, kh):
-        """Only checks mac, so only need mac to be checked"""
-        for k in self.arr:
-            if k.mac==kh.mac:
-                return True
-        return False
-    
-    def load(self):
-        if platform.system()=="Windows":
-            f=open(os.path.expanduser("~/.devicesinlan/known.txt"),"r")
-        elif platform.system()=="Linux":
-            f=open("/etc/devicesinlan/known.txt","r")
-        for l in f.readlines():
-            ar=l.split("=")
-            if len(ar)==2:
-                try:
-                    k=KnownDevice()
-                    ar=l.split("=")
-                    k.mac=ar[0].strip()
-                    k.alias=ar[1].strip()
-                    self.arr.append(k)
-                except:
-                    print(QApplication.translate("devicesinlan","Error parsing {}").format(l))
-        f.close()        
-    
-    def max_len_alias(self):
-        l=0
-        for h in self.arr:
-            if h.alias:
-                le=len(h.alias)
-                if l<le:
-                    l=le
-        return l
-        
-    def save(self):
-        """Save etc file"""
-        if platform.system()=="Windows":
-            f=open(os.path.expanduser("~/.devicesinlan/known.txt"),"w")
-        elif platform.system()=="Linux":
-            f=open("/etc/devicesinlan/known.txt","w")
-        for k in self.arr:
-            f.write("{} = {}\n".format(k.mac.lower(), k.alias))
-        f.close()        
-        
-    def order_by_alias(self):
-        self.arr=sorted(self.arr, key=lambda k: k.alias)
+#class SetKnownDevices:
+#    def __init__(self, mem):
+#        self.mem=mem
+#        self.arr=[]
+#        self.load()
+#        
+#    def append(self, k):
+#        if self.exists(k):
+#            self.remove_mac(k.mac)#Sustitute it
+#            print ("Mac already exists, overwriting it")
+#        self.arr.append(k)
+#    def print(self):
+#        maxalias=self.max_len_alias()     
+#        print (Color.bold(QApplication.translate("devicesinlan","KNOWN DEVICES BY USER AT {}").format( str(datetime.datetime.now())[:-7]).center (17+2+maxalias)))
+#        print ()
+#        print (Color.bold("{}  {}".format(" MAC ".center(17,'='), " ALIAS ".center(maxalias,'='))))
+#        self.mem.known.order_by_alias()
+#        for k in self.mem.known.arr:
+#            print ("{} {}".format(Color.green(k.mac), Color.bold(k.alias)))
+#
+#    def remove_mac(self, mac):
+#        """Returns a boolean if is deleted"""
+#        todelete=[]
+#        for k in self.arr:
+#            if k.mac==mac:
+#                todelete.append(k)
+#        
+#        for k in todelete:
+#            self.arr.remove(k)
+#        if len(todelete)>0:    
+#            return True
+#        
+#        return False
+#        
+#    def exists(self, kh):
+#        """Only checks mac, so only need mac to be checked"""
+#        for k in self.arr:
+#            if k.mac==kh.mac:
+#                return True
+#        return False
+#    
+#    def load(self):
+#        if platform.system()=="Windows":
+#            f=open(os.path.expanduser("~/.devicesinlan/known.txt"),"r")
+#        elif platform.system()=="Linux":
+#            f=open("/etc/devicesinlan/known.txt","r")
+#        for l in f.readlines():
+#            ar=l.split("=")
+#            if len(ar)==2:
+#                try:
+#                    k=KnownDevice()
+#                    ar=l.split("=")
+#                    k.mac=ar[0].strip()
+#                    k.alias=ar[1].strip()
+#                    self.arr.append(k)
+#                except:
+#                    print(QApplication.translate("devicesinlan","Error parsing {}").format(l))
+#        f.close()        
+#    
+#    def max_len_alias(self):
+#        l=0
+#        for h in self.arr:
+#            if h.alias:
+#                le=len(h.alias)
+#                if l<le:
+#                    l=le
+#        return l
+#        
+#    def save(self):
+#        """Save etc file"""
+#        if platform.system()=="Windows":
+#            f=open(os.path.expanduser("~/.devicesinlan/known.txt"),"w")
+#        elif platform.system()=="Linux":
+#            f=open("/etc/devicesinlan/known.txt","w")
+#        for k in self.arr:
+#            f.write("{} = {}\n".format(k.mac.lower(), k.alias))
+#        f.close()        
+#        
+#    def order_by_alias(self):
+#        self.arr=sorted(self.arr, key=lambda k: k.alias)
 
 def ping_command():
     """If detects OS ping, it uses it

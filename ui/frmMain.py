@@ -10,6 +10,7 @@ from frmSettings import *
 from frmHelp import *
 from frmAbout import *
 from frmInterfaceSelector import *
+from frmDeviceCRUD import *
 
             
 class frmMain(QMainWindow, Ui_frmMain):#    
@@ -21,10 +22,12 @@ class frmMain(QMainWindow, Ui_frmMain):#
         self.mem=mem
         self.sets=[]#Array of sets
         self.tables=[]#Array of tables
+        self.currentTable=None
+        self.currentSet=None
         self.tabWidget = QTabWidget(self.wdg)
         self.horizontalLayout.addWidget(self.tabWidget)
         self.showMaximized()
-        self.repaint()
+        self.tabWidget.currentChanged.connect(self.on_tabWidget_currentChanged)
 
         
     @pyqtSlot(QEvent)   
@@ -52,6 +55,22 @@ class frmMain(QMainWindow, Ui_frmMain):#
         self.retranslateUi(self)
         self.repaint()
         
+            
+    @pyqtSlot()      
+    def on_actionDeviceLink_triggered(self):
+        f=frmDeviceCRUD(self.mem, self.currentSet.selected)
+        f.exec_() 
+        self.table_update(self.currentSet, self.currentTable)
+        
+    @pyqtSlot()      
+    def on_actionDeviceUnlink_triggered(self):
+        self.currentSet.selected.unlink()
+        self.table_update(self.currentSet, self.currentTable)
+        
+    def table_update(self, set, table):
+        set.qtablewidget(table)
+        table.resizeColumnsToContents()
+        
     @pyqtSlot()      
     def on_actionScan_triggered(self):
         f=frmInterfaceSelector(self.mem, self)
@@ -61,7 +80,6 @@ class frmMain(QMainWindow, Ui_frmMain):#
         
         
         self.tab = QWidget()
-        self.tabWidget.addTab(self.tab, QIcon(":/open.png"),self.tr("Scanned at {}").format(str(datetime.datetime.now()).split(".")[0]))
         table=QTableWidget(self.tabWidget)
         horizontalLayout_2 = QVBoxLayout(self.tab)
         table.setColumnCount(0)
@@ -76,31 +94,38 @@ class frmMain(QMainWindow, Ui_frmMain):#
         
         inicio=datetime.datetime.now()
         set=SetDevices(self.mem)
-        set.qtablewidget(table)
         self.sets.append(set)
         self.tables.append(table)
+        self.tabWidget.addTab(self.tab, QIcon(":/open.png"),self.tr("Scanned at {}").format(str(datetime.datetime.now()).split(".")[0]))
+        self.tabWidget.setCurrentWidget(self.tab)
+        self.table_update(set, table)
         label=QLabel()
         label.setText(self.tr("It took {} to detect {} devices".format(datetime.datetime.now()-inicio, set.length())))
         horizontalLayout_2.addWidget(label)
-        table.resizeColumnsToContents()
         table.customContextMenuRequested[QPoint].connect(self.on_customContextMenuRequested)
         table.itemSelectionChanged.connect(self.on_itemSelectionChanged)
-        self.tabWidget.setCurrentWidget(self.tab)
 
     def on_customContextMenuRequested(self, pos):
-        table=self.tables[self.tabWidget.currentIndex()]
+        if self.currentSet.selected==None:
+            self.actionDeviceLink.setEnabled(False)
+            self.actionDeviceUnlink.setEnabled(False)
+        else:
+            self.actionDeviceLink.setEnabled(True)
+            self.actionDeviceUnlink.setEnabled(True)
         menu=QMenu()
         menu.addAction(self.actionDeviceLink)
         menu.addAction(self.actionDeviceUnlink)
-        menu.exec_(table.mapToGlobal(pos))
+        menu.exec_(self.currentTable.mapToGlobal(pos))
 
+    def on_tabWidget_currentChanged(self, index):
+        self.currentSet=self.sets[index]
+        self.currentTable=self.tables[index]
 
     def on_itemSelectionChanged(self):
-        set=self.sets[self.tabWidget.currentIndex()]
-        table=self.tables[self.tabWidget.currentIndex()]
         try:
-            for i in table.selectedItems():#itera por cada item no rowse.
-                set.selected=set.arr[i.row()]
+            for i in self.currentTable.selectedItems():#itera por cada item no rowse.
+                self.currentSet.selected=self.currentSet.arr[i.row()]
+            if self.currentSet.selected.mac==None:
+                self.currentSet.selected=None
         except:
-            set.selected=None
-        print ("selected: " +  str(set.selected))        
+            self.currentSet.selected=None   
