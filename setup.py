@@ -41,7 +41,7 @@ def filename_output():
     return "devicesinlan-{}-{}.{}".format(so,  version, pl)
 
 def winversion():
-    return "0.1"
+    return version
 
 print ("Building for", sys.platform, winversion())
 name="devicesinlan"
