@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="es">
+<!DOCTYPE TS><TS version="2.0" language="es" sourcelanguage="">
 <context>
     <name>devicesinlan</name>
     <message>
@@ -124,11 +123,6 @@
         <translation>Duró {} con el escáner de DevicesInLAN.</translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="50"/>
-        <source>Developed by Mariano Muñoz 2015 ©</source>
-        <translation>Developed by Mariano Muñoz 2015 ©</translation>
-    </message>
-    <message>
         <location filename="../libdevicesinlan.py" line="129"/>
         <source>Television</source>
         <translation>Televisión</translation>
@@ -178,6 +172,11 @@
         <source>Tablet</source>
         <translation>Tableta</translation>
     </message>
+    <message encoding="UTF-8">
+        <location filename="../devicesinlan.py" line="50"/>
+        <source>Developed by Mariano Muñoz 2015 ©</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>frmAbout</name>
@@ -213,17 +212,17 @@
     </message>
     <message>
         <location filename="../ui/frmAbout.py" line="21"/>
-        <source>VersiÃ³n {0}</source>
+        <source>Versi&#xc3;&#xb3;n {0}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ui/frmAbout.py" line="22"/>
-        <source>La pÃ¡gina del proyecto se encuentra en &lt;a href=&quot;http://devicesinlan.sourceforge.net&quot;&gt;http://devicesinlan.sourceforge.net&lt;/a&gt;&lt;p&gt; &lt;p&gt;</source>
+        <source>La p&#xc3;&#xa1;gina del proyecto se encuentra en &lt;a href=&quot;http://devicesinlan.sourceforge.net&quot;&gt;http://devicesinlan.sourceforge.net&lt;/a&gt;&lt;p&gt; &lt;p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ui/frmAbout.py" line="22"/>
-        <source>Este programa ha sido desarrollado por Mariano MuÃ±oz.&lt;p&gt;</source>
+        <source>Este programa ha sido desarrollado por Mariano Mu&#xc3;&#xb1;oz.&lt;p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
