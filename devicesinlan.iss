@@ -3,7 +3,7 @@
 
 #define MyAppName "devicesinlan"
 #define MyAppPublisher "Mariano Muñoz"
-#define MyAppURL "http://deviceninlan.sourceforge.net"
+#define MyAppURL "http://devicesinlan.sourceforge.net"
 #define MyAppExeName "devicesinlan.exe"
 
 [Setup]
@@ -17,7 +17,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={pf}\devicensinlan
+DefaultDirName={pf}\devicesinlan
 DisableDirPage=yes
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
