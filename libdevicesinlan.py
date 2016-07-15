@@ -239,19 +239,37 @@ class SetInterfaces:
             combo.addItem(name, l.id)
         if selected!=None:
                 combo.setCurrentIndex(combo.findData(selected))        
+                
+class ArpScanMethod:
+    PingArp=0 #Ping + ARP
+    Arping=1 #Arping utility
+    Own=2#My own scan
+    ArpScanner=3#Arpescanner
+                
 class SetDevices:
     def __init__(self, mem):
         """This constructor load /etc/devicesinlan/known.txt and executes arp-scan and parses its result"""
         self.mem=mem
         self.arr=[]
-        self.arp_scanner()#From arp_scan
         self.selected=None
+
+    def setMethod(self, arpscanmethod):
+        if arpscanmethod==ArpScanMethod.PingArp:
+            self.pingarp()
+        elif arpscanmethod==ArpScanMethod.Arping:
+            pass
+        elif arpscanmethod==ArpScanMethod.Own:
+            self.own()
+        elif arpscanmethod==ArpScanMethod.ArpScanner:
+            pass
+            
+
 
     def length(self):
         """Number of devices in the set"""
         return len(self.arr)
         
-    def arp_scanner(self):
+    def own(self):
         """Load Devices from arpscan output"""
 #            output=subprocess.check_output(["arp-scan", "--interface", self.mem.args.interface, "--localnet", "--ignoredups"]).decode('UTF-8')
         threads=[]
@@ -266,7 +284,7 @@ class SetDevices:
                 h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
                 self.arr.append(h)
                 continue
-            t=TRequest(str(addr), self.mem.interfaces.selected,  TypesARP.Standard)
+            t=TRequestPingArp(str(addr))
             t.start()
             threads.append(t)
             time.sleep(0.01)
@@ -284,8 +302,42 @@ class SetDevices:
                     h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
                 self.arr.append(h)
 
+        
+    def pingarp(self):
+        """Load Devices from arpscan output"""
+#            output=subprocess.check_output(["arp-scan", "--interface", self.mem.args.interface, "--localnet", "--ignoredups"]).decode('UTF-8')
+        threads=[]
+        for addr in ipaddress.IPv4Network("{}/{}".format(self.mem.interfaces.selected.ip, self.mem.interfaces.selected.mask), strict=False):
+            if str(addr)==self.mem.interfaces.selected.ip :#Adds device if ip is interface ip and jumps it
+                h=Device(self.mem)
+                h.ip=str(addr)
+                h.mac=self.mem.interfaces.selected.mac
+                h.oui=get_oui(h.mac)
+                h.pinged=True     
+                h.alias=self.mem.settings.value("DeviceAlias/{}".format(h.macwithout2points(h.mac.upper())), None)
+                h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
+                self.arr.append(h)
+                continue
+            t=TRequest(str(addr), self.mem.interfaces.selected,  TypesARP.Standard)
+            t.start()
+            threads.append(t)
+            
+        for t in threads:
+            t.join()
+            if t.mac!=None or t.pinged==True:
+                h=Device(self.mem)
+                h.ip=t.ip
+                h.mac=t.mac
+                h.oui=t.oui
+                h.pinged=t.pinged
+                if h.mac:
+                    h.alias=self.mem.settings.value("DeviceAlias/{}".format(h.macwithout2points(h.mac.upper())), None)
+                    h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
+                self.arr.append(h)
+
+
     def max_len_oui(self):
-        ma=max(len(h.oui) for h in self.arr)
+        ma=max(len(str(h.oui)) for h in self.arr)
         if ma==0:
             return 14
         return ma
@@ -395,6 +447,11 @@ class Device:
     def macwithout2points(self, macwith):
         return macwith.replace(":", "")
         
+
+
+
+
+
 
 class TRequest(threading.Thread):
     def __init__(self, ip, interface, arp_type):
@@ -538,125 +595,34 @@ class TRequest(threading.Thread):
             except:
                 pass
         return s
+        
+        
 
-#class KnownDevice:
-#    def __init__(self):
-#        self.mac=None
-#        self.alias=None
-#
-#    def validate_mac(self, s):
-#        if len(s)!=17:
-#            return False
-#
-#        if re.match(r'([0-9a-f]{2}[:-]){5}([0-9a-f]{2})', s):
-#            return True
-#        return False
-#
-#    def validate_alias(self, s):
-#        if len(s)>40:
-#            return False
-#        if len(s)==0:
-#            return False
-#        return True
-#        
-#    def insert_mac(self):
-#        validated=False
-#        while  validated==False:
-#            self.mac=input(Color.bold(QApplication.translate("devicesinlan","Input the MAC of the known device (xx:xx:xx:xx:xx:xx): "))).lower()
-#            if self.validate_mac(self.mac):
-#                validated=True
-#            else:
-#                print (Color.red(QApplication.translate("devicesinlan","You need to insert a mac with the next format: 2a:3b:4c:5d:6e:7a")))
-#
-#    def insert_alias(self):
-#        validated=False
-#        while validated==False:
-#            self.alias=input(Color.bold(QApplication.translate("devicesinlan","Input an alias of the known device: ")))
-#            if self.validate_alias(self.alias):
-#                validated=True
-#            else:
-#                print (Color.red(QApplication.translate("devicesinlan","You need to add an alias")))
 
-#class SetKnownDevices:
-#    def __init__(self, mem):
-#        self.mem=mem
-#        self.arr=[]
-#        self.load()
-#        
-#    def append(self, k):
-#        if self.exists(k):
-#            self.remove_mac(k.mac)#Sustitute it
-#            print ("Mac already exists, overwriting it")
-#        self.arr.append(k)
-#    def print(self):
-#        maxalias=self.max_len_alias()     
-#        print (Color.bold(QApplication.translate("devicesinlan","KNOWN DEVICES BY USER AT {}").format( str(datetime.datetime.now())[:-7]).center (17+2+maxalias)))
-#        print ()
-#        print (Color.bold("{}  {}".format(" MAC ".center(17,'='), " ALIAS ".center(maxalias,'='))))
-#        self.mem.known.order_by_alias()
-#        for k in self.mem.known.arr:
-#            print ("{} {}".format(Color.green(k.mac), Color.bold(k.alias)))
-#
-#    def remove_mac(self, mac):
-#        """Returns a boolean if is deleted"""
-#        todelete=[]
-#        for k in self.arr:
-#            if k.mac==mac:
-#                todelete.append(k)
-#        
-#        for k in todelete:
-#            self.arr.remove(k)
-#        if len(todelete)>0:    
-#            return True
-#        
-#        return False
-#        
-#    def exists(self, kh):
-#        """Only checks mac, so only need mac to be checked"""
-#        for k in self.arr:
-#            if k.mac==kh.mac:
-#                return True
-#        return False
-#    
-#    def load(self):
-#        if platform.system()=="Windows":
-#            f=open(os.path.expanduser("~/.devicesinlan/known.txt"),"r")
-#        elif platform.system()=="Linux":
-#            f=open("/etc/devicesinlan/known.txt","r")
-#        for l in f.readlines():
-#            ar=l.split("=")
-#            if len(ar)==2:
-#                try:
-#                    k=KnownDevice()
-#                    ar=l.split("=")
-#                    k.mac=ar[0].strip()
-#                    k.alias=ar[1].strip()
-#                    self.arr.append(k)
-#                except:
-#                    print(QApplication.translate("devicesinlan","Error parsing {}").format(l))
-#        f.close()        
-#    
-#    def max_len_alias(self):
-#        l=0
-#        for h in self.arr:
-#            if h.alias:
-#                le=len(h.alias)
-#                if l<le:
-#                    l=le
-#        return l
-#        
-#    def save(self):
-#        """Save etc file"""
-#        if platform.system()=="Windows":
-#            f=open(os.path.expanduser("~/.devicesinlan/known.txt"),"w")
-#        elif platform.system()=="Linux":
-#            f=open("/etc/devicesinlan/known.txt","w")
-#        for k in self.arr:
-#            f.write("{} = {}\n".format(k.mac.lower(), k.alias))
-#        f.close()        
-#        
-#    def order_by_alias(self):
-#        self.arr=sorted(self.arr, key=lambda k: k.alias)
+class TRequestPingArp(threading.Thread):
+    def __init__(self, ip):
+        threading.Thread.__init__(self)
+        self.ip = ip
+        self.mac=None#Mac address string
+        self.oui=""#String hardware name
+        self.pinged=False
+        
+    def run(self):    
+        try: 
+            output=subprocess.call(["ping", "-c", "1", "-W", "1", self.ip], shell=False, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+            if output==0:
+                self.pinged=True
+        except: #if exit is not 0
+            pass
+        if self.pinged==True:
+            arpexit=subprocess.check_output(["arp", self.ip])
+            arpexit=arpexit.decode('utf-8')
+            arpexit=arpexit.split(" ")
+            for s in arpexit:
+                if len(s)==17:
+                    self.mac=s
+                    self.oui=get_oui(self.mac)
+        print (self.ip, self.mac)
 
 def ping_command():
     """If detects OS ping, it uses it

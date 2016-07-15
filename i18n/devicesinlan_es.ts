@@ -3,17 +3,17 @@
 <context>
     <name>devicesinlan</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="324"/>
+        <location filename="../libdevicesinlan.py" line="376"/>
         <source>This device</source>
         <translation>Este dispositivo</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="311"/>
+        <location filename="../libdevicesinlan.py" line="363"/>
         <source>{} DEVICES IN LAN FROM {} INTERFACE AT {}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="334"/>
+        <location filename="../libdevicesinlan.py" line="386"/>
         <source>There was reply to a ping from IP address with &apos;*&apos; ({} pings).</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28,37 +28,37 @@
         <translation>Français</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="341"/>
+        <location filename="../libdevicesinlan.py" line="393"/>
         <source>IP</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="342"/>
+        <location filename="../libdevicesinlan.py" line="394"/>
         <source>MAC</source>
         <translation>MAC</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="343"/>
+        <location filename="../libdevicesinlan.py" line="395"/>
         <source>Alias</source>
         <translation>Alias</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="344"/>
+        <location filename="../libdevicesinlan.py" line="396"/>
         <source>Hardware</source>
         <translation>Hardware</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="345"/>
+        <location filename="../libdevicesinlan.py" line="397"/>
         <source>Ping</source>
         <translation>Ping</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="697"/>
+        <location filename="../libdevicesinlan.py" line="663"/>
         <source>True</source>
         <translation>Sí</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="700"/>
+        <location filename="../libdevicesinlan.py" line="666"/>
         <source>False</source>
         <translation>No</translation>
     </message>
@@ -191,22 +191,22 @@
         <translation>a los siguientes idiomas&lt;p&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="215"/>
+        <location filename="../ui/Ui_frmAbout.py" line="217"/>
         <source>About DevicesInLan</source>
         <translation>Acerca de DevicesInLan</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="216"/>
+        <location filename="../ui/Ui_frmAbout.py" line="218"/>
         <source>DevicesInLan</source>
         <translation>DevicesInLan</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="217"/>
+        <location filename="../ui/Ui_frmAbout.py" line="219"/>
         <source>Credits</source>
         <translation>Créditos</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="218"/>
+        <location filename="../ui/Ui_frmAbout.py" line="220"/>
         <source>License</source>
         <translation>Licencia</translation>
     </message>
@@ -358,12 +358,12 @@
         <translation>Nuevo escaneo</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="99"/>
+        <location filename="../ui/frmMain.py" line="100"/>
         <source>Scanned at {}</source>
         <translation>Escaneado a las {}</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="103"/>
+        <location filename="../ui/frmMain.py" line="104"/>
         <source>It took {} to detect {} devices</source>
         <translation>Duró {} detectar {} dispositivos</translation>
     </message>

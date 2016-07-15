@@ -94,6 +94,7 @@ class frmMain(QMainWindow, Ui_frmMain):#
         
         inicio=datetime.datetime.now()
         set=SetDevices(self.mem)
+        set.setMethod(ArpScanMethod.Own)
         self.sets.append(set)
         self.tables.append(table)
         self.tabWidget.addTab(self.tab, QIcon(":/open.png"),self.tr("Scanned at {}").format(str(datetime.datetime.now()).split(".")[0]))
