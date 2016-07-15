@@ -344,10 +344,11 @@ class SetDevices:
 
 
     def max_len_oui(self):
-        ma=max(len(str(h.oui)) for h in self.arr)
-        if ma==0:
-            return 14
-        return ma
+        max=15
+        for h in self.arr:
+            if len(str(h.oui))>max:
+                max=len(str(h.oui))
+        return max
 
     def max_len_alias(self):
         l=14
@@ -388,7 +389,7 @@ class SetDevices:
                 else:
                     mac=Color.red(mac)
                     alias=" "     
-                print ("{}  {}  {}  {}".format((pinged+h.ip).ljust(16), mac.center(17),   Color.yellow(alias.ljust(maxalias)), h.oui.ljust(maxoui)))    
+                print ("{}  {}  {}  {}".format((pinged+h.ip).ljust(16), mac.center(17),   Color.yellow(alias.ljust(maxalias)), str(h.oui).ljust(maxoui)))    
         print (Color.bold("="*(16+2+17+2+maxalias+2+maxoui)))        
         print (QApplication.translate("devicesinlan","There was reply to a ping from IP address with '*' ({} pings).").format(numpings))
             
@@ -622,7 +623,6 @@ class TRequestPingArp(threading.Thread):
             output=subprocess.check_output(["ping", "-n", "1", self.ip], shell=False, stderr=subprocess.DEVNULL, creationflags=CREATE_NO_WINDOW)
             #if there are two "bytes" words, the ping was made correctly
             entrecomas=output.split(b"bytes")
-            print(entrecomas,  entrecomas[1])
             if len(entrecomas)==3:
                 self.pinged=True
         else:
@@ -643,7 +643,6 @@ class TRequestPingArp(threading.Thread):
                     if len(s)==17 and s.find(":")!=-1:
                         self.mac=s
                         self.oui=get_oui(self.mac)
-        print (self.ip, self.mac)
 
 def ping_command():
     """If detects OS ping, it uses it

@@ -49,7 +49,7 @@ if platform.system()=="Windows":
 elif platform.system()=="Linux":
     parser=argparse.ArgumentParser(prog='devicesinlan', description=QApplication.translate("devicesinlan",'Show devices in a LAN making an ARP and a ICMP request to find them'),  
     epilog=QApplication.translate("devicesinlan","If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).")+"\n"
-          +QApplication.translate("devicesinlan","Developed by Mariano Muñoz 2015 ©")
+          +QApplication.translate("devicesinlan","Developed by Mariano Muñoz 2015-{}".format(dateversion.year))
     , formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('-v', '--version', action='version', version=version)
     parser.add_argument('-c',  '--console', help=QApplication.translate("devicesinlan",'Use console app'), action='store_true',  default=False)
@@ -101,6 +101,7 @@ elif platform.system()=="Linux":
         
         inicio=datetime.datetime.now()
         set=SetDevices(mem)
+        set.setMethod(ArpScanMethod.PingArp)
         set.print()
         print (QApplication.translate("devicesinlan","It took {} with DevicesInLAN scanner.").format (datetime.datetime.now()-inicio))
 

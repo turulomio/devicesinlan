@@ -3,17 +3,17 @@
 <context>
     <name>devicesinlan</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="383"/>
+        <location filename="../libdevicesinlan.py" line="384"/>
         <source>This device</source>
         <translation>Este dispositivo</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="370"/>
+        <location filename="../libdevicesinlan.py" line="371"/>
         <source>{} DEVICES IN LAN FROM {} INTERFACE AT {}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="393"/>
+        <location filename="../libdevicesinlan.py" line="394"/>
         <source>There was reply to a ping from IP address with &apos;*&apos; ({} pings).</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28,27 +28,27 @@
         <translation>Français</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="400"/>
+        <location filename="../libdevicesinlan.py" line="401"/>
         <source>IP</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="401"/>
+        <location filename="../libdevicesinlan.py" line="402"/>
         <source>MAC</source>
         <translation>MAC</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="402"/>
+        <location filename="../libdevicesinlan.py" line="403"/>
         <source>Alias</source>
         <translation>Alias</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="403"/>
+        <location filename="../libdevicesinlan.py" line="404"/>
         <source>Hardware</source>
         <translation>Hardware</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="404"/>
+        <location filename="../libdevicesinlan.py" line="405"/>
         <source>Ping</source>
         <translation>Ping</translation>
     </message>
@@ -118,7 +118,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="105"/>
+        <location filename="../devicesinlan.py" line="106"/>
         <source>It took {} with DevicesInLAN scanner.</source>
         <translation>Duró {} con el escáner de DevicesInLAN.</translation>
     </message>
@@ -172,11 +172,6 @@
         <source>Tablet</source>
         <translation>Tableta</translation>
     </message>
-    <message encoding="UTF-8">
-        <location filename="../devicesinlan.py" line="50"/>
-        <source>Developed by Mariano Muñoz 2015 ©</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>frmAbout</name>
@@ -191,22 +186,22 @@
         <translation>a los siguientes idiomas&lt;p&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="215"/>
+        <location filename="../ui/Ui_frmAbout.py" line="217"/>
         <source>About DevicesInLan</source>
         <translation>Acerca de DevicesInLan</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="216"/>
+        <location filename="../ui/Ui_frmAbout.py" line="218"/>
         <source>DevicesInLan</source>
         <translation>DevicesInLan</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="217"/>
+        <location filename="../ui/Ui_frmAbout.py" line="219"/>
         <source>Credits</source>
         <translation>Créditos</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="218"/>
+        <location filename="../ui/Ui_frmAbout.py" line="220"/>
         <source>License</source>
         <translation>Licencia</translation>
     </message>
