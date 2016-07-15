@@ -3,17 +3,17 @@
 <context>
     <name>devicesinlan</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="376"/>
+        <location filename="../libdevicesinlan.py" line="383"/>
         <source>This device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="363"/>
+        <location filename="../libdevicesinlan.py" line="370"/>
         <source>{} DEVICES IN LAN FROM {} INTERFACE AT {}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="386"/>
+        <location filename="../libdevicesinlan.py" line="393"/>
         <source>There was reply to a ping from IP address with &apos;*&apos; ({} pings).</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28,37 +28,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="393"/>
+        <location filename="../libdevicesinlan.py" line="400"/>
         <source>IP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="394"/>
+        <location filename="../libdevicesinlan.py" line="401"/>
         <source>MAC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="395"/>
+        <location filename="../libdevicesinlan.py" line="402"/>
         <source>Alias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="396"/>
+        <location filename="../libdevicesinlan.py" line="403"/>
         <source>Hardware</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="397"/>
+        <location filename="../libdevicesinlan.py" line="404"/>
         <source>Ping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="663"/>
+        <location filename="../libdevicesinlan.py" line="684"/>
         <source>True</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="666"/>
+        <location filename="../libdevicesinlan.py" line="687"/>
         <source>False</source>
         <translation type="unfinished"></translation>
     </message>
@@ -206,22 +206,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="217"/>
+        <location filename="../ui/Ui_frmAbout.py" line="215"/>
         <source>About DevicesInLan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="218"/>
+        <location filename="../ui/Ui_frmAbout.py" line="216"/>
         <source>DevicesInLan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="219"/>
+        <location filename="../ui/Ui_frmAbout.py" line="217"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="220"/>
+        <location filename="../ui/Ui_frmAbout.py" line="218"/>
         <source>License</source>
         <translation type="unfinished"></translation>
     </message>

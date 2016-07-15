@@ -13,7 +13,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 import ipaddress
 version="0.6.0.1"
-dateversion=datetime.date(2016, 3, 27)
+dateversion=datetime.date(2016, 7, 15)
 
 
 # I had a lot of problems with UTF-8. LANG must be es_ES.UTF-8 to work
@@ -284,7 +284,7 @@ class SetDevices:
                 h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
                 self.arr.append(h)
                 continue
-            t=TRequestPingArp(str(addr))
+            t=TRequest(str(addr), self.mem.interfaces.selected,  TypesARP.Standard)
             t.start()
             threads.append(t)
             time.sleep(0.01)
@@ -305,8 +305,15 @@ class SetDevices:
         
     def pingarp(self):
         """Load Devices from arpscan output"""
-#            output=subprocess.check_output(["arp-scan", "--interface", self.mem.args.interface, "--localnet", "--ignoredups"]).decode('UTF-8')
         threads=[]
+#        t=TRequestPingArp("192.168.1.100")
+#        t.start()
+#        threads.append(t)
+#        t.join()
+#        t=TRequestPingArp("192.168.1.167")
+#        t.start()
+#        threads.append(t)
+        
         for addr in ipaddress.IPv4Network("{}/{}".format(self.mem.interfaces.selected.ip, self.mem.interfaces.selected.mask), strict=False):
             if str(addr)==self.mem.interfaces.selected.ip :#Adds device if ip is interface ip and jumps it
                 h=Device(self.mem)
@@ -318,7 +325,7 @@ class SetDevices:
                 h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
                 self.arr.append(h)
                 continue
-            t=TRequest(str(addr), self.mem.interfaces.selected,  TypesARP.Standard)
+            t=TRequestPingArp(str(addr))
             t.start()
             threads.append(t)
             
@@ -400,6 +407,7 @@ class SetDevices:
         table.setRowCount(self.length())
         for rownumber, h in enumerate(self.arr):
             alias=""
+            print(h.alias, h.mac, h.ip)
             if h.alias!=None:
                 alias=h.alias
             table.setItem(rownumber, 0, qleft(h.ip))
@@ -607,21 +615,34 @@ class TRequestPingArp(threading.Thread):
         self.oui=""#String hardware name
         self.pinged=False
         
-    def run(self):    
-        try: 
+    def run(self):
+        #PING
+        if platform.system()=="Windows":
+            CREATE_NO_WINDOW=0x08000000
+            output=subprocess.check_output(["ping", "-n", "1", self.ip], shell=False, stderr=subprocess.DEVNULL, creationflags=CREATE_NO_WINDOW)
+            #if there are two "bytes" words, the ping was made correctly
+            entrecomas=output.split(b"bytes")
+            print(entrecomas,  entrecomas[1])
+            if len(entrecomas)==3:
+                self.pinged=True
+        else:
             output=subprocess.call(["ping", "-c", "1", "-W", "1", self.ip], shell=False, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
             if output==0:
                 self.pinged=True
-        except: #if exit is not 0
-            pass
+        #ARP
         if self.pinged==True:
-            arpexit=subprocess.check_output(["arp", self.ip])
-            arpexit=arpexit.decode('utf-8')
-            arpexit=arpexit.split(" ")
-            for s in arpexit:
-                if len(s)==17:
-                    self.mac=s
-                    self.oui=get_oui(self.mac)
+            if platform.system()=="Windows":
+                arpexit=subprocess.check_output(["arp", "-a",  self.ip], creationflags=CREATE_NO_WINDOW)
+                for s in arpexit.split(b" "):
+                    if len(s)==17 and s.find(b"-")!=-1:
+                        self.mac=s.decode()
+                        self.oui=get_oui(self.mac)
+            else:
+                arpexit=subprocess.check_output(["arp", self.ip])
+                for s in arpexit.decode('utf-8').split(" "):
+                    if len(s)==17 and s.find(":")!=-1:
+                        self.mac=s
+                        self.oui=get_oui(self.mac)
         print (self.ip, self.mac)
 
 def ping_command():
