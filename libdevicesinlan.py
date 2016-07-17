@@ -12,7 +12,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 import ipaddress
-version="0.7.0.0"
+version="0.7.0"
 dateversion=datetime.date(2016, 7, 17)
 
 

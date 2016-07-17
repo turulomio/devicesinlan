@@ -18,7 +18,7 @@ class frmAbout(QDialog, Ui_frmAbout):
         if name:
             self.setObjectName(name)
         self.setupUi(self)
-        self.lblVersion.setText(self.tr("Versión {0}".format(libdevicesinlan.version)))
+        self.lblVersion.setText(self.tr("Version {0}".format(libdevicesinlan.version)))
         self.textBrowser.setHtml(
             self.tr("La página del proyecto se encuentra en <a href=\"http://devicesinlan.sourceforge.net\">http://devicesinlan.sourceforge.net</a><p> <p>")+
             self.tr("Este programa ha sido desarrollado por Mariano Muñoz.<p>")+

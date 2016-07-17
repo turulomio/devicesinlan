@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="es" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.1" language="es">
 <context>
     <name>devicesinlan</name>
     <message>
@@ -202,17 +203,17 @@
     </message>
     <message>
         <location filename="../ui/frmAbout.py" line="21"/>
-        <source>Versi&#xc3;&#xb3;n {0}</source>
+        <source>VersiÃ³n {0}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ui/frmAbout.py" line="22"/>
-        <source>La p&#xc3;&#xa1;gina del proyecto se encuentra en &lt;a href=&quot;http://devicesinlan.sourceforge.net&quot;&gt;http://devicesinlan.sourceforge.net&lt;/a&gt;&lt;p&gt; &lt;p&gt;</source>
+        <source>La pÃ¡gina del proyecto se encuentra en &lt;a href=&quot;http://devicesinlan.sourceforge.net&quot;&gt;http://devicesinlan.sourceforge.net&lt;/a&gt;&lt;p&gt; &lt;p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ui/frmAbout.py" line="22"/>
-        <source>Este programa ha sido desarrollado por Mariano Mu&#xc3;&#xb1;oz.&lt;p&gt;</source>
+        <source>Este programa ha sido desarrollado por Mariano MuÃ±oz.&lt;p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
