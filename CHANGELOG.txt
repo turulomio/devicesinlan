@@ -29,3 +29,9 @@ devicesinlan 0.6.0 20150819
 - Added ping search support
 - Made my own arp-scanner
 - Added ieee-oui.txt database with get-oui from arp-scan
+
+devicesinlan 0.7.0 20160717
+===========================
+- Added UI.
+- First Windows verion
+

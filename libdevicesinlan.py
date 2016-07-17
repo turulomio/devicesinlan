@@ -12,8 +12,8 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 import ipaddress
-version="0.6.0.1"
-dateversion=datetime.date(2016, 7, 15)
+version="0.7.0.0"
+dateversion=datetime.date(2016, 7, 17)
 
 
 # I had a lot of problems with UTF-8. LANG must be es_ES.UTF-8 to work

@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 import argparse
-import subprocess
 import datetime
 import platform
 import os
@@ -61,9 +60,9 @@ elif platform.system()=="Linux":
     args=parser.parse_args()        
     
     if args.console==False:    
-        if os.path.exists("/etc/devicesinlan/known.txt")==False:
-            subprocess.check_output(["cp","/etc/devicesinlan/known.txt.dist","/etc/devicesinlan/known.txt"])
-            print(QApplication.translate("devicesinlan","I couldn't find /etc/devicesinlan/known.txt.") + " " + QApplication.translate("devicesinlan","I copied distribution file to it.") + " "+ QApplication.translate("devicesinlan","Add your mac addresses to detect strage devices in your LAN."))
+#        if os.path.exists("/etc/devicesinlan/known.txt")==False:
+#            subprocess.check_output(["cp","/etc/devicesinlan/known.txt.dist","/etc/devicesinlan/known.txt"])
+#            print(QApplication.translate("devicesinlan","I couldn't find /etc/devicesinlan/known.txt.") + " " + QApplication.translate("devicesinlan","I copied distribution file to it.") + " "+ QApplication.translate("devicesinlan","Add your mac addresses to detect strage devices in your LAN."))
 
         app.setQuitOnLastWindowClosed(True)
         import frmMain 

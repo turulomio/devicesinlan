@@ -68,12 +68,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="66"/>
+        <location filename="../devicesinlan.py" line="41"/>
         <source>I copied distribution file to it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="66"/>
+        <location filename="../devicesinlan.py" line="41"/>
         <source>Add your mac addresses to detect strage devices in your LAN.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -110,11 +110,6 @@
     <message>
         <location filename="../devicesinlan.py" line="60"/>
         <source>List known device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../devicesinlan.py" line="66"/>
-        <source>I couldn&apos;t find /etc/devicesinlan/known.txt.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
