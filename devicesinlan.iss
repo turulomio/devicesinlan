@@ -44,7 +44,6 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 Source: "devicesinlan.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "*.pyd"; DestDir: "{app}"; Flags: ignoreversion  
 Source: "i18n/*.qm"; DestDir: "{app}/i18n/"; Flags: ignoreversion    
-Source: "known.txt.dist"; DestDir: "{app}"; Flags: ignoreversion
 Source: "ieee-oui.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "*.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "library.zip"; DestDir: "{app}"; Flags: ignoreversion        

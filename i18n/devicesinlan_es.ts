@@ -64,57 +64,57 @@
         <translation>No</translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="41"/>
+        <location filename="../devicesinlan.py" line="40"/>
         <source>I couldn&apos;t find .devicesinlan/known.txt.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="41"/>
+        <location filename="../devicesinlan.py" line="40"/>
         <source>I copied distribution file to it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="41"/>
+        <location filename="../devicesinlan.py" line="40"/>
         <source>Add your mac addresses to detect strage devices in your LAN.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="50"/>
+        <location filename="../devicesinlan.py" line="49"/>
         <source>Show devices in a LAN making an ARP and a ICMP request to find them</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="50"/>
+        <location filename="../devicesinlan.py" line="49"/>
         <source>If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="55"/>
+        <location filename="../devicesinlan.py" line="54"/>
         <source>Use console app</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="57"/>
+        <location filename="../devicesinlan.py" line="56"/>
         <source>Net interface name</source>
         <translation>Nombre del interfaz de red</translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="58"/>
+        <location filename="../devicesinlan.py" line="57"/>
         <source>Add a known device</source>
         <translation>Añadir un nuevo dispositivo</translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="59"/>
+        <location filename="../devicesinlan.py" line="58"/>
         <source>Remove a known device</source>
         <translation>Elminar un dispositivo conocido</translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="60"/>
+        <location filename="../devicesinlan.py" line="59"/>
         <source>List known device</source>
         <translation>Listado de dispositivos conocidos</translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="106"/>
+        <location filename="../devicesinlan.py" line="105"/>
         <source>It took {} with DevicesInLAN scanner.</source>
         <translation>Duró {} con el escáner de DevicesInLAN.</translation>
     </message>
@@ -182,29 +182,24 @@
         <translation>a los siguientes idiomas&lt;p&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="217"/>
+        <location filename="../ui/Ui_frmAbout.py" line="215"/>
         <source>About DevicesInLan</source>
         <translation>Acerca de DevicesInLan</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="218"/>
+        <location filename="../ui/Ui_frmAbout.py" line="216"/>
         <source>DevicesInLan</source>
         <translation>DevicesInLan</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="219"/>
+        <location filename="../ui/Ui_frmAbout.py" line="217"/>
         <source>Credits</source>
         <translation>Créditos</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="220"/>
+        <location filename="../ui/Ui_frmAbout.py" line="218"/>
         <source>License</source>
         <translation>Licencia</translation>
-    </message>
-    <message>
-        <location filename="../ui/frmAbout.py" line="21"/>
-        <source>VersiÃ³n {0}</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ui/frmAbout.py" line="22"/>
@@ -215,6 +210,11 @@
         <location filename="../ui/frmAbout.py" line="22"/>
         <source>Este programa ha sido desarrollado por Mariano MuÃ±oz.&lt;p&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/frmAbout.py" line="21"/>
+        <source>Version {0}</source>
+        <translation type="unfinished">Versión {0}</translation>
     </message>
 </context>
 <context>

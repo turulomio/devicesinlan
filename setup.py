@@ -53,12 +53,10 @@ include_files.append(("i18n/devicesinlan_es.qm", "i18n/devicesinlan_es.qm"))
 include_files.append(("i18n/devicesinlan_fr.qm", "i18n/devicesinlan_fr.qm"))
 include_files.append(("i18n/devicesinlan_ro.qm", "i18n/devicesinlan_ro.qm"))
 include_files.append(("i18n/devicesinlan_ru.qm", "i18n/devicesinlan_ru.qm"))
-include_files.append("known.txt.dist")
 
 #Build options
 if sys.platform=='win32':
       base = 'Win32GUI'
-      include_files.append("known.txt.dist")
       include_files.append("devicesinlan.iss")
       build_msi_options = {
            'upgrade_code': '{3849730B-2375-4F76-B4A5-343277A23B9B}',
