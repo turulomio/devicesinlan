@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="es">
+<!DOCTYPE TS><TS version="2.0" language="es" sourcelanguage="">
 <context>
     <name>devicesinlan</name>
     <message>
@@ -182,33 +181,33 @@
         <translation>a los siguientes idiomas&lt;p&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="215"/>
+        <location filename="../ui/Ui_frmAbout.py" line="217"/>
         <source>About DevicesInLan</source>
         <translation>Acerca de DevicesInLan</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="216"/>
+        <location filename="../ui/Ui_frmAbout.py" line="218"/>
         <source>DevicesInLan</source>
         <translation>DevicesInLan</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="217"/>
+        <location filename="../ui/Ui_frmAbout.py" line="219"/>
         <source>Credits</source>
         <translation>Créditos</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="218"/>
+        <location filename="../ui/Ui_frmAbout.py" line="220"/>
         <source>License</source>
         <translation>Licencia</translation>
     </message>
     <message>
         <location filename="../ui/frmAbout.py" line="22"/>
-        <source>La pÃ¡gina del proyecto se encuentra en &lt;a href=&quot;http://devicesinlan.sourceforge.net&quot;&gt;http://devicesinlan.sourceforge.net&lt;/a&gt;&lt;p&gt; &lt;p&gt;</source>
+        <source>La p&#xc3;&#xa1;gina del proyecto se encuentra en &lt;a href=&quot;http://devicesinlan.sourceforge.net&quot;&gt;http://devicesinlan.sourceforge.net&lt;/a&gt;&lt;p&gt; &lt;p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ui/frmAbout.py" line="22"/>
-        <source>Este programa ha sido desarrollado por Mariano MuÃ±oz.&lt;p&gt;</source>
+        <source>Este programa ha sido desarrollado por Mariano Mu&#xc3;&#xb1;oz.&lt;p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

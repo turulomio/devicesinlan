@@ -3,9 +3,8 @@ DESTDIR ?= /
 PREFIXBIN=$(DESTDIR)/usr/bin
 PREFIXLIB=$(DESTDIR)/usr/lib/devicesinlan
 PREFIXSHARE=$(DESTDIR)/usr/share/devicesinlan
-PREFIXLOCALE=$(DESTDIR)/usr/share/locale/
-
-
+PREFIXPIXMAPS=$(DESTDIR)/usr/share/pixmaps/
+PREFIXAPPLICATIONS=$(DESTDIR)/usr/share/applications/
 
 install:
 
@@ -23,6 +22,8 @@ install:
 	install -o root -d $(PREFIXBIN)
 	install -o root -d $(PREFIXLIB)
 	install -o root -d $(PREFIXSHARE)
+	install -o root -d $(PREFIXPIXMAPS)
+	install -o root -d $(PREFIXAPPLICATIONS)
 	install -m 644 -o root ui/*.py $(PREFIXLIB)
 	install -m 644 -o root images/*.py $(PREFIXLIB)
 	install -m 644 -o root images/devicesinlan.png $(DESTDIR)/usr/share/pixmaps/
@@ -35,8 +36,8 @@ install:
 
 uninstall:
 	rm $(PREFIXBIN)/devicesinlan
-	rm $(DESTDIR)/usr/share/applications/devicesinlan.desktop
-	rm $(DESTDIR)/usr/share/pixmaps/devicesinlan.png
+	rm $(PREFIXAPPLICATIONS)/devicesinlan.desktop
+	rm $(PREFIXPIXMAPS)/devicesinlan.png
 	rm -Rf $(PREFIXLIB)
 	rm -Rf $(PREFIXSHARE)
 

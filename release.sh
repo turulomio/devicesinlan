@@ -1,12 +1,15 @@
 #!/bin/bash
 DIR=devicesinlan-`cat libdevicesinlan.py | grep 'version="'| cut --delimiter='"'  -f 2`
+BUILDDIR=build/$DIR
 FILE=$DIR.tar.gz
 echo "Este script crea el fichero $FILE para ser subido al proyecto"
 
-mkdir $DIR
-mkdir $DIR/images
-mkdir $DIR/i18n
-mkdir $DIR/ui
+rm -Rf $BUILDDIR
+
+mkdir -p $BUILDDIR
+mkdir $BUILDDIR/images
+mkdir $BUILDDIR/i18n
+mkdir $BUILDDIR/ui
 
 cp      Makefile \
         AUTHORS.txt \
@@ -14,21 +17,28 @@ cp      Makefile \
         GPL-3.txt \
         INSTALL.txt \
         RELEASES.txt \
+        libdevicesinlan.py \
         devicesinlan.py \
+        devicesinlan.pro \
+        devicesinlan.desktop \
         ieee-oui.txt \
-        $DIR
+        $BUILDDIR
 
 cp      images/*.png \
         images/*.ico \
         images/*.qrc \
-        $DIR/images
+        $BUILDDIR/images
 
 cp      i18n/*.ts \
-        $DIR/i18n
+        $BUILDDIR/i18n
 
 cp      ui/*.ui \
         ui/frm*.py \
-        $DIR/ui
+        $BUILDDIR/ui
 
+cd build
 tar cvz $DIR -f $FILE
-rm -R $DIR
+cd ..
+
+## BIN LINUX
+python3 setup.py build
