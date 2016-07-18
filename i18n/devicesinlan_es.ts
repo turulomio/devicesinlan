@@ -3,17 +3,17 @@
 <context>
     <name>devicesinlan</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="384"/>
+        <location filename="../libdevicesinlan.py" line="387"/>
         <source>This device</source>
         <translation>Este dispositivo</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="371"/>
+        <location filename="../libdevicesinlan.py" line="374"/>
         <source>{} DEVICES IN LAN FROM {} INTERFACE AT {}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="394"/>
+        <location filename="../libdevicesinlan.py" line="397"/>
         <source>There was reply to a ping from IP address with &apos;*&apos; ({} pings).</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28,37 +28,37 @@
         <translation>Français</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="401"/>
+        <location filename="../libdevicesinlan.py" line="404"/>
         <source>IP</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="402"/>
+        <location filename="../libdevicesinlan.py" line="405"/>
         <source>MAC</source>
         <translation>MAC</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="403"/>
+        <location filename="../libdevicesinlan.py" line="406"/>
         <source>Alias</source>
         <translation>Alias</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="404"/>
+        <location filename="../libdevicesinlan.py" line="407"/>
         <source>Hardware</source>
         <translation>Hardware</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="405"/>
+        <location filename="../libdevicesinlan.py" line="408"/>
         <source>Ping</source>
         <translation>Ping</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="684"/>
+        <location filename="../libdevicesinlan.py" line="687"/>
         <source>True</source>
         <translation>Sí</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="687"/>
+        <location filename="../libdevicesinlan.py" line="690"/>
         <source>False</source>
         <translation>No</translation>
     </message>
@@ -118,54 +118,59 @@
         <translation>Duró {} con el escáner de DevicesInLAN.</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="129"/>
+        <location filename="../libdevicesinlan.py" line="131"/>
         <source>Television</source>
         <translation>Televisión</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="130"/>
+        <location filename="../libdevicesinlan.py" line="132"/>
         <source>Digital camera</source>
         <translation>Cámara digital</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="128"/>
+        <location filename="../libdevicesinlan.py" line="130"/>
         <source>Unknown</source>
         <translation>Desconocido</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="131"/>
+        <location filename="../libdevicesinlan.py" line="133"/>
         <source>Web camera</source>
         <translation>Cámara Web</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="132"/>
+        <location filename="../libdevicesinlan.py" line="134"/>
         <source>Laptop</source>
         <translation>Ordenador portátil</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="133"/>
+        <location filename="../libdevicesinlan.py" line="135"/>
         <source>Computer</source>
         <translation>Ordenador personal</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="134"/>
+        <location filename="../libdevicesinlan.py" line="136"/>
         <source>Modem</source>
         <translation>Router</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="135"/>
+        <location filename="../libdevicesinlan.py" line="137"/>
         <source>Smartphone</source>
         <translation>Teléfono móvil</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="136"/>
+        <location filename="../libdevicesinlan.py" line="138"/>
         <source>Printer</source>
         <translation>Impresora</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="137"/>
+        <location filename="../libdevicesinlan.py" line="139"/>
         <source>Tablet</source>
         <translation>Tableta</translation>
+    </message>
+    <message>
+        <location filename="../libdevicesinlan.py" line="140"/>
+        <source>Wireless USB dongle</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

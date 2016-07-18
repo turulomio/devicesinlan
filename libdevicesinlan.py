@@ -97,6 +97,8 @@ class DeviceType:
             return QPixmap(":/devices/printer.png")
         elif self.id==9:
             return QPixmap(":/devices/tablet.png")
+        elif self.id==10:
+            return QPixmap(":/devices/usb-wireless.png")
         return None
         
     def qicon(self):
@@ -135,6 +137,7 @@ class SetDeviceTypes:
         self.append(DeviceType(self.mem).init__create(7, QApplication.translate("devicesinlan", "Smartphone")))
         self.append(DeviceType(self.mem).init__create(8, QApplication.translate("devicesinlan", "Printer")))
         self.append(DeviceType(self.mem).init__create(9, QApplication.translate("devicesinlan", "Tablet")))
+        self.append(DeviceType(self.mem).init__create(10, QApplication.translate("devicesinlan", "Wireless USB dongle")))
 
     def order_by_name(self):
         """Orders the Set using self.arr"""
