@@ -2,8 +2,6 @@
 import argparse
 import datetime
 import platform
-import os
-import shutil
 import sys
 from PyQt5.QtWidgets import *   
 if platform.system()=="Windows":
@@ -12,9 +10,6 @@ if platform.system()=="Windows":
 elif platform.system()=="Linux":
     sys.path.append("/usr/lib/devicesinlan")
 from libdevicesinlan import *
-
-    
-
 """
     To see information of the ARP protocol, look into doc/devicesinlan.odt
 """
@@ -31,14 +26,6 @@ mem=Mem()
 mem.change_language(mem.settings.value("frmSettings/language", "en"))
 
 if platform.system()=="Windows":
-    if os.path.exists(os.path.expanduser("~/.devicesinlan/"))==False:
-        try:
-            os.makedirs(os.path.expanduser("~/.devicesinlan/"))
-        except:
-            pass
-        shutil.copy("known.txt.dist",os.path.expanduser("~/.devicesinlan/known.txt"))
-        print(QApplication.translate("devicesinlan","I couldn't find .devicesinlan/known.txt.") + " " + QApplication.translate("devicesinlan","I copied distribution file to it.") + " "+ QApplication.translate("devicesinlan","Add your mac addresses to detect strage devices in your LAN."))
-
     app.setQuitOnLastWindowClosed(True)
     import frmMain
     frmMain = frmMain.frmMain(mem) 
@@ -60,10 +47,6 @@ elif platform.system()=="Linux":
     args=parser.parse_args()        
     
     if args.console==False:    
-#        if os.path.exists("/etc/devicesinlan/known.txt")==False:
-#            subprocess.check_output(["cp","/etc/devicesinlan/known.txt.dist","/etc/devicesinlan/known.txt"])
-#            print(QApplication.translate("devicesinlan","I couldn't find /etc/devicesinlan/known.txt.") + " " + QApplication.translate("devicesinlan","I copied distribution file to it.") + " "+ QApplication.translate("devicesinlan","Add your mac addresses to detect strage devices in your LAN."))
-
         app.setQuitOnLastWindowClosed(True)
         import frmMain 
         frmMain = frmMain.frmMain(mem) 

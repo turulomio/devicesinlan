@@ -53,57 +53,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="40"/>
-        <source>I couldn&apos;t find .devicesinlan/known.txt.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../devicesinlan.py" line="40"/>
-        <source>I copied distribution file to it.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../devicesinlan.py" line="40"/>
-        <source>Add your mac addresses to detect strage devices in your LAN.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../devicesinlan.py" line="49"/>
+        <location filename="../devicesinlan.py" line="36"/>
         <source>Show devices in a LAN making an ARP and a ICMP request to find them</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="49"/>
+        <location filename="../devicesinlan.py" line="36"/>
         <source>If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="54"/>
+        <location filename="../devicesinlan.py" line="41"/>
         <source>Use console app</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="56"/>
+        <location filename="../devicesinlan.py" line="43"/>
         <source>Net interface name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="57"/>
+        <location filename="../devicesinlan.py" line="44"/>
         <source>Add a known device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="58"/>
+        <location filename="../devicesinlan.py" line="45"/>
         <source>Remove a known device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="59"/>
+        <location filename="../devicesinlan.py" line="46"/>
         <source>List known device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="105"/>
+        <location filename="../devicesinlan.py" line="88"/>
         <source>It took {} with DevicesInLAN scanner.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -186,22 +171,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="217"/>
+        <location filename="../ui/Ui_frmAbout.py" line="215"/>
         <source>About DevicesInLan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="218"/>
+        <location filename="../ui/Ui_frmAbout.py" line="216"/>
         <source>DevicesInLan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="219"/>
+        <location filename="../ui/Ui_frmAbout.py" line="217"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="220"/>
+        <location filename="../ui/Ui_frmAbout.py" line="218"/>
         <source>License</source>
         <translation type="unfinished"></translation>
     </message>
