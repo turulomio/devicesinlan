@@ -43,12 +43,10 @@ class Color:
 
 class Mem:
     def __init__(self):
-#        self.known=SetKnownDevices(self)
         self.settings=QSettings()
         self.translator=QTranslator()
         self.interfaces=SetInterfaces(self)
         self.interfaces.load_all()
-        self.interfaces.print()
         self.types=SetDeviceTypes(self)
         self.types.load_all()
         
@@ -57,11 +55,7 @@ class Mem:
         urls= ["i18n/devicesinlan_" + language + ".qm","/usr/share/devicesinlan/devicesinlan_" + language + ".qm"]
         for url in urls:
             if os.path.exists(url)==True:
-                print ("Found {} from {}".format(url,  os.getcwd()))
                 break
-            else:
-                print ("Not found {} from {}".format(url,  os.getcwd()))        
-            
         self.translator.load(url)
         QCoreApplication.installTranslator(self.translator);
 
@@ -212,12 +206,8 @@ class SetInterfaces:
                             netifaces.ifaddresses(iface)[netifaces.AF_INET][i]["netmask"],
                             netifaces.ifaddresses(iface)[netifaces.AF_INET][i]["broadcast"]  
                         ))
-#                        print("Done")
-#                    else:
-#                        print ("Eliminating loopbak")
             except:
                 pass
-#                print (QApplication.translate("devicesinlan", "Interface not well parsed and not selected"))
         
     def print(self):
         for interface in self.arr:
@@ -366,7 +356,6 @@ class SetDevices:
         self.arr=sorted(self.arr, key=lambda k: (int(k.ip.split(".")[0]), int(k.ip.split(".")[1]), int(k.ip.split(".")[2]), int(k.ip.split(".")[3])))
         
     def print(self):
-        numpings=0
         maxalias=self.max_len_alias()
         maxoui=self.max_len_oui()
         self.order_by_ip()
@@ -374,38 +363,26 @@ class SetDevices:
         print (Color.bold(QApplication.translate("devicesinlan","{} DEVICES IN LAN FROM {} INTERFACE AT {}").format(self.length(), self.mem.interfaces.selected.id.upper(), str(datetime.datetime.now())[:-7]).center (6+15+17+maxalias+maxoui)))
         print (Color.bold("{}  {}  {}  {}".format(" IP ".center(16,'=')," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'='))))
         for h in self.arr:
-            if h.mac==None:
-                mac="                 "
-            else:
-                mac=h.mac
-            if h.pinged==True:
-                numpings=numpings+1
-                pinged="*"
-            else:
-                pinged=" "
             if h.ip==self.mem.interfaces.selected.ip:
-                print ("{}  {}  {}  {}".format(Color.pink((pinged+h.ip).ljust(16)), Color.pink(mac.center(17)),   Color.pink(QApplication.translate("devicesinlan","This device").ljust(maxalias)), Color.pink(h.oui.ljust(maxoui))))
+                print ("{}  {}  {}  {}".format(Color.pink(h.ip.ljust(16)), Color.pink(h.mac.center(17)),   Color.pink(QApplication.translate("devicesinlan","This device").ljust(maxalias)), Color.pink(h.oui.ljust(maxoui))))
             else:
                 if h.alias:
-                    mac=Color.green(mac)
+                    mac=Color.green(h.mac)
                     alias=h.alias
                 else:
-                    mac=Color.red(mac)
+                    mac=Color.red(h.mac)
                     alias=" "     
-                print ("{}  {}  {}  {}".format((pinged+h.ip).ljust(16), mac.center(17),   Color.yellow(alias.ljust(maxalias)), str(h.oui).ljust(maxoui)))    
-        print (Color.bold("="*(16+2+17+2+maxalias+2+maxoui)))        
-        print (QApplication.translate("devicesinlan","There was reply to a ping from IP address with '*' ({} pings).").format(numpings))
+                print ("{}  {}  {}  {}".format(h.ip.ljust(16), mac.center(17),   Color.yellow(alias.ljust(maxalias)), str(h.oui).ljust(maxoui)))    
+        print (Color.bold("="*(16+2+17+2+maxalias+2+maxoui)))
             
     def qtablewidget(self, table):
-        numpings=0
         self.order_by_ip() 
         ##HEADERS
-        table.setColumnCount(5)
+        table.setColumnCount(4)
         table.setHorizontalHeaderItem(0, QTableWidgetItem(QApplication.translate("devicesinlan","IP" )))
         table.setHorizontalHeaderItem(1, QTableWidgetItem(QApplication.translate("devicesinlan","MAC" )))
         table.setHorizontalHeaderItem(2,  QTableWidgetItem(QApplication.translate("devicesinlan","Alias" )))
         table.setHorizontalHeaderItem(3, QTableWidgetItem(QApplication.translate("devicesinlan","Hardware" )))
-        table.setHorizontalHeaderItem(4, QTableWidgetItem(QApplication.translate("devicesinlan","Ping" )))
         ##DATA 
         table.clearContents()   
         table.setRowCount(self.length())
@@ -418,9 +395,6 @@ class SetDevices:
             table.setItem(rownumber, 1, qleft(h.mac))
             table.setItem(rownumber, 2, qleft(alias))
             table.setItem(rownumber, 3, qleft(h.oui))
-            table.setItem(rownumber, 4,  qbool(h.pinged))
-            if h.pinged==True:
-                numpings=numpings+1
             if h.alias!=None:
                 for i in range(0, table.columnCount()):
                     table.item(rownumber, i).setBackground( QColor(182, 255, 182))       
@@ -458,12 +432,6 @@ class Device:
         
     def macwithout2points(self, macwith):
         return macwith.replace(":", "")
-        
-
-
-
-
-
 
 class TRequest(threading.Thread):
     def __init__(self, ip, interface, arp_type):
@@ -667,7 +635,7 @@ def get_oui(mac):
     f=open(url, "rb")
     for line in f.readlines():
         if line.find(mac.encode())!=-1:
-            return line.decode('utf-8').split("\t")[1][:-1].upper()
+            return line.decode('utf-8').split("\t")[1][:-2].upper()
 
     
 def qbool(bool):
