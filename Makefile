@@ -17,7 +17,7 @@ install:
 	pyrcc5 images/devicesinlan.qrc > images/devicesinlan_rc.py
 
 	pylupdate5 -noobsolete devicesinlan.pro
-	lrelease devicesinlan.pro
+	lrelease -qt5 devicesinlan.pro
 
 	install -o root -d $(PREFIXBIN)
 	install -o root -d $(PREFIXLIB)

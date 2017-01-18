@@ -3,21 +3,25 @@ import argparse
 import datetime
 import platform
 import sys
-from PyQt5.QtWidgets import *   
+from PyQt5.QtWidgets import QApplication
 if platform.system()=="Windows":
     sys.path.append("ui")
     sys.path.append("images")
 elif platform.system()=="Linux":
     sys.path.append("/usr/lib/devicesinlan")
-from libdevicesinlan import *
-"""
-    To see information of the ARP protocol, look into doc/devicesinlan.odt
-"""
-    
-##############################################
+from libdevicesinlan import ArpScanMethod, Color, Device, Mem, SetDevices, dateversion,  version
 
-args=None
-app = QApplication(sys.argv)
+if len(sys.argv)>1:#To see if it's console or not
+    from PyQt5.QtCore import QCoreApplication
+    console=True
+    app=QCoreApplication(sys.argv)
+    tr=QCoreApplication.translate
+else:
+    from PyQt5.QtCore import QCoreApplication
+    console=False
+    app=QApplication(sys.argv)
+    tr=QApplication(sys.argv).translate
+
 app.setOrganizationName("DevicesInLAN")
 app.setOrganizationDomain("devicesinlan.sourceforge.net")
 app.setApplicationName("DevicesInLAN")
@@ -33,51 +37,48 @@ if platform.system()=="Windows":
     sys.exit(app.exec_())
 
 elif platform.system()=="Linux":
-    parser=argparse.ArgumentParser(prog='devicesinlan', description=QApplication.translate("devicesinlan",'Show devices in a LAN making an ARP and a ICMP request to find them'),  
-    epilog=QApplication.translate("devicesinlan","If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).")+"\n"
-          +QApplication.translate("devicesinlan","Developed by Mariano Muñoz 2015-{}".format(dateversion.year))
+    parser=argparse.ArgumentParser(prog='devicesinlan', description=tr("devicesinlan",'Show devices in a LAN making an ARP and a ICMP request to find them'),  
+    epilog=tr("devicesinlan","If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).")+"\n"
+          +tr("devicesinlan","Developed by Mariano Muñoz 2015-{}".format(dateversion.year))
     , formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('-v', '--version', action='version', version=version)
-    parser.add_argument('-c',  '--console', help=QApplication.translate("devicesinlan",'Use console app'), action='store_true',  default=False)
+    parser.add_argument('-c',  '--console', help=tr("devicesinlan",'Use console app'), action='store_true',  default=False)
     group = parser.add_mutually_exclusive_group()
-    group.add_argument('-i',  '--interface', help=QApplication.translate("devicesinlan",'Net interface name'),  default='eth0')
-    group.add_argument('-a',  '--add', help=QApplication.translate("devicesinlan",'Add a known device'), action='store_true')
-    group.add_argument('-r',  '--remove', help=QApplication.translate("devicesinlan",'Remove a known device'), action='store_true')
-    group.add_argument('-l',  '--list', help=QApplication.translate("devicesinlan",'List known device'), action='store_true')
+    group.add_argument('-i',  '--interface', help=tr("devicesinlan",'Net interface name'),  default='eth0')
+    group.add_argument('-a',  '--add', help=tr("devicesinlan",'Add a known device'), action='store_true')
+    group.add_argument('-r',  '--remove', help=tr("devicesinlan",'Remove a known device'), action='store_true')
+    group.add_argument('-l',  '--list', help=tr("devicesinlan",'List known device'), action='store_true')
     args=parser.parse_args()        
     
-    if args.console==False:    
+    if console==False:    
         app.setQuitOnLastWindowClosed(True)
         import frmMain 
         frmMain = frmMain.frmMain(mem) 
         frmMain.show()
         sys.exit(app.exec_())
-
     else:##Console
-#        if args.add:
-#            k=KnownDevice()
-#            k.insert_mac()
-#            k.insert_alias()
-#            known.append(k)
-#            known.save()    
-#            print (Color.green(QApplication.translate("devicesinlan","Known device inserted")))
-#            sys.exit(0)
-#            
-#        if args.remove:
-#            k=KnownDevice()
-#            k.insert_mac()
-#            if known.remove_mac(k.mac):
-#                known.save()
-#                print (Color.green(QApplication.translate("devicesinlan","Mac removed")))
-#            else:
-#                print (Color.red(QApplication.translate("devicesinlan","I couldn't find the mac")))
-#            sys.exit(0)
-#            
-#        if args.list:
-#            known.print()
-#            sys.exit(0)
-                
-        
+        if args.add:
+            d=Device(mem)
+            d.insert_mac()
+            d.insert_alias()
+            d.type=mem.types.find_by_id(0)
+            d.link()
+            print (Color.green(tr("devicesinlan","Device inserted")))
+            mem.settings.sync()
+            sys.exit(0)
+           
+        if args.remove:
+            d=Device(mem)
+            d.insert_mac()
+            d.unlink()
+            print (Color.green(tr("devicesinlan","Mac removed")))
+            mem.settings.sync()
+            sys.exit(0)
+            
+        if args.list:
+            for key in mem.settings.allKeys():
+                print (key)
+            sys.exit(0)
         ## Load devices
         mem.interfaces.selected=mem.interfaces.find_by_id(args.interface)
         
@@ -85,6 +86,6 @@ elif platform.system()=="Linux":
         set=SetDevices(mem)
         set.setMethod(ArpScanMethod.PingArp)
         set.print()
-        print (QApplication.translate("devicesinlan","It took {} with DevicesInLAN scanner.").format (datetime.datetime.now()-inicio))
+        print (tr("devicesinlan","It took {} with DevicesInLAN scanner.").format (datetime.datetime.now()-inicio))
 
 

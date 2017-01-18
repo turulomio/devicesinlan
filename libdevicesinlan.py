@@ -4,6 +4,7 @@ import threading
 import gettext
 import netifaces
 import os
+import re
 import platform
 import subprocess
 import time
@@ -12,8 +13,8 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 import ipaddress
-version="0.7.0"
-dateversion=datetime.date(2016, 7, 17)
+version="0.8.0"
+dateversion=datetime.date(2017, 1, 18)
 
 
 # I had a lot of problems with UTF-8. LANG must be es_ES.UTF-8 to work
@@ -413,6 +414,41 @@ class Device:
         self.alias=None
         self.pinged=False
         self.type=None
+        
+        
+    def validate_mac(self, s):
+        if len(s)!=17:
+            return False
+
+        if re.match(r'([0-9a-f]{2}[:-]){5}([0-9a-f]{2})', s):
+            return True
+        return False
+
+    def validate_alias(self, s):
+        if len(s)>40:
+            return False
+        if len(s)==0:
+            return False
+        return True
+        
+    def insert_mac(self):
+        validated=False
+        while  validated==False:
+            self.mac=input(Color.bold(_("Input the MAC of the known device (xx:xx:xx:xx:xx:xx): "))).lower()
+            if self.validate_mac(self.mac):
+                validated=True
+            else:
+                print (Color.red(_("You need to insert a mac with the next format: 2a:3b:4c:5d:6e:7a")))
+
+    def insert_alias(self):
+        validated=False
+        while validated==False:
+            self.alias=input(Color.bold(_("Input an alias of the known device: ")))
+            if self.validate_alias(self.alias):
+                validated=True
+            else:
+                print (Color.red(_("You need to add an alias")))
+
         
     def link(self):
         self.mem.settings.setValue("DeviceAlias/{}".format(self.macwithout2points(self.mac.upper())), self.alias)

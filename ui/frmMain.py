@@ -1,16 +1,16 @@
 import datetime
 import sys
-from PyQt5.QtWidgets import *
+from PyQt5.QtCore import pyqtSlot, Qt, QPoint, QEvent
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QMainWindow, QMenu, QTabWidget, QTableWidget,  QDialog, QWidget, QVBoxLayout, QLabel,  QAbstractItemView, qApp
 
-from Ui_frmMain import *
-from frmAbout import *
-from frmHelp import *
-from libdevicesinlan import *
-from frmSettings import *
-from frmHelp import *
-from frmAbout import *
-from frmInterfaceSelector import *
-from frmDeviceCRUD import *
+from Ui_frmMain import Ui_frmMain
+from libdevicesinlan import dateversion,  SetDevices,  ArpScanMethod
+from frmSettings import frmSettings
+from frmHelp import frmHelp
+from frmAbout import frmAbout
+from frmInterfaceSelector import frmInterfaceSelector
+from frmDeviceCRUD import frmDeviceCRUD
 
             
 class frmMain(QMainWindow, Ui_frmMain):#    
@@ -87,7 +87,7 @@ class frmMain(QMainWindow, Ui_frmMain):#
         table.setContextMenuPolicy(Qt.CustomContextMenu)
         table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         table.setSelectionMode(QAbstractItemView.SingleSelection)
-        table.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
+        table.setSelectionBehavior(QAbstractItemView.SelectRows)
         horizontalLayout_2.addWidget(table)        
         table.setAlternatingRowColors(True)
         

@@ -35,7 +35,8 @@ devicesinlan 0.7.0 20160717
 - Added UI.
 - First Windows verion
 
-devicesinlan 0.8.0 XXXXXXXX
+devicesinlan 0.8.0 20170118
 ===========================
 - Added more device types
-
+- Works -a, -r, -l again
+- Improved apps dependencies
