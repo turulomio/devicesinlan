@@ -9,9 +9,9 @@ import platform
 import subprocess
 import time
 import socket
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
+from PyQt5.QtCore import QCoreApplication, QSettings, QTranslator, Qt
+from PyQt5.QtWidgets import QTableWidgetItem, QApplication
+from PyQt5.QtGui import QColor,  QPixmap, QIcon
 import ipaddress
 version="0.8.0"
 dateversion=datetime.date(2017, 1, 18)

@@ -3,7 +3,6 @@ import argparse
 import datetime
 import platform
 import sys
-from PyQt5.QtWidgets import QApplication
 if platform.system()=="Windows":
     sys.path.append("ui")
     sys.path.append("images")
@@ -17,7 +16,7 @@ if len(sys.argv)>1:#To see if it's console or not
     app=QCoreApplication(sys.argv)
     tr=QCoreApplication.translate
 else:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt5.QtWidgets import QApplication
     console=False
     app=QApplication(sys.argv)
     tr=QApplication(sys.argv).translate
