@@ -247,6 +247,26 @@ class SetDevices:
         self.arr=[]
         self.selected=None
 
+
+    def init__from_settings(self):
+        """
+            Load all devices in settings
+        """
+        
+        self.mem.settings.beginGroup("DeviceAlias")#Las key son sin DevicesAlias ahora
+        for key in self.mem.settings.childKeys():
+            d=Device(self.mem)
+            d.mac=d.macwith2points(key)
+            d.alias=self.mem.settings.value("{}".format(d.macwithout2points(d.mac.upper())), None)
+            d.oui=get_oui(d.mac)
+            self.arr.append(d)
+        self.mem.settings.endGroup()
+        
+        #Carga los types antes no se pod´ia
+        for d in self.arr:
+            d.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(d.macwithout2points(d.mac.upper())), 0)))
+            
+
     def setMethod(self, arpscanmethod):
         if arpscanmethod==ArpScanMethod.PingArp:
             self.pingarp()
@@ -344,6 +364,13 @@ class SetDevices:
                 max=len(str(h.oui))
         return max
 
+    def max_len_type(self):
+        max=0
+        for h in self.arr:
+            if len(h.type.name)>max:
+                max=len(h.type.name)
+        return max
+
     def max_len_alias(self):
         l=14
         for h in self.arr:
@@ -355,17 +382,20 @@ class SetDevices:
         
     def order_by_ip(self):
         self.arr=sorted(self.arr, key=lambda k: (int(k.ip.split(".")[0]), int(k.ip.split(".")[1]), int(k.ip.split(".")[2]), int(k.ip.split(".")[3])))
+    def order_by_alias(self):
+        self.arr=sorted(self.arr, key=lambda k: k.alias)
         
     def print(self):
         maxalias=self.max_len_alias()
         maxoui=self.max_len_oui()
+        maxtype=self.max_len_type()
         self.order_by_ip()
-        print (Color.bold("="*(16+2+17+2+maxalias+2+maxoui)))
+        print (Color.bold("="*(16+2+maxtype+2+17+2+maxalias+2+maxoui)))
         print (Color.bold(QApplication.translate("devicesinlan","{} DEVICES IN LAN FROM {} INTERFACE AT {}").format(self.length(), self.mem.interfaces.selected.id.upper(), str(datetime.datetime.now())[:-7]).center (6+15+17+maxalias+maxoui)))
-        print (Color.bold("{}  {}  {}  {}".format(" IP ".center(16,'=')," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'='))))
+        print (Color.bold("{}  {}  {}  {}  {}".format(" IP ".center(16,'='),"TYPE".center(maxtype,"=")," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'='))))
         for h in self.arr:
             if h.ip==self.mem.interfaces.selected.ip:
-                print ("{}  {}  {}  {}".format(Color.pink(h.ip.ljust(16)), Color.pink(h.mac.center(17)),   Color.pink(QApplication.translate("devicesinlan","This device").ljust(maxalias)), Color.pink(h.oui.ljust(maxoui))))
+                print ("{}  {}  {}  {}  {}".format(Color.pink(h.ip.ljust(16)), Color.pink(h.type.name.ljust(maxtype)), Color.pink(h.mac.center(17)),   Color.pink(QApplication.translate("devicesinlan","This device").ljust(maxalias)), Color.pink(h.oui.ljust(maxoui))))
             else:
                 if h.alias:
                     mac=Color.green(h.mac)
@@ -373,9 +403,26 @@ class SetDevices:
                 else:
                     mac=Color.red(h.mac)
                     alias=" "     
-                print ("{}  {}  {}  {}".format(h.ip.ljust(16), mac.center(17),   Color.yellow(alias.ljust(maxalias)), str(h.oui).ljust(maxoui)))    
-        print (Color.bold("="*(16+2+17+2+maxalias+2+maxoui)))
-            
+                print ("{}  {}  {}  {}".format(h.ip.ljust(16), h.type.name.ljust(maxtype),  mac.center(17),   Color.yellow(alias.ljust(maxalias)), str(h.oui).ljust(maxoui)))    
+        print (Color.bold("="*(16+2+maxtype+2+17+2+maxalias+2+maxoui)))
+                
+
+    def print_devices_from_settings(self):
+        """
+            Print list of all database devices
+        """
+        maxalias=self.max_len_alias()
+        maxoui=self.max_len_oui()
+        maxtype=self.max_len_type()
+        self.order_by_alias()
+        print (Color.bold("="*(maxtype+2+17+2+maxalias+2+maxoui)))
+        print (Color.bold(QApplication.translate("devicesinlan","{} DEVICES IN DATABASE AT {}").format(self.length(), str(datetime.datetime.now())[:-7]).center (6+15+17+maxalias+maxoui)))        
+        print (Color.bold("{}  {}  {}  {}".format(" TYPE ".center(maxtype,'=')," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'='))))
+        for h in self.arr:
+            mac=Color.green(h.mac)
+            print ("{}  {}  {}  {}".format(h.type.name.ljust(maxtype), mac.center(17),   Color.yellow(h.alias.ljust(maxalias)), str(h.oui).ljust(maxoui)))    
+        print (Color.bold("="*(maxtype+2+17+2+maxalias+2+maxoui)))
+
     def qtablewidget(self, table):
         self.order_by_ip() 
         ##HEADERS
@@ -389,7 +436,6 @@ class SetDevices:
         table.setRowCount(self.length())
         for rownumber, h in enumerate(self.arr):
             alias=""
-            print(h.alias, h.mac, h.ip)
             if h.alias!=None:
                 alias=h.alias
             table.setItem(rownumber, 0, qleft(h.ip))
@@ -463,7 +509,7 @@ class Device:
     def macwith2points(self, macwithout):
         macwith=""
         for i in range(6):
-            macwith=macwithout[i*2]+macwithout[i*2+1]+":"
+            macwith=macwith+macwithout[i*2]+macwithout[i*2+1]+":"
         return macwith[:-1]
         
     def macwithout2points(self, macwith):

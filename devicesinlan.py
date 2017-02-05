@@ -75,8 +75,9 @@ elif platform.system()=="Linux":
             sys.exit(0)
             
         if args.list:
-            for key in mem.settings.allKeys():
-                print (key)
+            set=SetDevices(mem)
+            set.init__from_settings()
+            set.print_devices_from_settings()
             sys.exit(0)
         ## Load devices
         mem.interfaces.selected=mem.interfaces.find_by_id(args.interface)

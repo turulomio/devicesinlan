@@ -3,49 +3,49 @@
 <context>
     <name>@default</name>
     <message>
-        <location filename="../devicesinlan.py" line="40"/>
+        <location filename="../devicesinlan.py" line="39"/>
         <source>devicesinlan</source>
         <comment>Show devices in a LAN making an ARP and a ICMP request to find them</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="40"/>
+        <location filename="../devicesinlan.py" line="39"/>
         <source>devicesinlan</source>
         <comment>If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="40"/>
+        <location filename="../devicesinlan.py" line="39"/>
         <source>devicesinlan</source>
         <comment>Developed by Mariano Mu&#xc3;&#xb1;oz 2015-{}</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="45"/>
+        <location filename="../devicesinlan.py" line="44"/>
         <source>devicesinlan</source>
         <comment>Use console app</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="47"/>
+        <location filename="../devicesinlan.py" line="46"/>
         <source>devicesinlan</source>
         <comment>Net interface name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="48"/>
+        <location filename="../devicesinlan.py" line="47"/>
         <source>devicesinlan</source>
         <comment>Add a known device</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="49"/>
+        <location filename="../devicesinlan.py" line="48"/>
         <source>devicesinlan</source>
         <comment>Remove a known device</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="50"/>
+        <location filename="../devicesinlan.py" line="49"/>
         <source>devicesinlan</source>
         <comment>List known device</comment>
         <translation type="unfinished"></translation>
@@ -57,13 +57,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="66"/>
+        <location filename="../devicesinlan.py" line="65"/>
         <source>devicesinlan</source>
         <comment>Device inserted</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="74"/>
+        <location filename="../devicesinlan.py" line="73"/>
         <source>devicesinlan</source>
         <comment>Mac removed</comment>
         <translation type="unfinished"></translation>
@@ -72,12 +72,12 @@
 <context>
     <name>devicesinlan</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="368"/>
+        <location filename="../libdevicesinlan.py" line="398"/>
         <source>This device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="364"/>
+        <location filename="../libdevicesinlan.py" line="394"/>
         <source>{} DEVICES IN LAN FROM {} INTERFACE AT {}</source>
         <translation type="unfinished"></translation>
     </message>
@@ -92,32 +92,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="383"/>
+        <location filename="../libdevicesinlan.py" line="430"/>
         <source>IP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="384"/>
+        <location filename="../libdevicesinlan.py" line="431"/>
         <source>MAC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="385"/>
+        <location filename="../libdevicesinlan.py" line="432"/>
         <source>Alias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="386"/>
+        <location filename="../libdevicesinlan.py" line="433"/>
         <source>Hardware</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="691"/>
+        <location filename="../libdevicesinlan.py" line="737"/>
         <source>True</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="694"/>
+        <location filename="../libdevicesinlan.py" line="740"/>
         <source>False</source>
         <translation type="unfinished"></translation>
     </message>
@@ -174,6 +174,11 @@
     <message>
         <location filename="../libdevicesinlan.py" line="135"/>
         <source>Wireless USB dongle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../libdevicesinlan.py" line="419"/>
+        <source>{} DEVICES IN DATABASE AT {}</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
