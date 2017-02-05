@@ -36,7 +36,7 @@
      <x>0</x>
      <y>0</y>
      <width>995</width>
-     <height>30</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuAyuda">
@@ -46,17 +46,26 @@
     <addaction name="actionHelp"/>
     <addaction name="separator"/>
     <addaction name="actionAbout"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuConfiguraci_n">
     <property name="title">
      <string>&amp;Configuration</string>
     </property>
+    <addaction name="actionSettings"/>
+   </widget>
+   <widget class="QMenu" name="menuKnown_devices">
+    <property name="title">
+     <string>Devices</string>
+    </property>
+    <addaction name="actionScan"/>
+    <addaction name="separator"/>
     <addaction name="actionShowDatabase"/>
     <addaction name="separator"/>
-    <addaction name="actionSettings"/>
-    <addaction name="separator"/>
-    <addaction name="actionExit"/>
+    <addaction name="actionResetDatabase"/>
    </widget>
+   <addaction name="menuKnown_devices"/>
    <addaction name="menuConfiguraci_n"/>
    <addaction name="menuAyuda"/>
   </widget>
@@ -149,30 +158,6 @@
     <string>New scan</string>
    </property>
   </action>
-  <action name="actionDeviceLink">
-   <property name="icon">
-    <iconset resource="../images/devicesinlan.qrc">
-     <normaloff>:/save.png</normaloff>:/save.png</iconset>
-   </property>
-   <property name="text">
-    <string>Link device</string>
-   </property>
-   <property name="toolTip">
-    <string>Link device</string>
-   </property>
-  </action>
-  <action name="actionDeviceUnlink">
-   <property name="icon">
-    <iconset resource="../images/devicesinlan.qrc">
-     <normaloff>:/cancel.png</normaloff>:/cancel.png</iconset>
-   </property>
-   <property name="text">
-    <string>Unlink device</string>
-   </property>
-   <property name="toolTip">
-    <string>Unlink device</string>
-   </property>
-  </action>
   <action name="actionShowDatabase">
    <property name="icon">
     <iconset resource="../images/devicesinlan.qrc">
@@ -183,6 +168,18 @@
    </property>
    <property name="toolTip">
     <string>Show devices database</string>
+   </property>
+  </action>
+  <action name="actionResetDatabase">
+   <property name="icon">
+    <iconset resource="../images/devicesinlan.qrc">
+     <normaloff>:/cancel.png</normaloff>:/cancel.png</iconset>
+   </property>
+   <property name="text">
+    <string>Reset database</string>
+   </property>
+   <property name="toolTip">
+    <string>Reset database</string>
    </property>
   </action>
  </widget>

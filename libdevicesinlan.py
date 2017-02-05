@@ -252,9 +252,8 @@ class SetDevices(QObject):
         self.mem.settings.beginGroup("DeviceAlias")#Las key son sin DevicesAlias ahora
         for key in self.mem.settings.childKeys():
             d=Device(self.mem)
-            d.mac=d.macwith2points(key)
+            d.mac=d.macwith2points(key).upper()
             d.alias=self.mem.settings.value("{}".format(d.macwithout2points(d.mac.upper())), None)
-            d.oui=get_oui(d.mac)
             self.arr.append(d)
         self.mem.settings.endGroup()
         
@@ -280,15 +279,13 @@ class SetDevices(QObject):
         return len(self.arr)
         
     def own(self):
-        """Load Devices from arpscan output"""
-#            output=subprocess.check_output(["arp-scan", "--interface", self.mem.args.interface, "--localnet", "--ignoredups"]).decode('UTF-8')
+        """Load Devices from ping and my arp output"""
         threads=[]
         for addr in ipaddress.IPv4Network("{}/{}".format(self.mem.interfaces.selected.ip, self.mem.interfaces.selected.mask), strict=False):
             if str(addr)==self.mem.interfaces.selected.ip :#Adds device if ip is interface ip and jumps it
                 h=Device(self.mem)
                 h.ip=str(addr)
                 h.mac=self.mem.interfaces.selected.mac
-                h.oui=get_oui(h.mac)
                 h.pinged=True     
                 h.alias=self.mem.settings.value("DeviceAlias/{}".format(h.macwithout2points(h.mac.upper())), None)
                 h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
@@ -304,32 +301,24 @@ class SetDevices(QObject):
             if t.mac!=None or t.pinged==True:
                 h=Device(self.mem)
                 h.ip=t.ip
-                h.mac=t.mac
+                h.mac=t.mac.replace("-", ":")#This is for windows 
                 h.oui=t.oui
                 h.pinged=t.pinged
                 if h.mac:
                     h.alias=self.mem.settings.value("DeviceAlias/{}".format(h.macwithout2points(h.mac.upper())), None)
                     h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
                 self.arr.append(h)
+                
 
         
     def pingarp(self):
-        """Load Devices from arpscan output"""
-        threads=[]
-#        t=TRequestPingArp("192.168.1.100")
-#        t.start()
-#        threads.append(t)
-#        t.join()
-#        t=TRequestPingArp("192.168.1.167")
-#        t.start()
-#        threads.append(t)
-        
+        """Load Devices from scan with ping and arp commands output"""
+        threads=[]       
         for addr in ipaddress.IPv4Network("{}/{}".format(self.mem.interfaces.selected.ip, self.mem.interfaces.selected.mask), strict=False):
             if str(addr)==self.mem.interfaces.selected.ip :#Adds device if ip is interface ip and jumps it
                 h=Device(self.mem)
                 h.ip=str(addr)
-                h.mac=self.mem.interfaces.selected.mac
-                h.oui=get_oui(h.mac)
+                h.mac=self.mem.interfaces.selected.mac.upper()
                 h.pinged=True     
                 h.alias=self.mem.settings.value("DeviceAlias/{}".format(h.macwithout2points(h.mac.upper())), None)
                 h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
@@ -345,7 +334,6 @@ class SetDevices(QObject):
                 h=Device(self.mem)
                 h.ip=t.ip
                 h.mac=t.mac
-                h.oui=t.oui
                 h.pinged=t.pinged
                 if h.mac:
                     h.alias=self.mem.settings.value("DeviceAlias/{}".format(h.macwithout2points(h.mac.upper())), None)
@@ -370,6 +358,10 @@ class SetDevices(QObject):
         
     def append(self, o):
         self.arr.append(o)
+        
+    def clear(self):
+        for o in self.arr:
+            self.arr.remove(o)
         
     def find_by_mac(self, mac):
         for d in self.arr:
@@ -399,7 +391,10 @@ class SetDevices(QObject):
     def order_by_ip(self):
         self.arr=sorted(self.arr, key=lambda k: (int(k.ip.split(".")[0]), int(k.ip.split(".")[1]), int(k.ip.split(".")[2]), int(k.ip.split(".")[3])))
     def order_by_alias(self):
-        self.arr=sorted(self.arr, key=lambda k: k.alias)
+        try:
+            self.arr=sorted(self.arr, key=lambda k: k.alias)
+        except:
+            pass
         
     def print(self):
         maxalias=self.max_len_alias()
@@ -459,7 +454,7 @@ class SetDevices(QObject):
             table.item(rownumber,0).setIcon(h.type.qicon())
             table.setItem(rownumber, 1, qleft(h.mac))
             table.setItem(rownumber, 2, qleft(alias))
-            table.setItem(rownumber, 3, qleft(h.oui))
+            table.setItem(rownumber, 3, qleft(h.oui()))
             table.setItem(rownumber, 4, qleft(h.ip))
             if h.alias!=None:
                 for i in range(0, table.columnCount()):
@@ -484,7 +479,7 @@ class SetDevices(QObject):
             table.item(rownumber, 0).setIcon(h.type.qicon())
             table.setItem(rownumber, 1, qleft(h.mac))
             table.setItem(rownumber, 2, qleft(h.alias))
-            table.setItem(rownumber, 3, qleft(h.oui))
+            table.setItem(rownumber, 3, qleft(h.oui()))
 
 class Device(QObject):
     def __init__(self, mem):
@@ -492,7 +487,7 @@ class Device(QObject):
         self.mem=mem
         self.ip=None
         self.mac=None
-        self.oui=None
+        self.__oui=None# You must use self.oui()
         self.alias=None
         self.pinged=False
         self.type=None
@@ -505,6 +500,28 @@ class Device(QObject):
         if re.match(r'([0-9a-f]{2}[:-]){5}([0-9a-f]{2})', s):
             return True
         return False
+
+    def oui(self):
+        if self.__oui!=None:#It already has been searched
+            return self.__oui
+
+        if self.mac==None:
+            print("I can't get oui of a None MAC")
+            return self.__oui
+
+        print("Seaching {}".format(self.mac))
+        if platform.system()=="Windows":
+            url="ieee-oui.txt"
+        elif platform.system()=="Linux":
+            url="/usr/share/devicesinlan/ieee-oui.txt"
+
+        self.__oui=""
+        mac=self.mac.replace(":", "")[:-6]
+        f=open(url, "rb")
+        for line in f.readlines():
+            if line.find(mac.encode())!=-1:
+                self.__oui=line.decode('utf-8').split("\t")[1][:-2].upper()
+        return self.__oui
 
     def validate_alias(self, s):
         if len(s)>40:
@@ -561,7 +578,6 @@ class TRequest(threading.Thread):
         self.interface=interface
         self.ip = ip
         self.mac=None#Mac address string
-        self.oui=""#String hardware name
         self.arp_sent_frame=None
         self.arp_received_frame=None
         self.icmp_sent_frame=None
@@ -616,6 +632,7 @@ class TRequest(threading.Thread):
                 self.ip2bytes(self.ip)
             self.arp_sent_frame=frame2
             socket_arp.send(frame2)
+
         def arp_receive():
             '''
             00:06 Mac Destination FF:FF:FF:FF:FF:FF
@@ -641,7 +658,6 @@ class TRequest(threading.Thread):
             #Compare ip whith ip of the trame
             if self.ip==self.bytes2ip(frame[28:32]):    
                 self.mac=self.bytes2mac(frame[22:28])
-                self.oui=get_oui(self.mac)
                 return True
                 
             return False
@@ -695,58 +711,30 @@ class TRequestPingArp(threading.Thread):
         threading.Thread.__init__(self)
         self.ip = ip
         self.mac=None#Mac address string
-        self.oui=""#String hardware name
         self.pinged=False
         
     def run(self):
         #PING
         if platform.system()=="Windows":
             CREATE_NO_WINDOW=0x08000000
-            output=subprocess.check_output(["ping", "-n", "1", self.ip], shell=False, stderr=subprocess.DEVNULL, creationflags=CREATE_NO_WINDOW)
-            #if there are two "bytes" words, the ping was made correctly
-            entrecomas=output.split(b"bytes")
-            if len(entrecomas)==3:
-                self.pinged=True
+            output=subprocess.call(["ping", "-n", "1", self.ip], shell=False, stderr=subprocess.DEVNULL, creationflags=CREATE_NO_WINDOW)
         else:
             output=subprocess.call(["ping", "-c", "1", "-W", "1", self.ip], shell=False, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
-            if output==0:
-                self.pinged=True
+        if output==0:
+            self.pinged=True
+
         #ARP
         if self.pinged==True:
             if platform.system()=="Windows":
                 arpexit=subprocess.check_output(["arp", "-a",  self.ip], creationflags=CREATE_NO_WINDOW)
                 for s in arpexit.split(b" "):
                     if len(s)==17 and s.find(b"-")!=-1:
-                        self.mac=s.decode()
-                        self.oui=get_oui(self.mac)
+                        self.mac=s.decode().replace("-", ":").upper()
             else:
                 arpexit=subprocess.check_output(["arp", self.ip])
                 for s in arpexit.decode('utf-8').split(" "):
                     if len(s)==17 and s.find(":")!=-1:
-                        self.mac=s
-                        self.oui=get_oui(self.mac)
-
-def ping_command():
-    """If detects OS ping, it uses it
-    None: Not found
-    String Comand to use"""
-    if os.path.exists("/bin/ping"):
-        return "ping"
-    return None
-    
-def get_oui(mac):
-    if platform.system()=="Windows":
-        url="ieee-oui.txt"
-        mac=mac.replace("-", "").upper()[:-6]
-    elif platform.system()=="Linux":
-        mac=mac.replace(":", "").upper()[:-6]
-        url="/usr/share/devicesinlan/ieee-oui.txt"
-    if len(mac)!=6:#No tiene los 3 primeros n´umeros de la mac
-        return ""
-    f=open(url, "rb")
-    for line in f.readlines():
-        if line.find(mac.encode())!=-1:
-            return line.decode('utf-8').split("\t")[1][:-2].upper()
+                        self.mac=s.upper()
 
     
 def qbool(bool):

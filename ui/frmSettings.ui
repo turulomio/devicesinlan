@@ -14,8 +14,8 @@
    <string>DevicesInLan settings</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/glparchis/configure.png</normaloff>:/glparchis/configure.png</iconset>
+   <iconset resource="../images/devicesinlan.qrc">
+    <normaloff>:/configure.png</normaloff>:/configure.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
