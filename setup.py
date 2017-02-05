@@ -42,7 +42,6 @@ def filename_output():
 
 def winversion():
     return version
-
 print ("Building for", sys.platform, winversion())
 name="devicesinlan"
 
@@ -57,7 +56,7 @@ include_files.append(("i18n/devicesinlan_ru.qm", "i18n/devicesinlan_ru.qm"))
 #Build options
 if sys.platform=='win32':
       base = 'Win32GUI'
-#      base="Console"
+      #base="Console"
       include_files.append("devicesinlan.iss")
       build_msi_options = {
            'upgrade_code': '{3849730B-2375-4F76-B4A5-343277A23BDE}',
