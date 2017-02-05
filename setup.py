@@ -5,7 +5,7 @@ import subprocess
 import platform
 sys.path.append('ui')
 sys.path.append('images')
-from libdevicesinlan import version,dateversion
+from libdevicesinlan import version
 
 
 def build_dir():
@@ -41,7 +41,7 @@ def filename_output():
     return "devicesinlan-{}-{}.{}".format(so,  version, pl)
 
 def winversion():
-    return "{}.{}.{}".format(dateversion.year,dateversion.month,dateversion.day)
+    return version
 
 print ("Building for", sys.platform, winversion())
 name="devicesinlan"

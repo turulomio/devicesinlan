@@ -3,22 +3,22 @@
 <context>
     <name>Device</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="538"/>
+        <location filename="../libdevicesinlan.py" line="541"/>
         <source>Input the MAC of the known device (xx:xx:xx:xx:xx:xx): </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="542"/>
+        <location filename="../libdevicesinlan.py" line="545"/>
         <source>You need to insert a mac with the next format: 2a:3b:4c:5d:6e:7a</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="547"/>
+        <location filename="../libdevicesinlan.py" line="550"/>
         <source>Input an alias of the known device: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="551"/>
+        <location filename="../libdevicesinlan.py" line="554"/>
         <source>You need to add an alias</source>
         <translation type="unfinished"></translation>
     </message>
@@ -135,12 +135,12 @@
 <context>
     <name>devicesinlan</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="754"/>
+        <location filename="../libdevicesinlan.py" line="757"/>
         <source>True</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="757"/>
+        <location filename="../libdevicesinlan.py" line="760"/>
         <source>False</source>
         <translation type="unfinished"></translation>
     </message>

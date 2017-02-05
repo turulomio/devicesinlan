@@ -342,7 +342,7 @@ class SetDevices(QObject):
 
 
     def max_len_oui(self):
-        max=15
+        max=6
         for h in self.arr:
             if len(str(h.oui))>max:
                 max=len(str(h.oui))
@@ -413,8 +413,8 @@ class SetDevices(QObject):
                     alias=h.alias
                 else:
                     mac=Color.red(h.mac)
-                    alias=" "     
-                print ("{}  {}  {}  {}".format(h.ip.ljust(16), h.type.name.ljust(maxtype),  mac.center(17),   Color.yellow(alias.ljust(maxalias)), str(h.oui).ljust(maxoui)))    
+                    alias=" "
+                print ("{}  {}  {}  {}  {}".format(h.ip.ljust(16), h.type.name.ljust(maxtype),  mac.center(17),   Color.yellow(alias.ljust(maxalias)), h.oui.ljust(maxoui)))    
         print (Color.bold("="*(16+2+maxtype+2+17+2+maxalias+2+maxoui)))
                 
 
@@ -454,7 +454,7 @@ class SetDevices(QObject):
             table.item(rownumber,0).setIcon(h.type.qicon())
             table.setItem(rownumber, 1, qleft(h.mac))
             table.setItem(rownumber, 2, qleft(alias))
-            table.setItem(rownumber, 3, qleft(h.oui()))
+            table.setItem(rownumber, 3, qleft(h.oui))
             table.setItem(rownumber, 4, qleft(h.ip))
             if h.alias!=None:
                 for i in range(0, table.columnCount()):
@@ -479,7 +479,7 @@ class SetDevices(QObject):
             table.item(rownumber, 0).setIcon(h.type.qicon())
             table.setItem(rownumber, 1, qleft(h.mac))
             table.setItem(rownumber, 2, qleft(h.alias))
-            table.setItem(rownumber, 3, qleft(h.oui()))
+            table.setItem(rownumber, 3, qleft(h.oui))
 
 class Device(QObject):
     def __init__(self, mem):
@@ -500,8 +500,12 @@ class Device(QObject):
         if re.match(r'([0-9a-f]{2}[:-]){5}([0-9a-f]{2})', s):
             return True
         return False
-
+        
+    @property
     def oui(self):
+        """
+            Se invoca como self.oui
+        """
         if self.__oui!=None:#It already has been searched
             return self.__oui
 
@@ -509,7 +513,6 @@ class Device(QObject):
             print("I can't get oui of a None MAC")
             return self.__oui
 
-        print("Seaching {}".format(self.mac))
         if platform.system()=="Windows":
             url="ieee-oui.txt"
         elif platform.system()=="Linux":

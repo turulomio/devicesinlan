@@ -40,7 +40,7 @@ elif platform.system()=="Linux":
     epilog=app.translate("devicesinlan","If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).")+"\n"
           +app.translate("devicesinlan","Developed by Mariano Muñoz 2015-{}".format(dateversion.year))
     , formatter_class=argparse.RawTextHelpFormatter)
-    parser.add_argument('--version', action='version', version=version)
+    parser.add_argument('--version', action='version', version="{} ({})".format(version, dateversion))
     parser.add_argument('--console', help=app.translate("devicesinlan",'Use console app'), action='store_true',  default=False)
     group = parser.add_mutually_exclusive_group()
     group.add_argument('--interface', help=app.translate("devicesinlan",'Net interface name'),  default='eth0')
