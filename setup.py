@@ -5,7 +5,7 @@ import subprocess
 import platform
 sys.path.append('ui')
 sys.path.append('images')
-from libdevicesinlan import version
+from libdevicesinlan import version,dateversion
 
 
 def build_dir():
@@ -41,7 +41,7 @@ def filename_output():
     return "devicesinlan-{}-{}.{}".format(so,  version, pl)
 
 def winversion():
-    return version
+    return "{}.{}.{}".format(dateversion.year,dateversion.month,dateversion.day)
 
 print ("Building for", sys.platform, winversion())
 name="devicesinlan"
@@ -56,8 +56,8 @@ include_files.append(("i18n/devicesinlan_ru.qm", "i18n/devicesinlan_ru.qm"))
 
 #Build options
 if sys.platform=='win32':
-#      base = 'Win32GUI'
-      base="Console"
+      base = 'Win32GUI'
+#      base="Console"
       include_files.append("devicesinlan.iss")
       build_msi_options = {
            'upgrade_code': '{3849730B-2375-4F76-B4A5-343277A23BDE}',
@@ -93,7 +93,7 @@ if sys.platform=="win32":
     if platform.architecture()[0]=="32bit":
         inno=inno.replace(" (x86)", "")
     
-#    subprocess.call([inno,  "/o../",  "/DVERSION_NAME={}".format(winversion()), "/DFILENAME={}".format(filename_output()),"devicesinlan.iss"], stdout=sys.stdout)
+    subprocess.call([inno,  "/o../",  "/DVERSION_NAME={}".format(winversion()), "/DFILENAME={}".format(filename_output()),"devicesinlan.iss"], stdout=sys.stdout)
 else:   #Linux
     print (build_dir(), filename_output(), os.getcwd())
     pwd=os.getcwd()
