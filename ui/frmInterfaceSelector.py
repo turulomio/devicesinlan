@@ -1,7 +1,6 @@
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-
-from Ui_frmInterfaceSelector import *
+from PyQt5.QtWidgets import QDialog
+from PyQt5.QtCore import pyqtSlot
+from Ui_frmInterfaceSelector import Ui_frmInterfaceSelector
 
 
 class frmInterfaceSelector(QDialog, Ui_frmInterfaceSelector):

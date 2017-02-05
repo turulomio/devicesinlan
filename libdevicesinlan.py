@@ -1,7 +1,6 @@
 import codecs
 import datetime
 import threading
-import gettext
 import netifaces
 import os
 import re
@@ -9,18 +8,12 @@ import platform
 import subprocess
 import time
 import socket
-from PyQt5.QtCore import QCoreApplication, QSettings, QTranslator, Qt
-from PyQt5.QtWidgets import QTableWidgetItem, QApplication
+from PyQt5.QtCore import QCoreApplication, QSettings, QTranslator, Qt, QObject
+from PyQt5.QtWidgets import QTableWidgetItem
 from PyQt5.QtGui import QColor,  QPixmap, QIcon
 import ipaddress
-version="0.8.0"
-dateversion=datetime.date(2017, 1, 18)
-
-
-# I had a lot of problems with UTF-8. LANG must be es_ES.UTF-8 to work
-gettext.textdomain('devicesinlan')
-gettext.bindtextdomain('devicesinlan', "./")
-_=gettext.gettext
+version="0.9.0"
+dateversion=datetime.date(2017, 2, 5)
 
 class TypesARP:
     Gratuitous = 1
@@ -102,8 +95,9 @@ class DeviceType:
         return ico
 
 
-class SetDeviceTypes:
+class SetDeviceTypes(QObject):
     def __init__(self, mem):
+        QObject.__init__(self)
         self.mem=mem
         self.arr=[]
         
@@ -122,17 +116,17 @@ class SetDeviceTypes:
         self.arr.append(o)
         
     def load_all(self):
-        self.append(DeviceType(self.mem).init__create(0, QApplication.translate("devicesinlan", "Unknown")))
-        self.append(DeviceType(self.mem).init__create(1, QApplication.translate("devicesinlan", "Television")))
-        self.append(DeviceType(self.mem).init__create(2, QApplication.translate("devicesinlan", "Digital camera")))
-        self.append(DeviceType(self.mem).init__create(3, QApplication.translate("devicesinlan", "Web camera")))
-        self.append(DeviceType(self.mem).init__create(4, QApplication.translate("devicesinlan", "Laptop")))
-        self.append(DeviceType(self.mem).init__create(5, QApplication.translate("devicesinlan", "Computer")))
-        self.append(DeviceType(self.mem).init__create(6, QApplication.translate("devicesinlan", "Modem")))
-        self.append(DeviceType(self.mem).init__create(7, QApplication.translate("devicesinlan", "Smartphone")))
-        self.append(DeviceType(self.mem).init__create(8, QApplication.translate("devicesinlan", "Printer")))
-        self.append(DeviceType(self.mem).init__create(9, QApplication.translate("devicesinlan", "Tablet")))
-        self.append(DeviceType(self.mem).init__create(10, QApplication.translate("devicesinlan", "Wireless USB dongle")))
+        self.append(DeviceType(self.mem).init__create(0, self.tr( "Unknown")))
+        self.append(DeviceType(self.mem).init__create(1, self.tr( "Television")))
+        self.append(DeviceType(self.mem).init__create(2, self.tr( "Digital camera")))
+        self.append(DeviceType(self.mem).init__create(3, self.tr( "Web camera")))
+        self.append(DeviceType(self.mem).init__create(4, self.tr( "Laptop")))
+        self.append(DeviceType(self.mem).init__create(5, self.tr( "Computer")))
+        self.append(DeviceType(self.mem).init__create(6, self.tr( "Modem")))
+        self.append(DeviceType(self.mem).init__create(7, self.tr( "Smartphone")))
+        self.append(DeviceType(self.mem).init__create(8, self.tr( "Printer")))
+        self.append(DeviceType(self.mem).init__create(9, self.tr( "Tablet")))
+        self.append(DeviceType(self.mem).init__create(10, self.tr( "Wireless USB dongle")))
 
     def order_by_name(self):
         """Orders the Set using self.arr"""
@@ -170,7 +164,7 @@ class Interface:
         return self
         
     def __str__(self):
-        return (QApplication.translate("devicesinlan","Interface {} ({}) with ip {}/{} and mac {}".format(self.name, self.id, self.ip, self.mask, self.mac)))
+        return (self.tr("Interface {} ({}) with ip {}/{} and mac {}".format(self.name, self.id, self.ip, self.mask, self.mac)))
         
 class SetInterfaces:
     def __init__(self, mem):
@@ -240,19 +234,21 @@ class ArpScanMethod:
     Own=2#My own scan
     ArpScanner=3#Arpescanner
                 
-class SetDevices:
+class SetDevices(QObject):
     def __init__(self, mem):
         """This constructor load /etc/devicesinlan/known.txt and executes arp-scan and parses its result"""
+        QObject.__init__(self)
         self.mem=mem
         self.arr=[]
         self.selected=None
+        self.isDatabase=False#Returns True if is init__from_settings
 
 
     def init__from_settings(self):
         """
             Load all devices in settings
         """
-        
+        self.isDatabase=True
         self.mem.settings.beginGroup("DeviceAlias")#Las key son sin DevicesAlias ahora
         for key in self.mem.settings.childKeys():
             d=Device(self.mem)
@@ -370,7 +366,27 @@ class SetDevices:
             if len(h.type.name)>max:
                 max=len(h.type.name)
         return max
-
+        
+        
+    def append(self, o):
+        self.arr.append(o)
+        
+    def find_by_mac(self, mac):
+        for d in self.arr:
+            if d.mac.upper()==mac.upper():
+                return d
+        return None
+        
+    def link(self, o):
+        if self.find_by_mac(o.mac)==None:#Insert in array, else is an update
+            self.append(o)
+        o.link()
+        
+    def unlink(self, o):
+        o.unlink()
+        if self.isDatabase==True:#Si es listado de database se debe borrar
+            self.arr.remove(o)
+        
     def max_len_alias(self):
         l=14
         for h in self.arr:
@@ -391,11 +407,11 @@ class SetDevices:
         maxtype=self.max_len_type()
         self.order_by_ip()
         print (Color.bold("="*(16+2+maxtype+2+17+2+maxalias+2+maxoui)))
-        print (Color.bold(QApplication.translate("devicesinlan","{} DEVICES IN LAN FROM {} INTERFACE AT {}").format(self.length(), self.mem.interfaces.selected.id.upper(), str(datetime.datetime.now())[:-7]).center (6+15+17+maxalias+maxoui)))
+        print (Color.bold(self.tr("{} DEVICES IN LAN FROM {} INTERFACE AT {}").format(self.length(), self.mem.interfaces.selected.id.upper(), str(datetime.datetime.now())[:-7]).center (6+15+17+maxalias+maxoui)))
         print (Color.bold("{}  {}  {}  {}  {}".format(" IP ".center(16,'='),"TYPE".center(maxtype,"=")," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'='))))
         for h in self.arr:
             if h.ip==self.mem.interfaces.selected.ip:
-                print ("{}  {}  {}  {}  {}".format(Color.pink(h.ip.ljust(16)), Color.pink(h.type.name.ljust(maxtype)), Color.pink(h.mac.center(17)),   Color.pink(QApplication.translate("devicesinlan","This device").ljust(maxalias)), Color.pink(h.oui.ljust(maxoui))))
+                print ("{}  {}  {}  {}  {}".format(Color.pink(h.ip.ljust(16)), Color.pink(h.type.name.ljust(maxtype)), Color.pink(h.mac.center(17)),   Color.pink(self.tr("This device").ljust(maxalias)), Color.pink(h.oui.ljust(maxoui))))
             else:
                 if h.alias:
                     mac=Color.green(h.mac)
@@ -416,7 +432,7 @@ class SetDevices:
         maxtype=self.max_len_type()
         self.order_by_alias()
         print (Color.bold("="*(maxtype+2+17+2+maxalias+2+maxoui)))
-        print (Color.bold(QApplication.translate("devicesinlan","{} DEVICES IN DATABASE AT {}").format(self.length(), str(datetime.datetime.now())[:-7]).center (6+15+17+maxalias+maxoui)))        
+        print (Color.bold(self.tr("{} DEVICES IN DATABASE AT {}").format(self.length(), str(datetime.datetime.now())[:-7]).center (6+15+17+maxalias+maxoui)))        
         print (Color.bold("{}  {}  {}  {}".format(" TYPE ".center(maxtype,'=')," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'='))))
         for h in self.arr:
             mac=Color.green(h.mac)
@@ -426,11 +442,12 @@ class SetDevices:
     def qtablewidget(self, table):
         self.order_by_ip() 
         ##HEADERS
-        table.setColumnCount(4)
-        table.setHorizontalHeaderItem(0, QTableWidgetItem(QApplication.translate("devicesinlan","IP" )))
-        table.setHorizontalHeaderItem(1, QTableWidgetItem(QApplication.translate("devicesinlan","MAC" )))
-        table.setHorizontalHeaderItem(2,  QTableWidgetItem(QApplication.translate("devicesinlan","Alias" )))
-        table.setHorizontalHeaderItem(3, QTableWidgetItem(QApplication.translate("devicesinlan","Hardware" )))
+        table.setColumnCount(5)
+        table.setHorizontalHeaderItem(0, QTableWidgetItem(self.tr("Type" )))
+        table.setHorizontalHeaderItem(1, QTableWidgetItem(self.tr("MAC" )))
+        table.setHorizontalHeaderItem(2,  QTableWidgetItem(self.tr("Alias" )))
+        table.setHorizontalHeaderItem(3, QTableWidgetItem(self.tr("Hardware" )))
+        table.setHorizontalHeaderItem(4, QTableWidgetItem(self.tr("IP" )))
         ##DATA 
         table.clearContents()   
         table.setRowCount(self.length())
@@ -438,21 +455,40 @@ class SetDevices:
             alias=""
             if h.alias!=None:
                 alias=h.alias
-            table.setItem(rownumber, 0, qleft(h.ip))
+            table.setItem(rownumber, 0, qleft(h.type.name))
+            table.item(rownumber,0).setIcon(h.type.qicon())
             table.setItem(rownumber, 1, qleft(h.mac))
             table.setItem(rownumber, 2, qleft(alias))
             table.setItem(rownumber, 3, qleft(h.oui))
+            table.setItem(rownumber, 4, qleft(h.ip))
             if h.alias!=None:
                 for i in range(0, table.columnCount()):
                     table.item(rownumber, i).setBackground( QColor(182, 255, 182))       
             else:
                 for i in range(0, table.columnCount()):
                     table.item(rownumber, i).setBackground( QColor(255, 182, 182))       
-            if h.type!=None:
-                table.item(rownumber, 1).setIcon(h.type.qicon())
 
-class Device:
+    def qtablewidget_devices_from_settings(self, table):
+        self.order_by_alias() 
+        ##HEADERS
+        table.setColumnCount(4)
+        table.setHorizontalHeaderItem(0, QTableWidgetItem(self.tr("Type" )))
+        table.setHorizontalHeaderItem(1, QTableWidgetItem(self.tr("MAC" )))
+        table.setHorizontalHeaderItem(2,  QTableWidgetItem(self.tr("Alias" )))
+        table.setHorizontalHeaderItem(3, QTableWidgetItem(self.tr("Hardware" )))
+        ##DATA 
+        table.clearContents()   
+        table.setRowCount(self.length())
+        for rownumber, h in enumerate(self.arr):
+            table.setItem(rownumber, 0, qleft(h.type.name))
+            table.item(rownumber, 0).setIcon(h.type.qicon())
+            table.setItem(rownumber, 1, qleft(h.mac))
+            table.setItem(rownumber, 2, qleft(h.alias))
+            table.setItem(rownumber, 3, qleft(h.oui))
+
+class Device(QObject):
     def __init__(self, mem):
+        QObject.__init__(self)
         self.mem=mem
         self.ip=None
         self.mac=None
@@ -480,31 +516,34 @@ class Device:
     def insert_mac(self):
         validated=False
         while  validated==False:
-            self.mac=input(Color.bold(_("Input the MAC of the known device (xx:xx:xx:xx:xx:xx): "))).lower()
+            self.mac=input(Color.bold(self.tr("Input the MAC of the known device (xx:xx:xx:xx:xx:xx): "))).lower()
             if self.validate_mac(self.mac):
                 validated=True
             else:
-                print (Color.red(_("You need to insert a mac with the next format: 2a:3b:4c:5d:6e:7a")))
+                print (Color.red(self.tr("You need to insert a mac with the next format: 2a:3b:4c:5d:6e:7a")))
 
     def insert_alias(self):
         validated=False
         while validated==False:
-            self.alias=input(Color.bold(_("Input an alias of the known device: ")))
+            self.alias=input(Color.bold(self.tr("Input an alias of the known device: ")))
             if self.validate_alias(self.alias):
                 validated=True
             else:
-                print (Color.red(_("You need to add an alias")))
+                print (Color.red(self.tr("You need to add an alias")))
 
         
     def link(self):
         self.mem.settings.setValue("DeviceAlias/{}".format(self.macwithout2points(self.mac.upper())), self.alias)
         self.mem.settings.setValue("DeviceType/{}".format(self.macwithout2points(self.mac.upper())), self.type.id)
+        self.mem.settings.sync()
         
     def unlink(self):
+        """If device is in a set You must use set.unlink(o)"""
         self.mem.settings.remove("DeviceAlias/{}".format(self.macwithout2points(self.mac.upper())))
         self.mem.settings.remove("DeviceType/{}".format(self.macwithout2points(self.mac.upper())))
-        self.type=None
+        self.type=self.mem.types.find_by_id(0)
         self.alias=None
+        self.mem.settings.sync()
         
     def macwith2points(self, macwithout):
         macwith=""
@@ -545,16 +584,6 @@ class TRequest(threading.Thread):
     def run(self):    
         self.arp_process()
         self.ping_process()
-
-#        if self.ip in ("192.168.1.12", "192.168.1.102"):
-#            print ("""-------------------------------------------- {} from interface {}
-#Sent frame:
-#{}
-#Received frame:
-#{}
-#Macs: {}   {}   {}   {}
-#--------------------------------------------""".format(self.ip,  self.if_ip, self.arp_sent_frame,  self.arp_received_frame, self.bytes2mac(self.arp_received_frame[0:6]),self.bytes2mac(self.arp_received_frame[6:12]), self.bytes2mac(self.arp_received_frame[22:28]),   self.bytes2mac(self.arp_received_frame[32:38])))
-
 
     def arp_process(self):        
         def arp_send():
@@ -726,10 +755,10 @@ def qbool(bool):
     a.setFlags( Qt.ItemIsSelectable |  Qt.ItemIsEnabled )#Set no editable
     if bool:
         a.setCheckState(Qt.Checked);
-        a.setText(QApplication.translate("devicesinlan","True"))
+        a.setText(QCoreApplication.translate("devicesinlan","True"))
     else:
         a.setCheckState(Qt.Unchecked);
-        a.setText(QApplication.translate("devicesinlan","False"))
+        a.setText(QCoreApplication.translate("devicesinlan","False"))
     a.setTextAlignment(Qt.AlignVCenter|Qt.AlignCenter)
     return a
     

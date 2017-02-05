@@ -1,8 +1,8 @@
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtCore import pyqtSlot, QObject
+from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5.QtWidgets import QDialog
 
-from Ui_frmSettings import *
+from Ui_frmSettings import Ui_frmSettings
 
 class Language:
     def __init__(self, id, name):
@@ -26,8 +26,9 @@ class Language:
         ico.addPixmap(self.qpixmap(), QIcon.Normal, QIcon.Off) 
         return ico
 
-class SetLanguages:
+class SetLanguages(QObject):
     def __init__(self):
+        QObject.__init__(self)
         self.arr=[]
         self.selected=None
         self.load_all()
@@ -37,8 +38,8 @@ class SetLanguages:
         
     def load_all(self):
         self.append(Language("en","English" ))
-        self.append(Language("es",QApplication.translate("devicesinlan","Espanol" )))
-        self.append(Language("fr",QApplication.translate("devicesinlan","Francais" )))
+        self.append(Language("es","Espa\xf1ol" ))
+        self.append(Language("fr","Fran\xe7ais" ))
         self.append(Language("ro","Rom\xe2n" ))
         self.append(Language("ru",'\u0420\u0443\u0441\u0441\u043a\u0438\u0439' ))
 

@@ -40,3 +40,8 @@ devicesinlan 0.8.0 20170118
 - Added more device types
 - Works -a, -r, -l again
 - Improved apps dependencies
+
+devicesinlan 0.9.0 20170205
+===========================
+- Pretty list in console
+- Device type added to lists

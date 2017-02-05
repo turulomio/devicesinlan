@@ -36,17 +36,17 @@ if platform.system()=="Windows":
     sys.exit(app.exec_())
 
 elif platform.system()=="Linux":
-    parser=argparse.ArgumentParser(prog='devicesinlan', description=tr("devicesinlan",'Show devices in a LAN making an ARP and a ICMP request to find them'),  
-    epilog=tr("devicesinlan","If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).")+"\n"
-          +tr("devicesinlan","Developed by Mariano Muñoz 2015-{}".format(dateversion.year))
+    parser=argparse.ArgumentParser(prog='devicesinlan', description=app.translate("devicesinlan",'Show devices in a LAN making an ARP and a ICMP request to find them'),  
+    epilog=app.translate("devicesinlan","If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).")+"\n"
+          +app.translate("devicesinlan","Developed by Mariano Muñoz 2015-{}".format(dateversion.year))
     , formatter_class=argparse.RawTextHelpFormatter)
-    parser.add_argument('-v', '--version', action='version', version=version)
-    parser.add_argument('-c',  '--console', help=tr("devicesinlan",'Use console app'), action='store_true',  default=False)
+    parser.add_argument('--version', action='version', version=version)
+    parser.add_argument('--console', help=app.translate("devicesinlan",'Use console app'), action='store_true',  default=False)
     group = parser.add_mutually_exclusive_group()
-    group.add_argument('-i',  '--interface', help=tr("devicesinlan",'Net interface name'),  default='eth0')
-    group.add_argument('-a',  '--add', help=tr("devicesinlan",'Add a known device'), action='store_true')
-    group.add_argument('-r',  '--remove', help=tr("devicesinlan",'Remove a known device'), action='store_true')
-    group.add_argument('-l',  '--list', help=tr("devicesinlan",'List known device'), action='store_true')
+    group.add_argument('--interface', help=app.translate("devicesinlan",'Net interface name'),  default='eth0')
+    group.add_argument('--add', help=app.translate("devicesinlan",'Add a known device'), action='store_true')
+    group.add_argument('--remove', help=app.translate("devicesinlan",'Remove a known device'), action='store_true')
+    group.add_argument('--list', help=app.translate("devicesinlan",'List known devices'), action='store_true')
     args=parser.parse_args()        
     
     if console==False:    
@@ -62,7 +62,7 @@ elif platform.system()=="Linux":
             d.insert_alias()
             d.type=mem.types.find_by_id(0)
             d.link()
-            print (Color.green(tr("devicesinlan","Device inserted")))
+            print (Color.green(app.translate("devicesinlan","Device inserted")))
             mem.settings.sync()
             sys.exit(0)
            
@@ -70,7 +70,7 @@ elif platform.system()=="Linux":
             d=Device(mem)
             d.insert_mac()
             d.unlink()
-            print (Color.green(tr("devicesinlan","Mac removed")))
+            print (Color.green(app.translate("devicesinlan","Mac removed")))
             mem.settings.sync()
             sys.exit(0)
             
@@ -86,6 +86,6 @@ elif platform.system()=="Linux":
         set=SetDevices(mem)
         set.setMethod(ArpScanMethod.PingArp)
         set.print()
-        print (tr("devicesinlan","It took {} with DevicesInLAN scanner.").format (datetime.datetime.now()-inicio))
+        print (app.translate("devicesinlan","It took {} with DevicesInLAN scanner.").format (datetime.datetime.now()-inicio))
 
 

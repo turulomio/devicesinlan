@@ -1,9 +1,6 @@
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
-
-from Ui_frmAbout import *
-import libdevicesinlan
+from PyQt5.QtWidgets import QDialog
+from Ui_frmAbout import Ui_frmAbout
+from  libdevicesinlan import version,  dateversion
 
 class frmAbout(QDialog, Ui_frmAbout):
     def __init__(self, parent = None, name = None, modal = False):
@@ -18,13 +15,13 @@ class frmAbout(QDialog, Ui_frmAbout):
         if name:
             self.setObjectName(name)
         self.setupUi(self)
-        self.lblVersion.setText(self.tr("Version {0}".format(libdevicesinlan.version)))
+        self.lblVersion.setText(self.tr("Version {} ({})".format(version,  dateversion)))
         self.textBrowser.setHtml(
-            self.tr("La página del proyecto se encuentra en <a href=\"http://devicesinlan.sourceforge.net\">http://devicesinlan.sourceforge.net</a><p> <p>")+
-            self.tr("Este programa ha sido desarrollado por Mariano Muñoz.<p>")+
-            self.tr("Ha sido traducido por:")+
-            "<ul><li>Mariano Muñoz</li><li>Nadejda Adam</li></ul><p>\n"+
-            self.tr("a los siguientes idiomas<p>")+
+            self.tr("Project web page is in <a href=\"http://devicesinlan.sourceforge.net\">http://devicesinlan.sourceforge.net</a><p> <p>")+
+            self.tr("This program has been developed by Mariano Mu\xf1oz.<p>")+
+            self.tr("It has been translated by:")+
+            "<ul><li>Mariano Mu\xf1oz</li><li>Nadejda Adam</li></ul><p>\n"+
+            self.tr("to the following languages<p>")+
             "<ul><li>English</li><li>Fran\xe7ais</li><li>Espa\xf1ol</li><li>Rom\xe2n</li><li>\u0420\u0443\u0441\u0441\u043a\u0438\u0439</li></ul><p>")
 
 

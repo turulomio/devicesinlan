@@ -41,6 +41,36 @@ class frmMain(QMainWindow, Ui_frmMain):#
     def on_actionAbout_triggered(self):
         fr=frmAbout(self,"frmAbout")
         fr.open()
+
+    @pyqtSlot()      
+    def on_actionShowDatabase_triggered(self):
+        self.tab = QWidget()
+        table=QTableWidget(self.tabWidget)
+        horizontalLayout_2 = QVBoxLayout(self.tab)
+        table.setColumnCount(0)
+        table.setRowCount(0)
+        table.setContextMenuPolicy(Qt.CustomContextMenu)
+        table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        table.setSelectionMode(QAbstractItemView.SingleSelection)
+        table.setSelectionBehavior(QAbstractItemView.SelectRows)
+        horizontalLayout_2.addWidget(table)        
+        table.setAlternatingRowColors(True)
+        
+        
+        inicio=datetime.datetime.now()
+        set=SetDevices(self.mem)
+        set.init__from_settings()
+        self.sets.append(set)
+        self.tables.append(table)
+        self.tabWidget.addTab(self.tab, QIcon(":/database.png"),self.tr("Database devices at {}").format(str(datetime.datetime.now()).split(".")[0]))
+        self.tabWidget.setCurrentWidget(self.tab)
+        self.table_update(set, table)
+        label=QLabel()
+        label.setText(self.tr("It took {} to show {} devices".format(datetime.datetime.now()-inicio, set.length())))
+        horizontalLayout_2.addWidget(label)
+        table.customContextMenuRequested[QPoint].connect(self.on_customContextMenuRequested)
+        table.itemSelectionChanged.connect(self.on_itemSelectionChanged)
+
         
     @pyqtSlot()      
     def on_actionHelp_triggered(self):
@@ -58,18 +88,23 @@ class frmMain(QMainWindow, Ui_frmMain):#
             
     @pyqtSlot()      
     def on_actionDeviceLink_triggered(self):
-        f=frmDeviceCRUD(self.mem, self.currentSet.selected)
+        f=frmDeviceCRUD(self.mem, self.currentSet)
         f.exec_() 
         self.table_update(self.currentSet, self.currentTable)
         
     @pyqtSlot()      
     def on_actionDeviceUnlink_triggered(self):
-        self.currentSet.selected.unlink()
+        self.currentSet.unlink(self.currentSet.selected)
         self.table_update(self.currentSet, self.currentTable)
         
     def table_update(self, set, table):
-        set.qtablewidget(table)
+        if set.isDatabase==True:
+            set.qtablewidget_devices_from_settings(table)
+        else:
+            set.qtablewidget(table)
         table.resizeColumnsToContents()
+        
+        
         
     @pyqtSlot()      
     def on_actionScan_triggered(self):
@@ -112,7 +147,10 @@ class frmMain(QMainWindow, Ui_frmMain):#
             self.actionDeviceUnlink.setEnabled(False)
         else:
             self.actionDeviceLink.setEnabled(True)
-            self.actionDeviceUnlink.setEnabled(True)
+            if self.currentSet.isDatabase==True:
+                self.actionDeviceLink.setEnabled(False)
+            else:
+                self.actionDeviceUnlink.setEnabled(True)
         menu=QMenu()
         menu.addAction(self.actionDeviceLink)
         menu.addAction(self.actionDeviceUnlink)

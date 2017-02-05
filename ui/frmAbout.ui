@@ -9,23 +9,23 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1050</width>
-    <height>739</height>
+    <width>641</width>
+    <height>466</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>About DevicesInLan</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/glparchis/ficharoja.png</normaloff>:/glparchis/ficharoja.png</iconset>
+   <iconset resource="../images/devicesinlan.qrc">
+    <normaloff>:/devicesinlan.png</normaloff>:/devicesinlan.png</iconset>
   </property>
   <property name="modal">
    <bool>true</bool>
   </property>
   <layout class="QVBoxLayout">
    <item>
-    <layout class="QVBoxLayout">
+    <layout class="QVBoxLayout" name="vbox">
      <item>
       <widget class="QLabel" name="lblPixmap">
        <property name="pixmap">

@@ -36,7 +36,7 @@
      <x>0</x>
      <y>0</y>
      <width>995</width>
-     <height>28</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuAyuda">
@@ -49,8 +49,9 @@
    </widget>
    <widget class="QMenu" name="menuConfiguraci_n">
     <property name="title">
-     <string>Configuration</string>
+     <string>&amp;Configuration</string>
     </property>
+    <addaction name="actionShowDatabase"/>
     <addaction name="separator"/>
     <addaction name="actionSettings"/>
     <addaction name="separator"/>
@@ -80,8 +81,11 @@
    </attribute>
    <addaction name="actionScan"/>
    <addaction name="separator"/>
+   <addaction name="actionShowDatabase"/>
    <addaction name="actionSettings"/>
    <addaction name="separator"/>
+   <addaction name="actionAbout"/>
+   <addaction name="actionHelp"/>
    <addaction name="actionExit"/>
   </widget>
   <widget class="QStatusBar" name="status"/>
@@ -106,7 +110,7 @@
      <normaloff>:/devicesinlan.png</normaloff>:/devicesinlan.png</iconset>
    </property>
    <property name="text">
-    <string>About</string>
+    <string>&amp;About</string>
    </property>
   </action>
   <action name="actionSettings">
@@ -115,7 +119,7 @@
      <normaloff>:/configure.png</normaloff>:/configure.png</iconset>
    </property>
    <property name="text">
-    <string>Settings</string>
+    <string>&amp;Settings</string>
    </property>
   </action>
   <action name="actionHelp">
@@ -124,7 +128,7 @@
      <normaloff>:/help.png</normaloff>:/help.png</iconset>
    </property>
    <property name="text">
-    <string>Help</string>
+    <string>&amp;Help</string>
    </property>
    <property name="toolTip">
     <string>Muestra la ayuda del juego</string>
@@ -167,6 +171,18 @@
    </property>
    <property name="toolTip">
     <string>Unlink device</string>
+   </property>
+  </action>
+  <action name="actionShowDatabase">
+   <property name="icon">
+    <iconset resource="../images/devicesinlan.qrc">
+     <normaloff>:/database.png</normaloff>:/database.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show &amp;devices database</string>
+   </property>
+   <property name="toolTip">
+    <string>Show devices database</string>
    </property>
   </action>
  </widget>

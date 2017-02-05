@@ -1,5 +1,6 @@
 <RCC>
   <qresource>
+    <file>database.png</file>
     <file>cancel.png</file>
     <file>add.png</file>
     <file>configure.png</file>
