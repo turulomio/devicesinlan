@@ -70,7 +70,7 @@
           </size>
          </property>
          <property name="pixmap">
-          <pixmap resource="../images/devicesinlan.qrc">:/devicesinlan.png</pixmap>
+          <pixmap resource="../images/devicesinlan.qrc">:/help.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>

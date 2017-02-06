@@ -236,17 +236,17 @@
         <translation>Acerca de DevicesInLan</translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.ui" line="49"/>
+        <location filename="../ui/frmAbout.ui" line="39"/>
         <source>DevicesInLan</source>
         <translation>DevicesInLan</translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.ui" line="70"/>
+        <location filename="../ui/frmAbout.ui" line="109"/>
         <source>Credits</source>
         <translation>Créditos</translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.ui" line="84"/>
+        <location filename="../ui/frmAbout.ui" line="123"/>
         <source>License</source>
         <translation>Licencia</translation>
     </message>
