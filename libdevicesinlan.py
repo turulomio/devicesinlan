@@ -200,7 +200,7 @@ class SetInterfaces:
     def print(self):
         i=1
         for interface in self.arr:
-            print (Style.BRIGHT + "{}. {}".format(i, Style.BRIGHT+ Fore.GREEN+str(interface.id)))
+            print (Style.BRIGHT + "{}. {} ({}/{} and MAC: {})".format(i, Style.BRIGHT+ Fore.GREEN+str(interface.id), interface.ip, interface.mask, interface.mac))
             i=i+1
 
     def order_by_name(self):
@@ -734,9 +734,10 @@ class TRequest(threading.Thread):
 def input_int(text, default=None):
     while True:
         if default==None:
-            res=input(text+": ")
+            res=input(Style.BRIGHT+text+": ")
         else:
-            res=input(text+ " [{}]: ".format(default))
+            print(Style.BRIGHT+ Fore.WHITE+"{} [{}]: ".format(text, Fore.GREEN+str(default)+Fore.WHITE), end="")
+            res=input()
         try:
             if res==None or res=="":
                 res=default
@@ -744,6 +745,8 @@ def input_int(text, default=None):
             return res
         except:
             pass
+            
+
 def input_string(text):
     return input(text)
 
