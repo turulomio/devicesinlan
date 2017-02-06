@@ -11,6 +11,7 @@ import socket
 from PyQt5.QtCore import QCoreApplication, QSettings, QTranslator, Qt, QObject
 from PyQt5.QtWidgets import QTableWidgetItem
 from PyQt5.QtGui import QColor,  QPixmap, QIcon
+from colorama import Style, Fore
 import ipaddress
 version="0.9.0"
 dateversion=datetime.date(2017, 2, 5)
@@ -18,22 +19,6 @@ dateversion=datetime.date(2017, 2, 5)
 class TypesARP:
     Gratuitous = 1
     Standard = 2
-
-class Color:
-    def green(s):
-       return "\033[92m{}\033[0m".format(s)
-    
-    def red(s):
-       return "\033[91m{}\033[0m".format(s)
-    
-    def bold(s):
-       return "\033[1m{}\033[0m".format(s)
-
-    def pink(s):
-        return "\033[95m{}\033[0m".format(s)
-        
-    def yellow(s):
-        return "\033[93m{}\033[0m".format(s)
 
 class Mem:
     def __init__(self):
@@ -401,21 +386,21 @@ class SetDevices(QObject):
         maxoui=self.max_len_oui()
         maxtype=self.max_len_type()
         self.order_by_ip()
-        print (Color.bold("="*(16+2+maxtype+2+17+2+maxalias+2+maxoui)))
-        print (Color.bold(self.tr("{} DEVICES IN LAN FROM {} INTERFACE AT {}").format(self.length(), self.mem.interfaces.selected.id.upper(), str(datetime.datetime.now())[:-7]).center (6+15+17+maxalias+maxoui)))
-        print (Color.bold("{}  {}  {}  {}  {}".format(" IP ".center(16,'='),"TYPE".center(maxtype,"=")," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'='))))
+        print (Style.BRIGHT+ "="*(16+2+maxtype+2+17+2+maxalias+2+maxoui))
+        print (Style.BRIGHT+ self.tr("{} DEVICES IN LAN FROM {} INTERFACE AT {}").format(self.length(), self.mem.interfaces.selected.id.upper(), str(datetime.datetime.now())[:-7]).center (6+15+17+maxalias+maxoui))
+        print (Style.BRIGHT+ "{}  {}  {}  {}  {}".format(" IP ".center(16,'='),"TYPE".center(maxtype,"=")," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'=')))
         for h in self.arr:
             if h.ip==self.mem.interfaces.selected.ip:
-                print ("{}  {}  {}  {}  {}".format(Color.pink(h.ip.ljust(16)), Color.pink(h.type.name.ljust(maxtype)), Color.pink(h.mac.center(17)),   Color.pink(self.tr("This device").ljust(maxalias)), Color.pink(h.oui.ljust(maxoui))))
+                print ("{}  {}  {}  {}  {}".format(Style.BRIGHT+Fore.MAGENTA + h.ip.ljust(16), h.type.name.ljust(maxtype), h.mac.center(17),   self.tr("This device").ljust(maxalias), h.oui.ljust(maxoui)))
             else:
                 if h.alias:
-                    mac=Color.green(h.mac)
+                    mac=Style.BRIGHT+Fore.GREEN + h.mac
                     alias=h.alias
                 else:
-                    mac=Color.red(h.mac)
+                    mac=Style.BRIGHT+Fore.RED+ h.mac
                     alias=" "
-                print ("{}  {}  {}  {}  {}".format(h.ip.ljust(16), h.type.name.ljust(maxtype),  mac.center(17),   Color.yellow(alias.ljust(maxalias)), h.oui.ljust(maxoui)))    
-        print (Color.bold("="*(16+2+maxtype+2+17+2+maxalias+2+maxoui)))
+                print ("{}  {}  {}  {}  {}".format(h.ip.ljust(16), h.type.name.ljust(maxtype),  mac.center(17),   Style.BRIGHT+Fore.YELLOW +  alias.ljust(maxalias), Style.NORMAL+Fore.WHITE+ h.oui.ljust(maxoui)))
+        print (Style.BRIGHT + "="*(16+2+maxtype+2+17+2+maxalias+2+maxoui))
                 
 
     def print_devices_from_settings(self):
@@ -426,13 +411,13 @@ class SetDevices(QObject):
         maxoui=self.max_len_oui()
         maxtype=self.max_len_type()
         self.order_by_alias()
-        print (Color.bold("="*(maxtype+2+17+2+maxalias+2+maxoui)))
-        print (Color.bold(self.tr("{} DEVICES IN DATABASE AT {}").format(self.length(), str(datetime.datetime.now())[:-7]).center (6+15+17+maxalias+maxoui)))        
-        print (Color.bold("{}  {}  {}  {}".format(" TYPE ".center(maxtype,'=')," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'='))))
+        print (Style.BRIGHT+"="*(maxtype+2+17+2+maxalias+2+maxoui))
+        print (Style.BRIGHT+self.tr("{} DEVICES IN DATABASE AT {}").format(self.length(), str(datetime.datetime.now())[:-7]).center (6+15+17+maxalias+maxoui))
+        print (Style.BRIGHT+ "{}  {}  {}  {}".format(" TYPE ".center(maxtype,'=')," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'=')))
         for h in self.arr:
-            mac=Color.green(h.mac)
-            print ("{}  {}  {}  {}".format(h.type.name.ljust(maxtype), mac.center(17),   Color.yellow(h.alias.ljust(maxalias)), str(h.oui).ljust(maxoui)))    
-        print (Color.bold("="*(maxtype+2+17+2+maxalias+2+maxoui)))
+            mac=Style.BRIGHT+ Fore.GREEN +h.mac
+            print ("{}  {}  {}  {}".format(h.type.name.ljust(maxtype), mac.center(17),   Style.BRIGHT + Fore.YELLOW+ h.alias.ljust(maxalias), Style.NORMAL + Fore.WHITE+  str(h.oui).ljust(maxoui)))    
+        print (Style.BRIGHT+"="*(maxtype+2+17+2+maxalias+2+maxoui))
 
     def qtablewidget(self, table):
         self.order_by_ip() 
@@ -536,20 +521,20 @@ class Device(QObject):
     def insert_mac(self):
         validated=False
         while  validated==False:
-            self.mac=input(Color.bold(self.tr("Input the MAC of the known device (xx:xx:xx:xx:xx:xx): "))).lower()
+            self.mac=input(Style.BRIGHT+ self.tr("Input the MAC of the known device (XX:XX:XX:XX:XX:XX): ")).upper()
             if self.validate_mac(self.mac):
                 validated=True
             else:
-                print (Color.red(self.tr("You need to insert a mac with the next format: 2a:3b:4c:5d:6e:7a")))
+                print (Style.BRIGHT+ Fore.RED+ self.tr("You need to insert a mac with the next format: 2A:3B:4C:5D:6E:7A"))
 
     def insert_alias(self):
         validated=False
         while validated==False:
-            self.alias=input(Color.bold(self.tr("Input an alias of the known device: ")))
+            self.alias=input(Style.BRIGHT+self.tr("Input an alias of the known device: "))
             if self.validate_alias(self.alias):
                 validated=True
             else:
-                print (Color.red(self.tr("You need to add an alias")))
+                print (Style.BRIGHT+Fore.RED+ self.tr("You need to add an alias"))
 
         
     def link(self):

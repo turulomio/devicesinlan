@@ -166,6 +166,8 @@ class frmMain(QMainWindow, Ui_frmMain):#
         
         self.tab = myTab(set, self.tabWidget)
         self.tab.setLabelText(self.tr("It took {} to detect {} devices".format(datetime.datetime.now()-inicio, set.length())))
+        
+        set.print()
 
     @pyqtSlot()      
     def on_actionShowDatabase_triggered(self):
@@ -175,6 +177,8 @@ class frmMain(QMainWindow, Ui_frmMain):#
         
         self.tab = myTab(set, self.tabWidget)
         self.tab.setLabelText(self.tr("It took {} to show {} devices".format(datetime.datetime.now()-inicio, set.length())))
+        
+        set.print_devices_from_settings()
 
     def on_tabWidget_tabCloseRequested(self, index):
 #        self.tabWidget.currentWidget().close()

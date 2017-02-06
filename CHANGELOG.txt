@@ -45,3 +45,7 @@ devicesinlan 0.9.0 20170205
 ===========================
 - Pretty list in console
 - Device type added to lists
+
+devicesinlan 0.10.0 XXXXXXXX
+============================
+- Replaced Color class by colorama package

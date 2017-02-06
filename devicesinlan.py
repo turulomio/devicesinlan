@@ -8,7 +8,9 @@ if platform.system()=="Windows":
     sys.path.append("images")
 elif platform.system()=="Linux":
     sys.path.append("/usr/lib/devicesinlan")
-from libdevicesinlan import ArpScanMethod, Color, Device, Mem, SetDevices, dateversion,  version
+from libdevicesinlan import ArpScanMethod, Device, Mem, SetDevices, dateversion,  version
+from colorama import init,  Style, Fore
+init(autoreset=True)
 
 if len(sys.argv)>1:#To see if it's console or not
     from PyQt5.QtCore import QCoreApplication
@@ -62,7 +64,7 @@ elif platform.system()=="Linux":
             d.insert_alias()
             d.type=mem.types.find_by_id(0)
             d.link()
-            print (Color.green(app.translate("devicesinlan","Device inserted")))
+            print (Style.BRIGHT+ Fore.GREEN + app.translate("devicesinlan","Device inserted"))
             mem.settings.sync()
             sys.exit(0)
            
@@ -70,7 +72,8 @@ elif platform.system()=="Linux":
             d=Device(mem)
             d.insert_mac()
             d.unlink()
-            print (Color.green(app.translate("devicesinlan","Mac removed")))
+            print (Style.BRIGHT+Fore.GREEN+app.translate("devicesinlan","Mac removed"))
+
             mem.settings.sync()
             sys.exit(0)
             
