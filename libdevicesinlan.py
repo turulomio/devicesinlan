@@ -731,10 +731,15 @@ class TRequest(threading.Thread):
                 pass
         return s
 
-def input_int(text):
+def input_int(text, default=None):
     while True:
-        res=input(text)
+        if default==None:
+            res=input(text+": ")
+        else:
+            res=input(text+ " [{}]: ".format(default))
         try:
+            if res==None or res=="":
+                res=default
             res=int(res)
             return res
         except:

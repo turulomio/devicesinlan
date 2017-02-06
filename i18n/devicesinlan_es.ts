@@ -143,12 +143,12 @@
 <context>
     <name>devicesinlan</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="760"/>
+        <location filename="../libdevicesinlan.py" line="765"/>
         <source>True</source>
         <translation>Verdadero</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="763"/>
+        <location filename="../libdevicesinlan.py" line="768"/>
         <source>False</source>
         <translation>Falso</translation>
     </message>
@@ -188,7 +188,7 @@
         <translation>Mac borrada</translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="98"/>
+        <location filename="../devicesinlan.py" line="101"/>
         <source>It took {} with DevicesInLAN scanner.</source>
         <translation>Duró {} con el escáner de DevicesInLAN.</translation>
     </message>
@@ -208,13 +208,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="87"/>
-        <source>Select an interface number: </source>
+        <location filename="../devicesinlan.py" line="86"/>
+        <source>There are not interfaces to scan.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="91"/>
-        <source>Input an integer with the request concurrence. 100 is OK: </source>
+        <location filename="../devicesinlan.py" line="90"/>
+        <source>Select an interface number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../devicesinlan.py" line="94"/>
+        <source>Input an integer with the request concurrence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../devicesinlan.py" line="101"/>
+        <source>seconds</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

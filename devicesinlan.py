@@ -82,19 +82,22 @@ else:##Console
         mem.interfaces.selected=mem.interfaces.find_by_id(args.interface)
         
     if args.wizard==True:
+        if mem.interfaces.length()==0:
+            print(Style.BRIGHT+ Fore.RED+app.translate("devicesinlan", "There are not interfaces to scan."))
+            sys.exit(1)
         mem.interfaces.print()
         while True:
-            id=input_int(Style.BRIGHT + app.translate("devicesinlan", "Select an interface number: "))
+            id=input_int(Style.BRIGHT + app.translate("devicesinlan", "Select an interface number"), 1)
             if id<=mem.interfaces.length():#Check id 
                 break
         mem.interfaces.selected=mem.interfaces.find_by_id(mem.interfaces.arr[id-1].id)
-        mem.settings.setValue("frmSettings/concurrence", input_int(Style.BRIGHT+app.translate("devicesinlan", "Input an integer with the request concurrence. 100 is OK: ")))
+        mem.settings.setValue("frmSettings/concurrence", input_int(Style.BRIGHT+app.translate("devicesinlan", "Input an integer with the request concurrence"), 100))
         
     
     inicio=datetime.datetime.now()
     set=SetDevices(mem)
     set.setMethod(ArpScanMethod.PingArp)
     set.print()
-    print (app.translate("devicesinlan","It took {} with DevicesInLAN scanner.").format (datetime.datetime.now()-inicio))
+    print (Style.BRIGHT+app.translate("devicesinlan","It took {} with DevicesInLAN scanner.").format (Fore.GREEN+str(datetime.datetime.now()-inicio)+ " "+ app.translate("devicesinlan", "seconds")+Fore.WHITE))
 
 
