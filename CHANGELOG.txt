@@ -56,3 +56,7 @@ devicesinlan 0.11.0 XXXXXXXX
 - Replaced Thread with PoolThreadExecutor
 - Added setting to set concurrence
 - Improved console reports
+
+devicesinlan 0.12.0 XXXXXXXX
+============================
+- Project man page created

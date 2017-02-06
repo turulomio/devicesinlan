@@ -46,9 +46,10 @@ Source: "*.pyd"; DestDir: "{app}"; Flags: ignoreversion
 Source: "i18n/*.qm"; DestDir: "{app}/i18n/"; Flags: ignoreversion    
 Source: "ieee-oui.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "*.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "library.zip"; DestDir: "{app}"; Flags: ignoreversion        
-Source: "platforms\*"; DestDir: "{app}\platforms\"; Flags: ignoreversion recursesubdirs createallsubdirs   
+Source: "library.zip"; DestDir: "{app}"; Flags: ignoreversion        çç
+Source: "platforms\*"; DestDir: "{app}\platforms\"; Flags: ignoreversion recursesubdirs createallsubdirs   ç
 Source: "imageformats\*"; DestDir: "{app}\imageformats\"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "devicesinlan.html"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

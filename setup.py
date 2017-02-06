@@ -47,7 +47,7 @@ name="devicesinlan"
 
 
 #Add files
-include_files=[ 'images/devicesinlan.ico', 'GPL-3.txt', 'ieee-oui.txt']
+include_files=[ 'images/devicesinlan.ico', 'GPL-3.txt', 'ieee-oui.txt', 'devicesinlan.html']
 include_files.append(("i18n/devicesinlan_es.qm", "i18n/devicesinlan_es.qm"))
 include_files.append(("i18n/devicesinlan_fr.qm", "i18n/devicesinlan_fr.qm"))
 include_files.append(("i18n/devicesinlan_ro.qm", "i18n/devicesinlan_ro.qm"))
@@ -70,6 +70,7 @@ if sys.platform=='win32':
                'build_exe': build_exe_options}
 else:#linux
       base="Console"
+      include_files.append("devicesinlan.1")
       build_options = dict(includes = [], excludes = [], include_files=include_files)
       options=dict(build_exe = build_options)
 

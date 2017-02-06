@@ -20,6 +20,8 @@ cp      Makefile \
         libdevicesinlan.py \
         devicesinlan.py \
         devicesinlan.pro \
+        devicesinlan.1 \
+        devicesinlan.html \
         devicesinlan.desktop \
         ieee-oui.txt \
         $BUILDDIR

@@ -1,5 +1,7 @@
 from PyQt5.QtWidgets import QDialog
+from PyQt5.QtCore import QUrl
 from Ui_frmHelp import Ui_frmHelp
+import platform
 
 class frmHelp(QDialog, Ui_frmHelp):
     def __init__(self, parent = None, name = None, modal = False):
@@ -14,6 +16,7 @@ class frmHelp(QDialog, Ui_frmHelp):
         if name:
             self.setObjectName(name)
         self.setupUi(self)
-        self.browser.setHtml(
-            self.tr("<h2>Documentation</h2>")
-        )
+        if platform.system()=="Windows":
+            self.viewer.setSource(QUrl("devicesinlan.html"))    
+        elif platform.system()=="Linux":
+            self.viewer.setSource(QUrl("/usr/share/devicesinlan/devicesinlan.html"))    

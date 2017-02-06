@@ -96,11 +96,7 @@
       </layout>
      </item>
      <item>
-      <widget class="QTextBrowser" name="browser">
-       <property name="openExternalLinks">
-        <bool>true</bool>
-       </property>
-      </widget>
+      <widget class="QTextBrowser" name="viewer"/>
      </item>
     </layout>
    </item>
