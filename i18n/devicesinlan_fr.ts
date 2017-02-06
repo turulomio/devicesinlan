@@ -3,12 +3,12 @@
 <context>
     <name>Device</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="575"/>
+        <location filename="../libdevicesinlan.py" line="576"/>
         <source>Input an alias of the known device: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="579"/>
+        <location filename="../libdevicesinlan.py" line="581"/>
         <source>You need to add an alias</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18,7 +18,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="570"/>
+        <location filename="../libdevicesinlan.py" line="571"/>
         <source>You need to insert a mac with the next format: 2A:3B:4C:5D:6E:7A</source>
         <translation type="unfinished"></translation>
     </message>
@@ -143,12 +143,12 @@
 <context>
     <name>devicesinlan</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="765"/>
+        <location filename="../libdevicesinlan.py" line="770"/>
         <source>True</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="768"/>
+        <location filename="../libdevicesinlan.py" line="773"/>
         <source>False</source>
         <translation type="unfinished"></translation>
     </message>

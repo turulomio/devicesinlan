@@ -3,12 +3,12 @@
 <context>
     <name>Device</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="575"/>
+        <location filename="../libdevicesinlan.py" line="576"/>
         <source>Input an alias of the known device: </source>
         <translation>Añada un alias del dispositivo conocido: </translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="579"/>
+        <location filename="../libdevicesinlan.py" line="581"/>
         <source>You need to add an alias</source>
         <translation>Necesita añadir un alias</translation>
     </message>
@@ -18,7 +18,7 @@
         <translation>Introduzca la MAC de un dispositivo desconocido (XX:XX:XX:XX:XX:XX): </translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="570"/>
+        <location filename="../libdevicesinlan.py" line="571"/>
         <source>You need to insert a mac with the next format: 2A:3B:4C:5D:6E:7A</source>
         <translation>Necesita añadir una mac con el siguiente formato: 2A:3B:4C:5D:6E:7A</translation>
     </message>
@@ -143,12 +143,12 @@
 <context>
     <name>devicesinlan</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="765"/>
+        <location filename="../libdevicesinlan.py" line="770"/>
         <source>True</source>
         <translation>Verdadero</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="768"/>
+        <location filename="../libdevicesinlan.py" line="773"/>
         <source>False</source>
         <translation>Falso</translation>
     </message>
@@ -200,32 +200,32 @@
     <message>
         <location filename="../devicesinlan.py" line="39"/>
         <source>Uses a wizard to select options</source>
-        <translation type="unfinished"></translation>
+        <translation>Usa un asistente para seleccionar las opciones</translation>
     </message>
     <message>
         <location filename="../devicesinlan.py" line="80"/>
         <source>This interface doesn&apos;t exist. Please use --wizard parameter to help you.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este interfaz no existe. Por favor usa --wizard para que te ayude.</translation>
     </message>
     <message>
         <location filename="../devicesinlan.py" line="86"/>
         <source>There are not interfaces to scan.</source>
-        <translation type="unfinished"></translation>
+        <translation>No hay interfaces para escanear.</translation>
     </message>
     <message>
         <location filename="../devicesinlan.py" line="90"/>
         <source>Select an interface number</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecciona el número de la interfaz</translation>
     </message>
     <message>
         <location filename="../devicesinlan.py" line="94"/>
         <source>Input an integer with the request concurrence</source>
-        <translation type="unfinished"></translation>
+        <translation>Introduce un número de peticiones concurrentes</translation>
     </message>
     <message>
         <location filename="../devicesinlan.py" line="101"/>
         <source>seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>segundos</translation>
     </message>
 </context>
 <context>

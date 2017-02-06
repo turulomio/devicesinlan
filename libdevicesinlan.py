@@ -14,8 +14,8 @@ from PyQt5.QtGui import QColor,  QPixmap, QIcon
 from colorama import Style, Fore
 from concurrent.futures import ThreadPoolExecutor,  as_completed
 import ipaddress
-version="0.10.0"
-dateversion=datetime.date(2017, 2, 6)
+version="0.11.0"
+dateversion=datetime.date(2017, 2, 7)
 
 class TypesARP:
     Gratuitous = 1
@@ -522,7 +522,7 @@ class Device(QObject):
         if len(s)!=17:
             return False
 
-        if re.match(r'([0-9a-f]{2}[:-]){5}([0-9a-f]{2})', s):
+        if re.match(r'([0-9a-fA-F]{2}[:-]){5}([0-9a-fA-F]{2})', s):
             return True
         return False
         
@@ -561,7 +561,8 @@ class Device(QObject):
     def insert_mac(self):
         validated=False
         while  validated==False:
-            self.mac=input(Style.BRIGHT+ self.tr("Input the MAC of the known device (XX:XX:XX:XX:XX:XX): ")).upper()
+            print(Style.BRIGHT+ self.tr("Input the MAC of the known device (XX:XX:XX:XX:XX:XX): "), end="")
+            self.mac=input().upper()
             if self.validate_mac(self.mac):
                 validated=True
             else:
@@ -570,7 +571,8 @@ class Device(QObject):
     def insert_alias(self):
         validated=False
         while validated==False:
-            self.alias=input(Style.BRIGHT+self.tr("Input an alias of the known device: "))
+            print(Style.BRIGHT+self.tr("Input an alias of the known device: "), end="")
+            self.alias=input()
             if self.validate_alias(self.alias):
                 validated=True
             else:
