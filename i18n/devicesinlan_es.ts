@@ -15,12 +15,12 @@
     <message>
         <location filename="../libdevicesinlan.py" line="526"/>
         <source>Input the MAC of the known device (XX:XX:XX:XX:XX:XX): </source>
-        <translation type="unfinished"></translation>
+        <translation>Introduzca la MAC de un dispositivo desconocido (XX:XX:XX:XX:XX:XX): </translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="530"/>
         <source>You need to insert a mac with the next format: 2A:3B:4C:5D:6E:7A</source>
-        <translation type="unfinished"></translation>
+        <translation>Necesita añadir una mac con el siguiente formato: 2A:3B:4C:5D:6E:7A</translation>
     </message>
 </context>
 <context>

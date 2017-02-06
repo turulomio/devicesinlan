@@ -13,8 +13,8 @@ from PyQt5.QtWidgets import QTableWidgetItem
 from PyQt5.QtGui import QColor,  QPixmap, QIcon
 from colorama import Style, Fore
 import ipaddress
-version="0.9.0"
-dateversion=datetime.date(2017, 2, 5)
+version="0.10.0"
+dateversion=datetime.date(2017, 2, 6)
 
 class TypesARP:
     Gratuitous = 1
