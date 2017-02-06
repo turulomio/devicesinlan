@@ -12,6 +12,7 @@ from PyQt5.QtCore import QCoreApplication, QSettings, QTranslator, Qt, QObject
 from PyQt5.QtWidgets import QTableWidgetItem
 from PyQt5.QtGui import QColor,  QPixmap, QIcon
 from colorama import Style, Fore
+from concurrent.futures import ThreadPoolExecutor,  as_completed
 import ipaddress
 version="0.10.0"
 dateversion=datetime.date(2017, 2, 6)
@@ -20,23 +21,29 @@ class TypesARP:
     Gratuitous = 1
     Standard = 2
 
-class Mem:
+class Mem(QObject):
     def __init__(self):
+        QObject.__init__(self)
         self.settings=QSettings()
         self.translator=QTranslator()
         self.interfaces=SetInterfaces(self)
         self.interfaces.load_all()
         self.types=SetDeviceTypes(self)
         self.types.load_all()
-        
+
     def change_language(self, language):  
         """language es un string"""  
         urls= ["i18n/devicesinlan_" + language + ".qm","/usr/share/devicesinlan/devicesinlan_" + language + ".qm"]
         for url in urls:
             if os.path.exists(url)==True:
-                break
-        self.translator.load(url)
-        QCoreApplication.installTranslator(self.translator);
+                self.translator.load(url)
+                QCoreApplication.installTranslator(self.translator)
+#                print(self.tr("Language changed to {} using {}".format(language, url)))
+                return
+        if language!="en":
+#            print(self.tr("Using default (en)."))
+#        else:
+            print(Style.BRIGHT+ Fore.CYAN+ self.tr("Language ({}) couldn't be loaded in {}. Using default (en).".format(language, urls)))
 
 class DeviceType:
     def __init__(self, mem):
@@ -129,8 +136,9 @@ class SetDeviceTypes(QObject):
             selected=0
         if selected!=None:
                 combo.setCurrentIndex(combo.findData(selected))        
-class Interface:
+class Interface(QObject):
     def __init__(self, mem):
+        QObject.__init__(self)
         self.mem=mem
         self.id=None#Id numerico de Windows o id de Linux
         self.name=None
@@ -190,8 +198,10 @@ class SetInterfaces:
                 pass
         
     def print(self):
+        i=1
         for interface in self.arr:
-            print ( interface)
+            print (Style.BRIGHT + "{}. {}".format(i, Style.BRIGHT+ Fore.GREEN+str(interface.id)))
+            i=i+1
 
     def order_by_name(self):
         """Orders the Set using self.arr"""
@@ -298,43 +308,68 @@ class SetDevices(QObject):
         
     def pingarp(self):
         """Load Devices from scan with ping and arp commands output"""
-        threads=[]       
-        for addr in ipaddress.IPv4Network("{}/{}".format(self.mem.interfaces.selected.ip, self.mem.interfaces.selected.mask), strict=False):
-            if str(addr)==self.mem.interfaces.selected.ip :#Adds device if ip is interface ip and jumps it
-                h=Device(self.mem)
-                h.ip=str(addr)
-                h.mac=self.mem.interfaces.selected.mac.upper()
-                h.pinged=True     
-                h.alias=self.mem.settings.value("DeviceAlias/{}".format(h.macwithout2points(h.mac.upper())), None)
-                h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
-                self.arr.append(h)
-                continue
-            t=TRequestPingArp(str(addr))
-            t.start()
-            threads.append(t)
-            
-        for t in threads:
-            t.join()
-            if t.mac!=None or t.pinged==True:
-                h=Device(self.mem)
-                h.ip=t.ip
-                h.mac=t.mac
-                h.pinged=t.pinged
-                if h.mac:
+        def get_ip_mac_pinged( ip):
+            """
+                Returns a list  [ip,mac,pinged]
+            """
+            pinged=False
+            mac=None
+            #PING
+            if platform.system()=="Windows":
+                CREATE_NO_WINDOW=0x08000000
+                output=subprocess.call(["ping", "-n", "1", ip], shell=False, stderr=subprocess.DEVNULL, creationflags=CREATE_NO_WINDOW)
+            else:
+                output=subprocess.call(["ping", "-c", "1", "-W", "1", ip], shell=False, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+            if output==0:
+                pinged=True
+
+            #ARP
+            if pinged==True:
+                if platform.system()=="Windows":
+                    arpexit=subprocess.check_output(["arp", "-a",  ip], creationflags=CREATE_NO_WINDOW)
+                    for s in arpexit.split(b" "):
+                        if len(s)==17 and s.find(b"-")!=-1:
+                            mac=s.decode().replace("-", ":").upper()
+                else:
+                    arpexit=subprocess.check_output(["arp", ip])
+                    for s in arpexit.decode('utf-8').split(" "):
+                        if len(s)==17 and s.find(":")!=-1:
+                            mac=s.upper()
+            return(ip, mac, pinged)
+            ###################################
+        futures=[]
+        concurrence=int(self.mem.settings.value("frmSettings/concurrence", 50))
+        with ThreadPoolExecutor(max_workers=concurrence) as executor:
+            for addr in ipaddress.IPv4Network("{}/{}".format(self.mem.interfaces.selected.ip, self.mem.interfaces.selected.mask), strict=False):
+                if str(addr)==self.mem.interfaces.selected.ip :#Adds device if ip is interface ip and jumps it
+                    h=Device(self.mem)
+                    h.ip=str(addr)
+                    h.mac=self.mem.interfaces.selected.mac.upper()
+                    h.pinged=True     
                     h.alias=self.mem.settings.value("DeviceAlias/{}".format(h.macwithout2points(h.mac.upper())), None)
                     h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
-                self.arr.append(h)
-
+                    self.arr.append(h)
+                    continue
+                else:
+                    futures.append(executor.submit(get_ip_mac_pinged,  str(addr)))
+                
+            for i,  future in enumerate(as_completed(futures)):
+                h=Device(self.mem)
+                (h.ip, h.mac, h.pinged)=future.result()
+                if h.mac!=None and h.pinged==True:
+                    h.alias=self.mem.settings.value("DeviceAlias/{}".format(h.macwithout2points(h.mac.upper())), None)
+                    h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
+                    self.arr.append(h)#Solo si se da alias
 
     def max_len_oui(self):
-        max=6
+        max=10
         for h in self.arr:
             if len(str(h.oui))>max:
                 max=len(str(h.oui))
         return max
 
     def max_len_type(self):
-        max=0
+        max=10
         for h in self.arr:
             if len(h.type.name)>max:
                 max=len(h.type.name)
@@ -365,7 +400,7 @@ class SetDevices(QObject):
             self.arr.remove(o)
         
     def max_len_alias(self):
-        l=14
+        l=len(self.tr("This device"))
         for h in self.arr:
             if h.alias:
                 le=len(h.alias)
@@ -385,9 +420,10 @@ class SetDevices(QObject):
         maxalias=self.max_len_alias()
         maxoui=self.max_len_oui()
         maxtype=self.max_len_type()
+        maxlength=16+2+maxtype+2+17+2+maxalias+2+maxoui
         self.order_by_ip()
-        print (Style.BRIGHT+ "="*(16+2+maxtype+2+17+2+maxalias+2+maxoui))
-        print (Style.BRIGHT+ self.tr("{} DEVICES IN LAN FROM {} INTERFACE AT {}").format(self.length(), self.mem.interfaces.selected.id.upper(), str(datetime.datetime.now())[:-7]).center (6+15+17+maxalias+maxoui))
+        print (Style.BRIGHT+ "="*(maxlength))
+        print (Style.BRIGHT+ self.tr("{} DEVICES IN LAN FROM {} INTERFACE AT {}").format(self.length(), self.mem.interfaces.selected.id.upper(), str(datetime.datetime.now())[:-7]).center(maxlength))
         print (Style.BRIGHT+ "{}  {}  {}  {}  {}".format(" IP ".center(16,'='),"TYPE".center(maxtype,"=")," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'=')))
         for h in self.arr:
             if h.ip==self.mem.interfaces.selected.ip:
@@ -400,7 +436,7 @@ class SetDevices(QObject):
                     mac=Style.BRIGHT+Fore.RED+ h.mac
                     alias=" "
                 print ("{}  {}  {}  {}  {}".format(h.ip.ljust(16), h.type.name.ljust(maxtype),  mac.center(17),   Style.BRIGHT+Fore.YELLOW +  alias.ljust(maxalias), Style.NORMAL+Fore.WHITE+ h.oui.ljust(maxoui)))
-        print (Style.BRIGHT + "="*(16+2+maxtype+2+17+2+maxalias+2+maxoui))
+        print (Style.BRIGHT + "="*(maxlength))
                 
 
     def print_devices_from_settings(self):
@@ -410,14 +446,15 @@ class SetDevices(QObject):
         maxalias=self.max_len_alias()
         maxoui=self.max_len_oui()
         maxtype=self.max_len_type()
+        maxlength=maxtype+2+17+2+maxalias+2+maxoui
         self.order_by_alias()
-        print (Style.BRIGHT+"="*(maxtype+2+17+2+maxalias+2+maxoui))
-        print (Style.BRIGHT+self.tr("{} DEVICES IN DATABASE AT {}").format(self.length(), str(datetime.datetime.now())[:-7]).center (6+15+17+maxalias+maxoui))
+        print (Style.BRIGHT+"="*(maxlength))
+        print (Style.BRIGHT+self.tr("{} DEVICES IN DATABASE AT {}").format(self.length(), str(datetime.datetime.now())[:-7]).center (maxlength))
         print (Style.BRIGHT+ "{}  {}  {}  {}".format(" TYPE ".center(maxtype,'=')," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'=')))
         for h in self.arr:
             mac=Style.BRIGHT+ Fore.GREEN +h.mac
             print ("{}  {}  {}  {}".format(h.type.name.ljust(maxtype), mac.center(17),   Style.BRIGHT + Fore.YELLOW+ h.alias.ljust(maxalias), Style.NORMAL + Fore.WHITE+  str(h.oui).ljust(maxoui)))    
-        print (Style.BRIGHT+"="*(maxtype+2+17+2+maxalias+2+maxoui))
+        print (Style.BRIGHT+"="*(maxlength))
 
     def qtablewidget(self, table):
         self.order_by_ip() 
@@ -435,8 +472,11 @@ class SetDevices(QObject):
             alias=""
             if h.alias!=None:
                 alias=h.alias
-            table.setItem(rownumber, 0, qleft(h.type.name))
-            table.item(rownumber,0).setIcon(h.type.qicon())
+            if h.type!=None:#Error en Windows
+                table.setItem(rownumber, 0, qleft(h.type.name))
+                table.item(rownumber,0).setIcon(h.type.qicon())
+            else:
+                table.setItem(rownumber, 0, qleft("None"))
             table.setItem(rownumber, 1, qleft(h.mac))
             table.setItem(rownumber, 2, qleft(alias))
             table.setItem(rownumber, 3, qleft(h.oui))
@@ -690,39 +730,17 @@ class TRequest(threading.Thread):
             except:
                 pass
         return s
-        
-        
 
-
-class TRequestPingArp(threading.Thread):
-    def __init__(self, ip):
-        threading.Thread.__init__(self)
-        self.ip = ip
-        self.mac=None#Mac address string
-        self.pinged=False
-        
-    def run(self):
-        #PING
-        if platform.system()=="Windows":
-            CREATE_NO_WINDOW=0x08000000
-            output=subprocess.call(["ping", "-n", "1", self.ip], shell=False, stderr=subprocess.DEVNULL, creationflags=CREATE_NO_WINDOW)
-        else:
-            output=subprocess.call(["ping", "-c", "1", "-W", "1", self.ip], shell=False, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
-        if output==0:
-            self.pinged=True
-
-        #ARP
-        if self.pinged==True:
-            if platform.system()=="Windows":
-                arpexit=subprocess.check_output(["arp", "-a",  self.ip], creationflags=CREATE_NO_WINDOW)
-                for s in arpexit.split(b" "):
-                    if len(s)==17 and s.find(b"-")!=-1:
-                        self.mac=s.decode().replace("-", ":").upper()
-            else:
-                arpexit=subprocess.check_output(["arp", self.ip])
-                for s in arpexit.decode('utf-8').split(" "):
-                    if len(s)==17 and s.find(":")!=-1:
-                        self.mac=s.upper()
+def input_int(text):
+    while True:
+        res=input(text)
+        try:
+            res=int(res)
+            return res
+        except:
+            pass
+def input_string(text):
+    return input(text)
 
     
 def qbool(bool):

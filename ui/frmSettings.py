@@ -76,7 +76,8 @@ class frmSettings(QDialog, Ui_frmSettings):
         self.mem=mem
         self.setupUi(self)
         self.languages=SetLanguages()
-        self.languages.qcombobox(self.cmbLanguage, self.mem.settings.value("frmSettings/language", "en"))            
+        self.languages.qcombobox(self.cmbLanguage, self.mem.settings.value("frmSettings/language", "en"))          
+        self.spnConcurrent.setValue(int(self.mem.settings.value("frmSettings/concurrence", 50)))
 
     @pyqtSlot(str)      
     def on_cmbLanguage_currentIndexChanged(self, stri):        
@@ -86,3 +87,5 @@ class frmSettings(QDialog, Ui_frmSettings):
         
     def on_buttonBox_accepted(self):
         self.mem.settings.setValue("frmSettings/language", self.languages.selected.id)
+        self.mem.settings.setValue("frmSettings/concurrence", self.spnConcurrent.value())
+        self.mem.settings.sync()

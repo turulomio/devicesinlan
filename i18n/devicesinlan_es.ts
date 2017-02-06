@@ -3,22 +3,22 @@
 <context>
     <name>Device</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="535"/>
+        <location filename="../libdevicesinlan.py" line="575"/>
         <source>Input an alias of the known device: </source>
         <translation>Añada un alias del dispositivo conocido: </translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="539"/>
+        <location filename="../libdevicesinlan.py" line="579"/>
         <source>You need to add an alias</source>
         <translation>Necesita añadir un alias</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="526"/>
+        <location filename="../libdevicesinlan.py" line="566"/>
         <source>Input the MAC of the known device (XX:XX:XX:XX:XX:XX): </source>
         <translation>Introduzca la MAC de un dispositivo desconocido (XX:XX:XX:XX:XX:XX): </translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="530"/>
+        <location filename="../libdevicesinlan.py" line="570"/>
         <source>You need to insert a mac with the next format: 2A:3B:4C:5D:6E:7A</source>
         <translation>Necesita añadir una mac con el siguiente formato: 2A:3B:4C:5D:6E:7A</translation>
     </message>
@@ -26,65 +26,73 @@
 <context>
     <name>Interface</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="152"/>
+        <location filename="../libdevicesinlan.py" line="160"/>
         <source>Interface {} ({}) with ip {}/{} and mac {}</source>
         <translation>Interfaz {} ({}) con ip {}/{} y mac {}</translation>
     </message>
 </context>
 <context>
+    <name>Mem</name>
+    <message>
+        <location filename="../libdevicesinlan.py" line="46"/>
+        <source>Language ({}) couldn&apos;t be loaded in {}. Using default (en).</source>
+        <translation>El idioma ({}) no pudo ser cargado en {}. Usando el idioma por defecto (en).</translation>
+    </message>
+</context>
+<context>
     <name>SetDeviceTypes</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="104"/>
+        <location filename="../libdevicesinlan.py" line="111"/>
         <source>Unknown</source>
         <translation>Desconocido</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="105"/>
+        <location filename="../libdevicesinlan.py" line="112"/>
         <source>Television</source>
         <translation>Televisión</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="106"/>
+        <location filename="../libdevicesinlan.py" line="113"/>
         <source>Digital camera</source>
         <translation>Cámara digital</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="107"/>
+        <location filename="../libdevicesinlan.py" line="114"/>
         <source>Web camera</source>
         <translation>Cámara Web</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="108"/>
+        <location filename="../libdevicesinlan.py" line="115"/>
         <source>Laptop</source>
         <translation>Ordenador portátil</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="109"/>
+        <location filename="../libdevicesinlan.py" line="116"/>
         <source>Computer</source>
         <translation>Ordenador personal</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="110"/>
+        <location filename="../libdevicesinlan.py" line="117"/>
         <source>Modem</source>
         <translation>Router</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="111"/>
+        <location filename="../libdevicesinlan.py" line="118"/>
         <source>Smartphone</source>
         <translation>Teléfono móvil</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="112"/>
+        <location filename="../libdevicesinlan.py" line="119"/>
         <source>Printer</source>
         <translation>Impresora</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="113"/>
+        <location filename="../libdevicesinlan.py" line="120"/>
         <source>Tablet</source>
         <translation>Tableta</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="114"/>
+        <location filename="../libdevicesinlan.py" line="121"/>
         <source>Wireless USB dongle</source>
         <translation>Adaptador USB WIFI</translation>
     </message>
@@ -92,42 +100,42 @@
 <context>
     <name>SetDevices</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="390"/>
+        <location filename="../libdevicesinlan.py" line="426"/>
         <source>{} DEVICES IN LAN FROM {} INTERFACE AT {}</source>
         <translation>{} DISPOSITIVOS EN RED DESDE EL INTERFAZ {} A LAS {}</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="394"/>
+        <location filename="../libdevicesinlan.py" line="430"/>
         <source>This device</source>
         <translation>Este dispositivo</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="415"/>
+        <location filename="../libdevicesinlan.py" line="452"/>
         <source>{} DEVICES IN DATABASE AT {}</source>
-        <translation>{} dispositivos en la base de datos a las {}</translation>
+        <translation>{} DISPOSITIVOS EN LA BASE DE DATOS A LAS {}</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="456"/>
+        <location filename="../libdevicesinlan.py" line="496"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="457"/>
+        <location filename="../libdevicesinlan.py" line="497"/>
         <source>MAC</source>
         <translation>MAC</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="458"/>
+        <location filename="../libdevicesinlan.py" line="498"/>
         <source>Alias</source>
         <translation>Alias</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="459"/>
+        <location filename="../libdevicesinlan.py" line="499"/>
         <source>Hardware</source>
         <translation>Hardware</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="430"/>
+        <location filename="../libdevicesinlan.py" line="467"/>
         <source>IP</source>
         <translation>IP</translation>
     </message>
@@ -135,64 +143,79 @@
 <context>
     <name>devicesinlan</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="742"/>
+        <location filename="../libdevicesinlan.py" line="760"/>
         <source>True</source>
         <translation>Verdadero</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="745"/>
+        <location filename="../libdevicesinlan.py" line="763"/>
         <source>False</source>
         <translation>Falso</translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="41"/>
+        <location filename="../devicesinlan.py" line="33"/>
         <source>Show devices in a LAN making an ARP and a ICMP request to find them</source>
         <translation>Muestra dispositivos en una LAN haciendo una petición ARP y otra ICMP para encontrarlos</translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="41"/>
+        <location filename="../devicesinlan.py" line="33"/>
         <source>If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).</source>
         <translation>Si le gusta esta aplicación, por favor vote por ella en Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).</translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="46"/>
-        <source>Use console app</source>
-        <translation>Usa la aplicación en consola</translation>
-    </message>
-    <message>
-        <location filename="../devicesinlan.py" line="48"/>
+        <location filename="../devicesinlan.py" line="40"/>
         <source>Net interface name</source>
         <translation>Nombre del interfaz de red</translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="49"/>
+        <location filename="../devicesinlan.py" line="41"/>
         <source>Add a known device</source>
         <translation>Añade un dispositivo conocido</translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="50"/>
+        <location filename="../devicesinlan.py" line="42"/>
         <source>Remove a known device</source>
         <translation>Borra un dispositivo conocido</translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="67"/>
+        <location filename="../devicesinlan.py" line="59"/>
         <source>Device inserted</source>
         <translation>Dispositivo añadido</translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="75"/>
+        <location filename="../devicesinlan.py" line="67"/>
         <source>Mac removed</source>
         <translation>Mac borrada</translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="92"/>
+        <location filename="../devicesinlan.py" line="98"/>
         <source>It took {} with DevicesInLAN scanner.</source>
         <translation>Duró {} con el escáner de DevicesInLAN.</translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="51"/>
+        <location filename="../devicesinlan.py" line="43"/>
         <source>List known devices</source>
         <translation>Listado de dispositivos conocidos</translation>
+    </message>
+    <message>
+        <location filename="../devicesinlan.py" line="39"/>
+        <source>Uses a wizard to select options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../devicesinlan.py" line="80"/>
+        <source>This interface doesn&apos;t exist. Please use --wizard parameter to help you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../devicesinlan.py" line="87"/>
+        <source>Select an interface number: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../devicesinlan.py" line="91"/>
+        <source>Input an integer with the request concurrence. 100 is OK: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -413,14 +436,19 @@
 <context>
     <name>frmSettings</name>
     <message>
-        <location filename="../ui/Ui_frmSettings.py" line="84"/>
+        <location filename="../ui/Ui_frmSettings.py" line="96"/>
         <source>DevicesInLan settings</source>
         <translation>Configuración de DevicesInLan</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmSettings.py" line="85"/>
+        <location filename="../ui/Ui_frmSettings.py" line="97"/>
         <source>Select a language</source>
         <translation>Selecciona un idioma</translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmSettings.py" line="98"/>
+        <source>Concurrent requests</source>
+        <translation>Peticiones concurrentes</translation>
     </message>
 </context>
 <context>

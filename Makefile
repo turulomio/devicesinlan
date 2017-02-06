@@ -32,7 +32,7 @@ install:
 	install -m 755 -o root devicesinlan.py $(PREFIXBIN)/devicesinlan
 	install -m 755 -o root libdevicesinlan.py $(PREFIXLIB)
 	install -m 644 -o root GPL-3.txt CHANGELOG.txt AUTHORS.txt RELEASES.txt INSTALL.txt ieee-oui.txt $(PREFIXSHARE)
-	install -m 644 -o root i18n/*.qm $(PREFIXLIB)
+	install -m 644 -o root i18n/*.qm $(PREFIXSHARE)
 
 uninstall:
 	rm $(PREFIXBIN)/devicesinlan
