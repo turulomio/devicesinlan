@@ -1,12 +1,12 @@
-.TH DEVICESINLAN 1 2017-02-06
+.TH DEVICESINLAN 1 2017-02-07
 .SH NAME
 devicesinlan \- Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net.
+
 .SH SYNOPSIS
-.B devicesinlan
-[ \fB\-\-wizard\fR | \fB\-\-interface\fR | \fB\-\-add\fR | \fB\-\-remove\fR | \fB\-\-list\fR ]
+.TP
+.B devicesinlan [ \fB\-\-wizard\fR | \fB\-\-interface\fR | \fB\-\-add\fR | \fB\-\-remove\fR | \fB\-\-list\fR ]
 
 .SH DESCRIPTION GUI MODE
-
 If you launch devicesinlan without parameters and you are in a graphic system (Linux or Windows) it launches the program with a Qt Interface.
 
 In the app menu you have the followings features:
@@ -14,16 +14,14 @@ In the app menu you have the followings features:
 .TP
 .B Devices > New Scan
 
-
-
 .TP
 .B Devices > Show devices database
 
 .TP
 .B Devices > Reset database
 
-
 This option erases all known devices in database. 
+
 .TP
 .B Configuracion > Settings
 
@@ -40,7 +38,6 @@ In this dialog you can select your prefered language and you can configure the n
 
 
 .SH DESCRIPTION CONSOLE MODE
-
 If you launch deviceslan with some parameters, it will be executed in console mode.
 
 .TP
@@ -61,3 +58,4 @@ If a device is not known, it will be showed in red. Devices in green are trusted
 
 .TP
 .B \-\-list
+

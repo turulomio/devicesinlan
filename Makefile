@@ -34,7 +34,9 @@ install:
 	install -m 644 -o root GPL-3.txt CHANGELOG.txt AUTHORS.txt RELEASES.txt INSTALL.txt ieee-oui.txt $(PREFIXSHARE)
 	install -m 644 -o root i18n/*.qm $(PREFIXSHARE)
 	install -m 644 -o root devicesinlan.1 $(PREFIXMAN)
-	man2html devicesinlan.1 > devicesinlan.html
+	man2html devicesinlan.1|sed '1,2d'|sed '4,7d' > /tmp/devicesinlan.html
+	cat /tmp/devicesinlan.html|head -n -14 > devicesinlan.html
+	cat /tmp/devicesinlan.html|tail -n 6 >> devicesinlan.html
 	install -m 644 -o root devicesinlan.html $(PREFIXSHARE)/devicesinlan.html
 
 uninstall:
