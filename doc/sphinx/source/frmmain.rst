@@ -8,8 +8,8 @@
 
 
 
-Welcome to libdevicesinlan Page
-===============================
+frmMain module
+==============
 
 .. toctree::
    :maxdepth: 2
@@ -20,3 +20,5 @@ Autocode
 
 .. automodule:: frmMain
    :members:
+   :undoc-members:
+   :show-inheritance:
