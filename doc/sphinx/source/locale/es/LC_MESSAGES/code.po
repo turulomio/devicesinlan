@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../source/code.rst:7
 msgid "Welcome to Code Page"
-msgstr ""
+msgstr "Bienvenido a la página del código"
 
 #: ../../source/code.rst:11
 msgid "Executables"
