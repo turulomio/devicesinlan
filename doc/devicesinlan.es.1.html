@@ -1,0 +1,170 @@
+<HTML><HEAD><TITLE>Manpage of DEVICESINLAN</TITLE>
+</HEAD><BODY>
+<H1>DEVICESINLAN</H1>
+Section: User Commands  (1)<BR>Updated: 2017-02-07<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+<B>devicesinlan:</B>
+
+Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net.
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+devicesinlan [ --wizard | --interface | --add | --remove | --list ]
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPCIÓN DEL MODO INTERFAZ GRÁFICO</H2>
+
+<P>
+
+If you launch devicesinlan without parameters and you are in a graphic system (Linux or Windows) it launches the program with a Qt Interface.
+<P>
+
+In the app menu you have the followings features:
+<P>
+
+<DL COMPACT><DT><DD>
+<B>Devices &gt; New Scan</B>
+
+</DL>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<B>Devices &gt; Show devices database</B>
+
+</DL>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<B>Devices &gt; Reset database</B>
+
+</DL>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<DL COMPACT><DT><DD>
+This option erases all known devices in database.
+</DL>
+
+</DL>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<B>Configuration &gt; Settings</B>
+
+</DL>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<DL COMPACT><DT><DD>
+In this dialog you can select your prefered language and you can configure the number of concurrence request.
+</DL>
+
+</DL>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<B>Ayuda &gt; Ayuda</B>
+
+</DL>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<B>Ayuda &gt; Acerca de</B>
+
+</DL>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<B>Ayuda &gt; Salir</B>
+
+</DL>
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>DESCRIPCIÓN DEL MODO CONSOLA</H2>
+
+<P>
+
+If you launch deviceslan with some parameters, it will be executed in console mode.
+<P>
+
+<DL COMPACT><DT><DD>
+<B>--wizard</B>
+
+</DL>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<DL COMPACT><DT><DD>
+It list all interfaces in the system and lets you to select the one you wish and the number of concurrent request. After that, it scans the net and prints a list of the detected devices.
+</DL>
+
+</DL>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<B>--interface</B>
+
+</DL>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<DL COMPACT><DT><DD>
+Scans the net of the interface parameter and prints a list of the detected devices.
+</DL>
+
+</DL>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<DL COMPACT><DT><DD>
+If a device is not known, it will be showed in red. Devices in green are trusted devices.
+</DL>
+
+</DL>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<B>--add</B>
+
+</DL>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<B>--remove</B>
+
+</DL>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<B>--list</B>
+
+</DL>
+
+<P>
+
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 19:52:51 GMT, February 07, 2017
+</BODY>
+</HTML>
+

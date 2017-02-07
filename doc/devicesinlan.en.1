@@ -1,0 +1,92 @@
+.TH DEVICESINLAN 1 2017\-02\-07
+.SH NAME
+.B devicesinlan:
+Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net.
+.SH SYNOPSIS
+devicesinlan [ \-\-wizard | \-\-interface | \-\-add | \-\-remove | \-\-list ]
+.SH GUI MODE DESCRIPTION
+.PP
+If you launch devicesinlan without parameters and you are in a graphic system (Linux or Windows) it launches the program with a Qt Interface.
+.PP
+In the app menu you have the followings features:
+.PP
+.RS
+.B Devices > New Scan
+.RE
+.PP
+.RS
+.B Devices > Show devices database
+.RE
+.PP
+.RS
+.B Devices > Reset database
+.RE
+.PP
+.RS
+.RS
+This option erases all known devices in database.
+.RE
+.RE
+.PP
+.RS
+.B Configuration > Settings
+.RE
+.PP
+.RS
+.RS
+In this dialog you can select your prefered language and you can configure the number of concurrence request.
+.RE
+.RE
+.PP
+.RS
+.B Help > Help
+.RE
+.PP
+.RS
+.B Help > About
+.RE
+.PP
+.RS
+.B Help > Exit
+.RE
+.SH CONSOLE MODE DESCRIPTION
+.PP
+If you launch deviceslan with some parameters, it will be executed in console mode.
+.PP
+.RS
+.B \-\-wizard
+.RE
+.PP
+.RS
+.RS
+It list all interfaces in the system and lets you to select the one you wish and the number of concurrent request. After that, it scans the net and prints a list of the detected devices.
+.RE
+.RE
+.PP
+.RS
+.B \-\-interface
+.RE
+.PP
+.RS
+.RS
+Scans the net of the interface parameter and prints a list of the detected devices.
+.RE
+.RE
+.PP
+.RS
+.RS
+If a device is not known, it will be showed in red. Devices in green are trusted devices.
+.RE
+.RE
+.PP
+.RS
+.B \-\-add
+.RE
+.PP
+.RS
+.B \-\-remove
+.RE
+.PP
+.RS
+.B \-\-list
+.RE

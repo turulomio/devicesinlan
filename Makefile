@@ -5,7 +5,7 @@ PREFIXLIB=$(DESTDIR)/usr/lib/devicesinlan
 PREFIXSHARE=$(DESTDIR)/usr/share/devicesinlan
 PREFIXPIXMAPS=$(DESTDIR)/usr/share/pixmaps/
 PREFIXAPPLICATIONS=$(DESTDIR)/usr/share/applications/
-PREFIXMAN=$(DESTDIR)/usr/share/man/man1/
+PREFIXMAN=$(DESTDIR)/usr/share/man/
 
 install:
 	pyuic5 ui/frmAbout.ui > ui/Ui_frmAbout.py
@@ -18,6 +18,11 @@ install:
 
 	pylupdate5 -noobsolete devicesinlan.pro
 	lrelease -qt5 devicesinlan.pro
+	python3 mangenerator.py --language es
+	python3 mangenerator.py --language en
+	python3 mangenerator.py --language fr
+	python3 mangenerator.py --language ro
+	python3 mangenerator.py --language ru
 
 	install -o root -d $(PREFIXBIN)
 	install -o root -d $(PREFIXLIB)
@@ -31,13 +36,13 @@ install:
 
 	install -m 755 -o root devicesinlan.py $(PREFIXBIN)/devicesinlan
 	install -m 755 -o root libdevicesinlan.py libmangenerator.py $(PREFIXLIB)
-	install -m 644 -o root GPL-3.txt CHANGELOG.txt AUTHORS.txt RELEASES.txt INSTALL.txt ieee-oui.txt $(PREFIXSHARE)
+	install -m 644 -o root GPL-3.txt CHANGELOG.txt AUTHORS.txt RELEASES.txt INSTALL.txt ieee-oui.txt devicesinlan.html $(PREFIXSHARE)
 	install -m 644 -o root i18n/*.qm $(PREFIXSHARE)
-	install -m 644 -o root devicesinlan.1 $(PREFIXMAN)
-	man2html devicesinlan.1|sed '1,2d'|sed '4,7d' > /tmp/devicesinlan.html
-	cat /tmp/devicesinlan.html|head -n -14 > devicesinlan.html
-	cat /tmp/devicesinlan.html|tail -n 6 >> devicesinlan.html
-	install -m 644 -o root devicesinlan.html $(PREFIXSHARE)/devicesinlan.html
+	install -m 644 -o root doc/devicesinlan.en.1 $(PREFIXMAN)/man1/devicesinlan.1
+	install -m 644 -o root doc/devicesinlan.es.1 $(PREFIXMAN)/es/man1/devicesinlan.1
+	install -m 644 -o root doc/devicesinlan.fr.1 $(PREFIXMAN)/fr/man1/devicesinlan.1
+	install -m 644 -o root doc/devicesinlan.ro.1 $(PREFIXMAN)/ro/man1/devicesinlan.1
+	install -m 644 -o root doc/devicesinlan.ru.1 $(PREFIXMAN)/ru/man1/devicesinlan.1
 
 uninstall:
 	rm $(PREFIXBIN)/devicesinlan
@@ -45,6 +50,9 @@ uninstall:
 	rm $(PREFIXPIXMAPS)/devicesinlan.png
 	rm -Rf $(PREFIXLIB)
 	rm -Rf $(PREFIXSHARE)
-	rm $(PREFIXMAN)/devicesinlan.1
-
+	rm -Rf $(PREFIXMAN)/man1/devicesinlan.1
+	rm -Rf $(PREFIXMAN)/es/man1/devicesinlan.1
+	rm -Rf $(PREFIXMAN)/fr/man1/devicesinlan.1
+	rm -Rf $(PREFIXMAN)/ro/man1/devicesinlan.1
+	rm -Rf $(PREFIXMAN)/ru/man1/devicesinlan.1
 

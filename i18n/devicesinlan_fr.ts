@@ -153,77 +153,77 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="33"/>
+        <location filename="../devicesinlan.py" line="42"/>
         <source>Show devices in a LAN making an ARP and a ICMP request to find them</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="33"/>
+        <location filename="../devicesinlan.py" line="42"/>
         <source>If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="40"/>
+        <location filename="../devicesinlan.py" line="49"/>
         <source>Net interface name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="41"/>
+        <location filename="../devicesinlan.py" line="50"/>
         <source>Add a known device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="42"/>
+        <location filename="../devicesinlan.py" line="51"/>
         <source>Remove a known device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="59"/>
+        <location filename="../devicesinlan.py" line="68"/>
         <source>Device inserted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="67"/>
+        <location filename="../devicesinlan.py" line="76"/>
         <source>Mac removed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="101"/>
+        <location filename="../devicesinlan.py" line="110"/>
         <source>It took {} with DevicesInLAN scanner.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="43"/>
+        <location filename="../devicesinlan.py" line="52"/>
         <source>List known devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="39"/>
+        <location filename="../devicesinlan.py" line="48"/>
         <source>Uses a wizard to select options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="80"/>
+        <location filename="../devicesinlan.py" line="89"/>
         <source>This interface doesn&apos;t exist. Please use --wizard parameter to help you.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="86"/>
+        <location filename="../devicesinlan.py" line="95"/>
         <source>There are not interfaces to scan.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="90"/>
+        <location filename="../devicesinlan.py" line="99"/>
         <source>Select an interface number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="94"/>
+        <location filename="../devicesinlan.py" line="103"/>
         <source>Input an integer with the request concurrence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="101"/>
+        <location filename="../devicesinlan.py" line="110"/>
         <source>seconds</source>
         <translation type="unfinished"></translation>
     </message>
@@ -251,27 +251,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.py" line="18"/>
+        <location filename="../ui/frmAbout.py" line="15"/>
         <source>Version {} ({})</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.py" line="19"/>
+        <location filename="../ui/frmAbout.py" line="16"/>
         <source>Project web page is in &lt;a href=&quot;http://devicesinlan.sourceforge.net&quot;&gt;http://devicesinlan.sourceforge.net&lt;/a&gt;&lt;p&gt; &lt;p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.py" line="19"/>
+        <location filename="../ui/frmAbout.py" line="16"/>
         <source>This program has been developed by Mariano Mu&#xf1;oz.&lt;p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.py" line="19"/>
+        <location filename="../ui/frmAbout.py" line="16"/>
         <source>It has been translated by:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.py" line="19"/>
+        <location filename="../ui/frmAbout.py" line="16"/>
         <source>to the following languages&lt;p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -453,6 +453,99 @@
     <message>
         <location filename="../ui/Ui_frmSettings.py" line="98"/>
         <source>Concurrent requests</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>mangenerator</name>
+    <message>
+        <location filename="../mangenerator.py" line="37"/>
+        <source>Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mangenerator.py" line="39"/>
+        <source>GUI MODE DESCRIPTION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mangenerator.py" line="45"/>
+        <source>This option erases all known devices in database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mangenerator.py" line="47"/>
+        <source>In this dialog you can select your prefered language and you can configure the number of concurrence request.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mangenerator.py" line="48"/>
+        <source>Help &gt; Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mangenerator.py" line="49"/>
+        <source>Help &gt; About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mangenerator.py" line="50"/>
+        <source>Help &gt; Exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mangenerator.py" line="53"/>
+        <source>CONSOLE MODE DESCRIPTION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mangenerator.py" line="56"/>
+        <source>It list all interfaces in the system and lets you to select the one you wish and the number of concurrent request. After that, it scans the net and prints a list of the detected devices.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mangenerator.py" line="58"/>
+        <source>Scans the net of the interface parameter and prints a list of the detected devices.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mangenerator.py" line="59"/>
+        <source>If a device is not known, it will be showed in red. Devices in green are trusted devices.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mangenerator.py" line="40"/>
+        <source>If you launch devicesinlan without parameters and you are in a graphic system (Linux or Windows) it launches the program with a Qt Interface.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mangenerator.py" line="41"/>
+        <source>In the app menu you have the followings features:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mangenerator.py" line="42"/>
+        <source>Devices &gt; New Scan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mangenerator.py" line="43"/>
+        <source>Devices &gt; Show devices database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mangenerator.py" line="44"/>
+        <source>Devices &gt; Reset database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mangenerator.py" line="46"/>
+        <source>Configuration &gt; Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mangenerator.py" line="54"/>
+        <source>If you launch deviceslan with some parameters, it will be executed in console mode.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
