@@ -18,12 +18,6 @@ install:
 
 	pylupdate5 -noobsolete devicesinlan.pro
 	lrelease -qt5 devicesinlan.pro
-	python3 mangenerator.py --language es
-	python3 mangenerator.py --language en
-	python3 mangenerator.py --language fr
-	python3 mangenerator.py --language ro
-	python3 mangenerator.py --language ru
-
 	install -o root -d $(PREFIXBIN)
 	install -o root -d $(PREFIXLIB)
 	install -o root -d $(PREFIXSHARE)
@@ -56,3 +50,9 @@ uninstall:
 	rm -Rf $(PREFIXMAN)/ro/man1/devicesinlan.1
 	rm -Rf $(PREFIXMAN)/ru/man1/devicesinlan.1
 
+man:
+	python3 mangenerator.py --language es
+	python3 mangenerator.py --language en
+	python3 mangenerator.py --language fr
+	python3 mangenerator.py --language ro
+	python3 mangenerator.py --language ru

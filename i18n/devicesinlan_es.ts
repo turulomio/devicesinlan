@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="es" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.1" language="es">
 <context>
     <name>Device</name>
     <message>
@@ -262,7 +263,7 @@
     </message>
     <message>
         <location filename="../ui/frmAbout.py" line="16"/>
-        <source>This program has been developed by Mariano Mu&#xf1;oz.&lt;p&gt;</source>
+        <source>This program has been developed by Mariano Muñoz.&lt;p&gt;</source>
         <translation>El programa ha sido desarrollado por Mariano Muñoz.&lt;p&gt;</translation>
     </message>
     <message>
@@ -461,7 +462,7 @@
     <message>
         <location filename="../mangenerator.py" line="37"/>
         <source>Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net.</source>
-        <translation type="unfinished"></translation>
+        <translation>Escanéa todos los dispositivos en tu red. Luego permite establecer un alias a tus dispositivos conocidos para que se pueda detectar dispositivos estraños en tu red.</translation>
     </message>
     <message>
         <location filename="../mangenerator.py" line="39"/>
@@ -476,7 +477,7 @@
     <message>
         <location filename="../mangenerator.py" line="47"/>
         <source>In this dialog you can select your prefered language and you can configure the number of concurrence request.</source>
-        <translation type="unfinished"></translation>
+        <translation>En este dialogo, puedes seleccionar tu idioma favorita y puedes configurar el número de peticiones concurrentes.</translation>
     </message>
     <message>
         <location filename="../mangenerator.py" line="48"/>
@@ -536,12 +537,12 @@
     <message>
         <location filename="../mangenerator.py" line="44"/>
         <source>Devices &gt; Reset database</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivos &gt; Borrar base de datos</translation>
     </message>
     <message>
         <location filename="../mangenerator.py" line="46"/>
         <source>Configuration &gt; Settings</source>
-        <translation type="unfinished">Configuración &gt; Preferencias</translation>
+        <translation>Configuración &gt; Preferencias</translation>
     </message>
     <message>
         <location filename="../mangenerator.py" line="54"/>
