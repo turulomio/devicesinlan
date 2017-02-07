@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="es">
+<!DOCTYPE TS><TS version="2.0" language="es" sourcelanguage="">
 <context>
     <name>Device</name>
     <message>
@@ -263,7 +262,7 @@
     </message>
     <message>
         <location filename="../ui/frmAbout.py" line="16"/>
-        <source>This program has been developed by Mariano Muñoz.&lt;p&gt;</source>
+        <source>This program has been developed by Mariano Mu&#xf1;oz.&lt;p&gt;</source>
         <translation>El programa ha sido desarrollado por Mariano Muñoz.&lt;p&gt;</translation>
     </message>
     <message>

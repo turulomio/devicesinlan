@@ -30,7 +30,7 @@ install:
 
 	install -m 755 -o root devicesinlan.py $(PREFIXBIN)/devicesinlan
 	install -m 755 -o root libdevicesinlan.py libmangenerator.py $(PREFIXLIB)
-	install -m 644 -o root GPL-3.txt CHANGELOG.txt AUTHORS.txt RELEASES.txt INSTALL.txt ieee-oui.txt devicesinlan.html $(PREFIXSHARE)
+	install -m 644 -o root GPL-3.txt CHANGELOG.txt AUTHORS.txt RELEASES.txt INSTALL.txt ieee-oui.txt doc/devicesinlan*.html $(PREFIXSHARE)
 	install -m 644 -o root i18n/*.qm $(PREFIXSHARE)
 	install -m 644 -o root doc/devicesinlan.en.1 $(PREFIXMAN)/man1/devicesinlan.1
 	install -m 644 -o root doc/devicesinlan.es.1 $(PREFIXMAN)/es/man1/devicesinlan.1
@@ -56,3 +56,8 @@ man:
 	python3 mangenerator.py --language fr
 	python3 mangenerator.py --language ro
 	python3 mangenerator.py --language ru
+	install -m 644 -o root doc/devicesinlan.en.1 $(PREFIXMAN)/man1/devicesinlan.1
+	install -m 644 -o root doc/devicesinlan.es.1 $(PREFIXMAN)/es/man1/devicesinlan.1
+	install -m 644 -o root doc/devicesinlan.fr.1 $(PREFIXMAN)/fr/man1/devicesinlan.1
+	install -m 644 -o root doc/devicesinlan.ro.1 $(PREFIXMAN)/ro/man1/devicesinlan.1
+	install -m 644 -o root doc/devicesinlan.ru.1 $(PREFIXMAN)/ru/man1/devicesinlan.1
