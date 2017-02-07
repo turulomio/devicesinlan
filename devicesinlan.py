@@ -1,4 +1,13 @@
 #!/usr/bin/python3
+
+## \mainpage DevicesInLan
+# This is the DevicesInLan project documentation
+# \~German
+# \brief Beschreibung
+# \~English
+#\ brief description
+
+
 import argparse
 import datetime
 import platform
