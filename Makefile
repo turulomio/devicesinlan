@@ -30,7 +30,7 @@ install:
 	install -m 644 -o root devicesinlan.desktop $(DESTDIR)/usr/share/applications/
 
 	install -m 755 -o root devicesinlan.py $(PREFIXBIN)/devicesinlan
-	install -m 755 -o root libdevicesinlan.py $(PREFIXLIB)
+	install -m 755 -o root libdevicesinlan.py libmangenerator.py $(PREFIXLIB)
 	install -m 644 -o root GPL-3.txt CHANGELOG.txt AUTHORS.txt RELEASES.txt INSTALL.txt ieee-oui.txt $(PREFIXSHARE)
 	install -m 644 -o root i18n/*.qm $(PREFIXSHARE)
 	install -m 644 -o root devicesinlan.1 $(PREFIXMAN)
