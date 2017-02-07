@@ -15,3 +15,9 @@ Welcome to Guide Page
    :maxdepth: 2
    :caption: Contents:
 
+GUI app
+-------
+
+
+Console app
+-----------

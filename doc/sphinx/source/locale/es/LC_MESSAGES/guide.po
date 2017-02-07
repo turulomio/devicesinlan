@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DevicesInLan \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-07 13:01+0100\n"
+"POT-Creation-Date: 2017-02-07 15:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,5 +20,13 @@ msgstr ""
 
 #: ../../source/guide.rst:12
 msgid "Welcome to Guide Page"
-msgstr ""
+msgstr "Bienvenido a la guía de usuario"
+
+#: ../../source/guide.rst:19
+msgid "GUI app"
+msgstr "Aplicación Gráfica"
+
+#: ../../source/guide.rst:23
+msgid "Console app"
+msgstr "Aplicación Consola"
 

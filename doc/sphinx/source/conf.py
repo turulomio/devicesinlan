@@ -21,9 +21,7 @@ import os
 import sys
 sys.path.append('/usr/lib/python3.4/site-packages')
 sys.path.append(os.getcwd()+"/../../../")
-
 sys.path.append(os.getcwd()+"/../../../ui")
-
 sys.path.append(os.getcwd()+"/../../../images")
 
 print(sys.path)
@@ -48,7 +46,7 @@ templates_path = ['_templates']
 source_suffix = '.rst'
 
 # The master toctree document.
-master_doc = 'index'
+master_doc = 'guide'
 
 # General information about the project.
 project = 'DevicesInLan'
@@ -69,7 +67,7 @@ release = ''
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = 'english'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
