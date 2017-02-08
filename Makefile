@@ -16,13 +16,16 @@ install:
 	pyuic5 ui/frmDeviceCRUD.ui > ui/Ui_frmDeviceCRUD.py
 	pyrcc5 images/devicesinlan.qrc > images/devicesinlan_rc.py
 
-	pylupdate5 -noobsolete devicesinlan.pro
-	lrelease -qt5 devicesinlan.pro
 	install -o root -d $(PREFIXBIN)
 	install -o root -d $(PREFIXLIB)
 	install -o root -d $(PREFIXSHARE)
 	install -o root -d $(PREFIXPIXMAPS)
 	install -o root -d $(PREFIXAPPLICATIONS)
+	install -o root -d $(PREFIXMAN)/man1
+	install -o root -d $(PREFIXMAN)/es/man1
+	install -o root -d $(PREFIXMAN)/fr/man1
+	install -o root -d $(PREFIXMAN)/ro/man1
+	install -o root -d $(PREFIXMAN)/ru/man1
 	install -m 644 -o root ui/*.py $(PREFIXLIB)
 	install -m 644 -o root images/*.py $(PREFIXLIB)
 	install -m 644 -o root images/devicesinlan.png $(DESTDIR)/usr/share/pixmaps/
@@ -51,6 +54,13 @@ uninstall:
 	rm -Rf $(PREFIXMAN)/ru/man1/devicesinlan.1
 
 man:
+	install -o root -d $(PREFIXMAN)/man1
+	install -o root -d $(PREFIXMAN)/es/man1
+	install -o root -d $(PREFIXMAN)/fr/man1
+	install -o root -d $(PREFIXMAN)/ro/man1
+	install -o root -d $(PREFIXMAN)/ru/man1
+	pylupdate5 -noobsolete devicesinlan.pro
+	lrelease -qt5 devicesinlan.pro
 	python3 mangenerator.py --language es
 	python3 mangenerator.py --language en
 	python3 mangenerator.py --language fr
