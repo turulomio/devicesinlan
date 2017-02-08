@@ -49,7 +49,7 @@ Source: "*.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "library.zip"; DestDir: "{app}"; Flags: ignoreversion
 Source: "platforms\*"; DestDir: "{app}\platforms\"; Flags: ignoreversion recursesubdirs createallsubdirs   
 Source: "imageformats\*"; DestDir: "{app}\imageformats\"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "devicesinlan.html"; DestDir: "{app}"; Flags: ignoreversion
+Source: "*.html"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

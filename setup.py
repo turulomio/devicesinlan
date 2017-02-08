@@ -52,6 +52,11 @@ include_files.append(("i18n/devicesinlan_es.qm", "i18n/devicesinlan_es.qm"))
 include_files.append(("i18n/devicesinlan_fr.qm", "i18n/devicesinlan_fr.qm"))
 include_files.append(("i18n/devicesinlan_ro.qm", "i18n/devicesinlan_ro.qm"))
 include_files.append(("i18n/devicesinlan_ru.qm", "i18n/devicesinlan_ru.qm"))
+include_files.append(("doc/devicesinlan.en.1.html", "devicesinlan.en.1.html"))
+include_files.append(("doc/devicesinlan.es.1.html", "devicesinlan.es.1.html"))
+include_files.append(("doc/devicesinlan.fr.1.html", "devicesinlan.fr.1.html"))
+include_files.append(("doc/devicesinlan.ro.1.html", "devicesinlan.ro.1.html"))
+include_files.append(("doc/devicesinlan.ru.1.html", "devicesinlan.ru.1.html"))
 
 #Build options
 if sys.platform=='win32':
