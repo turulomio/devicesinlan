@@ -1,16 +1,19 @@
 import datetime
 import sys
+import os
+from urllib.request import urlopen
 from PyQt5.QtCore import pyqtSlot, Qt, QPoint, QEvent
 from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtWidgets import QMainWindow, QMenu, QTabWidget, QTableWidget,  QDialog, QWidget, QVBoxLayout, QLabel,  QAbstractItemView, qApp, QMessageBox, QAction
-
+from PyQt5.QtWidgets import QMainWindow, QMenu, QTabWidget, QTableWidget,  QDialog, QWidget, QVBoxLayout, QLabel,  QAbstractItemView, qApp, QMessageBox, QAction, QFileDialog
+#from uuid import  uuid4
 from Ui_frmMain import Ui_frmMain
-from libdevicesinlan import dateversion,  SetDevices,  ArpScanMethod
+from libdevicesinlan import dateversion, Device,   SetDevices,  ArpScanMethod, b2s,  version,  qmessagebox
 from frmSettings import frmSettings
 from frmHelp import frmHelp
 from frmAbout import frmAbout
 from frmInterfaceSelector import frmInterfaceSelector
 from frmDeviceCRUD import frmDeviceCRUD
+from xml.dom import minidom
 
 
 
@@ -114,7 +117,105 @@ class frmMain(QMainWindow, Ui_frmMain):#
         self.horizontalLayout.addWidget(self.tabWidget)
         self.showMaximized()
         self.tabWidget.tabCloseRequested.connect(self.on_tabWidget_tabCloseRequested)
+        if datetime.date.today()-datetime.date.fromordinal(int(self.mem.settings.value("frmMain/lastupdate", 1)))>=datetime.timedelta(days=7):
+            self.checkUpdates(False)
+        self.setInstallationUUID()
+                
+    @pyqtSlot()      
+    def on_actionUpdates_triggered(self):
+        self.checkUpdates(True)            
+        
+    @pyqtSlot()      
+    def on_actionListLoad_triggered(self):
+        filename=os.path.basename(QFileDialog.getOpenFileName(self, "", "", "eXtensible Markup Language (*.xml)")[0])
+        new=SetDevices(self.mem)
+#<data>
+#    <items>
+#        <item name="item1"></item>
+#        <item name="item2"></item>
+#        <item name="item3"></item>
+#        <item name="item4"></item>
+#    </items>
+#</data>
+#
+#PYTHON:
 
+        xmldoc = minidom.parse(filename)
+        itemlist = xmldoc.getElementsByTagName('device')
+        print(len(itemlist))
+        for item in itemlist:
+            print(item.attributes['alias'].value)
+            d=Device(self.mem)
+            d.alias=item.attributes['alias'].value
+            d.mac=item.attributes['mac'].value
+            d.type=self.mem.types.find_by_id(int(item.attributes['type'].value))
+            new.append(d)
+        print(new.length())
+    
+    @pyqtSlot()      
+    def on_actionListSave_triggered(self):
+        devices=SetDevices(self.mem).init__from_settings()
+        s='<devicesinlan version="{}">\n'.format(version)
+        s=s+"\t<devices>\n"
+        for d in devices.arr:
+            s=s+'\t\t<device alias="{}" mac="{}" type="{}"/>\n'.format(d.alias, d.mac, d.type.id)
+        s=s+"\t</devices>\n"
+        s=s+"</devicesinlan>\n"
+        c=str(datetime.datetime.now()).replace("-","").replace(":","").replace(" ","_")[:-7]
+        filename = QFileDialog.getSaveFileName(self, self.tr("Save File"), "devicesinlan_{}.xml".format(c), self.tr("eXtensible Markup Language (*.xml)"))[0]
+        if filename:
+            with open(filename, "w") as f:
+                f.write(s)
+
+        
+    def checkUpdates(self, showdialogwhennoupdates=False):
+        #Chequea en Internet
+        try:
+            web=b2s(urlopen('https://sourceforge.net/projects/devicesinlan/files/devicesinlan/').read())
+        except:
+            web=None
+            
+        #Si hay error de internet avisa
+        if web==None:
+            if showdialogwhennoupdates==True:
+                qmessagebox(self.tr("I couldn't check updates. Try later."))
+            return
+            
+        #Saca la version de internet
+        remoteversion=None
+        for line in web.split("\n"):
+            if line.find('class="folder "')!=-1:
+                remoteversion=line.split('"') [1]
+                break
+                
+        #Si no hay version sale
+        print ("Remote version",  remoteversion, "against",  version)
+        if remoteversion==None:
+            return
+                
+        if remoteversion==version.replace("+", ""):#Quita el mas de desarrollo 
+            if showdialogwhennoupdates==True:
+                qmessagebox(self.tr("You have the last version"))
+        else:
+            m=QMessageBox()
+            m.setIcon(QMessageBox.Information)
+            m.setWindowIcon(QIcon(":/devicesinlan.png"))
+            m.setTextFormat(Qt.RichText)#this is what makes the links clickable
+            m.setText(self.tr("There is a new DevicesInLan version. Please download it from <a href='http://glparchis.sourceforge.net'>http://glparchis.sourceforge.net</a> or directly from <a href='https://sourceforge.net/projects/devicesinlan/files/devicesinlan/")+remoteversion+"/'>Sourceforge</a>")
+            m.exec_() 
+        self.mem.settings.setValue("frmMain/lastupdate", datetime.date.today().toordinal())
+        
+
+    def setInstallationUUID(self):
+        if self.mem.settings.value("frmMain/uuid", "None")=="None":
+#            self.mem.settings.setValue("frmMain/uuid", str(uuid4()))
+            url='http://devicesinlan.sourceforge.net/php/devicesinlan_installations.php?uuid={}'.format(self.mem.settings.value("frmMain/uuid"))
+            print(url, "DEBO DESCOMENTAR")
+            try:
+                web=b2s(urlopen(url).read())
+            except:
+                web=None
+            print (web)       
         
     @pyqtSlot(QEvent)   
     def closeEvent(self,event):   

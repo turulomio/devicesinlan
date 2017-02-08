@@ -36,7 +36,7 @@
      <x>0</x>
      <y>0</y>
      <width>995</width>
-     <height>21</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuAyuda">
@@ -45,6 +45,7 @@
     </property>
     <addaction name="actionHelp"/>
     <addaction name="separator"/>
+    <addaction name="actionUpdates"/>
     <addaction name="actionAbout"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
@@ -57,11 +58,14 @@
    </widget>
    <widget class="QMenu" name="menuKnown_devices">
     <property name="title">
-     <string>Devices</string>
+     <string>&amp;Devices</string>
     </property>
     <addaction name="actionScan"/>
     <addaction name="separator"/>
     <addaction name="actionShowDatabase"/>
+    <addaction name="separator"/>
+    <addaction name="actionListLoad"/>
+    <addaction name="actionListSave"/>
     <addaction name="separator"/>
     <addaction name="actionResetDatabase"/>
    </widget>
@@ -152,7 +156,7 @@
      <normaloff>:/update.png</normaloff>:/update.png</iconset>
    </property>
    <property name="text">
-    <string>New scan</string>
+    <string>&amp;New scan</string>
    </property>
    <property name="toolTip">
     <string>New scan</string>
@@ -176,10 +180,46 @@
      <normaloff>:/cancel.png</normaloff>:/cancel.png</iconset>
    </property>
    <property name="text">
-    <string>Reset database</string>
+    <string>&amp;Reset database</string>
    </property>
    <property name="toolTip">
     <string>Reset database</string>
+   </property>
+  </action>
+  <action name="actionUpdates">
+   <property name="icon">
+    <iconset resource="../images/devicesinlan.qrc">
+     <normaloff>:/update.png</normaloff>:/update.png</iconset>
+   </property>
+   <property name="text">
+    <string>Check for updates</string>
+   </property>
+   <property name="toolTip">
+    <string>Check for updates</string>
+   </property>
+  </action>
+  <action name="actionListLoad">
+   <property name="icon">
+    <iconset resource="../images/devicesinlan.qrc">
+     <normaloff>:/open.png</normaloff>:/open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Load devices list</string>
+   </property>
+   <property name="toolTip">
+    <string>Load devices list</string>
+   </property>
+  </action>
+  <action name="actionListSave">
+   <property name="icon">
+    <iconset resource="../images/devicesinlan.qrc">
+     <normaloff>:/save.png</normaloff>:/save.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save devices list</string>
+   </property>
+   <property name="toolTip">
+    <string>Save devices list</string>
    </property>
   </action>
  </widget>

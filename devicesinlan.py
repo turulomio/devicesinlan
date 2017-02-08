@@ -1,17 +1,14 @@
 #!/usr/bin/python3
-
-## \mainpage DevicesInLan
-# This is the DevicesInLan project documentation
-# \~German
-# \brief Beschreibung
-# \~English
-#\ brief description
-
-
 import argparse
 import datetime
 import platform
 import sys
+import signal
+def signal_handler(signal, frame):
+        print(Style.BRIGHT+Fore.RED+app.translate("devicesinlan","You pressed 'Ctrl+C', exiting..."))
+        sys.exit(0)
+#############################3
+
 if platform.system()=="Windows":
     sys.path.append("ui")
     sys.path.append("images")
@@ -38,6 +35,8 @@ app.setApplicationName("DevicesInLAN")
 
 mem=Mem()
 mem.change_language(mem.settings.value("frmSettings/language", "en"))
+
+signal.signal(signal.SIGINT, signal_handler)
 
 parser=argparse.ArgumentParser(prog='devicesinlan', description=app.translate("devicesinlan",'Show devices in a LAN making an ARP and a ICMP request to find them'),  
 epilog=app.translate("devicesinlan","If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).")+"\n"

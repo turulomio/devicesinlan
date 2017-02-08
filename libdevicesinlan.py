@@ -9,7 +9,7 @@ import subprocess
 import time
 import socket
 from PyQt5.QtCore import QCoreApplication, QSettings, QTranslator, Qt, QObject
-from PyQt5.QtWidgets import QTableWidgetItem
+from PyQt5.QtWidgets import QTableWidgetItem, QMessageBox
 from PyQt5.QtGui import QColor,  QPixmap, QIcon
 from colorama import Style, Fore
 from concurrent.futures import ThreadPoolExecutor,  as_completed
@@ -255,6 +255,7 @@ class SetDevices(QObject):
         #Carga los types antes no se pod´ia
         for d in self.arr:
             d.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(d.macwithout2points(d.mac.upper())), 0)))
+        return self
             
 
     def setMethod(self, arpscanmethod):
@@ -331,7 +332,7 @@ class SetDevices(QObject):
                         if len(s)==17 and s.find(b"-")!=-1:
                             mac=s.decode().replace("-", ":").upper()
                 else:
-                    arpexit=subprocess.check_output(["arp", ip])
+                    arpexit=subprocess.check_output(["/sbin/arp", ip])
                     for s in arpexit.decode('utf-8').split(" "):
                         if len(s)==17 and s.find(":")!=-1:
                             mac=s.upper()
@@ -770,3 +771,19 @@ def qleft(string):
     a=QTableWidgetItem(str(string))
     a.setTextAlignment(Qt.AlignVCenter|Qt.AlignLeft)
     return a
+
+def b2s(b, code='UTF-8'):
+    return bytes(b).decode(code)
+    
+def s2b(s, code='UTF8'):
+    if s==None:
+        return "".encode(code)
+    else:
+        return s.encode(code)
+        
+def qmessagebox(message, type=QMessageBox.Information):
+    m=QMessageBox()
+    m.setWindowIcon(QIcon(":/devicesinlan.png"))
+    m.setIcon(type)
+    m.setText(str(message))
+    m.exec_() 
