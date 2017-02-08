@@ -1,6 +1,7 @@
 import datetime
 import sys
 import os
+import codecs
 from urllib.request import urlopen
 from PyQt5.QtCore import pyqtSlot, Qt, QPoint, QEvent
 from PyQt5.QtGui import QIcon, QPixmap
@@ -145,7 +146,7 @@ class frmMain(QMainWindow, Ui_frmMain):#
         c=str(datetime.datetime.now()).replace("-","").replace(":","").replace(" ","_")[:-7]
         filename = QFileDialog.getSaveFileName(self, self.tr("Save File"), "devicesinlan_{}.xml".format(c), self.tr("eXtensible Markup Language (*.xml)"))[0]
         if filename:
-            with open(filename, "w") as f:
+            with codecs.open(filename, "w", "utf-8") as f:
                 f.write(devices.xml())
 
         
