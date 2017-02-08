@@ -142,7 +142,7 @@ class frmMain(QMainWindow, Ui_frmMain):#
         
     @pyqtSlot()      
     def on_actionHelp_triggered(self):
-        fr=frmHelp(self,"frmHelp")
+        fr=frmHelp(self.mem, self,"frmHelp")
         fr.open()
 
     @pyqtSlot()      
