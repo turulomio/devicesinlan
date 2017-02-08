@@ -2,12 +2,11 @@ Nueva release
 =============
 ) Comprobar que funciona en Windows. No subir los ts desde windows, hacer un revert y subir versión con preparada para windows
 ) Actualizar en linux
-1) Modificar la version en devicesinlan.py
-) Modificar la fecha en devicesinlan.1
+1) Modificar la version en libdevicesinlan.py
 ) Update ieee-oui with get-oui
 2) Modificar todos los ficheros RELEASE CHANGELOG con num subversion +1 y versión nueva
-4) Hacer un make y Actualizar *.ts
-4) Hacer otro make y make man
+4) Hacer un make man y Actualizar *.ts
+4) Hacer otro make man y make
 ) Crear el fichero (con distribution.sh que pone la version automatico) y subirlo a sourceforge
 5) Subir al subversion y comprobar que queda subversion +1
 6) Crear un nuevo ebuild con la nueva versión

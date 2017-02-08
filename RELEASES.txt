@@ -7,5 +7,8 @@ devicesinlan-0.6.0 <==> svn -r  30 checkout svn://svn.code.sf.net/p/devicesinlan
 devicesinlan-0.7.0 <==> svn -r  65 checkout svn://svn.code.sf.net/p/devicesinlan/code/ devicesinlan
 devicesinlan-0.8.0 <==> svn -r  69 checkout svn://svn.code.sf.net/p/devicesinlan/code/ devicesinlan
 devicesinlan-0.9.0 <==> svn -r  76 checkout svn://svn.code.sf.net/p/devicesinlan/code/ devicesinlan
-devicesinlan-0.10.0 <==> svn -r  80 checkout svn://svn.code.sf.net/p/devicesinlan/code/ devicesinlan
-devicesinlan-0.10.0 <==> svn -r  85 checkout svn://svn.code.sf.net/p/devicesinlan/code/ devicesinlan
+devicesinlan-0.10.0 <==> svn -r 80 checkout svn://svn.code.sf.net/p/devicesinlan/code/ devicesinlan
+devicesinlan-0.11.0 <==> svn -r 85 checkout svn://svn.code.sf.net/p/devicesinlan/code/ devicesinlan
+devicesinlan-1.0.0 <==> svn -r 106 checkout svn://svn.code.sf.net/p/devicesinlan/code/ devicesinlan
+
+

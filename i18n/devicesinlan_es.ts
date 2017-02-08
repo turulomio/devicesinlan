@@ -393,7 +393,7 @@
         <translation>Nuevo escaneo</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="249"/>
+        <location filename="../ui/frmMain.py" line="250"/>
         <source>It took {} to detect {} devices</source>
         <translation>Duró {} detectar {} dispositivos</translation>
     </message>
@@ -418,7 +418,7 @@
         <translation>Mostrar la base de datos de dispositivos</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="260"/>
+        <location filename="../ui/frmMain.py" line="261"/>
         <source>It took {} to show {} devices</source>
         <translation>Duró {} mostrar {} dispositivos</translation>
     </message>
@@ -433,12 +433,12 @@
         <translation>Reiniciar la base de datos</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="218"/>
+        <location filename="../ui/frmMain.py" line="219"/>
         <source>Erase database confirmation</source>
         <translation>Confirmación de borrado de la base de datos</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="218"/>
+        <location filename="../ui/frmMain.py" line="219"/>
         <source>This action will erase known devices database. Do you want to continue?.</source>
         <translation>Esta acción borrará la base de datos de dispositivos conocidos. ¿Quiere continuar?.</translation>
     </message>
@@ -473,37 +473,37 @@
         <translation>Guarda la lista de dispositivos</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="135"/>
+        <location filename="../ui/frmMain.py" line="136"/>
         <source>Do you want to add this {} with MAC {} and set its name to {}?</source>
         <translation>¿Quieres añadir este {} con MAC {} y nombrarlo como {}?</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="139"/>
+        <location filename="../ui/frmMain.py" line="140"/>
         <source>We already have a device with this MAC: {}. Do you want to change its alias ({}) and type ({}) to a {} named {}?</source>
         <translation>Ya existe un dispositivo con esta MAC: {}. ¿Quieres cambiar su alias ({}) y su tipo ({}) a un {} de nombre {}?</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="146"/>
+        <location filename="../ui/frmMain.py" line="147"/>
         <source>Save File</source>
         <translation>Guardar fichero</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="146"/>
+        <location filename="../ui/frmMain.py" line="147"/>
         <source>eXtensible Markup Language (*.xml)</source>
         <translation>eXtensible Markup Language (*.xml)</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="162"/>
+        <location filename="../ui/frmMain.py" line="163"/>
         <source>I couldn&apos;t check updates. Try later.</source>
         <translation>No he podido buscar actualizaciones. Inténtelo más tarde.</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="179"/>
+        <location filename="../ui/frmMain.py" line="180"/>
         <source>You have the last version</source>
         <translation>Tienes la última versión</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="185"/>
+        <location filename="../ui/frmMain.py" line="186"/>
         <source>There is a new DevicesInLan version. Please download it from &lt;a href=&apos;http://glparchis.sourceforge.net&apos;&gt;http://glparchis.sourceforge.net&lt;/a&gt; or directly from &lt;a href=&apos;https://sourceforge.net/projects/devicesinlan/files/devicesinlan/</source>
         <translation>Hay una nueva versión de DevicesInLan. Por favor descárgela de &lt;a href=&apos;http://glparchis.sourceforge.net&apos;&gt;http://glparchis.sourceforge.net&lt;/a&gt; o directamente desde &lt;a href=&apos;https://sourceforge.net/projects/devicesinlan/files/devicesinlan/</translation>
     </message>
@@ -622,27 +622,27 @@
 <context>
     <name>myTab</name>
     <message>
-        <location filename="../ui/frmMain.py" line="34"/>
+        <location filename="../ui/frmMain.py" line="35"/>
         <source>Database devices at {}</source>
         <translation>Base de datos de dispositivos a las {}</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="36"/>
+        <location filename="../ui/frmMain.py" line="37"/>
         <source>Scanned at {}</source>
         <translation>Escaneado a las {}</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="51"/>
+        <location filename="../ui/frmMain.py" line="52"/>
         <source>Remove known device</source>
         <translation>Borrar dispositivo conocido</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="99"/>
+        <location filename="../ui/frmMain.py" line="100"/>
         <source>Edit known device</source>
         <translation>Modificar dispositivo conocido</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="101"/>
+        <location filename="../ui/frmMain.py" line="102"/>
         <source>Set as a known device</source>
         <translation>Establecer como dispositivo conocido</translation>
     </message>

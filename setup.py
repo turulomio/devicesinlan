@@ -75,7 +75,11 @@ if sys.platform=='win32':
                'build_exe': build_exe_options}
 else:#linux
       base="Console"
-      include_files.append("devicesinlan.1")
+      include_files.append("doc/devicesinlan.en.1")
+      include_files.append("doc/devicesinlan.es.1")
+      include_files.append("doc/devicesinlan.fr.1")
+      include_files.append("doc/devicesinlan.ro.1")
+      include_files.append("doc/devicesinlan.ru.1")
       build_options = dict(includes = [], excludes = [], include_files=include_files)
       options=dict(build_exe = build_options)
 

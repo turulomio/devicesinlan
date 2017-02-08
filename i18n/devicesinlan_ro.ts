@@ -393,7 +393,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="249"/>
+        <location filename="../ui/frmMain.py" line="250"/>
         <source>It took {} to detect {} devices</source>
         <translation type="unfinished"></translation>
     </message>
@@ -418,7 +418,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="260"/>
+        <location filename="../ui/frmMain.py" line="261"/>
         <source>It took {} to show {} devices</source>
         <translation type="unfinished"></translation>
     </message>
@@ -433,12 +433,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="218"/>
+        <location filename="../ui/frmMain.py" line="219"/>
         <source>Erase database confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="218"/>
+        <location filename="../ui/frmMain.py" line="219"/>
         <source>This action will erase known devices database. Do you want to continue?.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -473,37 +473,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="135"/>
+        <location filename="../ui/frmMain.py" line="136"/>
         <source>Do you want to add this {} with MAC {} and set its name to {}?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="139"/>
+        <location filename="../ui/frmMain.py" line="140"/>
         <source>We already have a device with this MAC: {}. Do you want to change its alias ({}) and type ({}) to a {} named {}?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="146"/>
+        <location filename="../ui/frmMain.py" line="147"/>
         <source>Save File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="146"/>
+        <location filename="../ui/frmMain.py" line="147"/>
         <source>eXtensible Markup Language (*.xml)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="162"/>
+        <location filename="../ui/frmMain.py" line="163"/>
         <source>I couldn&apos;t check updates. Try later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="179"/>
+        <location filename="../ui/frmMain.py" line="180"/>
         <source>You have the last version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="185"/>
+        <location filename="../ui/frmMain.py" line="186"/>
         <source>There is a new DevicesInLan version. Please download it from &lt;a href=&apos;http://glparchis.sourceforge.net&apos;&gt;http://glparchis.sourceforge.net&lt;/a&gt; or directly from &lt;a href=&apos;https://sourceforge.net/projects/devicesinlan/files/devicesinlan/</source>
         <translation type="unfinished"></translation>
     </message>
@@ -622,27 +622,27 @@
 <context>
     <name>myTab</name>
     <message>
-        <location filename="../ui/frmMain.py" line="34"/>
+        <location filename="../ui/frmMain.py" line="35"/>
         <source>Database devices at {}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="36"/>
+        <location filename="../ui/frmMain.py" line="37"/>
         <source>Scanned at {}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="51"/>
+        <location filename="../ui/frmMain.py" line="52"/>
         <source>Remove known device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="99"/>
+        <location filename="../ui/frmMain.py" line="100"/>
         <source>Edit known device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="101"/>
+        <location filename="../ui/frmMain.py" line="102"/>
         <source>Set as a known device</source>
         <translation type="unfinished"></translation>
     </message>

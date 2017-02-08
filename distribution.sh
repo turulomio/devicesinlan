@@ -1,5 +1,5 @@
 #!/bin/bash
-DIR=devicesinlan-`cat libdevicesinlan.py | grep 'version="'| cut --delimiter='"'  -f 2`
+DIR=devicesinlan-`cat libdevicesinlan.py | grep 'version = "'| cut --delimiter='"'  -f 2`
 BUILDDIR=build/$DIR
 FILE=$DIR.tar.gz
 echo "Este script crea el fichero $FILE para ser subido al proyecto"
@@ -10,6 +10,7 @@ mkdir -p $BUILDDIR
 mkdir $BUILDDIR/images
 mkdir $BUILDDIR/i18n
 mkdir $BUILDDIR/ui
+mkdir $BUILDDIR/doc
 
 cp      Makefile \
         AUTHORS.txt \
@@ -20,11 +21,14 @@ cp      Makefile \
         libdevicesinlan.py \
         devicesinlan.py \
         devicesinlan.pro \
-        devicesinlan.1 \
         devicesinlan.html \
         devicesinlan.desktop \
         ieee-oui.txt \
         $BUILDDIR
+
+cp      doc/*.1 \
+        doc/*.html
+        $BUILDDIR/doc
 
 cp      images/*.png \
         images/*.ico \
