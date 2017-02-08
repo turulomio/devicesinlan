@@ -61,11 +61,11 @@ man:
 	install -o root -d $(PREFIXMAN)/ru/man1
 	pylupdate5 -noobsolete devicesinlan.pro
 	lrelease -qt5 devicesinlan.pro
-	python3 mangenerator.py --language es
 	python3 mangenerator.py --language en
 	python3 mangenerator.py --language fr
 	python3 mangenerator.py --language ro
 	python3 mangenerator.py --language ru
+	python3 mangenerator.py --language es
 	install -m 644 -o root doc/devicesinlan.en.1 $(PREFIXMAN)/man1/devicesinlan.1
 	install -m 644 -o root doc/devicesinlan.es.1 $(PREFIXMAN)/es/man1/devicesinlan.1
 	install -m 644 -o root doc/devicesinlan.fr.1 $(PREFIXMAN)/fr/man1/devicesinlan.1

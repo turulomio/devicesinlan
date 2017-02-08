@@ -301,6 +301,11 @@
         <source>DevicesInLan help</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../ui/frmHelp.ui" line="116"/>
+        <source>Select a language</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>frmInterfaceSelector</name>
