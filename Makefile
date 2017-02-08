@@ -5,7 +5,7 @@ PREFIXLIB=$(DESTDIR)/usr/lib/devicesinlan
 PREFIXSHARE=$(DESTDIR)/usr/share/devicesinlan
 PREFIXPIXMAPS=$(DESTDIR)/usr/share/pixmaps/
 PREFIXAPPLICATIONS=$(DESTDIR)/usr/share/applications/
-PREFIXMAN=$(DESTDIR)/usr/share/man/
+PREFIXMAN=$(DESTDIR)/usr/share/man
 
 install:
 	pyuic5 ui/frmAbout.ui > ui/Ui_frmAbout.py
@@ -21,6 +21,7 @@ install:
 	install -o root -d $(PREFIXSHARE)
 	install -o root -d $(PREFIXPIXMAPS)
 	install -o root -d $(PREFIXAPPLICATIONS)
+	install -o root -d $(PREFIXMAN)
 	install -o root -d $(PREFIXMAN)/man1
 	install -o root -d $(PREFIXMAN)/es/man1
 	install -o root -d $(PREFIXMAN)/fr/man1
@@ -33,7 +34,7 @@ install:
 
 	install -m 755 -o root devicesinlan.py $(PREFIXBIN)/devicesinlan
 	install -m 755 -o root libdevicesinlan.py libmangenerator.py $(PREFIXLIB)
-	install -m 644 -o root GPL-3.txt CHANGELOG.txt AUTHORS.txt RELEASES.txt INSTALL.txt ieee-oui.txt doc/devicesinlan*.html $(PREFIXSHARE)
+	install -m 644 -o root GPL-3.txt CHANGELOG.txt AUTHORS.txt INSTALL.txt ieee-oui.txt doc/devicesinlan*.html $(PREFIXSHARE)
 	install -m 644 -o root i18n/*.qm $(PREFIXSHARE)
 	install -m 644 -o root doc/devicesinlan.en.1 $(PREFIXMAN)/man1/devicesinlan.1
 	install -m 644 -o root doc/devicesinlan.es.1 $(PREFIXMAN)/es/man1/devicesinlan.1
@@ -54,6 +55,7 @@ uninstall:
 	rm -Rf $(PREFIXMAN)/ru/man1/devicesinlan.1
 
 man:
+	install -o root -d $(PREFIXMAN)
 	install -o root -d $(PREFIXMAN)/man1
 	install -o root -d $(PREFIXMAN)/es/man1
 	install -o root -d $(PREFIXMAN)/fr/man1

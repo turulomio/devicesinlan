@@ -17,8 +17,9 @@ cp      Makefile \
         CHANGELOG.txt \
         GPL-3.txt \
         INSTALL.txt \
-        RELEASES.txt \
         libdevicesinlan.py \
+        libmangenerator.py \
+        mangenerator.py \
         devicesinlan.py \
         devicesinlan.pro \
         devicesinlan.html \
@@ -27,7 +28,7 @@ cp      Makefile \
         $BUILDDIR
 
 cp      doc/*.1 \
-        doc/*.html
+        doc/*.html \
         $BUILDDIR/doc
 
 cp      images/*.png \

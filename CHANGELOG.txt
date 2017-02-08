@@ -51,14 +51,14 @@ devicesinlan 0.10.0 20170206
 - Replaced Color class by colorama package
 - There is Color in Windows console reports
 
-devicesinlan 0.11.0 XXXXXXXX
+devicesinlan 0.11.0 20170207
 ============================
 - Replaced Thread with PoolThreadExecutor
 - Added setting to set concurrence
 - Improved console reports
 
-devicesinlan 0.12.0 XXXXXXXX
-============================
+devicesinlan 1.0.0 20170208
+===========================
 - Project man page created
 - Save/load xml lists
 - Check for updates

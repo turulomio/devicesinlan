@@ -4,16 +4,17 @@ Nueva release
 ) Actualizar en linux
 1) Modificar la version en libdevicesinlan.py
 ) Update ieee-oui with get-oui
-2) Modificar todos los ficheros RELEASE CHANGELOG con num subversion +1 y versión nueva
+2) Modificar CHANGELOG  y poner los datos de la versión nueva
 4) Hacer un make man y Actualizar *.ts
 4) Hacer otro make man y make
 ) Crear el fichero (con distribution.sh que pone la version automatico) y subirlo a sourceforge
-5) Subir al subversion y comprobar que queda subversion +1
+) Actualizar subversion en windows y crear versión. Luego subirla a Sourceforege
 6) Crear un nuevo ebuild con la nueva versión
 8) Subirlo al subversion del portage
+5) Por ultimo subir la versión devicesinlan al subversion ya que ahora no controlo el subversion en RELEASES
 9) Modificar la pagina web
    - Actualizar svn update myweb
-   - Crear objeto de Noticia
+   - Crear objeto de Noticia poniendo en RELEASE el último suversion aunque haya echo varios
    - Modificar la fecha en los enlaces y el r21 de la versíón
    - Subirla a internet con bash publicar.sh
    - Subir al subervsion los cambios 3en la web

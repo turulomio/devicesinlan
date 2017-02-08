@@ -115,7 +115,6 @@ If you write more than one paragraph, start the other paragraphs with the .PP co
         f=open("{}.{}.html".format(self.filename, self.manlevel), "w")
         arr=output.decode().split("\n")
         for i, line in enumerate(arr):
-            print(line)
             if i in [0, 1, 5, 6,  len(arr)-9, len(arr)-10, len(arr)-11, len(arr)-12, len(arr)-13, len(arr)-14, len(arr)-15, len(arr)-16]:#I delete ugly lines #MAN2HTML --1.6g
                 continue
             if line.startswith("<HTML><HEAD>"):
