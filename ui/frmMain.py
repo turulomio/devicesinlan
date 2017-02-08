@@ -1,6 +1,5 @@
 import datetime
 import sys
-import os
 import codecs
 from urllib.request import urlopen
 from PyQt5.QtCore import pyqtSlot, Qt, QPoint, QEvent
@@ -127,7 +126,8 @@ class frmMain(QMainWindow, Ui_frmMain):#
         
     @pyqtSlot()      
     def on_actionListLoad_triggered(self):
-        filename=os.path.basename(QFileDialog.getOpenFileName(self, "", "", "eXtensible Markup Language (*.xml)")[0])
+        filename=QFileDialog.getOpenFileName(self, "", "", "eXtensible Markup Language (*.xml)")[0]
+        print(filename)
         current=SetDevices(self.mem).init__from_settings()
         new=SetDevices(self.mem).init__from_xml(filename)
         for n in new.arr:
