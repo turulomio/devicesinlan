@@ -13,6 +13,7 @@ from PyQt5.QtWidgets import QTableWidgetItem, QMessageBox
 from PyQt5.QtGui import QColor,  QPixmap, QIcon
 from colorama import Style, Fore
 from concurrent.futures import ThreadPoolExecutor,  as_completed
+from xml.dom import minidom
 import ipaddress
 version="0.11.0"
 dateversion=datetime.date(2017, 2, 7)
@@ -30,6 +31,9 @@ class Mem(QObject):
         self.interfaces.load_all()
         self.types=SetDeviceTypes(self)
         self.types.load_all()
+
+    def setApp(self, app):
+        self.app=app#Link to app
 
     def change_language(self, language):  
         """language es un string"""  
@@ -238,6 +242,20 @@ class SetDevices(QObject):
         self.selected=None
         self.isDatabase=False#Returns True if is init__from_settings
 
+    def init__from_xml(self, filename):
+        """
+            Constructor thal load devices from a xml file. Used to import data from file
+        """
+        xmldoc = minidom.parse(filename)
+        itemlist = xmldoc.getElementsByTagName('device')
+        for item in itemlist:
+            print(item.attributes['alias'].value)
+            d=Device(self.mem)
+            d.alias=item.attributes['alias'].value
+            d.mac=item.attributes['mac'].value
+            d.type=self.mem.types.find_by_id(int(item.attributes['type'].value))
+            self.append(d)
+        return self
 
     def init__from_settings(self):
         """
@@ -507,6 +525,18 @@ class SetDevices(QObject):
             table.setItem(rownumber, 2, qleft(h.alias))
             table.setItem(rownumber, 3, qleft(h.oui))
 
+    def xml(self):
+        """
+            Returns a string with a xml of the array. Used to export data
+        """
+        s='<devicesinlan version="{}">\n'.format(version)
+        s=s+"\t<devices>\n"
+        for d in self.arr:
+            s=s+'\t\t<device alias="{}" mac="{}" type="{}"/>\n'.format(d.alias, d.mac, d.type.id)
+        s=s+"\t</devices>\n"
+        s=s+"</devicesinlan>\n"
+        return s
+
 class Device(QObject):
     def __init__(self, mem):
         QObject.__init__(self)
@@ -518,6 +548,12 @@ class Device(QObject):
         self.pinged=False
         self.type=None
         
+    def __eq__(self, other):
+        if other==None:
+            return False
+        if self.mac.upper()==other.mac.upper() and self.alias==other.alias and self.type.id==other.type.id:
+            return True
+        return False
         
     def validate_mac(self, s):
         if len(s)!=17:
@@ -787,3 +823,12 @@ def qmessagebox(message, type=QMessageBox.Information):
     m.setIcon(type)
     m.setText(str(message))
     m.exec_() 
+    
+def qquestion(message, qicon ):
+    """
+        return can be QMessageBox.Yes, QMessageBox.No
+    """
+    m=QMessageBox()
+    m.setWindowIcon(qicon)
+    return m.question(None, "DevicesInLan", message, QMessageBox.Yes, QMessageBox.No)
+        

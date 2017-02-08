@@ -5,15 +5,14 @@ from urllib.request import urlopen
 from PyQt5.QtCore import pyqtSlot, Qt, QPoint, QEvent
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QMenu, QTabWidget, QTableWidget,  QDialog, QWidget, QVBoxLayout, QLabel,  QAbstractItemView, qApp, QMessageBox, QAction, QFileDialog
-#from uuid import  uuid4
+from uuid import  uuid4
 from Ui_frmMain import Ui_frmMain
-from libdevicesinlan import dateversion, Device,   SetDevices,  ArpScanMethod, b2s,  version,  qmessagebox
+from libdevicesinlan import dateversion, SetDevices,  ArpScanMethod, b2s,  version,  qmessagebox, qquestion
 from frmSettings import frmSettings
 from frmHelp import frmHelp
 from frmAbout import frmAbout
 from frmInterfaceSelector import frmInterfaceSelector
 from frmDeviceCRUD import frmDeviceCRUD
-from xml.dom import minidom
 
 
 
@@ -128,44 +127,26 @@ class frmMain(QMainWindow, Ui_frmMain):#
     @pyqtSlot()      
     def on_actionListLoad_triggered(self):
         filename=os.path.basename(QFileDialog.getOpenFileName(self, "", "", "eXtensible Markup Language (*.xml)")[0])
-        new=SetDevices(self.mem)
-#<data>
-#    <items>
-#        <item name="item1"></item>
-#        <item name="item2"></item>
-#        <item name="item3"></item>
-#        <item name="item4"></item>
-#    </items>
-#</data>
-#
-#PYTHON:
-
-        xmldoc = minidom.parse(filename)
-        itemlist = xmldoc.getElementsByTagName('device')
-        print(len(itemlist))
-        for item in itemlist:
-            print(item.attributes['alias'].value)
-            d=Device(self.mem)
-            d.alias=item.attributes['alias'].value
-            d.mac=item.attributes['mac'].value
-            d.type=self.mem.types.find_by_id(int(item.attributes['type'].value))
-            new.append(d)
-        print(new.length())
+        current=SetDevices(self.mem).init__from_settings()
+        new=SetDevices(self.mem).init__from_xml(filename)
+        for n in new.arr:
+            c=current.find_by_mac(n.mac)
+            if c==None:#Not found its mac so n is new
+                if qquestion(self.tr("Do you want to add this {} with MAC {} and set its name to {}?".format(n.type.name.lower(), n.mac, n.alias)),  QIcon(":/save.png"))==QMessageBox.Yes:
+                    n.link()
+            else:
+                if n!=c:
+                    if qquestion(self.tr("We already have a device with this MAC: {}. Do you want to change its alias ({}) and type ({}) to a {} named {}?".format(c.mac, c.alias, c.type.name.lower(), n.type.name.lower(), n.alias)),  QIcon(":/save.png"))==QMessageBox.Yes:
+                        n.link()
     
     @pyqtSlot()      
     def on_actionListSave_triggered(self):
         devices=SetDevices(self.mem).init__from_settings()
-        s='<devicesinlan version="{}">\n'.format(version)
-        s=s+"\t<devices>\n"
-        for d in devices.arr:
-            s=s+'\t\t<device alias="{}" mac="{}" type="{}"/>\n'.format(d.alias, d.mac, d.type.id)
-        s=s+"\t</devices>\n"
-        s=s+"</devicesinlan>\n"
         c=str(datetime.datetime.now()).replace("-","").replace(":","").replace(" ","_")[:-7]
         filename = QFileDialog.getSaveFileName(self, self.tr("Save File"), "devicesinlan_{}.xml".format(c), self.tr("eXtensible Markup Language (*.xml)"))[0]
         if filename:
             with open(filename, "w") as f:
-                f.write(s)
+                f.write(devices.xml())
 
         
     def checkUpdates(self, showdialogwhennoupdates=False):
@@ -208,9 +189,8 @@ class frmMain(QMainWindow, Ui_frmMain):#
 
     def setInstallationUUID(self):
         if self.mem.settings.value("frmMain/uuid", "None")=="None":
-#            self.mem.settings.setValue("frmMain/uuid", str(uuid4()))
+            self.mem.settings.setValue("frmMain/uuid", str(uuid4()))
             url='http://devicesinlan.sourceforge.net/php/devicesinlan_installations.php?uuid={}'.format(self.mem.settings.value("frmMain/uuid"))
-            print(url, "DEBO DESCOMENTAR")
             try:
                 web=b2s(urlopen(url).read())
             except:

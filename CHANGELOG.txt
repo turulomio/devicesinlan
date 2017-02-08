@@ -60,3 +60,6 @@ devicesinlan 0.11.0 XXXXXXXX
 devicesinlan 0.12.0 XXXXXXXX
 ============================
 - Project man page created
+- Save/load xml lists
+- Check for updates
+- Gets installation statistcs

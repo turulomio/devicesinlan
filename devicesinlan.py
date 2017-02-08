@@ -34,6 +34,7 @@ app.setOrganizationDomain("devicesinlan.sourceforge.net")
 app.setApplicationName("DevicesInLAN")
 
 mem=Mem()
+mem.setApp(app)
 mem.change_language(mem.settings.value("frmSettings/language", "en"))
 
 signal.signal(signal.SIGINT, signal_handler)
