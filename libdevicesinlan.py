@@ -249,7 +249,6 @@ class SetDevices(QObject):
         xmldoc = minidom.parse(filename)
         itemlist = xmldoc.getElementsByTagName('device')
         for item in itemlist:
-            print(item.attributes['alias'].value)
             d=Device(self.mem)
             d.alias=item.attributes['alias'].value
             d.mac=item.attributes['mac'].value

@@ -127,18 +127,18 @@ class frmMain(QMainWindow, Ui_frmMain):#
     @pyqtSlot()      
     def on_actionListLoad_triggered(self):
         filename=QFileDialog.getOpenFileName(self, "", "", "eXtensible Markup Language (*.xml)")[0]
-        print(filename)
-        current=SetDevices(self.mem).init__from_settings()
-        new=SetDevices(self.mem).init__from_xml(filename)
-        for n in new.arr:
-            c=current.find_by_mac(n.mac)
-            if c==None:#Not found its mac so n is new
-                if qquestion(self.tr("Do you want to add this {} with MAC {} and set its name to {}?".format(n.type.name.lower(), n.mac, n.alias)),  QIcon(":/save.png"))==QMessageBox.Yes:
-                    n.link()
-            else:
-                if n!=c:
-                    if qquestion(self.tr("We already have a device with this MAC: {}. Do you want to change its alias ({}) and type ({}) to a {} named {}?".format(c.mac, c.alias, c.type.name.lower(), n.type.name.lower(), n.alias)),  QIcon(":/save.png"))==QMessageBox.Yes:
+        if filename!="":
+            current=SetDevices(self.mem).init__from_settings()
+            new=SetDevices(self.mem).init__from_xml(filename)
+            for n in new.arr:
+                c=current.find_by_mac(n.mac)
+                if c==None:#Not found its mac so n is new
+                    if qquestion(self.tr("Do you want to add this {} with MAC {} and set its name to {}?".format(n.type.name.lower(), n.mac, n.alias)),  QIcon(":/save.png"))==QMessageBox.Yes:
                         n.link()
+                else:
+                    if n!=c:
+                        if qquestion(self.tr("We already have a device with this MAC: {}. Do you want to change its alias ({}) and type ({}) to a {} named {}?".format(c.mac, c.alias, c.type.name.lower(), n.type.name.lower(), n.alias)),  QIcon(":/save.png"))==QMessageBox.Yes:
+                            n.link()
     
     @pyqtSlot()      
     def on_actionListSave_triggered(self):
@@ -171,7 +171,7 @@ class frmMain(QMainWindow, Ui_frmMain):#
                 break
                 
         #Si no hay version sale
-        print ("Remote version",  remoteversion, "against",  version)
+        print ("Remote version",  remoteversion, "against local",  version)
         if remoteversion==None:
             return
                 
@@ -191,12 +191,13 @@ class frmMain(QMainWindow, Ui_frmMain):#
     def setInstallationUUID(self):
         if self.mem.settings.value("frmMain/uuid", "None")=="None":
             self.mem.settings.setValue("frmMain/uuid", str(uuid4()))
-            url='http://devicesinlan.sourceforge.net/php/devicesinlan_installations.php?uuid={}'.format(self.mem.settings.value("frmMain/uuid"))
-            try:
-                web=b2s(urlopen(url).read())
-            except:
-                web=None
-            print (web)       
+        url='http://devicesinlan.sourceforge.net/php/devicesinlan_installations.php?uuid={}&version={}'.format(self.mem.settings.value("frmMain/uuid"), version)
+        print (url)
+        try:
+            web=b2s(urlopen(url).read())
+        except:
+            web=None
+        print (web)       
         
     @pyqtSlot(QEvent)   
     def closeEvent(self,event):   
@@ -218,8 +219,9 @@ class frmMain(QMainWindow, Ui_frmMain):#
         m.setWindowIcon(icon6)
         confirm=m.question(self, self.tr("Erase database confirmation"), self.tr("This action will erase known devices database. Do you want to continue?."), QMessageBox.Yes, QMessageBox.No)
         if confirm==QMessageBox.Yes:
-            self.mem.settings.clear()
-            self.mem.settings.sync()
+            devices=SetDevices(self.mem).init__from_settings()
+            for d in devices.arr:
+                d.unlink()
             self.on_actionShowDatabase_triggered()
         
     @pyqtSlot()      
