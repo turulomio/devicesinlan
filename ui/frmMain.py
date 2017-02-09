@@ -192,7 +192,6 @@ class frmMain(QMainWindow, Ui_frmMain):#
         if self.mem.settings.value("frmMain/uuid", "None")=="None":
             self.mem.settings.setValue("frmMain/uuid", str(uuid4()))
         url='http://devicesinlan.sourceforge.net/php/devicesinlan_installations.php?uuid={}&version={}'.format(self.mem.settings.value("frmMain/uuid"), version)
-        print (url)
         try:
             web=b2s(urlopen(url).read())
         except:

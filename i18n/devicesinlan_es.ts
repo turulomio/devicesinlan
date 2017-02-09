@@ -3,22 +3,22 @@
 <context>
     <name>Device</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="613"/>
+        <location filename="../libdevicesinlan.py" line="612"/>
         <source>Input an alias of the known device: </source>
         <translation>Añada un alias del dispositivo conocido: </translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="618"/>
+        <location filename="../libdevicesinlan.py" line="617"/>
         <source>You need to add an alias</source>
         <translation>Necesita añadir un alias</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="603"/>
+        <location filename="../libdevicesinlan.py" line="602"/>
         <source>Input the MAC of the known device (XX:XX:XX:XX:XX:XX): </source>
         <translation>Introduzca la MAC de un dispositivo desconocido (XX:XX:XX:XX:XX:XX): </translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="608"/>
+        <location filename="../libdevicesinlan.py" line="607"/>
         <source>You need to insert a mac with the next format: 2A:3B:4C:5D:6E:7A</source>
         <translation>Necesita añadir una mac con el siguiente formato: 2A:3B:4C:5D:6E:7A</translation>
     </message>
@@ -100,42 +100,42 @@
 <context>
     <name>SetDevices</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="445"/>
+        <location filename="../libdevicesinlan.py" line="444"/>
         <source>{} DEVICES IN LAN FROM {} INTERFACE AT {}</source>
         <translation>{} DISPOSITIVOS EN RED DESDE EL INTERFAZ {} A LAS {}</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="449"/>
+        <location filename="../libdevicesinlan.py" line="448"/>
         <source>This device</source>
         <translation>Este dispositivo</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="471"/>
+        <location filename="../libdevicesinlan.py" line="470"/>
         <source>{} DEVICES IN DATABASE AT {}</source>
         <translation>{} DISPOSITIVOS EN LA BASE DE DATOS A LAS {}</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="515"/>
+        <location filename="../libdevicesinlan.py" line="514"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="516"/>
+        <location filename="../libdevicesinlan.py" line="515"/>
         <source>MAC</source>
         <translation>MAC</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="517"/>
+        <location filename="../libdevicesinlan.py" line="516"/>
         <source>Alias</source>
         <translation>Alias</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="518"/>
+        <location filename="../libdevicesinlan.py" line="517"/>
         <source>Hardware</source>
         <translation>Hardware</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="486"/>
+        <location filename="../libdevicesinlan.py" line="485"/>
         <source>IP</source>
         <translation>IP</translation>
     </message>
@@ -143,12 +143,12 @@
 <context>
     <name>devicesinlan</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="807"/>
+        <location filename="../libdevicesinlan.py" line="806"/>
         <source>True</source>
         <translation>Verdadero</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="810"/>
+        <location filename="../libdevicesinlan.py" line="809"/>
         <source>False</source>
         <translation>Falso</translation>
     </message>
@@ -393,7 +393,7 @@
         <translation>Nuevo escaneo</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="250"/>
+        <location filename="../ui/frmMain.py" line="251"/>
         <source>It took {} to detect {} devices</source>
         <translation>Duró {} detectar {} dispositivos</translation>
     </message>
@@ -418,7 +418,7 @@
         <translation>Mostrar la base de datos de dispositivos</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="261"/>
+        <location filename="../ui/frmMain.py" line="262"/>
         <source>It took {} to show {} devices</source>
         <translation>Duró {} mostrar {} dispositivos</translation>
     </message>
@@ -622,27 +622,27 @@
 <context>
     <name>myTab</name>
     <message>
-        <location filename="../ui/frmMain.py" line="35"/>
+        <location filename="../ui/frmMain.py" line="34"/>
         <source>Database devices at {}</source>
         <translation>Base de datos de dispositivos a las {}</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="37"/>
+        <location filename="../ui/frmMain.py" line="36"/>
         <source>Scanned at {}</source>
         <translation>Escaneado a las {}</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="52"/>
+        <location filename="../ui/frmMain.py" line="51"/>
         <source>Remove known device</source>
         <translation>Borrar dispositivo conocido</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="100"/>
+        <location filename="../ui/frmMain.py" line="99"/>
         <source>Edit known device</source>
         <translation>Modificar dispositivo conocido</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="102"/>
+        <location filename="../ui/frmMain.py" line="101"/>
         <source>Set as a known device</source>
         <translation>Establecer como dispositivo conocido</translation>
     </message>

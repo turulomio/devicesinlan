@@ -8,10 +8,10 @@ Nueva release
 4) Hacer un make man y Actualizar *.ts
 4) Hacer otro make man y make
 ) Crear el fichero (con distribution.sh que pone la version automatico) y subirlo a sourceforge
-) Actualizar subversion en windows y crear versión. Luego subirla a Sourceforege
 6) Crear un nuevo ebuild con la nueva versión
 8) Subirlo al subversion del portage
 5) Por ultimo subir la versión devicesinlan al subversion ya que ahora no controlo el subversion en RELEASES
+) Actualizar subversion en windows y crear versión. Luego subirla a Sourceforge
 9) Modificar la pagina web
    - Actualizar svn update myweb
    - Crear objeto de Noticia poniendo en RELEASE el último suversion aunque haya echo varios

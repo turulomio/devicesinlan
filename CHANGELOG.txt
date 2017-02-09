@@ -63,3 +63,8 @@ devicesinlan 1.0.0 20170208
 - Save/load xml lists
 - Check for updates
 - Gets installation statistcs
+
+devicesinlan 1.0.1 20170209
+===========================
+- Improved statistics system
+- Fix little bugs

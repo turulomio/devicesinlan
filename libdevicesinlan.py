@@ -15,8 +15,8 @@ from colorama import Style, Fore
 from concurrent.futures import ThreadPoolExecutor,  as_completed
 from xml.dom import minidom
 import ipaddress
-version = "1.0.0"
-dateversion=datetime.date(2017, 2, 8)
+version = "1.0.1"
+dateversion=datetime.date(2017, 2, 9)
 
 class TypesARP:
     Gratuitous = 1
