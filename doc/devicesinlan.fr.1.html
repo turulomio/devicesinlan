@@ -13,7 +13,7 @@ Scans all devices in your LAN. Then you can set an alias to your known devices i
 <H2>SYNOPSIS</H2>
 
 <P>
-devicesinlan [ --wizard | --interface | --add | --remove | --list ]
+devicesinlan [-h] [--version] [--debug DEBUG] [ --wizard | --interface | --add | --remove | --list ]
 <A NAME="lbAD">&nbsp;</A>
 <H2>GUI MODE DESCRIPTION</H2>
 
@@ -35,6 +35,20 @@ In the app menu you have the followings features:
 
 <DL COMPACT><DT><DD>
 <B>Devices &gt; Show devices database</B>
+
+</DL>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<B>Devices &gt; Load devices list</B>
+
+</DL>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<B>Devices &gt; Save devices list</B>
 
 </DL>
 
@@ -80,7 +94,32 @@ In this dialog you can select your prefered language and you can configure the n
 <P>
 
 <DL COMPACT><DT><DD>
+<DL COMPACT><DT><DD>
+Shows this help information.
+</DL>
+
+</DL>
+
+<P>
+
+<DL COMPACT><DT><DD>
 <B>Help &gt; About</B>
+
+</DL>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<DL COMPACT><DT><DD>
+Shows information about DevicesInLAN license and authors.
+</DL>
+
+</DL>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<B>Help &gt; Check for updates</B>
 
 </DL>
 
@@ -91,13 +130,22 @@ In this dialog you can select your prefered language and you can configure the n
 
 </DL>
 
+<P>
+
+<DL COMPACT><DT><DD>
+<DL COMPACT><DT><DD>
+Exits from program.
+</DL>
+
+</DL>
+
 <A NAME="lbAE">&nbsp;</A>
 <H2>CONSOLE MODE DESCRIPTION</H2>
 
 <P>
 <P>
 
-If you launch deviceslan with some parameters, it will be executed in console mode.
+If you launch deviceslan with [ --wizard | --interface | --add | --remove | --list ], it will be executed in console mode.
 <P>
 
 <DL COMPACT><DT><DD>
@@ -149,7 +197,25 @@ If a device is not known, it will be showed in red. Devices in green are trusted
 <P>
 
 <DL COMPACT><DT><DD>
+<DL COMPACT><DT><DD>
+Allows to add a known device from console.
+</DL>
+
+</DL>
+
+<P>
+
+<DL COMPACT><DT><DD>
 <B>--remove</B>
+
+</DL>
+
+<P>
+
+<DL COMPACT><DT><DD>
+<DL COMPACT><DT><DD>
+Allows to remove a known device from console.
+</DL>
 
 </DL>
 
@@ -162,11 +228,20 @@ If a device is not known, it will be showed in red. Devices in green are trusted
 
 <P>
 
+<DL COMPACT><DT><DD>
+<DL COMPACT><DT><DD>
+Shows all knows devices in database from console.
+</DL>
+
+</DL>
+
+<P>
+
 <HR>
 This document was created by
 <A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
 using the manual pages.<BR>
-Time: 06:26:01 GMT, February 09, 2017
+Time: 04:57:20 GMT, February 10, 2017
 </BODY>
 </HTML>
 

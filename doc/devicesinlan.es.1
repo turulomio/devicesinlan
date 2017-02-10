@@ -1,11 +1,11 @@
-.TH DEVICESINLAN 1 2017\-02\-09
+.TH DEVICESINLAN 1 2017\-02\-10
 .SH NAME
 
 .B devicesinlan:
 Escan\('ea todos los dispositivos en tu red. Luego permite establecer un alias a tus dispositivos conocidos para que se pueda detectar dispositivos estra\(~nos en tu red.
 .SH SYNOPSIS
 
-devicesinlan [ \-\-wizard | \-\-interface | \-\-add | \-\-remove | \-\-list ]
+devicesinlan [\-h] [\-\-version] [\-\-debug DEBUG] [ \-\-wizard | \-\-interface | \-\-add | \-\-remove | \-\-list ]
 .SH DESCRIPCI\('ON DEL MODO INTERFAZ GR\('AFICO
 
 .PP
@@ -19,6 +19,14 @@ In the app menu you have the followings features:
 .PP
 .RS
 .B Dispositivos > Mostrar base de datos
+.RE
+.PP
+.RS
+.B Devices > Load devices list
+.RE
+.PP
+.RS
+.B Devices > Save devices list
 .RE
 .PP
 .RS
@@ -46,16 +54,38 @@ En este dialogo, puedes seleccionar tu idioma favorita y puedes configurar el n\
 .RE
 .PP
 .RS
+.RS
+Shows this help information.
+.RE
+.RE
+.PP
+.RS
 .B Ayuda > Acerca de
+.RE
+.PP
+.RS
+.RS
+Shows information about DevicesInLAN license and authors.
+.RE
+.RE
+.PP
+.RS
+.B Help > Check for updates
 .RE
 .PP
 .RS
 .B Ayuda > Salir
 .RE
+.PP
+.RS
+.RS
+Exits from program.
+.RE
+.RE
 .SH DESCRIPCI\('ON DEL MODO CONSOLA
 
 .PP
-If you launch deviceslan with some parameters, it will be executed in console mode.
+If you launch deviceslan with [ \-\-wizard | \-\-interface | \-\-add | \-\-remove | \-\-list ], it will be executed in console mode.
 .PP
 .RS
 .B \-\-wizard
@@ -88,9 +118,27 @@ If a device is not known, it will be showed in red. Devices in green are trusted
 .RE
 .PP
 .RS
+.RS
+Allows to add a known device from console.
+.RE
+.RE
+.PP
+.RS
 .B \-\-remove
 .RE
 .PP
 .RS
+.RS
+Allows to remove a known device from console.
+.RE
+.RE
+.PP
+.RS
 .B \-\-list
+.RE
+.PP
+.RS
+.RS
+Shows all knows devices in database from console.
+.RE
 .RE

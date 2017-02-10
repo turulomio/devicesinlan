@@ -1,6 +1,7 @@
 import codecs
 import datetime
 import threading
+import logging
 import netifaces
 import os
 import re
@@ -14,6 +15,8 @@ from PyQt5.QtGui import QColor,  QPixmap, QIcon
 from colorama import Style, Fore
 from concurrent.futures import ThreadPoolExecutor,  as_completed
 from xml.dom import minidom
+from uuid import  uuid4
+from urllib.request import urlopen
 import ipaddress
 version = "1.0.1"
 dateversion=datetime.date(2017, 2, 9)
@@ -35,6 +38,16 @@ class Mem(QObject):
     def setApp(self, app):
         self.app=app#Link to app
 
+    def setInstallationUUID(self):
+        if self.settings.value("frmMain/uuid", "None")=="None":
+            self.settings.setValue("frmMain/uuid", str(uuid4()))
+        url='http://devicesinlan.sourceforge.net/php/devicesinlan_installations.php?uuid={}&version={}'.format(self.settings.value("frmMain/uuid"), version)
+        try:
+            web=b2s(urlopen(url).read())
+        except:
+            web=None
+        logging.info(web)       
+
     def change_language(self, language):  
         """language es un string"""  
         urls= ["i18n/devicesinlan_" + language + ".qm","/usr/share/devicesinlan/devicesinlan_" + language + ".qm"]
@@ -42,12 +55,12 @@ class Mem(QObject):
             if os.path.exists(url)==True:
                 self.translator.load(url)
                 QCoreApplication.installTranslator(self.translator)
-#                print(self.tr("Language changed to {} using {}".format(language, url)))
+                logging.info(self.tr("Language changed to {} using {}".format(language, url)))
                 return
         if language!="en":
-#            print(self.tr("Using default (en)."))
-#        else:
-            print(Style.BRIGHT+ Fore.CYAN+ self.tr("Language ({}) couldn't be loaded in {}. Using default (en).".format(language, urls)))
+            logging.info(self.tr("Using default (en)."))
+        else:
+            logging.warning(Style.BRIGHT+ Fore.CYAN+ self.tr("Language ({}) couldn't be loaded in {}. Using default (en).".format(language, urls)))
 
 class DeviceType:
     def __init__(self, mem):

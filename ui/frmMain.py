@@ -1,11 +1,12 @@
 import datetime
 import sys
 import codecs
+import logging
 from urllib.request import urlopen
 from PyQt5.QtCore import pyqtSlot, Qt, QPoint, QEvent
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QMenu, QTabWidget, QTableWidget,  QDialog, QWidget, QVBoxLayout, QLabel,  QAbstractItemView, qApp, QMessageBox, QAction, QFileDialog
-from uuid import  uuid4
+
 from Ui_frmMain import Ui_frmMain
 from libdevicesinlan import dateversion, SetDevices,  ArpScanMethod, b2s,  version,  qmessagebox, qquestion
 from frmSettings import frmSettings
@@ -118,7 +119,6 @@ class frmMain(QMainWindow, Ui_frmMain):#
         self.tabWidget.tabCloseRequested.connect(self.on_tabWidget_tabCloseRequested)
         if datetime.date.today()-datetime.date.fromordinal(int(self.mem.settings.value("frmMain/lastupdate", 1)))>=datetime.timedelta(days=7):
             self.checkUpdates(False)
-        self.setInstallationUUID()
                 
     @pyqtSlot()      
     def on_actionUpdates_triggered(self):
@@ -171,7 +171,7 @@ class frmMain(QMainWindow, Ui_frmMain):#
                 break
                 
         #Si no hay version sale
-        print ("Remote version",  remoteversion, "against local",  version)
+        logging.info("Remote version {} against local {}".format (remoteversion,  version))
         if remoteversion==None:
             return
                 
@@ -188,19 +188,9 @@ class frmMain(QMainWindow, Ui_frmMain):#
         self.mem.settings.setValue("frmMain/lastupdate", datetime.date.today().toordinal())
         
 
-    def setInstallationUUID(self):
-        if self.mem.settings.value("frmMain/uuid", "None")=="None":
-            self.mem.settings.setValue("frmMain/uuid", str(uuid4()))
-        url='http://devicesinlan.sourceforge.net/php/devicesinlan_installations.php?uuid={}&version={}'.format(self.mem.settings.value("frmMain/uuid"), version)
-        try:
-            web=b2s(urlopen(url).read())
-        except:
-            web=None
-        print (web)       
-        
     @pyqtSlot(QEvent)   
     def closeEvent(self,event):   
-        print ("Exiting")
+        logging.warning ("Exiting")
         qApp.closeAllWindows()
         qApp.exit()
         sys.exit(0)

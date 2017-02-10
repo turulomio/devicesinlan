@@ -4,9 +4,12 @@ import datetime
 import platform
 import sys
 import signal
+import logging
+
 def signal_handler(signal, frame):
-        print(Style.BRIGHT+Fore.RED+app.translate("devicesinlan","You pressed 'Ctrl+C', exiting..."))
+        logging.warning(Style.BRIGHT+Fore.RED+app.translate("devicesinlan","You pressed 'Ctrl+C', exiting..."))
         sys.exit(0)
+
 #############################3
 
 if platform.system()=="Windows":
@@ -18,7 +21,7 @@ from libdevicesinlan import ArpScanMethod, Device, Mem, SetDevices, dateversion,
 from colorama import init,  Style, Fore
 init(autoreset=True)
 
-if len(sys.argv)>1:#To see if it's console or not
+if '--wizard' in sys.argv or '--interface' in sys.argv or '--add' in sys.argv or '--remove' in sys.argv or '--list' in sys.argv:
     from PyQt5.QtCore import QCoreApplication
     console=True
     app=QCoreApplication(sys.argv)
@@ -33,11 +36,9 @@ app.setOrganizationName("DevicesInLAN")
 app.setOrganizationDomain("devicesinlan.sourceforge.net")
 app.setApplicationName("DevicesInLAN")
 
-mem=Mem()
-mem.setApp(app)
-mem.change_language(mem.settings.value("frmSettings/language", "en"))
 
 signal.signal(signal.SIGINT, signal_handler)
+
 
 parser=argparse.ArgumentParser(prog='devicesinlan', description=app.translate("devicesinlan",'Show devices in a LAN making an ARP and a ICMP request to find them'),  
 epilog=app.translate("devicesinlan","If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).")+"\n"
@@ -50,8 +51,33 @@ group.add_argument('--interface', help=app.translate("devicesinlan",'Net interfa
 group.add_argument('--add', help=app.translate("devicesinlan",'Add a known device'), action='store_true')
 group.add_argument('--remove', help=app.translate("devicesinlan",'Remove a known device'), action='store_true')
 group.add_argument('--list', help=app.translate("devicesinlan",'List known devices'), action='store_true')
+parser.add_argument('--debug', help=app.translate("devicesinlan", "Debug program information"), default="WARNING")
 args=parser.parse_args()        
+
+#Por defecto se pone WARNING y mostrar´ia ERROR y CRITICAL
+logFormat = "%(asctime)s %(levelname)s %(module)s:%(lineno)d at %(funcName)s. %(message)s"
+dateFormat='%Y%m%d %I%M%S'
+
+if args.debug=="DEBUG":#Show detailed information that can help with program diagnosis and troubleshooting. CODE MARKS
+    logging.basicConfig(level=logging.DEBUG, format=logFormat, datefmt=dateFormat)
+elif args.debug=="INFO":#Everything is running as expected without any problem. TIME BENCHMARCKS
+    logging.basicConfig(level=logging.INFO, format=logFormat, datefmt=dateFormat)
+elif args.debug=="WARNING":#The program continues running, but something unexpected happened, which may lead to some problem down the road. THINGS TO DO
+    logging.basicConfig(level=logging.WARNING, format=logFormat, datefmt=dateFormat)
+elif args.debug=="ERROR":#The program fails to perform a certain function due to a bug.  SOMETHING BAD LOGIC
+    logging.basicConfig(level=logging.ERROR, format=logFormat, datefmt=dateFormat)
+elif args.debug=="CRITICAL":#The program encounters a serious error and may stop running. ERRORS
+    logging.basicConfig(level=logging.CRITICAL, format=logFormat, datefmt=dateFormat)
+else:
+    logging.basicConfig(level=logging.CRITICAL, format=logFormat, datefmt=dateFormat)
+    logging.critical("--debug parameter must be DEBUG, INFO, WARNING, ERROR or CRITICAL")
+    sys.exit(1)
     
+mem=Mem()
+mem.setApp(app)
+mem.change_language(mem.settings.value("frmSettings/language", "en"))
+mem.setInstallationUUID()
+
 if console==False:    
     app.setQuitOnLastWindowClosed(True)
     import frmMain 

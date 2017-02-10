@@ -192,7 +192,7 @@
      <normaloff>:/update.png</normaloff>:/update.png</iconset>
    </property>
    <property name="text">
-    <string>Check for updates</string>
+    <string>&amp;Check for updates</string>
    </property>
    <property name="toolTip">
     <string>Check for updates</string>
@@ -204,7 +204,7 @@
      <normaloff>:/open.png</normaloff>:/open.png</iconset>
    </property>
    <property name="text">
-    <string>Load devices list</string>
+    <string>&amp;Load devices list</string>
    </property>
    <property name="toolTip">
     <string>Load devices list</string>
@@ -216,7 +216,7 @@
      <normaloff>:/save.png</normaloff>:/save.png</iconset>
    </property>
    <property name="text">
-    <string>Save devices list</string>
+    <string>&amp;Save devices list</string>
    </property>
    <property name="toolTip">
     <string>Save devices list</string>
