@@ -136,7 +136,12 @@ class SetDeviceTypes(QObject):
         self.append(DeviceType(self.mem).init__create(8, self.tr( "Printer")))
         self.append(DeviceType(self.mem).init__create(9, self.tr( "Tablet")))
         self.append(DeviceType(self.mem).init__create(10, self.tr( "Wireless USB dongle")))
-
+        
+    def print(self):
+        """Printed number is self.id+1"""
+        for type in self.arr:
+            print (Style.BRIGHT + "{}. {}.".format(type.id+1, Style.BRIGHT+ Fore.GREEN+type.name))
+    
     def order_by_name(self):
         """Orders the Set using self.arr"""
         try:
@@ -627,6 +632,14 @@ class Device(QObject):
             else:
                 print (Style.BRIGHT+Fore.RED+ self.tr("You need to add an alias"))
 
+    def insert_type(self):
+        res=-1
+        self.mem.types.print()
+        while self.mem.types.find_by_id(res)==None:
+            res=input_int(Style.BRIGHT+self.tr("Select a type for the known device"), 1)
+            res=res-1#Due to number in prints were device.id+1
+        self.type=self.mem.types.find_by_id(res)
+            
         
     def link(self):
         self.mem.settings.setValue("DeviceAlias/{}".format(self.macwithout2points(self.mac.upper())), self.alias)

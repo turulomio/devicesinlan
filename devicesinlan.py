@@ -89,7 +89,7 @@ else:##Console
         d=Device(mem)
         d.insert_mac()
         d.insert_alias()
-        d.type=mem.types.find_by_id(0)
+        d.insert_type()
         d.link()
         print (Style.BRIGHT+ Fore.GREEN + app.translate("devicesinlan","Device inserted"))
         mem.settings.sync()

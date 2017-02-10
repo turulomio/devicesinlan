@@ -68,3 +68,9 @@ devicesinlan 1.0.1 20170209
 ===========================
 - Improved statistics system
 - Fix little bugs
+
+devicesinlan 1.0.2 XXXXXXXX
+===========================
+- Added logging system
+- Statistics work now in console mode
+- Add a Device can input the type now
