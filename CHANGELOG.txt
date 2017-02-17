@@ -74,3 +74,4 @@ devicesinlan 1.0.2 XXXXXXXX
 - Added logging system
 - Statistics work now in console mode
 - Add a Device can input the type now
+- Add to console mode --load --save --reset

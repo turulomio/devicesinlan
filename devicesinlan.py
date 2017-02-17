@@ -2,6 +2,7 @@
 import argparse
 import datetime
 import platform
+import os
 import sys
 import signal
 import logging
@@ -17,11 +18,11 @@ if platform.system()=="Windows":
     sys.path.append("images")
 elif platform.system()=="Linux":
     sys.path.append("/usr/lib/devicesinlan")
-from libdevicesinlan import ArpScanMethod, Device, Mem, SetDevices, dateversion,  version,  input_int
+from libdevicesinlan import ArpScanMethod, Device, Mem, SetDevices, dateversion,  version,  input_int,  input_YN
 from colorama import init,  Style, Fore
 init(autoreset=True)
 
-if '--wizard' in sys.argv or '--interface' in sys.argv or '--add' in sys.argv or '--remove' in sys.argv or '--list' in sys.argv:
+if '--wizard' in sys.argv or '--interface' in sys.argv or '--add' in sys.argv or '--remove' in sys.argv or '--list' in sys.argv or '--load' in sys.argv or '--save' in sys.argv or '--reset' in sys.argv:
     from PyQt5.QtCore import QCoreApplication
     console=True
     app=QCoreApplication(sys.argv)
@@ -51,6 +52,9 @@ group.add_argument('--interface', help=app.translate("devicesinlan",'Net interfa
 group.add_argument('--add', help=app.translate("devicesinlan",'Add a known device'), action='store_true')
 group.add_argument('--remove', help=app.translate("devicesinlan",'Remove a known device'), action='store_true')
 group.add_argument('--list', help=app.translate("devicesinlan",'List known devices'), action='store_true')
+group.add_argument('--load', help=app.translate("devicesinlan",'Load known devices list'), action='store')
+group.add_argument('--save', help=app.translate("devicesinlan",'Save known devices list'), action='store')
+group.add_argument('--reset', help=app.translate("devicesinlan",'Reset known devices list'), action='store_true', default=False)
 parser.add_argument('--debug', help=app.translate("devicesinlan", "Debug program information"), default="WARNING")
 args=parser.parse_args()        
 
@@ -85,6 +89,40 @@ if console==False:
     frmMain.show()
     sys.exit(app.exec_())
 else:##Console
+    if args.load:       
+        if os.path.exists(args.load):
+            current=SetDevices(mem).init__from_settings()
+            new=SetDevices(mem).init__from_xml(args.load)
+            for n in new.arr:
+                c=current.find_by_mac(n.mac)
+                if c==None:#Not found its mac so n is new
+                    if input_YN(app.translate("devicesinlan", "Do you want to add this {} with MAC {} and set its name to {}?".format(n.type.name.lower(), n.mac, n.alias)), default=app.translate("devicesinlan", "Y"))==True:
+                        n.link()
+                else:
+                    if n!=c:
+                        if input_YN(app.translate("devicesinlan", "We already have a device with this MAC: {}. Do you want to change its alias ({}) and type ({}) to a {} named {}?".format(c.mac, c.alias, c.type.name.lower(), n.type.name.lower(), n.alias)), default=app.translate("devicesinlan", "Y"))==True:
+                            n.link()
+        else:
+            print (Style.BRIGHT+Fore.RED+app.translate("devicesinlan", "File doesn't exist"))
+        sys.exit(0)
+
+    if args.reset:
+        result=input_YN(app.translate("devicesinlan", "Are you sure you want to reset known devices database"),  default=app.translate("devicesinlan","N"))
+        if result==True:
+            set=SetDevices(mem)
+            set.init__from_settings()
+            set.reset()
+            print (Style.BRIGHT+Fore.RED+app.translate("devicesinlan", "Database was reset"))
+        sys.exit(0)
+    
+    if args.save:
+        set=SetDevices(mem)
+        set.init__from_settings()
+        set.saveXml(args.save)
+        sys.exit(0)
+        
+
+
     if args.add==True:
         d=Device(mem)
         d.insert_mac()

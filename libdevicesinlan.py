@@ -278,7 +278,7 @@ class SetDevices(QObject):
         """
             Load all devices in settings
         """
-        self.isDatabase=True
+        self.isDatabase=True#Used to show icons
         self.mem.settings.beginGroup("DeviceAlias")#Las key son sin DevicesAlias ahora
         for key in self.mem.settings.childKeys():
             d=Device(self.mem)
@@ -286,6 +286,8 @@ class SetDevices(QObject):
             d.alias=self.mem.settings.value("{}".format(d.macwithout2points(d.mac.upper())), None)
             self.arr.append(d)
         self.mem.settings.endGroup()
+        
+        logging.debug("Loaded {} devices from settings".format(self.length()))
         
         #Carga los types antes no se pod´ia
         for d in self.arr:
@@ -415,9 +417,14 @@ class SetDevices(QObject):
     def append(self, o):
         self.arr.append(o)
         
-    def clear(self):
+    def reset(self):
+        todelete=[]#No puedo borrar de un for iterando
         for o in self.arr:
-            self.arr.remove(o)
+            todelete.append(o)
+            
+        for o in todelete:
+            logging.info("Reseting {}".format(o.mac))
+            self.unlink(o, remove_from_arr=True)
         
     def find_by_mac(self, mac):
         for d in self.arr:
@@ -430,9 +437,13 @@ class SetDevices(QObject):
             self.append(o)
         o.link()
         
-    def unlink(self, o):
+    def unlink(self, o,  remove_from_arr=False):
+        """
+            Be carefoul removing in the seama for or iterations
+            ., 
+        """
         o.unlink()
-        if self.isDatabase==True:#Si es listado de database se debe borrar
+        if remove_from_arr==True:
             self.arr.remove(o)
         
     def max_len_alias(self):
@@ -542,7 +553,7 @@ class SetDevices(QObject):
             table.setItem(rownumber, 2, qleft(h.alias))
             table.setItem(rownumber, 3, qleft(h.oui))
 
-    def xml(self):
+    def saveXml(self, filename):
         """
             Returns a string with a xml of the array. Used to export data
         """
@@ -552,7 +563,8 @@ class SetDevices(QObject):
             s=s+'\t\t<device alias="{}" mac="{}" type="{}"/>\n'.format(d.alias, d.mac, d.type.id)
         s=s+"\t</devices>\n"
         s=s+"</devicesinlan>\n"
-        return s
+        with codecs.open(filename, "w", "utf-8") as f:
+            f.write(s)
 
 class Device(QObject):
     def __init__(self, mem):
@@ -571,6 +583,9 @@ class Device(QObject):
         if self.mac.upper()==other.mac.upper() and self.alias==other.alias and self.type.id==other.type.id:
             return True
         return False
+        
+    def __repr__(self):
+        return ("Device {}".format(self.mac))
         
     def validate_mac(self, s):
         if len(s)!=17:
@@ -650,9 +665,10 @@ class Device(QObject):
         """If device is in a set You must use set.unlink(o)"""
         self.mem.settings.remove("DeviceAlias/{}".format(self.macwithout2points(self.mac.upper())))
         self.mem.settings.remove("DeviceType/{}".format(self.macwithout2points(self.mac.upper())))
+        self.mem.settings.sync()
+        logging.debug("Device {} unlinked".format(self.mac))
         self.type=self.mem.types.find_by_id(0)
         self.alias=None
-        self.mem.settings.sync()
         
     def macwith2points(self, macwithout):
         macwith=""
@@ -810,6 +826,23 @@ def input_int(text, default=None):
         except:
             pass
             
+
+def input_YN(pregunta, default="Y"):
+    ansyes=QCoreApplication.translate("devicesinlan","Y")
+    ansno=QCoreApplication.translate("devicesinlan","N")
+    
+    bracket="{}|{}".format(ansyes.upper(), ansno.lower()) if default.upper()==ansyes else "{}|{}".format(ansyes.lower(), ansno.upper())
+    while True:
+        print(Style.BRIGHT+ Fore.WHITE+"{} [{}]: ".format(pregunta,  Fore.GREEN+bracket+Fore.WHITE), end="")
+        user_input = input().strip().upper()
+        if not user_input or user_input=="":
+            user_input=default
+        if user_input == ansyes:
+                return True
+        elif user_input == ansno:
+                return False
+        else:
+                print (QCoreApplication.translate("devicesinlan","Please enter '{}' or '{}'".format(ansyes, ansno)))
 
 def input_string(text):
     return input(text)

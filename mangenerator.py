@@ -78,7 +78,7 @@ if __name__ == "__main__":
     
     
     man.header(QCoreApplication.translate("mangenerator","CONSOLE MODE DESCRIPTION"), 1)
-    man.paragraph(QCoreApplication.translate("mangenerator","If you launch deviceslan with [ --wizard | --interface | --add | --remove | --list ], it will be executed in console mode."), 1)
+    man.paragraph(QCoreApplication.translate("mangenerator","If you launch deviceslan with [ --wizard | --interface | --add | --remove | --list | --load | --save | --reset ], it will be executed in console mode."), 1)
     man.paragraph("--wizard", 2, True)
     man.paragraph(QCoreApplication.translate("mangenerator","It list all interfaces in the system and lets you to select the one you wish and the number of concurrent request. After that, it scans the net and prints a list of the detected devices."), 3)
     man.paragraph("--interface", 2, True)
@@ -90,5 +90,8 @@ if __name__ == "__main__":
     man.paragraph(QCoreApplication.translate("mangenerator","Allows to remove a known device from console."), 3)
     man.paragraph("--list", 2, True)
     man.paragraph(QCoreApplication.translate("mangenerator","Shows all knows devices in database from console."), 3)
+    man.paragraph("--load", 2, True)
+    man.paragraph("--save", 2, True)
+    man.paragraph("--reset", 2, True)
     man.save()
     man.saveHTML()

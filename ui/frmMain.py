@@ -1,6 +1,5 @@
 import datetime
 import sys
-import codecs
 import logging
 from urllib.request import urlopen
 from PyQt5.QtCore import pyqtSlot, Qt, QPoint, QEvent
@@ -145,9 +144,7 @@ class frmMain(QMainWindow, Ui_frmMain):#
         devices=SetDevices(self.mem).init__from_settings()
         c=str(datetime.datetime.now()).replace("-","").replace(":","").replace(" ","_")[:-7]
         filename = QFileDialog.getSaveFileName(self, self.tr("Save File"), "devicesinlan_{}.xml".format(c), self.tr("eXtensible Markup Language (*.xml)"))[0]
-        if filename:
-            with codecs.open(filename, "w", "utf-8") as f:
-                f.write(devices.xml())
+        devices.saveXml(filename)
 
         
     def checkUpdates(self, showdialogwhennoupdates=False):
@@ -209,8 +206,7 @@ class frmMain(QMainWindow, Ui_frmMain):#
         confirm=m.question(self, self.tr("Erase database confirmation"), self.tr("This action will erase known devices database. Do you want to continue?."), QMessageBox.Yes, QMessageBox.No)
         if confirm==QMessageBox.Yes:
             devices=SetDevices(self.mem).init__from_settings()
-            for d in devices.arr:
-                d.unlink()
+            devices.reset()
             self.on_actionShowDatabase_triggered()
         
     @pyqtSlot()      
