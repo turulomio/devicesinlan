@@ -68,6 +68,7 @@ man:
 	python3 mangenerator.py --language ro
 	python3 mangenerator.py --language ru
 	python3 mangenerator.py --language es
+	install -m 644 -o root i18n/*.qm $(PREFIXSHARE)
 	install -m 644 -o root doc/devicesinlan.en.1 $(PREFIXMAN)/man1/devicesinlan.1
 	install -m 644 -o root doc/devicesinlan.es.1 $(PREFIXMAN)/es/man1/devicesinlan.1
 	install -m 644 -o root doc/devicesinlan.fr.1 $(PREFIXMAN)/fr/man1/devicesinlan.1

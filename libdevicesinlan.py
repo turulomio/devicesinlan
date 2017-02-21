@@ -45,8 +45,8 @@ class Mem(QObject):
         try:
             web=b2s(urlopen(url).read())
         except:
-            web=None
-        logging.info(web)       
+            web=self.tr("Error collecting statistics")
+        logging.debug(web)
 
     def change_language(self, language):  
         """language es un string"""  

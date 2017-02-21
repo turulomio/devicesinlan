@@ -8,7 +8,7 @@ import signal
 import logging
 
 def signal_handler(signal, frame):
-        logging.warning(Style.BRIGHT+Fore.RED+app.translate("devicesinlan","You pressed 'Ctrl+C', exiting..."))
+        print(Style.BRIGHT+Fore.RED+app.translate("devicesinlan","You pressed 'Ctrl+C', exiting..."))
         sys.exit(0)
 
 #############################3
@@ -37,14 +37,12 @@ app.setOrganizationName("DevicesInLAN")
 app.setOrganizationDomain("devicesinlan.sourceforge.net")
 app.setApplicationName("DevicesInLAN")
 
-
 signal.signal(signal.SIGINT, signal_handler)
 
-
 parser=argparse.ArgumentParser(prog='devicesinlan', description=app.translate("devicesinlan",'Show devices in a LAN making an ARP and a ICMP request to find them'),  
-epilog=app.translate("devicesinlan","If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).")+"\n"
-      +app.translate("devicesinlan","Developed by Mariano Muñoz 2015-{}".format(dateversion.year))
-, formatter_class=argparse.RawTextHelpFormatter)
+    epilog=app.translate("devicesinlan","If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).")+"\n" +app.translate("devicesinlan","Developed by Mariano Muñoz 2015-{}".format(dateversion.year)), 
+    formatter_class=argparse.RawTextHelpFormatter
+    )
 parser.add_argument('--version', action='version', version="{} ({})".format(version, dateversion))
 group = parser.add_mutually_exclusive_group()
 group.add_argument('--wizard', help=app.translate("devicesinlan",'Uses a wizard to select options'), action='store_true',  default=False)
@@ -76,20 +74,20 @@ else:
     logging.basicConfig(level=logging.CRITICAL, format=logFormat, datefmt=dateFormat)
     logging.critical("--debug parameter must be DEBUG, INFO, WARNING, ERROR or CRITICAL")
     sys.exit(1)
-    
+
 mem=Mem()
 mem.setApp(app)
 mem.change_language(mem.settings.value("frmSettings/language", "en"))
 mem.setInstallationUUID()
 
-if console==False:    
+if console==False:
     app.setQuitOnLastWindowClosed(True)
     import frmMain 
     frmMain = frmMain.frmMain(mem) 
     frmMain.show()
     sys.exit(app.exec_())
 else:##Console
-    if args.load:       
+    if args.load:
         if os.path.exists(args.load):
             current=SetDevices(mem).init__from_settings()
             new=SetDevices(mem).init__from_xml(args.load)
@@ -107,21 +105,19 @@ else:##Console
         sys.exit(0)
 
     if args.reset:
-        result=input_YN(app.translate("devicesinlan", "Are you sure you want to reset known devices database"),  default=app.translate("devicesinlan","N"))
+        result=input_YN(app.translate("devicesinlan", "Are you sure you want to reset known devices database?"),  default=app.translate("devicesinlan","N"))
         if result==True:
             set=SetDevices(mem)
             set.init__from_settings()
             set.reset()
             print (Style.BRIGHT+Fore.RED+app.translate("devicesinlan", "Database was reset"))
         sys.exit(0)
-    
+
     if args.save:
         set=SetDevices(mem)
         set.init__from_settings()
         set.saveXml(args.save)
         sys.exit(0)
-        
-
 
     if args.add==True:
         d=Device(mem)
@@ -132,7 +128,7 @@ else:##Console
         print (Style.BRIGHT+ Fore.GREEN + app.translate("devicesinlan","Device inserted"))
         mem.settings.sync()
         sys.exit(0)
-       
+  
     if args.remove==True:
         d=Device(mem)
         d.insert_mac()
@@ -141,7 +137,7 @@ else:##Console
 
         mem.settings.sync()
         sys.exit(0)
-        
+
     if args.list==True:
         set=SetDevices(mem)
         set.init__from_settings()
@@ -153,7 +149,7 @@ else:##Console
             print(Style.BRIGHT+Fore.RED+app.translate("devicesinlan", "This interface doesn't exist. Please use --wizard parameter to help you."))
             sys.exit(1)
         mem.interfaces.selected=mem.interfaces.find_by_id(args.interface)
-        
+
     if args.wizard==True:
         if mem.interfaces.length()==0:
             print(Style.BRIGHT+ Fore.RED+app.translate("devicesinlan", "There are not interfaces to scan."))
@@ -165,8 +161,7 @@ else:##Console
                 break
         mem.interfaces.selected=mem.interfaces.find_by_id(mem.interfaces.arr[id-1].id)
         mem.settings.setValue("frmSettings/concurrence", input_int(app.translate("devicesinlan", "Input an integer with the request concurrence"), mem.settings.value("frmSettings/concurrence", 200)))
-        
-    
+
     inicio=datetime.datetime.now()
     set=SetDevices(mem)
     set.setMethod(ArpScanMethod.PingArp)

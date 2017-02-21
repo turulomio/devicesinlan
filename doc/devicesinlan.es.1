@@ -1,11 +1,11 @@
-.TH DEVICESINLAN 1 2017\-02\-17
+.TH DEVICESINLAN 1 2017\-02\-21
 .SH NAME
 
 .B devicesinlan:
 Escan\('ea todos los dispositivos en tu red. Luego permite establecer un alias a tus dispositivos conocidos para que se pueda detectar dispositivos estra\(~nos en tu red.
 .SH SYNOPSIS
 
-devicesinlan [\-h] [\-\-version] [\-\-debug DEBUG] [ \-\-wizard | \-\-interface | \-\-add | \-\-remove | \-\-list ]
+devicesinlan [\-h] [\-\-version] [\-\-debug DEBUG] [ \-\-wizard | \-\-interface | \-\-add | \-\-remove | \-\-list | \-\-load | \-\-save | \-\-reset ]
 .SH DESCRIPCI\('ON DEL MODO INTERFAZ GR\('AFICO
 
 .PP
@@ -22,15 +22,45 @@ In the app menu you have the followings features:
 .RE
 .PP
 .RS
-.B Devices > Load devices list
+.RS
+Shows all known devices in a new tab.
+.RE
 .RE
 .PP
 .RS
-.B Devices > Save devices list
+.RS
+Right click allows you to edit known devices database.
+.RE
+.RE
+.PP
+.RS
+.B Dispositivos \-> Carga una lista de dispositivos
+.RE
+.PP
+.RS
+.RS
+Loads a list of known devices in xml format.
+.RE
+.RE
+.PP
+.RS
+.B Dispositivos \-> Guarda la lista de dispositivos
+.RE
+.PP
+.RS
+.RS
+Saves the known devices list to a xml file.
+.RE
 .RE
 .PP
 .RS
 .B Dispositivos > Borrar base de datos
+.RE
+.PP
+.RS
+.RS
+Removes all known devices.
+.RE
 .RE
 .PP
 .RS
@@ -55,7 +85,7 @@ En este dialogo, puedes seleccionar tu idioma favorita y puedes configurar el n\
 .PP
 .RS
 .RS
-Shows this help information.
+Muestra esta ayuda.
 .RE
 .RE
 .PP
@@ -65,12 +95,18 @@ Shows this help information.
 .PP
 .RS
 .RS
-Shows information about DevicesInLAN license and authors.
+Muestra informaci\('on sobre la licencia y los autores de DevicesInLan.
 .RE
 .RE
 .PP
 .RS
-.B Help > Check for updates
+.B Ayuda \-> Buscar actualizaciones
+.RE
+.PP
+.RS
+.RS
+Checks for updates in DevicesInLan repository.
+.RE
 .RE
 .PP
 .RS
@@ -79,7 +115,7 @@ Shows information about DevicesInLAN license and authors.
 .PP
 .RS
 .RS
-Exits from program.
+Sale del programa.
 .RE
 .RE
 .SH DESCRIPCI\('ON DEL MODO CONSOLA
@@ -93,7 +129,7 @@ If you launch deviceslan with [ \-\-wizard | \-\-interface | \-\-add | \-\-remov
 .PP
 .RS
 .RS
-It list all interfaces in the system and lets you to select the one you wish and the number of concurrent request. After that, it scans the net and prints a list of the detected devices.
+Lista todos los interfaces de red en el sistema y te permite seleccionar uno y establecer el n\('umero de peticiones concurrente. Despu\('es de eso, escan\('ea la red y visualiza una lista de los dispositivos detectados.
 .RE
 .RE
 .PP
@@ -119,7 +155,7 @@ If a device is not known, it will be showed in red. Devices in green are trusted
 .PP
 .RS
 .RS
-Allows to add a known device from console.
+Permite a\(~nadir un dispositivo conocido desde consola.
 .RE
 .RE
 .PP
@@ -129,7 +165,7 @@ Allows to add a known device from console.
 .PP
 .RS
 .RS
-Allows to remove a known device from console.
+Permite borrar un dispositivo conocido desde consola.
 .RE
 .RE
 .PP
@@ -139,7 +175,7 @@ Allows to remove a known device from console.
 .PP
 .RS
 .RS
-Shows all knows devices in database from console.
+Shows all known devices in database from console.
 .RE
 .RE
 .PP
@@ -148,9 +184,27 @@ Shows all knows devices in database from console.
 .RE
 .PP
 .RS
+.RS
+Loads a list of known devices in xml format.
+.RE
+.RE
+.PP
+.RS
 .B \-\-save
 .RE
 .PP
 .RS
+.RS
+Saves the known devices list to a xml file.
+.RE
+.RE
+.PP
+.RS
 .B \-\-reset
+.RE
+.PP
+.RS
+.RS
+Removes all known devices.
+.RE
 .RE
