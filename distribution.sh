@@ -37,6 +37,7 @@ cp      images/*.png \
         $BUILDDIR/images
 
 cp      i18n/*.ts \
+        i18n/*.qm \
         $BUILDDIR/i18n
 
 cp      ui/*.ui \

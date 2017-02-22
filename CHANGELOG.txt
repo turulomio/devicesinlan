@@ -69,7 +69,7 @@ devicesinlan 1.0.1 20170209
 - Improved statistics system
 - Fix little bugs
 
-devicesinlan 1.0.2 XXXXXXXX
+devicesinlan 1.0.2 20170222
 ===========================
 - Added logging system
 - Statistics work now in console mode
