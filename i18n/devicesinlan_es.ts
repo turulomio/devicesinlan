@@ -51,7 +51,7 @@
     <message>
         <location filename="../libdevicesinlan.py" line="61"/>
         <source>Using default (en).</source>
-        <translation>Usando el idioma por defecto (en)</translation>
+        <translation>Usando el idioma por defecto (en).</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="48"/>
@@ -208,7 +208,7 @@
         <translation>Mac borrada</translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="172"/>
+        <location filename="../devicesinlan.py" line="173"/>
         <source>It took {} with DevicesInLAN scanner.</source>
         <translation>Duró {} con el escáner de DevicesInLAN.</translation>
     </message>
@@ -243,7 +243,7 @@
         <translation>Introduce un número de peticiones concurrentes</translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="172"/>
+        <location filename="../devicesinlan.py" line="173"/>
         <source>seconds</source>
         <translation>segundos</translation>
     </message>
@@ -656,22 +656,22 @@
     <message>
         <location filename="../mangenerator.py" line="90"/>
         <source>Scans the net of the interface parameter and prints a list of the detected devices.</source>
-        <translation type="unfinished"></translation>
+        <translation>Escanéa la red del interfaz pasado como parámetro y lista los dispositivos detectados.</translation>
     </message>
     <message>
         <location filename="../mangenerator.py" line="91"/>
         <source>If a device is not known, it will be showed in red. Devices in green are trusted devices.</source>
-        <translation type="unfinished"></translation>
+        <translation>Si un dispositivo es desconocido, será mostrado en rojo. Los dispositivos en verde son dispositivos confiables.</translation>
     </message>
     <message>
         <location filename="../mangenerator.py" line="61"/>
         <source>If you launch devicesinlan without parameters and you are in a graphic system (Linux or Windows) it launches the program with a Qt Interface.</source>
-        <translation type="unfinished"></translation>
+        <translation>Si ejecutas DevicesInLan sin parámetros y tu estás en un sistema gráfico (Linux o Windows), se ejecutará con un interfaz Qt.</translation>
     </message>
     <message>
         <location filename="../mangenerator.py" line="62"/>
         <source>In the app menu you have the followings features:</source>
-        <translation type="unfinished"></translation>
+        <translation>En el menú del aplicación tienes las siguientes funcionalidades:</translation>
     </message>
     <message>
         <location filename="../mangenerator.py" line="63"/>
@@ -736,52 +736,52 @@
     <message>
         <location filename="../mangenerator.py" line="86"/>
         <source>If you launch deviceslan with [ --wizard | --interface | --add | --remove | --list | --load | --save | --reset ], it will be executed in console mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Si ejecutar devicesinlan con [ --wizard | --interface | --add | --remove | --list | --load | --save | --reset ], será ejecutado en modo consola.</translation>
     </message>
     <message>
         <location filename="../mangenerator.py" line="99"/>
         <source>Loads a list of known devices in xml format.</source>
-        <translation type="unfinished"></translation>
+        <translation>Carga una lista de dispositivos conocidos en formato XML.</translation>
     </message>
     <message>
         <location filename="../mangenerator.py" line="101"/>
         <source>Saves the known devices list to a xml file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Guarda la lista de dispositivos conocidos a un fichero XML.</translation>
     </message>
     <message>
         <location filename="../mangenerator.py" line="106"/>
         <source>Removes all known devices.</source>
-        <translation type="unfinished"></translation>
+        <translation>Borra todos los dispositivos conocidos.</translation>
     </message>
     <message>
         <location filename="../mangenerator.py" line="97"/>
         <source>Shows all known devices in database from console.</source>
-        <translation type="unfinished"></translation>
+        <translation>Muestra todos los dispositivos conocidos en la base de datos, desde consola.</translation>
     </message>
     <message>
         <location filename="../mangenerator.py" line="65"/>
         <source>Shows all known devices in a new tab.</source>
-        <translation type="unfinished"></translation>
+        <translation>Muestra todos los dispositivos conocidos en una nueva pestaña.</translation>
     </message>
     <message>
         <location filename="../mangenerator.py" line="66"/>
         <source>Right click allows you to edit known devices database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Al hacer un click derecho, podrás editar la base de datos de dispositivos conocidos.</translation>
     </message>
     <message>
         <location filename="../mangenerator.py" line="81"/>
         <source>Checks for updates in DevicesInLan repository.</source>
-        <translation type="unfinished"></translation>
+        <translation>Busca actualizaciónes en el repositorio de DevicesInLan.</translation>
     </message>
     <message>
         <location filename="../mangenerator.py" line="103"/>
         <source>Gives debugging information when running DevicesInLAN. It&apos;s deactivated by default</source>
-        <translation type="unfinished"></translation>
+        <translation>Muestra información de depuración cuando se ejecuta DevicesInLan. Está desactivada por defecto</translation>
     </message>
     <message>
         <location filename="../mangenerator.py" line="104"/>
         <source>The parameter can take this options: CRITICAL, ERROR, WARNING, INFO, DEBUG.</source>
-        <translation type="unfinished"></translation>
+        <translation>El parámetro puede tomar los siguientes valores: CRITICAL, ERROR, WARNING, INFO, DEBUG.</translation>
     </message>
 </context>
 <context>

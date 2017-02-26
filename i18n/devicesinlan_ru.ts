@@ -208,7 +208,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="172"/>
+        <location filename="../devicesinlan.py" line="173"/>
         <source>It took {} with DevicesInLAN scanner.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -243,7 +243,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="172"/>
+        <location filename="../devicesinlan.py" line="173"/>
         <source>seconds</source>
         <translation type="unfinished"></translation>
     </message>

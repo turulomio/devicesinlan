@@ -76,7 +76,7 @@ devicesinlan 1.0.2 20170222
 - Add a Device can input the type now
 - Add to console mode --load --save --reset
 
-devicesinlan 1.1.0 XXXXXXXX
+devicesinlan 1.1.0 20170226
 ===========================
 - Logging is deactivated by default
 - Statistics system now sends platform
