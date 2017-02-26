@@ -41,12 +41,12 @@ class Mem(QObject):
     def setInstallationUUID(self):
         if self.settings.value("frmMain/uuid", "None")=="None":
             self.settings.setValue("frmMain/uuid", str(uuid4()))
-        url='http://devicesinlan.sourceforge.net/php/devicesinlan_installations.php?uuid={}&version={}'.format(self.settings.value("frmMain/uuid"), version)
+        url='http://devicesinlan.sourceforge.net/php/devicesinlan_installations.php?uuid={}&version={}&platform={}'.format(self.settings.value("frmMain/uuid"), version, platform.system())
         try:
             web=b2s(urlopen(url).read())
         except:
             web=self.tr("Error collecting statistics")
-        logging.debug(web)
+        logging.debug("{}, answering {}".format(web, url))
 
     def change_language(self, language):  
         """language es un string"""  
