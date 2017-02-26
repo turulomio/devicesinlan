@@ -198,17 +198,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="128"/>
+        <location filename="../devicesinlan.py" line="131"/>
         <source>Device inserted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="136"/>
+        <location filename="../devicesinlan.py" line="139"/>
         <source>Mac removed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="169"/>
+        <location filename="../devicesinlan.py" line="172"/>
         <source>It took {} with DevicesInLAN scanner.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -223,27 +223,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="149"/>
+        <location filename="../devicesinlan.py" line="152"/>
         <source>This interface doesn&apos;t exist. Please use --wizard parameter to help you.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="155"/>
+        <location filename="../devicesinlan.py" line="158"/>
         <source>There are not interfaces to scan.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="159"/>
+        <location filename="../devicesinlan.py" line="162"/>
         <source>Select an interface number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="163"/>
+        <location filename="../devicesinlan.py" line="166"/>
         <source>Input an integer with the request concurrence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="169"/>
+        <location filename="../devicesinlan.py" line="172"/>
         <source>seconds</source>
         <translation type="unfinished"></translation>
     </message>
@@ -258,12 +258,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="101"/>
+        <location filename="../devicesinlan.py" line="104"/>
         <source>Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="108"/>
+        <location filename="../devicesinlan.py" line="111"/>
         <source>N</source>
         <translation type="unfinished"></translation>
     </message>
@@ -283,17 +283,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="104"/>
+        <location filename="../devicesinlan.py" line="107"/>
         <source>File doesn&apos;t exist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="113"/>
+        <location filename="../devicesinlan.py" line="116"/>
         <source>Database was reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="108"/>
+        <location filename="../devicesinlan.py" line="111"/>
         <source>Are you sure you want to reset known devices database?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -749,7 +749,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="103"/>
+        <location filename="../mangenerator.py" line="106"/>
         <source>Removes all known devices.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -771,6 +771,16 @@
     <message>
         <location filename="../mangenerator.py" line="81"/>
         <source>Checks for updates in DevicesInLan repository.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mangenerator.py" line="103"/>
+        <source>Gives debugging information when running DevicesInLAN. It&apos;s deactivated by default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mangenerator.py" line="104"/>
+        <source>The parameter can take this options: CRITICAL, ERROR, WARNING, INFO, DEBUG.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

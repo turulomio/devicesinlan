@@ -53,7 +53,7 @@ group.add_argument('--list', help=app.translate("devicesinlan",'List known devic
 group.add_argument('--load', help=app.translate("devicesinlan",'Load known devices list'), action='store')
 group.add_argument('--save', help=app.translate("devicesinlan",'Save known devices list'), action='store')
 group.add_argument('--reset', help=app.translate("devicesinlan",'Reset known devices list'), action='store_true', default=False)
-parser.add_argument('--debug', help=app.translate("devicesinlan", "Debug program information"), default="WARNING")
+parser.add_argument('--debug', help=app.translate("devicesinlan", "Debug program information"))
 args=parser.parse_args()        
 
 #Por defecto se pone WARNING y mostrar´ia ERROR y CRITICAL
@@ -71,10 +71,13 @@ elif args.debug=="ERROR":#The program fails to perform a certain function due to
 elif args.debug=="CRITICAL":#The program encounters a serious error and may stop running. ERRORS
     logging.basicConfig(level=logging.CRITICAL, format=logFormat, datefmt=dateFormat)
 else:
-    logging.basicConfig(level=logging.CRITICAL, format=logFormat, datefmt=dateFormat)
-    logging.critical("--debug parameter must be DEBUG, INFO, WARNING, ERROR or CRITICAL")
-    sys.exit(1)
-
+    if args.debug:#Bad debug parameter
+        logging.basicConfig(level=logging.CRITICAL, format=logFormat, datefmt=dateFormat)
+        logging.critical("--debug parameter must be DEBUG, INFO, WARNING, ERROR or CRITICAL")
+        sys.exit(1)
+    else:     #No debug parameter
+        logging.propagate=False
+        
 mem=Mem()
 mem.setApp(app)
 mem.change_language(mem.settings.value("frmSettings/language", "en"))
@@ -161,6 +164,7 @@ else:##Console
                 break
         mem.interfaces.selected=mem.interfaces.find_by_id(mem.interfaces.arr[id-1].id)
         mem.settings.setValue("frmSettings/concurrence", input_int(app.translate("devicesinlan", "Input an integer with the request concurrence"), mem.settings.value("frmSettings/concurrence", 200)))
+        mem.settings.sync()
 
     inicio=datetime.datetime.now()
     set=SetDevices(mem)

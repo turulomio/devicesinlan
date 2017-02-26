@@ -75,3 +75,7 @@ devicesinlan 1.0.2 20170222
 - Statistics work now in console mode
 - Add a Device can input the type now
 - Add to console mode --load --save --reset
+
+devicesinlan 1.1.0 XXXXXXXX
+===========================
+- Logging is deactivated by default
