@@ -31,7 +31,7 @@ else:
     from PyQt5.QtWidgets import QApplication
     console=False
     app=QApplication(sys.argv)
-    tr=QApplication(sys.argv).translate
+    tr=QApplication.translate
 
 app.setOrganizationName("DevicesInLAN")
 app.setOrganizationDomain("devicesinlan.sourceforge.net")
@@ -77,7 +77,7 @@ else:
         sys.exit(1)
     else:     #No debug parameter
         logging.propagate=False
-        
+
 mem=Mem()
 mem.setApp(app)
 mem.change_language(mem.settings.value("frmSettings/language", "en"))
@@ -131,7 +131,7 @@ else:##Console
         print (Style.BRIGHT+ Fore.GREEN + app.translate("devicesinlan","Device inserted"))
         mem.settings.sync()
         sys.exit(0)
-  
+
     if args.remove==True:
         d=Device(mem)
         d.insert_mac()
@@ -171,5 +171,3 @@ else:##Console
     set.setMethod(ArpScanMethod.PingArp)
     set.print()
     print (Style.BRIGHT+app.translate("devicesinlan","It took {} with DevicesInLAN scanner.").format (Fore.GREEN+str(datetime.datetime.now()-inicio)+ " "+ app.translate("devicesinlan", "seconds")+Fore.WHITE))
-
-

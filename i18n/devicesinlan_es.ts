@@ -619,47 +619,47 @@
         <translation>DESCRIPCIÓN DEL MODO INTERFAZ GRÁFICO</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="73"/>
+        <location filename="../mangenerator.py" line="74"/>
         <source>This option erases all known devices in database.</source>
         <translation>Esta opción borra todos los dispositivos conocidos de la base de datos.</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="75"/>
+        <location filename="../mangenerator.py" line="76"/>
         <source>In this dialog you can select your prefered language and you can configure the number of concurrence request.</source>
         <translation>En este dialogo, puedes seleccionar tu idioma favorita y puedes configurar el número de peticiones concurrentes.</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="76"/>
+        <location filename="../mangenerator.py" line="77"/>
         <source>Help &gt; Help</source>
         <translation>Ayuda &gt; Ayuda</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="78"/>
+        <location filename="../mangenerator.py" line="79"/>
         <source>Help &gt; About</source>
         <translation>Ayuda &gt; Acerca de</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="82"/>
+        <location filename="../mangenerator.py" line="83"/>
         <source>Help &gt; Exit</source>
         <translation>Ayuda &gt; Salir</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="85"/>
+        <location filename="../mangenerator.py" line="86"/>
         <source>CONSOLE MODE DESCRIPTION</source>
         <translation>DESCRIPCIÓN DEL MODO CONSOLA</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="88"/>
+        <location filename="../mangenerator.py" line="89"/>
         <source>It list all interfaces in the system and lets you to select the one you wish and the number of concurrent request. After that, it scans the net and prints a list of the detected devices.</source>
         <translation>Lista todos los interfaces de red en el sistema y te permite seleccionar uno y establecer el número de peticiones concurrente. Después de eso, escanéa la red y visualiza una lista de los dispositivos detectados.</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="90"/>
+        <location filename="../mangenerator.py" line="91"/>
         <source>Scans the net of the interface parameter and prints a list of the detected devices.</source>
         <translation>Escanéa la red del interfaz pasado como parámetro y lista los dispositivos detectados.</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="91"/>
+        <location filename="../mangenerator.py" line="92"/>
         <source>If a device is not known, it will be showed in red. Devices in green are trusted devices.</source>
         <translation>Si un dispositivo es desconocido, será mostrado en rojo. Los dispositivos en verde son dispositivos confiables.</translation>
     </message>
@@ -679,109 +679,114 @@
         <translation>Dispositivos -&gt; Nuevo escaneado</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="64"/>
+        <location filename="../mangenerator.py" line="65"/>
         <source>Devices &gt; Show devices database</source>
         <translation>Dispositivos &gt; Mostrar base de datos</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="71"/>
+        <location filename="../mangenerator.py" line="72"/>
         <source>Devices &gt; Reset database</source>
         <translation>Dispositivos &gt; Borrar base de datos</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="74"/>
+        <location filename="../mangenerator.py" line="75"/>
         <source>Configuration &gt; Settings</source>
         <translation>Configuración &gt; Preferencias</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="67"/>
+        <location filename="../mangenerator.py" line="68"/>
         <source>Devices &gt; Load devices list</source>
         <translation>Dispositivos -&gt; Carga una lista de dispositivos</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="69"/>
+        <location filename="../mangenerator.py" line="70"/>
         <source>Devices &gt; Save devices list</source>
         <translation>Dispositivos -&gt; Guarda la lista de dispositivos</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="77"/>
+        <location filename="../mangenerator.py" line="78"/>
         <source>Shows this help information.</source>
         <translation>Muestra esta ayuda.</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="79"/>
+        <location filename="../mangenerator.py" line="80"/>
         <source>Shows information about DevicesInLAN license and authors.</source>
         <translation>Muestra información sobre la licencia y los autores de DevicesInLan.</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="80"/>
+        <location filename="../mangenerator.py" line="81"/>
         <source>Help &gt; Check for updates</source>
         <translation>Ayuda -&gt; Buscar actualizaciones</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="83"/>
+        <location filename="../mangenerator.py" line="84"/>
         <source>Exits from program.</source>
         <translation>Sale del programa.</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="93"/>
+        <location filename="../mangenerator.py" line="94"/>
         <source>Allows to add a known device from console.</source>
         <translation>Permite añadir un dispositivo conocido desde consola.</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="95"/>
+        <location filename="../mangenerator.py" line="96"/>
         <source>Allows to remove a known device from console.</source>
         <translation>Permite borrar un dispositivo conocido desde consola.</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="86"/>
+        <location filename="../mangenerator.py" line="87"/>
         <source>If you launch deviceslan with [ --wizard | --interface | --add | --remove | --list | --load | --save | --reset ], it will be executed in console mode.</source>
-        <translation>Si ejecutar devicesinlan con [ --wizard | --interface | --add | --remove | --list | --load | --save | --reset ], será ejecutado en modo consola.</translation>
+        <translation>Si lanzas devicesinlan con [ --wizard | --interface | --add | --remove | --list | --load | --save | --reset ], será ejecutado en modo consola.</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="99"/>
+        <location filename="../mangenerator.py" line="100"/>
         <source>Loads a list of known devices in xml format.</source>
         <translation>Carga una lista de dispositivos conocidos en formato XML.</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="101"/>
+        <location filename="../mangenerator.py" line="102"/>
         <source>Saves the known devices list to a xml file.</source>
         <translation>Guarda la lista de dispositivos conocidos a un fichero XML.</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="106"/>
+        <location filename="../mangenerator.py" line="107"/>
         <source>Removes all known devices.</source>
         <translation>Borra todos los dispositivos conocidos.</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="97"/>
+        <location filename="../mangenerator.py" line="98"/>
         <source>Shows all known devices in database from console.</source>
         <translation>Muestra todos los dispositivos conocidos en la base de datos, desde consola.</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="65"/>
+        <location filename="../mangenerator.py" line="66"/>
         <source>Shows all known devices in a new tab.</source>
         <translation>Muestra todos los dispositivos conocidos en una nueva pestaña.</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="66"/>
+        <location filename="../mangenerator.py" line="67"/>
         <source>Right click allows you to edit known devices database.</source>
         <translation>Al hacer un click derecho, podrás editar la base de datos de dispositivos conocidos.</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="81"/>
+        <location filename="../mangenerator.py" line="82"/>
         <source>Checks for updates in DevicesInLan repository.</source>
         <translation>Busca actualizaciónes en el repositorio de DevicesInLan.</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="103"/>
+        <location filename="../mangenerator.py" line="104"/>
         <source>Gives debugging information when running DevicesInLAN. It&apos;s deactivated by default</source>
         <translation>Muestra información de depuración cuando se ejecuta DevicesInLan. Está desactivada por defecto</translation>
     </message>
     <message>
-        <location filename="../mangenerator.py" line="104"/>
+        <location filename="../mangenerator.py" line="105"/>
         <source>The parameter can take this options: CRITICAL, ERROR, WARNING, INFO, DEBUG.</source>
         <translation>El parámetro puede tomar los siguientes valores: CRITICAL, ERROR, WARNING, INFO, DEBUG.</translation>
+    </message>
+    <message>
+        <location filename="../mangenerator.py" line="64"/>
+        <source>Searches all devices in tha LAN and show them in a new tab. If some device is not in the known devices list it will be shown with a red background. Devices with a green background are trusted devices</source>
+        <translation>Busca todos los dispositivos existentes en la red y los muestra en una nueva pestaña. Si algún dispositivo no está en la lista de dispositivos conocidos, será mostrado con un fondo rojo. Los dispositivos con un fondo verde son dispositivos confiables</translation>
     </message>
 </context>
 <context>

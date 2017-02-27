@@ -81,3 +81,7 @@ devicesinlan 1.1.0 20170226
 - Logging is deactivated by default
 - Statistics system now sends platform
 
+devicesinlan 1.1.1 XXXXXXXX
+===========================
+- Now, You don't need to be superuser to run DevicesInLan
+- Improved documentation and spanish translation

@@ -61,6 +61,7 @@ if __name__ == "__main__":
     man.paragraph(QCoreApplication.translate("mangenerator","If you launch devicesinlan without parameters and you are in a graphic system (Linux or Windows) it launches the program with a Qt Interface."), 1)
     man.paragraph(QCoreApplication.translate("mangenerator","In the app menu you have the followings features:"), 1)
     man.paragraph(QCoreApplication.translate("mangenerator","Devices > New Scan"), 2, True)
+    man.paragraph(QCoreApplication.translate("mangenerator","Searches all devices in tha LAN and show them in a new tab. If some device is not in the known devices list it will be shown with a red background. Devices with a green background are trusted devices"), 3)
     man.paragraph(QCoreApplication.translate("mangenerator","Devices > Show devices database"), 2, True)
     man.paragraph(QCoreApplication.translate("mangenerator","Shows all known devices in a new tab."), 3)
     man.paragraph(QCoreApplication.translate("mangenerator","Right click allows you to edit known devices database."), 3)
