@@ -24,10 +24,42 @@ if sys.platform=='win32':
       #base = 'Win32GUI'
       base="Console"
       include_files.append("devicesinlan.iss")
+      shortcut_table = [
+          ("DesktopShortcut",        # Shortcut
+           "DesktopFolder",          # Directory_
+           "DevicesInLan",     # Name
+           "TARGETDIR",              # Component_
+           "[TARGETDIR]devicesinlan.exe",   # Target
+           None,                     # Arguments
+           None,                     # Description
+           None,                     # Hotkey
+           None,                     # Icon
+           None,                     # IconIndex
+           None,                     # ShowCmd
+           'TARGETDIR'               # WkDir
+           ),
+
+          ("StartupShortcut",        # Shortcut
+           "StartupFolder",          # Directory_
+           "DevicesInLan",     # Name
+           "TARGETDIR",              # Component_
+           "[TARGETDIR]devicesinlan.exe",   # Target
+           None,                     # Arguments
+           None,                     # Description
+           None,                     # Hotkey
+           None,                     # Icon
+           None,                     # IconIndex
+           None,                     # ShowCmd
+           'TARGETDIR'               # WkDir
+           ),
+      ]
+
+      msi_data = {"Shortcut": shortcut_table}  # This will be part of the 'data' option of bdist_msi
       build_msi_options = {
            'upgrade_code': '{3849730B-2375-4F76-B4A5-343277A23BDE}',
            'add_to_path': False,
            'initial_target_dir': r'[ProgramFilesFolder]\%s' % (name),
+           'data': msi_data
             }
  
       build_exe_options = dict(includes = [],excludes=[], include_files=include_files)
