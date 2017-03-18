@@ -23,7 +23,6 @@ include_files.append(("doc/devicesinlan.ru.1.html", "devicesinlan.ru.1.html"))
 if sys.platform=='win32':
       #base = 'Win32GUI'
       base="Console"
-      include_files.append("devicesinlan.iss")
       shortcut_table = [
           ("DesktopShortcut",        # Shortcut
            "DesktopFolder",          # Directory_
@@ -63,9 +62,8 @@ if sys.platform=='win32':
             }
  
       build_exe_options = dict(includes = [],excludes=[], include_files=include_files)
+      options={'bdist_msi': build_msi_options, 'build_exe': build_exe_options}
 
-      options={'bdist_msi': build_msi_options,
-               'build_exe': build_exe_options}
 else:#linux
       base="Console"
       include_files.append("doc/devicesinlan.en.1")

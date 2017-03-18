@@ -67,6 +67,15 @@ if __name__ == '__main__':
     prefixapplications=args.destdir+"/usr/share/applications"
     prefixman=args.destdir+"/usr/share/man"
 
+    if "--dist_windows" in sys.argv and platform.system()!="Windows":
+        print("You need to be in Windows to pass this parameters")
+        sys.exit(1)
+    elif "--dist_windows" not in sys.argv and platform.system=="Windows":#In windows only dist_windows
+        print("You need to be in Linux to pass this parameters")
+        sys.exit(1)
+    
+    
+    
     if args.doc==True:
         shell("pylupdate5 -noobsolete -verbose devicesinlan.pro")
         shell("lrelease -qt5 devicesinlan.pro")
@@ -98,16 +107,7 @@ if __name__ == '__main__':
         print (build_dir(), filename_output(), os.getcwd())
         os.system("tar cvz -f '{0}/dist/{1}.tar.gz' * -C '{0}/{2}/'".format(pwd, filename_output(),  build_dir()))
     elif args.dist_windows==True:
-        if platform.system()=="Windows":
-            check_call([sys.executable, "setup.py","bdist_msi"])
-            #        os.chdir(build_dir())
-            #        inno="c:/Program Files (x86)/Inno Setup 5/ISCC.exe"
-            ##    if platform.architecture()[0]=="32bit":
-            ##        inno=inno.replace(" (x86)", "")
-            #
-            #        check_call([inno,  "/o../",  "/DVERSION_NAME={}".format(version_windows()), "/DFILENAME={}".format(filename_output()),"devicesinlan.iss"], stdout=sys.stdout)
-        else:
-            print("You need to launch this script in a Windows environment")
+        check_call([sys.executable, "setup.py","bdist_msi"])
     elif args.compile==True:
         futures=[]
         with ProcessPoolExecutor(max_workers=cpu_count()+1) as executor:
