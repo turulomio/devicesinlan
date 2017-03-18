@@ -220,7 +220,7 @@ class SetInterfaces:
         
     def find_by_id(self, id):
         for interface in self.arr:
-            if interface.id==id:
+            if interface.id()==id:
                 return interface
         return None
 
@@ -240,7 +240,7 @@ class SetInterfaces:
     def order_by_name(self):
         """Orders the Set using self.arr"""
         try:
-            self.arr=sorted(self.arr, key=lambda c: c.name,  reverse=False)       
+            self.arr=sorted(self.arr, key=lambda c: c.name(),  reverse=False)       
             return True
         except:
             return False       
@@ -249,11 +249,11 @@ class SetInterfaces:
         """Selected is id"""
         self.order_by_name()
         for l in self.arr:
-            if l.name==None:
+            if l.name()==None:
                 name="Interfaz sin nombre"
             else:
-                name=l.name
-            combo.addItem(name, l.id)
+                name=l.name()
+            combo.addItem(name, l.id())
         if selected!=None:
                 combo.setCurrentIndex(combo.findData(selected))        
                 

@@ -21,4 +21,4 @@ class frmInterfaceSelector(QDialog, Ui_frmInterfaceSelector):
             self.txtId.setText(self.mem.interfaces.selected.id())
 
     def on_buttonBox_accepted(self):
-        self.mem.settings.setValue("frmInterfaceSelector/interface_id", self.mem.interfaces.selected.id)
+        self.mem.settings.setValue("frmInterfaceSelector/interface_id", self.mem.interfaces.selected.id())
