@@ -11,7 +11,7 @@ import socket
 from PyQt5.QtCore import QCoreApplication, QSettings, QTranslator, Qt, QObject
 from PyQt5.QtWidgets import QTableWidgetItem, QMessageBox
 from PyQt5.QtGui import QColor,  QPixmap, QIcon
-from PyQt5.QtNetwork import QNetworkInterface
+from PyQt5.QtNetwork import QNetworkInterface, QAbstractSocket
 from colorama import Style, Fore
 from concurrent.futures import ThreadPoolExecutor,  as_completed
 from xml.dom import minidom
@@ -228,7 +228,7 @@ class SetInterfaces:
     def load_all(self):
         for i in QNetworkInterface.allInterfaces():
                 for e in i.addressEntries():
-                    if e.ip().isLoopback()==False:
+                    if e.ip().isLoopback()==False and i.isValid() and e.ip().isMulticast()==False and e.ip().isNull()==False and e.ip().protocol()==QAbstractSocket.IPv4Protocol:
                         self.append(Interface(self.mem).init__create(i, e))
         
     def print(self):

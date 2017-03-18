@@ -162,7 +162,7 @@ else:##Console
             id=input_int(app.translate("devicesinlan", "Select an interface number"), 1)
             if id<=mem.interfaces.length():#Check id 
                 break
-        mem.interfaces.selected=mem.interfaces.find_by_id(mem.interfaces.arr[id-1].id)
+        mem.interfaces.selected=mem.interfaces.find_by_id(mem.interfaces.arr[id-1].id())
         mem.settings.setValue("frmSettings/concurrence", input_int(app.translate("devicesinlan", "Input an integer with the request concurrence"), mem.settings.value("frmSettings/concurrence", 200)))
         mem.settings.sync()
 
