@@ -11,7 +11,7 @@ import socket
 from PyQt5.QtCore import QCoreApplication, QSettings, QTranslator, Qt, QObject
 from PyQt5.QtWidgets import QTableWidgetItem, QMessageBox
 from PyQt5.QtGui import QColor,  QPixmap, QIcon
-from PyQt5.QtNetwork import QNetworkInterface, QAbstractSocket
+from PyQt5.QtNetwork import QNetworkInterface, QAbstractSocket,  QTcpSocket
 from colorama import Style, Fore
 from concurrent.futures import ThreadPoolExecutor,  as_completed
 from xml.dom import minidom
@@ -362,20 +362,25 @@ class SetDevices(QObject):
             """
                 Returns a list  [ip,mac,pinged]
             """
-            pinged=False
+            pinged=True
             mac=None
-            #PING
-            if platform.system()=="Windows":
-                CREATE_NO_WINDOW=0x08000000
-                output=subprocess.call(["ping", "-n", "1", ip], shell=False, stderr=subprocess.DEVNULL, creationflags=CREATE_NO_WINDOW)
-            else:
-                output=subprocess.call(["ping", "-c", "1", "-W", "1", ip], shell=False, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
-            if output==0:
-                pinged=True
+#            #PING
+#            if platform.system()=="Windows":
+#                output=subprocess.call(["ping", "-n", "1", ip], shell=False, stderr=subprocess.DEVNULL, creationflags=CREATE_NO_WINDOW)
+#            else:
+#                output=subprocess.call(["ping", "-c", "1", "-W", "1", ip], shell=False, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+#            if output==0:
+#                pinged=True
+            socket=QTcpSocket()
+            socket.connectToHost(ip, 80)
+            socket.close()
+
+
 
             #ARP
             if pinged==True:
                 if platform.system()=="Windows":
+                    CREATE_NO_WINDOW=0x08000000
                     arpexit=subprocess.check_output(["arp", "-a",  ip], creationflags=CREATE_NO_WINDOW)
                     for s in arpexit.split(b" "):
                         if len(s)==17 and s.find(b"-")!=-1:
