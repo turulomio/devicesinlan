@@ -14,11 +14,11 @@ class frmInterfaceSelector(QDialog, Ui_frmInterfaceSelector):
     def on_cmbName_currentIndexChanged(self, id): 
         self.mem.interfaces.selected=self.mem.interfaces.find_by_id(self.cmbName.itemData(id))
         if self.mem.interfaces.selected!=None:
-            self.txtIP.setText(self.mem.interfaces.selected.ip)
-            self.txtMAC.setText(self.mem.interfaces.selected.mac)
-            self.txtBroadcast.setText(self.mem.interfaces.selected.broadcast)
-            self.txtMask.setText(self.mem.interfaces.selected.mask)
-            self.txtId.setText(self.mem.interfaces.selected.id)
+            self.txtIP.setText(self.mem.interfaces.selected.ip())
+            self.txtMAC.setText(self.mem.interfaces.selected.mac())
+            self.txtBroadcast.setText(self.mem.interfaces.selected.broadcast())
+            self.txtMask.setText(self.mem.interfaces.selected.netmask())
+            self.txtId.setText(self.mem.interfaces.selected.id())
 
     def on_buttonBox_accepted(self):
         self.mem.settings.setValue("frmInterfaceSelector/interface_id", self.mem.interfaces.selected.id)

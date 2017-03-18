@@ -2,7 +2,6 @@ import codecs
 import datetime
 import threading
 import logging
-import netifaces
 import os
 import re
 import platform
@@ -12,12 +11,13 @@ import socket
 from PyQt5.QtCore import QCoreApplication, QSettings, QTranslator, Qt, QObject
 from PyQt5.QtWidgets import QTableWidgetItem, QMessageBox
 from PyQt5.QtGui import QColor,  QPixmap, QIcon
+from PyQt5.QtNetwork import QNetworkInterface
 from colorama import Style, Fore
 from concurrent.futures import ThreadPoolExecutor,  as_completed
 from xml.dom import minidom
 from uuid import  uuid4
 from urllib.request import urlopen
-import ipaddress
+from ipaddress import IPv4Network
 version = "1.1.0"
 dateversion=datetime.date(2017, 2, 26)
 
@@ -157,33 +157,54 @@ class SetDeviceTypes(QObject):
         if selected==None:
             selected=0
         if selected!=None:
-                combo.setCurrentIndex(combo.findData(selected))        
+                combo.setCurrentIndex(combo.findData(selected))
+
 class Interface(QObject):
+    """Union of Interface and networkaddressentry. Remember than a interface can have networkaddressentry. ipaddress is qhostaddress"""
     def __init__(self, mem):
         QObject.__init__(self)
         self.mem=mem
-        self.id=None#Id numerico de Windows o id de Linux
-        self.name=None
-        self.ip=None
-        self.mac=None
-        self.mask=None
-        self.broadcast=None
         
-    def init__create(self, id, name, ip, mac, mask, broadcast):
-        self.id=id
-        self.name=name
-        self.ip=ip
-        self.mac=mac
-        self.mask=mask
-        self.broadcast=broadcast
+#        self.id=None#Id numerico de Windows o id de Linux
+#        self.name=None
+#        self.ip=None
+#        self.mac=None
+#        self.mask=None
+#        self.broadcast=None
+    
+    def addresses(self):
+        """List of strings with all ip addresses in the net of the interface"""
+        r=[]
+        for addr in IPv4Network("{}/{}".format(self.ip(), self.netmask()), strict=False):
+            r.append(addr)
+        return r
+        
+    def id(self):
+        return self.qnetworkinterface.name()
+        
+    def name(self):
+        return self.qnetworkinterface.humanReadableName()
+        
+    def ip(self):
+        return self.qnetworkaddressentry.ip().toString()
+        
+    def mac(self):
+        return self.qnetworkinterface.hardwareAddress()
+        
+    def netmask(self):
+        return self.qnetworkaddressentry.netmask().toString()
+        
+    def broadcast(self):
+        return self.qnetworkaddressentry.broadcast().toString()
+    
+    def init__create(self, qnetworkinterface, qnetworkaddressentry):
+        self.qnetworkinterface=qnetworkinterface
+        self.qnetworkaddressentry=qnetworkaddressentry
         return self
-        
-    def network(self):
-        """192.168.1.12/255.255.255.0 return 192.168.1.0/24. Quita el host bits"""
-        return ipaddress.IPv4Interface("{}/{}".format(self.ip, self.mask)).network
+
 
     def __str__(self):
-        return (self.tr("Interface {} ({}) with ip {}/{} and mac {}".format(self.name, self.id, self.ip, self.mask, self.mac)))
+        return (self.tr("Interface {} ({}) with ip {}/{} and mac {}".format(self.name, self.id(), self.ip(), self.netmask(), self.mac())))
         
 class SetInterfaces:
     def __init__(self, mem):
@@ -202,32 +223,18 @@ class SetInterfaces:
             if interface.id==id:
                 return interface
         return None
-        
-    def load_all(self):   
-        if platform.system()=="Windows":
-            idformac=-1000
-        elif platform.system()=="Linux":
-            idformac=netifaces.AF_PACKET
-        for iface in netifaces.interfaces():
-            try:
-                for i, ifa in enumerate(netifaces.ifaddresses(iface)[netifaces.AF_INET]):#Puede haber varias IP en interfaz: Af_inet ES PARA IPV4
-                    print(netifaces.ifaddresses(iface)[netifaces.AF_INET][i])
-                    if netifaces.ifaddresses(iface)[netifaces.AF_INET][i]["addr"]!="127.0.0.1":
-                        self.append(Interface(self.mem).init__create(
-                            iface, 
-                            None, 
-                            netifaces.ifaddresses(iface)[netifaces.AF_INET][i]["addr"],
-                            netifaces.ifaddresses(iface)[idformac][i]["addr"], 
-                            netifaces.ifaddresses(iface)[netifaces.AF_INET][i]["netmask"],
-                            netifaces.ifaddresses(iface)[netifaces.AF_INET][i]["broadcast"]  
-                        ))
-            except:
-                pass
+
+                
+    def load_all(self):
+        for i in QNetworkInterface.allInterfaces():
+                for e in i.addressEntries():
+                    if e.ip().isLoopback()==False:
+                        self.append(Interface(self.mem).init__create(i, e))
         
     def print(self):
         i=1
         for interface in self.arr:
-            print (Style.BRIGHT + "{}. {} ({}/{} and MAC: {})".format(i, Style.BRIGHT+ Fore.GREEN+str(interface.id), interface.ip, interface.mask, interface.mac))
+            print (Style.BRIGHT + "{}. {} ({}/{} and MAC: {})".format(i, Style.BRIGHT+ Fore.GREEN+str(interface.id()), interface.ip(), interface.netmask(), interface.mac()))
             i=i+1
 
     def order_by_name(self):
@@ -319,11 +326,11 @@ class SetDevices(QObject):
     def own(self):
         """Load Devices from ping and my arp output"""
         threads=[]
-        for addr in ipaddress.IPv4Network("{}/{}".format(self.mem.interfaces.selected.ip, self.mem.interfaces.selected.mask), strict=False):
-            if str(addr)==self.mem.interfaces.selected.ip :#Adds device if ip is interface ip and jumps it
+        for addr in self.mem.interfaces.selected.addresses():
+            if str(addr)==self.mem.interfaces.selected.ip():#Adds device if ip is interface ip and jumps it
                 h=Device(self.mem)
                 h.ip=str(addr)
-                h.mac=self.mem.interfaces.selected.mac
+                h.mac=self.mem.interfaces.selected.mac()
                 h.pinged=True     
                 h.alias=self.mem.settings.value("DeviceAlias/{}".format(h.macwithout2points(h.mac.upper())), None)
                 h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
@@ -382,15 +389,12 @@ class SetDevices(QObject):
             ###################################
         futures=[]
         concurrence=int(self.mem.settings.value("frmSettings/concurrence", 50))
-        print(platform.system(),self.mem.interfaces.selected.ip,self.mem.interfaces.selected.mask)
         with ThreadPoolExecutor(max_workers=concurrence) as executor:
-            print(self.mem.interfaces.selected, self.mem.interfaces.selected.network())
-            for addr in ipaddress.IPv4Network(self.mem.interfaces.selected.network(), strict=False):
-                print(addr,end="")
-                if str(addr)==self.mem.interfaces.selected.ip :#Adds device if ip is interface ip and jumps it
+            for addr in self.mem.interfaces.selected.addresses():
+                if str(addr)==self.mem.interfaces.selected.ip() :#Adds device if ip is interface ip and jumps it
                     h=Device(self.mem)
                     h.ip=str(addr)
-                    h.mac=self.mem.interfaces.selected.mac.upper()
+                    h.mac=self.mem.interfaces.selected.mac().upper()
                     h.pinged=True     
                     h.alias=self.mem.settings.value("DeviceAlias/{}".format(h.macwithout2points(h.mac.upper())), None)
                     h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
@@ -402,7 +406,6 @@ class SetDevices(QObject):
             for i,  future in enumerate(as_completed(futures)):
                 h=Device(self.mem)
                 (h.ip, h.mac, h.pinged)=future.result()
-                print(h.ip,h.mac)
                 if h.mac!=None and h.pinged==True:
                     h.alias=self.mem.settings.value("DeviceAlias/{}".format(h.macwithout2points(h.mac.upper())), None)
                     h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
@@ -479,10 +482,10 @@ class SetDevices(QObject):
         maxlength=16+2+maxtype+2+17+2+maxalias+2+maxoui
         self.order_by_ip()
         print (Style.BRIGHT+ "="*(maxlength))
-        print (Style.BRIGHT+ self.tr("{} DEVICES IN LAN FROM {} INTERFACE AT {}").format(self.length(), self.mem.interfaces.selected.id.upper(), str(datetime.datetime.now())[:-7]).center(maxlength))
+        print (Style.BRIGHT+ self.tr("{} DEVICES IN LAN FROM {} INTERFACE AT {}").format(self.length(), self.mem.interfaces.selected.id().upper(), str(datetime.datetime.now())[:-7]).center(maxlength))
         print (Style.BRIGHT+ "{}  {}  {}  {}  {}".format(" IP ".center(16,'='),"TYPE".center(maxtype,"=")," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'=')))
         for h in self.arr:
-            if h.ip==self.mem.interfaces.selected.ip:
+            if h.ip==self.mem.interfaces.selected.ip():
                 print ("{}  {}  {}  {}  {}".format(Style.BRIGHT+Fore.MAGENTA + h.ip.ljust(16), h.type.name.ljust(maxtype), h.mac.center(17),   self.tr("This device").ljust(maxalias), h.oui.ljust(maxoui)))
             else:
                 if h.alias:

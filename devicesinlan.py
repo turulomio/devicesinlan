@@ -168,6 +168,6 @@ else:##Console
 
     inicio=datetime.datetime.now()
     set=SetDevices(mem)
-    set.setMethod(ArpScanMethod.SocketArp)
+    set.setMethod(ArpScanMethod.PingArp)
     set.print()
     print (Style.BRIGHT+app.translate("devicesinlan","It took {} with DevicesInLAN scanner.").format (Fore.GREEN+str(datetime.datetime.now()-inicio)+ " "+ app.translate("devicesinlan", "seconds")+Fore.WHITE))
