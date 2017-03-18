@@ -178,6 +178,10 @@ class Interface(QObject):
         self.broadcast=broadcast
         return self
         
+    def network(self):
+        """192.168.1.12/255.255.255.0 return 192.168.1.0/24. Quita el host bits"""
+        return ipaddress.IPv4Interface("{}/{}".format(self.ip, self.mask)).network
+
     def __str__(self):
         return (self.tr("Interface {} ({}) with ip {}/{} and mac {}".format(self.name, self.id, self.ip, self.mask, self.mac)))
         
@@ -207,6 +211,7 @@ class SetInterfaces:
         for iface in netifaces.interfaces():
             try:
                 for i, ifa in enumerate(netifaces.ifaddresses(iface)[netifaces.AF_INET]):#Puede haber varias IP en interfaz: Af_inet ES PARA IPV4
+                    print(netifaces.ifaddresses(iface)[netifaces.AF_INET][i])
                     if netifaces.ifaddresses(iface)[netifaces.AF_INET][i]["addr"]!="127.0.0.1":
                         self.append(Interface(self.mem).init__create(
                             iface, 
@@ -346,7 +351,7 @@ class SetDevices(QObject):
         
     def pingarp(self):
         """Load Devices from scan with ping and arp commands output"""
-        def get_ip_mac_pinged( ip):
+        def get_ip_mac_pinged(ip):
             """
                 Returns a list  [ip,mac,pinged]
             """
@@ -377,8 +382,11 @@ class SetDevices(QObject):
             ###################################
         futures=[]
         concurrence=int(self.mem.settings.value("frmSettings/concurrence", 50))
+        print(platform.system(),self.mem.interfaces.selected.ip,self.mem.interfaces.selected.mask)
         with ThreadPoolExecutor(max_workers=concurrence) as executor:
-            for addr in ipaddress.IPv4Network("{}/{}".format(self.mem.interfaces.selected.ip, self.mem.interfaces.selected.mask), strict=False):
+            print(self.mem.interfaces.selected, self.mem.interfaces.selected.network())
+            for addr in ipaddress.IPv4Network(self.mem.interfaces.selected.network(), strict=False):
+                print(addr,end="")
                 if str(addr)==self.mem.interfaces.selected.ip :#Adds device if ip is interface ip and jumps it
                     h=Device(self.mem)
                     h.ip=str(addr)
@@ -394,6 +402,7 @@ class SetDevices(QObject):
             for i,  future in enumerate(as_completed(futures)):
                 h=Device(self.mem)
                 (h.ip, h.mac, h.pinged)=future.result()
+                print(h.ip,h.mac)
                 if h.mac!=None and h.pinged==True:
                     h.alias=self.mem.settings.value("DeviceAlias/{}".format(h.macwithout2points(h.mac.upper())), None)
                     h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
