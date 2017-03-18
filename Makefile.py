@@ -52,6 +52,7 @@ if __name__ == '__main__':
     parser=argparse.ArgumentParser(prog='Makefile.py', description='Makefile in python', epilog="Developed by Mariano Muñoz", formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('--doc', help="Generate docs and i18n",action="store_true",default=False)
     parser.add_argument('--compile', help="App compilation",action="store_true",default=False)
+    parser.add_argument('--compile_images', help="App images compilation",action="store_true",default=False)
     parser.add_argument('--destdir', help="Directory to install",action="store",default="/")
     parser.add_argument('--uninstall', help="Uninstall",action="store_true",default=False)
     parser.add_argument('--dist_sources', help="Make a sources tar", action="store_true",default=False)
@@ -73,9 +74,8 @@ if __name__ == '__main__':
     elif "--dist_windows" not in sys.argv and platform.system=="Windows":#In windows only dist_windows
         print("You need to be in Linux to pass this parameters")
         sys.exit(1)
-    
-    
-    
+
+
     if args.doc==True:
         shell("pylupdate5 -noobsolete -verbose devicesinlan.pro")
         shell("lrelease -qt5 devicesinlan.pro")
@@ -111,13 +111,14 @@ if __name__ == '__main__':
     elif args.compile==True:
         futures=[]
         with ProcessPoolExecutor(max_workers=cpu_count()+1) as executor:
-            futures.append(executor.submit(shell, "pyrcc5 images/devicesinlan.qrc -o images/devicesinlan_rc.py"))
             futures.append(executor.submit(shell, "pyuic5 ui/frmAbout.ui -o ui/Ui_frmAbout.py"))
             futures.append(executor.submit(shell, "pyuic5 ui/frmHelp.ui -o ui/Ui_frmHelp.py"))
             futures.append(executor.submit(shell, "pyuic5 ui/frmMain.ui -o ui/Ui_frmMain.py"))
             futures.append(executor.submit(shell, "pyuic5 ui/frmSettings.ui -o ui/Ui_frmSettings.py"))
             futures.append(executor.submit(shell, "pyuic5 ui/frmInterfaceSelector.ui -o ui/Ui_frmInterfaceSelector.py"))
             futures.append(executor.submit(shell, "pyuic5 ui/frmDeviceCRUD.ui -o ui/Ui_frmDeviceCRUD.py"))
+    elif args.compile_images==True:
+            shell("pyrcc5 images/devicesinlan.qrc -o images/devicesinlan_rc.py")
     else:
         shell("install -o root -d "+ prefixbin)
         shell("install -o root -d "+ prefixlib)
