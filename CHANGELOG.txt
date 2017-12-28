@@ -89,3 +89,8 @@ devicesinlan 1.2.0 20171228
 - Removed buggy shortcut
 - Added faster socket to check arp
 - Changed distribution system from innoreader to setup
+
+devicesinlan 1.3.0 XXXXXXXX
+===========================
+- Solved translation path bug in linux
+

@@ -49,8 +49,8 @@ class Mem(QObject):
         logging.debug("{}, answering {}".format(web, url))
 
     def change_language(self, language):  
-        """language es un string"""  
-        urls= ["i18n/devicesinlan_" + language + ".qm","/usr/share/devicesinlan/devicesinlan_" + language + ".qm"]
+        """language es un string"""
+        urls= ["i18n/devicesinlan_" + language + ".qm","/usr/lib/devicesinlan/devicesinlan_" + language + ".qm"]
         for url in urls:
             if os.path.exists(url)==True:
                 self.translator.load(url)
@@ -58,8 +58,6 @@ class Mem(QObject):
                 logging.info(self.tr("Language changed to {} using {}".format(language, url)))
                 return
         if language!="en":
-            logging.info(self.tr("Using default (en)."))
-        else:
             logging.warning(Style.BRIGHT+ Fore.CYAN+ self.tr("Language ({}) couldn't be loaded in {}. Using default (en).".format(language, urls)))
 
 class DeviceType:
