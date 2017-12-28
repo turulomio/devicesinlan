@@ -86,3 +86,5 @@ devicesinlan 1.1.1 XXXXXXXX
 - Now, You don't need to be superuser to run DevicesInLan
 - Improved documentation and spanish translation
 - Netifaces removed
+- Removed buggy shortcut
+- Added faster socket to check arp

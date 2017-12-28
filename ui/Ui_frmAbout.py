@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/frmAbout.ui'
 #
-# Created by: PyQt5 UI code generator 5.7.1
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -53,7 +53,6 @@ class Ui_frmAbout(object):
         self.tabGLParchis = QtWidgets.QWidget()
         self.tabGLParchis.setObjectName("tabGLParchis")
         self.hboxlayout = QtWidgets.QHBoxLayout(self.tabGLParchis)
-        self.hboxlayout.setContentsMargins(0, 0, 0, 0)
         self.hboxlayout.setObjectName("hboxlayout")
         self.textBrowser = QtWidgets.QTextBrowser(self.tabGLParchis)
         self.textBrowser.setOpenExternalLinks(True)
@@ -63,7 +62,6 @@ class Ui_frmAbout(object):
         self.tabLicense = QtWidgets.QWidget()
         self.tabLicense.setObjectName("tabLicense")
         self.vboxlayout = QtWidgets.QVBoxLayout(self.tabLicense)
-        self.vboxlayout.setContentsMargins(0, 0, 0, 0)
         self.vboxlayout.setObjectName("vboxlayout")
         self.txtLicense = QtWidgets.QTextBrowser(self.tabLicense)
         self.txtLicense.setLineWrapMode(QtWidgets.QTextEdit.WidgetWidth)
