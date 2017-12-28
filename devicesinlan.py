@@ -16,6 +16,8 @@ def signal_handler(signal, frame):
 if platform.system()=="Windows":
     sys.path.append("ui")
     sys.path.append("images")
+    if os.path.isdir(os.path.dirname(sys.argv[0])):#Without this lines windows shortcuts, anchored to init failed, works when installed
+            os.chdir(os.path.dirname(sys.argv[0]))
 elif platform.system()=="Linux":
     sys.path.append("/usr/lib/devicesinlan")
 from libdevicesinlan import ArpScanMethod, Device, Mem, SetDevices, dateversion,  version,  input_int,  input_YN
@@ -32,7 +34,7 @@ else:
     console=False
     app=QApplication(sys.argv)
     tr=QApplication.translate
-
+            
 app.setOrganizationName("DevicesInLAN")
 app.setOrganizationDomain("devicesinlan.sourceforge.net")
 app.setApplicationName("DevicesInLAN")
