@@ -1,6 +1,6 @@
 Nueva release
 =============
-) Comprobar que funciona en Windows. No subir los ts desde windows, hacer un revert y subir versión con preparada para windows
+) Comprobar que funciona en Windows. No subir los ts desde windows, hacer un revert y subir versión con preparada para windows, comprobando que en setup.py base win32 in set
 ) Actualizar en linux
 1) Modificar la version en libdevicesinlan.py
 ) Update ieee-oui with get-oui
