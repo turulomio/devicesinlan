@@ -81,10 +81,11 @@ devicesinlan 1.1.0 20170226
 - Logging is deactivated by default
 - Statistics system now sends platform
 
-devicesinlan 1.1.1 XXXXXXXX
+devicesinlan 1.2.0 20171228
 ===========================
 - Now, You don't need to be superuser to run DevicesInLan
 - Improved documentation and spanish translation
 - Netifaces removed
 - Removed buggy shortcut
 - Added faster socket to check arp
+- Changed distribution system from innoreader to setup

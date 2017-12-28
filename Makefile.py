@@ -105,7 +105,7 @@ if __name__ == '__main__':
         pwd=os.getcwd()
         os.chdir(build_dir())
         print (build_dir(), filename_output(), os.getcwd())
-        os.system("tar cvz -f '{0}/dist/{1}.tar.gz' * -C '{0}/{2}/'".format(pwd, filename_output(),  build_dir()))
+        os.system("tar cvz -C '{0}/{2}/'  -f '{0}/dist/{1}.tar.gz' *".format(pwd, filename_output(),  build_dir()))
     elif args.dist_windows==True:
         check_call([sys.executable, "setup.py","bdist_msi"])
     elif args.compile==True:

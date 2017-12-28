@@ -2,5 +2,6 @@ include AUTHORS.txt GPL-3.txt INSTALL.txt devicesinlan.desktop devicesinlan.pro 
 recursive-include i18n *.ts *.qm
 recursive-include images *.png  devicesinlan.qrc *.py
 recursive-include ui  *.py
+recursive-include doc *.html *.1
 prune __pycache__
 global-exclude *.pyc

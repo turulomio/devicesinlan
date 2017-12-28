@@ -3,27 +3,27 @@
 <context>
     <name>Device</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="662"/>
+        <location filename="../libdevicesinlan.py" line="664"/>
         <source>Input an alias of the known device: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="667"/>
+        <location filename="../libdevicesinlan.py" line="669"/>
         <source>You need to add an alias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="652"/>
+        <location filename="../libdevicesinlan.py" line="654"/>
         <source>Input the MAC of the known device (XX:XX:XX:XX:XX:XX): </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="657"/>
+        <location filename="../libdevicesinlan.py" line="659"/>
         <source>You need to insert a mac with the next format: 2A:3B:4C:5D:6E:7A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="673"/>
+        <location filename="../libdevicesinlan.py" line="675"/>
         <source>Select a type for the known device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -125,7 +125,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="494"/>
+        <location filename="../libdevicesinlan.py" line="541"/>
         <source>This device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -135,22 +135,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="560"/>
+        <location filename="../libdevicesinlan.py" line="562"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="561"/>
+        <location filename="../libdevicesinlan.py" line="563"/>
         <source>MAC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="562"/>
+        <location filename="../libdevicesinlan.py" line="564"/>
         <source>Alias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="563"/>
+        <location filename="../libdevicesinlan.py" line="565"/>
         <source>Hardware</source>
         <translation type="unfinished"></translation>
     </message>
@@ -163,87 +163,87 @@
 <context>
     <name>devicesinlan</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="882"/>
+        <location filename="../libdevicesinlan.py" line="884"/>
         <source>True</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="885"/>
+        <location filename="../libdevicesinlan.py" line="887"/>
         <source>False</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="42"/>
+        <location filename="../devicesinlan.py" line="44"/>
         <source>Show devices in a LAN making an ARP and a ICMP request to find them</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="42"/>
+        <location filename="../devicesinlan.py" line="44"/>
         <source>If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="49"/>
+        <location filename="../devicesinlan.py" line="51"/>
         <source>Net interface name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="50"/>
+        <location filename="../devicesinlan.py" line="52"/>
         <source>Add a known device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="51"/>
+        <location filename="../devicesinlan.py" line="53"/>
         <source>Remove a known device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="131"/>
+        <location filename="../devicesinlan.py" line="133"/>
         <source>Device inserted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="139"/>
+        <location filename="../devicesinlan.py" line="141"/>
         <source>Mac removed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="173"/>
+        <location filename="../devicesinlan.py" line="175"/>
         <source>It took {} with DevicesInLAN scanner.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="52"/>
+        <location filename="../devicesinlan.py" line="54"/>
         <source>List known devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="48"/>
+        <location filename="../devicesinlan.py" line="50"/>
         <source>Uses a wizard to select options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="152"/>
+        <location filename="../devicesinlan.py" line="154"/>
         <source>This interface doesn&apos;t exist. Please use --wizard parameter to help you.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="158"/>
+        <location filename="../devicesinlan.py" line="160"/>
         <source>There are not interfaces to scan.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="162"/>
+        <location filename="../devicesinlan.py" line="164"/>
         <source>Select an interface number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="166"/>
+        <location filename="../devicesinlan.py" line="168"/>
         <source>Input an integer with the request concurrence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="173"/>
+        <location filename="../devicesinlan.py" line="175"/>
         <source>seconds</source>
         <translation type="unfinished"></translation>
     </message>
@@ -253,47 +253,47 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="56"/>
+        <location filename="../devicesinlan.py" line="58"/>
         <source>Debug program information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="104"/>
+        <location filename="../devicesinlan.py" line="106"/>
         <source>Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="111"/>
+        <location filename="../devicesinlan.py" line="113"/>
         <source>N</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="53"/>
+        <location filename="../devicesinlan.py" line="55"/>
         <source>Load known devices list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="54"/>
+        <location filename="../devicesinlan.py" line="56"/>
         <source>Save known devices list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="55"/>
+        <location filename="../devicesinlan.py" line="57"/>
         <source>Reset known devices list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="107"/>
+        <location filename="../devicesinlan.py" line="109"/>
         <source>File doesn&apos;t exist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="116"/>
+        <location filename="../devicesinlan.py" line="118"/>
         <source>Database was reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="111"/>
+        <location filename="../devicesinlan.py" line="113"/>
         <source>Are you sure you want to reset known devices database?</source>
         <translation type="unfinished"></translation>
     </message>

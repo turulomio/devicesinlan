@@ -18,8 +18,8 @@ from xml.dom import minidom
 from uuid import  uuid4
 from urllib.request import urlopen
 from ipaddress import IPv4Network
-version = "1.1.0"
-dateversion=datetime.date(2017, 2, 26)
+version = "1.2.0"
+dateversion=datetime.date(2017, 12, 28)
 
 class TypesARP:
     Gratuitous = 1

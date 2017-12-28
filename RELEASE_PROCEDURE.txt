@@ -5,9 +5,9 @@ Nueva release
 1) Modificar la version en libdevicesinlan.py
 ) Update ieee-oui with get-oui
 2) Modificar CHANGELOG  y poner los datos de la versión nueva
-4) Hacer un make man y Actualizar *.ts
-4) Hacer otro make man y make y luego otro make man, no se porqué pero funciona
-) Crear el fichero (con distribution.sh que pone la version automatico) y subirlo a sourceforge
+4) Hacer un python3 Makefile.py --doc y Actualizar *.ts
+4) Hacer otro python3 Makefile.py  y make y luego otro make man, no se porqué pero funciona
+) Crear el fichero de fuentes y binario de linux y subirlo a sourceforge
 6) Crear un nuevo ebuild con la nueva versión
 8) Subirlo al subversion del portage
 5) Por ultimo subir la versión devicesinlan al subversion ya que ahora no controlo el subversion en RELEASES
