@@ -547,7 +547,11 @@ class SetDevices(QObject):
             table.setItem(rownumber, 4, qleft(h.ip))
             if alias!="":
                 for i in range(0, table.columnCount()):
-                    table.item(rownumber, i).setBackground( QColor(182, 255, 182))       
+                    if h.ip==self.mem.interfaces.selected.ip():
+                        table.item(rownumber, i).setBackground( QColor(182, 182, 255))
+                    else:
+                        table.item(rownumber, i).setBackground( QColor(182, 255, 182))
+
             else:
                 for i in range(0, table.columnCount()):
                     table.item(rownumber, i).setBackground( QColor(255, 182, 182))       
