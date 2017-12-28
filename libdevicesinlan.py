@@ -536,6 +536,8 @@ class SetDevices(QObject):
             alias=""
             if h.alias!=None:
                 alias=h.alias
+            if h.ip==self.mem.interfaces.selected.ip():
+                alias=self.tr("This device")
             if h.type!=None:#Error en Windows
                 table.setItem(rownumber, 0, qleft(h.type.name))
                 table.item(rownumber,0).setIcon(h.type.qicon())
@@ -545,7 +547,7 @@ class SetDevices(QObject):
             table.setItem(rownumber, 2, qleft(alias))
             table.setItem(rownumber, 3, qleft(h.oui))
             table.setItem(rownumber, 4, qleft(h.ip))
-            if h.alias!=None:
+            if alias!="":
                 for i in range(0, table.columnCount()):
                     table.item(rownumber, i).setBackground( QColor(182, 255, 182))       
             else:
