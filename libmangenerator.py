@@ -1,5 +1,4 @@
 import datetime
-from subprocess import Popen, PIPE
 """
     If you want to saveHTML you need to have in your path man2html
 """
@@ -25,6 +24,7 @@ If you write more than one paragraph, start the other paragraphs with the .PP co
         self.filename=filename
         self.language=language
         self.doc=""
+        self.html=""#Variable where html output is generated
         
     def tr(self, s):
         """
@@ -61,12 +61,18 @@ If you write more than one paragraph, start the other paragraphs with the .PP co
     def paragraph(self, s,  level=1, bold=False):
         self.append(".PP\n")
         if bold==True:
-            bold=".B "
+            bo=".B "
         else:
-            bold=""
+            bo=""
         self.append(".RS\n"*(level-1))
-        self.append("{}{}\n".format(bold, s))
+        self.append("{}{}\n".format(bo, s))
         self.append(".RE\n"*(level-1))
+        #HTML
+        if bold==True:
+            self.html=self.html + "<p>{}<strong>{}</strong></p>\n".format("&nbsp;"*8*level, s)
+        else:
+            self.html=self.html + "<p>{}{}</p>\n".format("&nbsp;"*8*level, s)
+        
         
     def setMetadata(self, projectname,   manlevel,  date,  author,  brief):
         """
@@ -79,6 +85,17 @@ If you write more than one paragraph, start the other paragraphs with the .PP co
         self.header("NAME", 1)
         self.append(".B {}:\n".format(self.projectname))
         self.append("{}\n".format(brief))
+        #HTML
+        self.html="""
+<html>
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+    <title>{0} - {1}</title>
+</head>
+<body>
+<h1>NAME</h1>
+<p>{0}: {2}</p>
+        """.format(self.projectname, self.author, brief)
         
     def setSynopsis(self, args):
         """
@@ -87,6 +104,8 @@ If you write more than one paragraph, start the other paragraphs with the .PP co
         ##################
         self.header("SYNOPSIS")
         self.append("{} {}\n".format(self.projectname, args))
+        #HTML
+        self.html=self.html + "<p>{} {}</p>\n".format(self.projectname, args)
 
     def header(self, text, level=1):
         if level==1:
@@ -97,6 +116,9 @@ If you write more than one paragraph, start the other paragraphs with the .PP co
             self.paragraph("+ "+ text.upper(), level, bold=True)
         elif level==4:
             self.paragraph("- "+ text.upper(), level, bold=True)
+            
+        #HTML
+        self.html=self.html + "<H{0}>{1}</H{0}>\n".format(level, text)
 
     def save(self):
         """
@@ -107,22 +129,17 @@ If you write more than one paragraph, start the other paragraphs with the .PP co
         f=open("{}.{}".format(self.filename, self.manlevel), "w")
         f.write(self.replaceUTF8(self.doc))
         f.close()
-        
+        #HTML
+        self.html=self.html + """
+<hr>
+<p>Created with libmangenerator at {}</p>
+</body>
+</html>""".format(datetime.datetime.now())
+
     def saveHTML(self):
-        s = Popen(['man2html'], stdin=PIPE, stdout=PIPE, stderr=PIPE)
-        output, errs = s.communicate(self.doc.encode())
-        
         f=open("{}.{}.html".format(self.filename, self.manlevel), "w")
-        arr=output.decode().split("\n")
-        for i, line in enumerate(arr):
-            if i in [0, 1, 5, 6,  len(arr)-9, len(arr)-10, len(arr)-11, len(arr)-12, len(arr)-13, len(arr)-14, len(arr)-15, len(arr)-16]:#I delete ugly lines #MAN2HTML --1.6g
-                continue
-            if line.startswith("<HTML><HEAD>"):
-                line=line.replace('<HTML><HEAD>', '<HTML><HEAD><meta charset="UTF-8" />')
-            f.write(line+"\n")
+        f.write(self.html)
         f.close()
-
-
 
     def simpleParagraph(self, text, style="Standard"):
         pass

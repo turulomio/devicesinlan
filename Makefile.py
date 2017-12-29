@@ -96,6 +96,11 @@ if __name__ == '__main__':
         shell("rm -Rf {}/fr/man1/devicesinlan.1".format(prefixman))
         shell("rm -Rf {}/ro/man1/devicesinlan.1".format(prefixman))
         shell("rm -Rf {}/ru/man1/devicesinlan.1".format(prefixman))
+        shell("rm -Rf {}/man1/devicesinlan_gui.1".format(prefixman))
+        shell("rm -Rf {}/es/man1/devicesinlan_gui.1".format(prefixman))
+        shell("rm -Rf {}/fr/man1/devicesinlan_gui.1".format(prefixman))
+        shell("rm -Rf {}/ro/man1/devicesinlan_gui.1".format(prefixman))
+        shell("rm -Rf {}/ru/man1/devicesinlan_gui.1".format(prefixman))
     elif args.dist_sources==True:
         shell("{} setup.py sdist".format(args.python))
     elif args.dist_linux==True:
@@ -142,6 +147,11 @@ if __name__ == '__main__':
         shell("install -m 644 -o root doc/devicesinlan.fr.1 "+ prefixman+"/fr/man1/devicesinlan.1")
         shell("install -m 644 -o root doc/devicesinlan.ro.1 "+ prefixman+"/ro/man1/devicesinlan.1")
         shell("install -m 644 -o root doc/devicesinlan.ru.1 "+ prefixman+"/ru/man1/devicesinlan.1")
-        
+        shell("install -m 644 -o root doc/devicesinlan_gui.en.1 "+ prefixman+"/man1/devicesinlan_gui.1")
+        shell("install -m 644 -o root doc/devicesinlan_gui.es.1 "+ prefixman+"/es/man1/devicesinlan_gui.1")
+        shell("install -m 644 -o root doc/devicesinlan_gui.fr.1 "+ prefixman+"/fr/man1/devicesinlan_gui.1")
+        shell("install -m 644 -o root doc/devicesinlan_gui.ro.1 "+ prefixman+"/ro/man1/devicesinlan_gui.1")
+        shell("install -m 644 -o root doc/devicesinlan_gui.ru.1 "+ prefixman+"/ru/man1/devicesinlan_gui.1")
+
     print ("*** Process took {} using {} processors ***".format(datetime.datetime.now()-start , cpu_count()))
 

@@ -20,9 +20,21 @@ class frmHelp(QDialog, Ui_frmHelp):
         self.languages.qcombobox(self.cmbLanguage, self.mem.settings.value("frmSettings/language", "en"))         
         
     @pyqtSlot(str)      
-    def on_cmbLanguage_currentIndexChanged(self, stri):      
-        self.languages.selected=self.languages.find_by_name(stri)  
-        urls= ["devicesinlan." + self.languages.selected.id+ ".1.html","/usr/share/devicesinlan/devicesinlan." + self.languages.selected.id+ ".1.html"]
+    def on_cmbLanguage_currentIndexChanged(self, stri):    
+        self.setSource()
+        
+    @pyqtSlot(str)      
+    def on_cmbProgram_currentIndexChanged(self, stri):
+        self.setSource()
+
+    def setSource(self):
+        self.languages.selected=self.languages.find_by_name(self.cmbLanguage.currentText())
+        if self.cmbProgram.currentIndex()==1:
+            program="devicesinlan"
+        else:
+            program="devicesinlan_gui"
+        urls= ["{}.{}.1.html".format(program, self.languages.selected.id), "/usr/share/devicesinlan/{}.{}.1.html".format(program, self.languages.selected.id)]
         for url in urls:
             if os.path.exists(url)==True:
                 self.viewer.setSource(QUrl(url))
+        

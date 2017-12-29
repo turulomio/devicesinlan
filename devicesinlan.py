@@ -137,21 +137,21 @@ if args.list==True:
 ## Load devices
 if args.interface:
     if mem.interfaces.find_by_id(args.interface)==None:
-        print(Style.BRIGHT+Fore.RED+app.translate("devicesinlan", "This interface doesn't exist. Please use --wizard parameter to help you."))
+        print(Style.BRIGHT+Fore.RED+app.translate("devicesinlan", "This interface doesn't exist. Please remove the --interface parameter to use a wizard."))
         sys.exit(1)
     mem.interfaces.selected=mem.interfaces.find_by_id(args.interface)
-
-if mem.interfaces.length()==0:
-    print(Style.BRIGHT+ Fore.RED+app.translate("devicesinlan", "There are not interfaces to scan."))
-    sys.exit(1)
-mem.interfaces.print()
-while True:
-    id=input_int(app.translate("devicesinlan", "Select an interface number"), 1)
-    if id<=mem.interfaces.length():#Check id 
-        break
-mem.interfaces.selected=mem.interfaces.find_by_id(mem.interfaces.arr[id-1].id())
-mem.settings.setValue("frmSettings/concurrence", input_int(app.translate("devicesinlan", "Input an integer with the request concurrence"), mem.settings.value("frmSettings/concurrence", 200)))
-mem.settings.sync()
+else:
+    if mem.interfaces.length()==0:
+        print(Style.BRIGHT+ Fore.RED+app.translate("devicesinlan", "There are not interfaces to scan."))
+        sys.exit(1)
+    mem.interfaces.print()
+    while True:
+        id=input_int(app.translate("devicesinlan", "Select an interface number"), 1)
+        if id<=mem.interfaces.length():#Check id 
+            break
+    mem.interfaces.selected=mem.interfaces.find_by_id(mem.interfaces.arr[id-1].id())
+    mem.settings.setValue("frmSettings/concurrence", input_int(app.translate("devicesinlan", "Input an integer with the request concurrence"), mem.settings.value("frmSettings/concurrence", 200)))
+    mem.settings.sync()
 
 inicio=datetime.datetime.now()
 set=SetDevices(mem)

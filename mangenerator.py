@@ -45,7 +45,7 @@ if __name__ == "__main__":
     app.setOrganizationDomain("devicesinlan.sourceforge.net")
     app.setApplicationName("mangenerator")
     translator=QTranslator()
-    urls= ["i18n/devicesinlan_" + args.language + ".qm","/usr/share/devicesinlan/devicesinlan_" + args.language+ ".qm"]
+    urls= ["i18n/devicesinlan_" + args.language + ".qm","/usr/lib/devicesinlan/devicesinlan_" + args.language+ ".qm"]
     if args.language!="en":
         for url in urls:
             if os.path.exists(url)==True:
@@ -54,11 +54,10 @@ if __name__ == "__main__":
             else:
                 print("Language {} not detected".format(args.language))
 
-    man=Man("doc/devicesinlan.{}".format(args.language))
-    man.setMetadata("devicesinlan",  1,   datetime.date.today(), "Mariano Muñoz", QCoreApplication.translate("mangenerator","Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net."))
-    man.setSynopsis("[-h] [--version] [--debug DEBUG] [ --wizard | --interface | --add | --remove | --list | --load | --save | --reset ]")
-    man.header(QCoreApplication.translate("mangenerator","GUI MODE DESCRIPTION"), 1)
-    man.paragraph(QCoreApplication.translate("mangenerator","If you launch devicesinlan without parameters and you are in a graphic system (Linux or Windows) it launches the program with a Qt Interface."), 1)
+    man=Man("doc/devicesinlan_gui.{}".format(args.language))
+    man.setMetadata("devicesinlan_gui",  1,   datetime.date.today(), "Mariano Muñoz", QCoreApplication.translate("mangenerator","Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net."))
+    man.setSynopsis("[--help] [--version] [--debug DEBUG]")
+    man.header(QCoreApplication.translate("mangenerator","DESCRIPTION"), 1)
     man.paragraph(QCoreApplication.translate("mangenerator","In the app menu you have the followings features:"), 1)
     man.paragraph(QCoreApplication.translate("mangenerator","Devices > New Scan"), 2, True)
     man.paragraph(QCoreApplication.translate("mangenerator","Searches all devices in tha LAN and show them in a new tab. If some device is not in the known devices list it will be shown with a red background. Devices with a green background are trusted devices"), 3)
@@ -82,11 +81,16 @@ if __name__ == "__main__":
     man.paragraph(QCoreApplication.translate("mangenerator","Checks for updates in DevicesInLan repository."), 3)
     man.paragraph(QCoreApplication.translate("mangenerator","Help > Exit"), 2, True)
     man.paragraph(QCoreApplication.translate("mangenerator","Exits from program."), 3)
+    man.save()
+    man.saveHTML()
 
-    man.header(QCoreApplication.translate("mangenerator","CONSOLE MODE DESCRIPTION"), 1)
-    man.paragraph(QCoreApplication.translate("mangenerator","If you launch deviceslan with [ --wizard | --interface | --add | --remove | --list | --load | --save | --reset ], it will be executed in console mode."), 1)
-    man.paragraph("--wizard", 2, True)
-    man.paragraph(QCoreApplication.translate("mangenerator","It list all interfaces in the system and lets you to select the one you wish and the number of concurrent request. After that, it scans the net and prints a list of the detected devices."), 3)
+    man=Man("doc/devicesinlan.{}".format(args.language))
+    man.setMetadata("devicesinlan",  1,   datetime.date.today(), "Mariano Muñoz", QCoreApplication.translate("mangenerator","Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net."))
+    man.setSynopsis("[--help] [--version] [--debug DEBUG] [ --wizard | --interface | --add | --remove | --list | --load | --save | --reset ]")
+
+    man.header(QCoreApplication.translate("mangenerator","DESCRIPTION"), 1)
+    man.paragraph(QCoreApplication.translate("mangenerator","If you launch deviceslan without parameters a console wizard is launched."), 1)
+    man.paragraph(QCoreApplication.translate("mangenerator","Morever you can use one of this parameters."), 1)
     man.paragraph("--interface", 2, True)
     man.paragraph(QCoreApplication.translate("mangenerator","Scans the net of the interface parameter and prints a list of the detected devices."), 3)
     man.paragraph(QCoreApplication.translate("mangenerator","If a device is not known, it will be showed in red. Devices in green are trusted devices."), 3)
