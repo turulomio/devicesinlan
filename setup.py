@@ -46,8 +46,12 @@ if sys.platform=='win32':
            'initial_target_dir': r'[ProgramFilesFolder]\%s' % (name),
            'data': msi_data
             }
- 
-      build_exe_options = dict(includes = [],excludes=[], include_files=include_files)
+      build_exe_options = dict(
+            optimize=2, 
+            includes = [],
+            excludes=[], 
+            include_files=include_files
+        )
       options={'bdist_msi': build_msi_options, 'build_exe': build_exe_options}
 
 else:#linux
@@ -62,8 +66,8 @@ else:#linux
       options=dict(build_exe = build_options)
 
 executables = [
-      Executable('devicesinlan.py', base=base_console, icon='images/devicesinlan.ico', shortcutName= name, shortcutDir='ProgramMenuFolder'), 
-      Executable('devicesinlan_gui.py', base=base_gui, icon='images/devicesinlan.ico', shortcutName="{} (Console)".format(name), shortcutDir='ProgramMenuFolder')
+      Executable('devicesinlan_gui.py', base=base_console, icon='images/devicesinlan.ico', shortcutName= name, shortcutDir='ProgramMenuFolder'), 
+      Executable('devicesinlan.py', base=base_gui, icon='images/devicesinlan.ico', shortcutName="{} (Console)".format(name), shortcutDir='ProgramMenuFolder')
 ]
 
 setup(name=name,
