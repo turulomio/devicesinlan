@@ -18,6 +18,11 @@ include_files.append(("doc/devicesinlan.es.1.html", "devicesinlan.es.1.html"))
 include_files.append(("doc/devicesinlan.fr.1.html", "devicesinlan.fr.1.html"))
 include_files.append(("doc/devicesinlan.ro.1.html", "devicesinlan.ro.1.html"))
 include_files.append(("doc/devicesinlan.ru.1.html", "devicesinlan.ru.1.html"))
+include_files.append(("doc/devicesinlan_gui.en.1.html", "devicesinlan_gui.en.1.html"))
+include_files.append(("doc/devicesinlan_gui.es.1.html", "devicesinlan_gui.es.1.html"))
+include_files.append(("doc/devicesinlan_gui.fr.1.html", "devicesinlan_gui.fr.1.html"))
+include_files.append(("doc/devicesinlan_gui.ro.1.html", "devicesinlan_gui.ro.1.html"))
+include_files.append(("doc/devicesinlan_gui.ru.1.html", "devicesinlan_gui.ru.1.html"))
 
 #Build options
 if sys.platform=='win32':
@@ -62,6 +67,11 @@ else:#linux
       include_files.append("doc/devicesinlan.fr.1")
       include_files.append("doc/devicesinlan.ro.1")
       include_files.append("doc/devicesinlan.ru.1")
+      include_files.append("doc/devicesinlan_gui.en.1")
+      include_files.append("doc/devicesinlan_gui.es.1")
+      include_files.append("doc/devicesinlan_gui.fr.1")
+      include_files.append("doc/devicesinlan_gui.ro.1")
+      include_files.append("doc/devicesinlan_gui.ru.1")
       build_options = dict(includes = [], excludes = [], include_files=include_files)
       options=dict(build_exe = build_options)
 
