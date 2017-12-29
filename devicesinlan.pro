@@ -2,6 +2,7 @@ SOURCES         = libdevicesinlan.py \
                   libmangenerator.py \
                   mangenerator.py \
                   devicesinlan.py \
+                  devicesinlan_gui.py \
                   ui/frmMain.py \
                   ui/Ui_frmMain.py \
                   ui/frmHelp.py \

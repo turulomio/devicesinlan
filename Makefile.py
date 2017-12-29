@@ -29,7 +29,7 @@ def build_dir():
         else:
             pl="i686"
     return "build/exe.{}-{}-{}".format(so, pl, pyversion)
-    
+
 def filename_output():
     if sys.platform=="win32":
         so="windows"
@@ -44,7 +44,6 @@ def filename_output():
         else:
             pl="x86"
     return "xulpymoney-{}-{}.{}".format(so,  version, pl)
-    
 
 
 if __name__ == '__main__':
@@ -132,6 +131,7 @@ if __name__ == '__main__':
         shell("install -o root -d "+ prefixman+"/ru/man1")
 
         shell("install -m 755 -o root devicesinlan.py "+ prefixbin+"/devicesinlan")
+        shell("install -m 755 -o root devicesinlan_gui.py "+ prefixbin+"/devicesinlan_gui")
         shell("install -m 644 -o root ui/*.py libdevicesinlan.py libmangenerator.py images/*.py "+ prefixlib)
         shell("install -m 644 -o root i18n/*.qm " + prefixlib)
         shell("install -m 644 -o root devicesinlan.desktop "+ prefixapplications)

@@ -1,2 +1,2 @@
-make install to install
-make uninstall to uninstall
+Use to look for  help
+# python3 Makefile.py --help

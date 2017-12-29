@@ -6,6 +6,8 @@ import os
 import sys
 import signal
 import logging
+from colorama import init,  Style, Fore
+from PyQt5.QtCore import QCoreApplication
 
 def signal_handler(signal, frame):
         print(Style.BRIGHT+Fore.RED+app.translate("devicesinlan","You pressed 'Ctrl+C', exiting..."))
@@ -21,33 +23,24 @@ if platform.system()=="Windows":
 elif platform.system()=="Linux":
     sys.path.append("/usr/lib/devicesinlan")
 from libdevicesinlan import ArpScanMethod, Device, Mem, SetDevices, dateversion,  version,  input_int,  input_YN
-from colorama import init,  Style, Fore
 init(autoreset=True)
 
-if '--wizard' in sys.argv or '--interface' in sys.argv or '--add' in sys.argv or '--remove' in sys.argv or '--list' in sys.argv or '--load' in sys.argv or '--save' in sys.argv or '--reset' in sys.argv:
-    from PyQt5.QtCore import QCoreApplication
-    console=True
-    app=QCoreApplication(sys.argv)
-    tr=QCoreApplication.translate
-else:
-    from PyQt5.QtWidgets import QApplication
-    console=False
-    app=QApplication(sys.argv)
-    tr=QApplication.translate
-            
+console=True
+app=QCoreApplication(sys.argv)
+tr=QCoreApplication.translate
+
 app.setOrganizationName("DevicesInLAN")
 app.setOrganizationDomain("devicesinlan.sourceforge.net")
 app.setApplicationName("DevicesInLAN")
 
 signal.signal(signal.SIGINT, signal_handler)
 
-parser=argparse.ArgumentParser(prog='devicesinlan', description=app.translate("devicesinlan",'Show devices in a LAN making an ARP and a ICMP request to find them'),  
+parser=argparse.ArgumentParser(prog='devicesinlan', description=app.translate("devicesinlan",'Show devices in a LAN making an ARP search to find them'),  
     epilog=app.translate("devicesinlan","If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).")+"\n" +app.translate("devicesinlan","Developed by Mariano Muñoz 2015-{}".format(dateversion.year)), 
     formatter_class=argparse.RawTextHelpFormatter
     )
 parser.add_argument('--version', action='version', version="{} ({})".format(version, dateversion))
 group = parser.add_mutually_exclusive_group()
-group.add_argument('--wizard', help=app.translate("devicesinlan",'Uses a wizard to select options'), action='store_true',  default=False)
 group.add_argument('--interface', help=app.translate("devicesinlan",'Net interface name'))
 group.add_argument('--add', help=app.translate("devicesinlan",'Add a known device'), action='store_true')
 group.add_argument('--remove', help=app.translate("devicesinlan",'Remove a known device'), action='store_true')
@@ -85,91 +78,83 @@ mem.setApp(app)
 mem.change_language(mem.settings.value("frmSettings/language", "en"))
 mem.setInstallationUUID()
 
-if console==False:
-    app.setQuitOnLastWindowClosed(True)
-    import frmMain 
-    frmMain = frmMain.frmMain(mem) 
-    frmMain.show()
-    sys.exit(app.exec_())
-else:##Console
-    if args.load:
-        if os.path.exists(args.load):
-            current=SetDevices(mem).init__from_settings()
-            new=SetDevices(mem).init__from_xml(args.load)
-            for n in new.arr:
-                c=current.find_by_mac(n.mac)
-                if c==None:#Not found its mac so n is new
-                    if input_YN(app.translate("devicesinlan", "Do you want to add this {} with MAC {} and set its name to {}?".format(n.type.name.lower(), n.mac, n.alias)), default=app.translate("devicesinlan", "Y"))==True:
+if args.load:
+    if os.path.exists(args.load):
+        current=SetDevices(mem).init__from_settings()
+        new=SetDevices(mem).init__from_xml(args.load)
+        for n in new.arr:
+            c=current.find_by_mac(n.mac)
+            if c==None:#Not found its mac so n is new
+                if input_YN(app.translate("devicesinlan", "Do you want to add this {} with MAC {} and set its name to {}?".format(n.type.name.lower(), n.mac, n.alias)), default=app.translate("devicesinlan", "Y"))==True:
+                    n.link()
+            else:
+                if n!=c:
+                    if input_YN(app.translate("devicesinlan", "We already have a device with this MAC: {}. Do you want to change its alias ({}) and type ({}) to a {} named {}?".format(c.mac, c.alias, c.type.name.lower(), n.type.name.lower(), n.alias)), default=app.translate("devicesinlan", "Y"))==True:
                         n.link()
-                else:
-                    if n!=c:
-                        if input_YN(app.translate("devicesinlan", "We already have a device with this MAC: {}. Do you want to change its alias ({}) and type ({}) to a {} named {}?".format(c.mac, c.alias, c.type.name.lower(), n.type.name.lower(), n.alias)), default=app.translate("devicesinlan", "Y"))==True:
-                            n.link()
-        else:
-            print (Style.BRIGHT+Fore.RED+app.translate("devicesinlan", "File doesn't exist"))
-        sys.exit(0)
+    else:
+        print (Style.BRIGHT+Fore.RED+app.translate("devicesinlan", "File doesn't exist"))
+    sys.exit(0)
 
-    if args.reset:
-        result=input_YN(app.translate("devicesinlan", "Are you sure you want to reset known devices database?"),  default=app.translate("devicesinlan","N"))
-        if result==True:
-            set=SetDevices(mem)
-            set.init__from_settings()
-            set.reset()
-            print (Style.BRIGHT+Fore.RED+app.translate("devicesinlan", "Database was reset"))
-        sys.exit(0)
-
-    if args.save:
+if args.reset:
+    result=input_YN(app.translate("devicesinlan", "Are you sure you want to reset known devices database?"),  default=app.translate("devicesinlan","N"))
+    if result==True:
         set=SetDevices(mem)
         set.init__from_settings()
-        set.saveXml(args.save)
-        sys.exit(0)
+        set.reset()
+        print (Style.BRIGHT+Fore.RED+app.translate("devicesinlan", "Database was reset"))
+    sys.exit(0)
 
-    if args.add==True:
-        d=Device(mem)
-        d.insert_mac()
-        d.insert_alias()
-        d.insert_type()
-        d.link()
-        print (Style.BRIGHT+ Fore.GREEN + app.translate("devicesinlan","Device inserted"))
-        mem.settings.sync()
-        sys.exit(0)
-
-    if args.remove==True:
-        d=Device(mem)
-        d.insert_mac()
-        d.unlink()
-        print (Style.BRIGHT+Fore.GREEN+app.translate("devicesinlan","Mac removed"))
-
-        mem.settings.sync()
-        sys.exit(0)
-
-    if args.list==True:
-        set=SetDevices(mem)
-        set.init__from_settings()
-        set.print_devices_from_settings()
-        sys.exit(0)
-    ## Load devices
-    if args.interface:
-        if mem.interfaces.find_by_id(args.interface)==None:
-            print(Style.BRIGHT+Fore.RED+app.translate("devicesinlan", "This interface doesn't exist. Please use --wizard parameter to help you."))
-            sys.exit(1)
-        mem.interfaces.selected=mem.interfaces.find_by_id(args.interface)
-
-    if args.wizard==True:
-        if mem.interfaces.length()==0:
-            print(Style.BRIGHT+ Fore.RED+app.translate("devicesinlan", "There are not interfaces to scan."))
-            sys.exit(1)
-        mem.interfaces.print()
-        while True:
-            id=input_int(app.translate("devicesinlan", "Select an interface number"), 1)
-            if id<=mem.interfaces.length():#Check id 
-                break
-        mem.interfaces.selected=mem.interfaces.find_by_id(mem.interfaces.arr[id-1].id())
-        mem.settings.setValue("frmSettings/concurrence", input_int(app.translate("devicesinlan", "Input an integer with the request concurrence"), mem.settings.value("frmSettings/concurrence", 200)))
-        mem.settings.sync()
-
-    inicio=datetime.datetime.now()
+if args.save:
     set=SetDevices(mem)
-    set.setMethod(ArpScanMethod.PingArp)
-    set.print()
-    print (Style.BRIGHT+app.translate("devicesinlan","It took {} with DevicesInLAN scanner.").format (Fore.GREEN+str(datetime.datetime.now()-inicio)+ " "+ app.translate("devicesinlan", "seconds")+Fore.WHITE))
+    set.init__from_settings()
+    set.saveXml(args.save)
+    sys.exit(0)
+
+if args.add==True:
+    d=Device(mem)
+    d.insert_mac()
+    d.insert_alias()
+    d.insert_type()
+    d.link()
+    print (Style.BRIGHT+ Fore.GREEN + app.translate("devicesinlan","Device inserted"))
+    mem.settings.sync()
+    sys.exit(0)
+
+if args.remove==True:
+    d=Device(mem)
+    d.insert_mac()
+    d.unlink()
+    print (Style.BRIGHT+Fore.GREEN+app.translate("devicesinlan","Mac removed"))
+
+    mem.settings.sync()
+    sys.exit(0)
+
+if args.list==True:
+    set=SetDevices(mem)
+    set.init__from_settings()
+    set.print_devices_from_settings()
+    sys.exit(0)
+## Load devices
+if args.interface:
+    if mem.interfaces.find_by_id(args.interface)==None:
+        print(Style.BRIGHT+Fore.RED+app.translate("devicesinlan", "This interface doesn't exist. Please use --wizard parameter to help you."))
+        sys.exit(1)
+    mem.interfaces.selected=mem.interfaces.find_by_id(args.interface)
+
+if mem.interfaces.length()==0:
+    print(Style.BRIGHT+ Fore.RED+app.translate("devicesinlan", "There are not interfaces to scan."))
+    sys.exit(1)
+mem.interfaces.print()
+while True:
+    id=input_int(app.translate("devicesinlan", "Select an interface number"), 1)
+    if id<=mem.interfaces.length():#Check id 
+        break
+mem.interfaces.selected=mem.interfaces.find_by_id(mem.interfaces.arr[id-1].id())
+mem.settings.setValue("frmSettings/concurrence", input_int(app.translate("devicesinlan", "Input an integer with the request concurrence"), mem.settings.value("frmSettings/concurrence", 200)))
+mem.settings.sync()
+
+inicio=datetime.datetime.now()
+set=SetDevices(mem)
+set.setMethod(ArpScanMethod.PingArp)
+set.print()
+print (Style.BRIGHT+app.translate("devicesinlan","It took {} with DevicesInLAN scanner.").format (Fore.GREEN+str(datetime.datetime.now()-inicio)+ " "+ app.translate("devicesinlan", "seconds")+Fore.WHITE))

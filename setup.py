@@ -21,8 +21,8 @@ include_files.append(("doc/devicesinlan.ru.1.html", "devicesinlan.ru.1.html"))
 
 #Build options
 if sys.platform=='win32':
-      base = 'Win32GUI'
-      #base="Console"
+      base_gui = 'Win32GUI'
+      base_console="Console"
       shortcut_table = [
           ("DesktopShortcut",        # Shortcut
            "DesktopFolder",          # Directory_
@@ -51,7 +51,8 @@ if sys.platform=='win32':
       options={'bdist_msi': build_msi_options, 'build_exe': build_exe_options}
 
 else:#linux
-      base="Console"
+      base_gui="Console"
+      base_console="Console"
       include_files.append("doc/devicesinlan.en.1")
       include_files.append("doc/devicesinlan.es.1")
       include_files.append("doc/devicesinlan.fr.1")
@@ -61,7 +62,8 @@ else:#linux
       options=dict(build_exe = build_options)
 
 executables = [
-      Executable('devicesinlan.py', base=base, icon='images/devicesinlan.ico', shortcutName= name, shortcutDir='ProgramMenuFolder')
+      Executable('devicesinlan.py', base=base_console, icon='images/devicesinlan.ico', shortcutName= name, shortcutDir='ProgramMenuFolder'), 
+      Executable('devicesinlan_gui.py', base=base_gui, icon='images/devicesinlan.ico', shortcutName="{} (Console)".format(name), shortcutDir='ProgramMenuFolder')
 ]
 
 setup(name=name,

@@ -94,3 +94,4 @@ devicesinlan 1.3.0 XXXXXXXX
 ===========================
 - Solved translation path bug in linux
 - Current device is showed in blue
+- Now there is an executable for console and other for ui
