@@ -66,8 +66,8 @@ else:#linux
       options=dict(build_exe = build_options)
 
 executables = [
-      Executable('devicesinlan_gui.py', base=base_console, icon='images/devicesinlan.ico', shortcutName= name, shortcutDir='ProgramMenuFolder'), 
-      Executable('devicesinlan.py', base=base_gui, icon='images/devicesinlan.ico', shortcutName="{} (Console)".format(name), shortcutDir='ProgramMenuFolder')
+      Executable('devicesinlan_gui.py', base=base_gui, icon='images/devicesinlan.ico', shortcutName= name, shortcutDir='ProgramMenuFolder'), 
+      Executable('devicesinlan.py', base=base_console, icon='images/devicesinlan.ico')#, shortcutName="{} (Console)".format(name), shortcutDir='ProgramMenuFolder')
 ]
 
 setup(name=name,
