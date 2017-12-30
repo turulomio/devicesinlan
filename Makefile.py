@@ -89,11 +89,36 @@ def makefile_install_all():
 
         shell("install -m 755 -o root devicesinlan.py "+ prefixbin+"/devicesinlan")
         shell("install -m 755 -o root devicesinlan_gui.py "+ prefixbin+"/devicesinlan_gui")
-        shell("install -m 644 -o root ui/*.py libdevicesinlan.py libdevicesinlan_gui.py libmangenerator.py images/*.py "+ prefixlib)
+        shell("install -m 644 -o root ui/*.py libdevicesinlan.py libdevicesinlan_gui.py images/*.py "+ prefixlib)
         shell("install -m 644 -o root i18n/*.qm " + prefixlib)
         shell("install -m 644 -o root devicesinlan.desktop "+ prefixapplications)
         shell("install -m 644 -o root images/devicesinlan.png "+ prefixpixmaps+"/devicesinlan.png")
         shell("install -m 644 -o root GPL-3.txt CHANGELOG.txt AUTHORS.txt INSTALL.txt ieee-oui.txt doc/devicesinlan*.html "+ prefixshare)
+        shell("install -m 644 -o root doc/devicesinlan.en.1 "+ prefixman+"/man1/devicesinlan.1")
+        shell("install -m 644 -o root doc/devicesinlan.es.1 "+ prefixman+"/es/man1/devicesinlan.1")
+        shell("install -m 644 -o root doc/devicesinlan.fr.1 "+ prefixman+"/fr/man1/devicesinlan.1")
+        shell("install -m 644 -o root doc/devicesinlan.ro.1 "+ prefixman+"/ro/man1/devicesinlan.1")
+        shell("install -m 644 -o root doc/devicesinlan.ru.1 "+ prefixman+"/ru/man1/devicesinlan.1")
+        shell("install -m 644 -o root doc/devicesinlan_gui.en.1 "+ prefixman+"/man1/devicesinlan_gui.1")
+        shell("install -m 644 -o root doc/devicesinlan_gui.es.1 "+ prefixman+"/es/man1/devicesinlan_gui.1")
+        shell("install -m 644 -o root doc/devicesinlan_gui.fr.1 "+ prefixman+"/fr/man1/devicesinlan_gui.1")
+        shell("install -m 644 -o root doc/devicesinlan_gui.ro.1 "+ prefixman+"/ro/man1/devicesinlan_gui.1")
+        shell("install -m 644 -o root doc/devicesinlan_gui.ru.1 "+ prefixman+"/ru/man1/devicesinlan_gui.1")
+
+def makefile_install_console():
+        shell("install -o root -d "+ prefixbin)
+        shell("install -o root -d "+ prefixlib)
+        shell("install -o root -d "+ prefixshare)
+        shell("install -o root -d "+ prefixman+"/man1")
+        shell("install -o root -d "+ prefixman+"/es/man1")
+        shell("install -o root -d "+ prefixman+"/fr/man1")
+        shell("install -o root -d "+ prefixman+"/ro/man1")
+        shell("install -o root -d "+ prefixman+"/ru/man1")
+
+        shell("install -m 755 -o root devicesinlan.py "+ prefixbin+"/devicesinlan")
+        shell("install -m 644 -o root libdevicesinlan.py "+ prefixlib)
+        shell("install -m 644 -o root i18n/*.qm " + prefixlib)
+        shell("install -m 644 -o root GPL-3.txt CHANGELOG.txt AUTHORS.txt INSTALL.txt ieee-oui.txt "+ prefixshare)
         shell("install -m 644 -o root doc/devicesinlan.en.1 "+ prefixman+"/man1/devicesinlan.1")
         shell("install -m 644 -o root doc/devicesinlan.es.1 "+ prefixman+"/es/man1/devicesinlan.1")
         shell("install -m 644 -o root doc/devicesinlan.fr.1 "+ prefixman+"/fr/man1/devicesinlan.1")
@@ -191,15 +216,18 @@ def mangenerator(language):
 if __name__ == '__main__':
     start=datetime.datetime.now()
     parser=argparse.ArgumentParser(prog='Makefile.py', description='Makefile in python', epilog="Developed by Mariano Muñoz", formatter_class=argparse.RawTextHelpFormatter)
-    parser.add_argument('--doc', help="Generate docs and i18n",action="store_true",default=False)
-    parser.add_argument('--compile', help="App compilation",action="store_true",default=False)
-    parser.add_argument('--compile_images', help="App images compilation",action="store_true",default=False)
-    parser.add_argument('--destdir', help="Directory to install",action="store",default="/")
-    parser.add_argument('--uninstall', help="Uninstall",action="store_true",default=False)
-    parser.add_argument('--dist_sources', help="Make a sources tar", action="store_true",default=False)
-    parser.add_argument('--dist_linux', help="Make a Linux binary distribution", action="store_true",default=False)
-    parser.add_argument('--dist_windows', help="Make a Windows binary distribution", action="store_true",default=False)
+    group=parser.add_mutually_exclusive_group()
+    group.add_argument('--doc', help="Generate docs and i18n",action="store_true",default=False)
+    group.add_argument('--compile', help="App compilation",action="store_true",default=False)
+    group.add_argument('--compile_images', help="App images compilation",action="store_true",default=False)
+    group.add_argument('--install_all', help="Directory to install console and gui app. / recomended",action="store",default=None)
+    group.add_argument('--install_console', help="Directory to install only console app. / recomended",action="store",default=None)
+    group.add_argument('--uninstall', help="Uninstall. / recomended",action="store",default=None)
+    group.add_argument('--dist_sources', help="Make a sources tar", action="store_true",default=False)
+    group.add_argument('--dist_linux', help="Make a Linux binary distribution", action="store_true",default=False)
+    group.add_argument('--dist_windows', help="Make a Windows binary distribution", action="store_true",default=False)
     parser.add_argument('--python', help="Python path", action="store",default='/usr/bin/python3')
+
     args=parser.parse_args()
 
     if "--dist_windows" in sys.argv and platform.system()!="Windows":
@@ -213,21 +241,35 @@ if __name__ == '__main__':
     app.setOrganizationName("DevicesInLAN")
     app.setOrganizationDomain("devicesinlan.sourceforge.net")
     app.setApplicationName("devicesinlan_makefile")
-    
+
     mem=MemApp()
     mem.setApp(app)
-    
-    prefixbin=args.destdir+"/usr/bin"
-    prefixlib=args.destdir+"/usr/lib/devicesinlan"
-    prefixshare=args.destdir+"/usr/share/devicesinlan"
-    prefixpixmaps=args.destdir+"/usr/share/pixmaps"
-    prefixapplications=args.destdir+"/usr/share/applications"
-    prefixman=args.destdir+"/usr/share/man"
+    print(args.install_all)
 
-    if args.doc==True:
+    if args.install_all or args.install_console or args.uninstall:
+        if args.install_all:
+            destdir=args.install_all
+        elif args.install_console:
+            destdir=args.install_console
+        elif args.uninstall:
+            destdir=args.uninstall
+
+        prefixbin=destdir+"/usr/bin"
+        prefixlib=destdir+"/usr/lib/devicesinlan"
+        prefixshare=destdir+"/usr/share/devicesinlan"
+        prefixpixmaps=destdir+"/usr/share/pixmaps"
+        prefixapplications=destdir+"/usr/share/applications"
+        prefixman=destdir+"/usr/share/man"
+
+        if args.install_all:
+            makefile_install_all()
+        if args.install_console:
+            makefile_install_console()
+        if args.uninstall:
+            makefile_uninstall()
+
+    elif args.doc==True:
         makefile_doc()
-    elif args.uninstall==True:
-        makefile_uninstall()
     elif args.dist_sources==True:
         makefile_dist_sources()
     elif args.dist_linux==True:
@@ -238,8 +280,6 @@ if __name__ == '__main__':
         makefile_compile()
     elif args.compile_images==True:
         makefile_compile_images()
-    else:
-        makefile_install_all()
 
     print ("*** Process took {} using {} processors ***".format(datetime.datetime.now()-start , cpu_count()))
 

@@ -233,7 +233,6 @@ class frmMain(QMainWindow, Ui_frmMain):#
         inicio=datetime.datetime.now()
         set=SetDevices(self.mem)
         set.setMethod(ArpScanMethod.PingArp)
-        set.print()
         
         self.tab = myTab(set, self.tabWidget)
         self.tab.setLabelText(self.tr("It took {} to detect {} devices".format(datetime.datetime.now()-inicio, set.length())))
