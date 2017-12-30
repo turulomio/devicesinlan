@@ -220,9 +220,9 @@ if __name__ == '__main__':
     group.add_argument('--doc', help="Generate docs and i18n",action="store_true",default=False)
     group.add_argument('--compile', help="App compilation",action="store_true",default=False)
     group.add_argument('--compile_images', help="App images compilation",action="store_true",default=False)
-    group.add_argument('--install_all', help="Directory to install console and gui app. / recomended",action="store",default=None)
-    group.add_argument('--install_console', help="Directory to install only console app. / recomended",action="store",default=None)
-    group.add_argument('--uninstall', help="Uninstall. / recomended",action="store",default=None)
+    group.add_argument('--install_all', help="Directory to install console and gui app. / recomended",action="store", metavar="PATH", default=None)
+    group.add_argument('--install_console', help="Directory to install only console app. / recomended",action="store", metavar="PATH", default=None)
+    group.add_argument('--uninstall', help="Uninstall. / recomended",action="store", metavar="PATH", default=None)
     group.add_argument('--dist_sources', help="Make a sources tar", action="store_true",default=False)
     group.add_argument('--dist_linux', help="Make a Linux binary distribution", action="store_true",default=False)
     group.add_argument('--dist_windows', help="Make a Windows binary distribution", action="store_true",default=False)
@@ -244,7 +244,6 @@ if __name__ == '__main__':
 
     mem=MemApp()
     mem.setApp(app)
-    print(args.install_all)
 
     if args.install_all or args.install_console or args.uninstall:
         if args.install_all:
