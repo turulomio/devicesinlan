@@ -86,7 +86,7 @@ if __name__ == "__main__":
 
     man=Man("doc/devicesinlan.{}".format(args.language))
     man.setMetadata("devicesinlan",  1,   datetime.date.today(), "Mariano Muñoz", QCoreApplication.translate("mangenerator","Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net."))
-    man.setSynopsis("[--help] [--version] [--debug DEBUG] [ --wizard | --interface | --add | --remove | --list | --load | --save | --reset ]")
+    man.setSynopsis("[--help] [--version] [--debug DEBUG] [ --interface | --add | --remove | --list | --load | --save | --reset ]")
 
     man.header(QCoreApplication.translate("mangenerator","DESCRIPTION"), 1)
     man.paragraph(QCoreApplication.translate("mangenerator","If you launch deviceslan without parameters a console wizard is launched."), 1)

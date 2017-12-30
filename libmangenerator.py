@@ -134,7 +134,7 @@ If you write more than one paragraph, start the other paragraphs with the .PP co
 <hr>
 <p>Created with libmangenerator at {}</p>
 </body>
-</html>""".format(datetime.datetime.now())
+</html>""".format(datetime.date.today())
 
     def saveHTML(self):
         f=open("{}.{}.html".format(self.filename, self.manlevel), "w")
