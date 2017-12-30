@@ -3,27 +3,27 @@
 <context>
     <name>Device</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="666"/>
+        <location filename="../libdevicesinlan_gui.py" line="666"/>
         <source>Input an alias of the known device: </source>
         <translation>Añada un alias del dispositivo conocido: </translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="671"/>
+        <location filename="../libdevicesinlan_gui.py" line="671"/>
         <source>You need to add an alias</source>
         <translation>Necesita añadir un alias</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="656"/>
+        <location filename="../libdevicesinlan_gui.py" line="656"/>
         <source>Input the MAC of the known device (XX:XX:XX:XX:XX:XX): </source>
         <translation>Introduzca la MAC de un dispositivo desconocido (XX:XX:XX:XX:XX:XX): </translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="661"/>
+        <location filename="../libdevicesinlan_gui.py" line="661"/>
         <source>You need to insert a mac with the next format: 2A:3B:4C:5D:6E:7A</source>
         <translation>Necesita añadir una mac con el siguiente formato: 2A:3B:4C:5D:6E:7A</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="677"/>
+        <location filename="../libdevicesinlan_gui.py" line="677"/>
         <source>Select a type for the known device</source>
         <translation>Selecciona un tipo para el dispositivo conocido</translation>
     </message>
@@ -31,7 +31,7 @@
 <context>
     <name>Interface</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="205"/>
+        <location filename="../libdevicesinlan_gui.py" line="205"/>
         <source>Interface {} ({}) with ip {}/{} and mac {}</source>
         <translation>Interfaz {} ({}) con ip {}/{} y mac {}</translation>
     </message>
@@ -39,75 +39,88 @@
 <context>
     <name>Mem</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="61"/>
+        <location filename="../libdevicesinlan_gui.py" line="61"/>
         <source>Language ({}) couldn&apos;t be loaded in {}. Using default (en).</source>
         <translation>El idioma ({}) no pudo ser cargado en {}. Usando el idioma por defecto (en).</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="58"/>
+        <location filename="../libdevicesinlan_gui.py" line="58"/>
         <source>Language changed to {} using {}</source>
         <translation>El idioma cambio a {} usando {}</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="48"/>
+        <location filename="../libdevicesinlan_gui.py" line="48"/>
         <source>Error collecting statistics</source>
         <translation>Error al recoger las estadísticas</translation>
     </message>
 </context>
 <context>
+    <name>MemApp</name>
+    <message>
+        <location filename="../libdevicesinlan.py" line="47"/>
+        <source>Language changed to {} using {}</source>
+        <translation>El idioma cambio a {} usando {}</translation>
+    </message>
+    <message>
+        <location filename="../libdevicesinlan.py" line="50"/>
+        <source>Language ({}) couldn&apos;t be loaded in {}. Using default (en).</source>
+        <translation>El idioma ({}) no pudo ser cargado en {}. Usando el idioma por defecto (en).</translation>
+    </message>
+</context>
+<context>
     <name>SetDeviceTypes</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="126"/>
+        <location filename="../libdevicesinlan_gui.py" line="126"/>
         <source>Unknown</source>
         <translation>Desconocido</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="127"/>
+        <location filename="../libdevicesinlan_gui.py" line="127"/>
         <source>Television</source>
         <translation>Televisión</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="128"/>
+        <location filename="../libdevicesinlan_gui.py" line="128"/>
         <source>Digital camera</source>
         <translation>Cámara digital</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="129"/>
+        <location filename="../libdevicesinlan_gui.py" line="129"/>
         <source>Web camera</source>
         <translation>Cámara Web</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="130"/>
+        <location filename="../libdevicesinlan_gui.py" line="130"/>
         <source>Laptop</source>
         <translation>Ordenador portátil</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="131"/>
+        <location filename="../libdevicesinlan_gui.py" line="131"/>
         <source>Computer</source>
         <translation>Ordenador personal</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="132"/>
+        <location filename="../libdevicesinlan_gui.py" line="132"/>
         <source>Modem</source>
         <translation>Router</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="133"/>
+        <location filename="../libdevicesinlan_gui.py" line="133"/>
         <source>Smartphone</source>
         <translation>Teléfono móvil</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="134"/>
+        <location filename="../libdevicesinlan_gui.py" line="134"/>
         <source>Printer</source>
         <translation>Impresora</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="135"/>
+        <location filename="../libdevicesinlan_gui.py" line="135"/>
         <source>Tablet</source>
         <translation>Tableta</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="136"/>
+        <location filename="../libdevicesinlan_gui.py" line="136"/>
         <source>Wireless USB dongle</source>
         <translation>Adaptador USB WIFI</translation>
     </message>
@@ -115,42 +128,42 @@
 <context>
     <name>SetDevices</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="488"/>
+        <location filename="../libdevicesinlan_gui.py" line="488"/>
         <source>{} DEVICES IN LAN FROM {} INTERFACE AT {}</source>
         <translation>{} DISPOSITIVOS EN RED DESDE EL INTERFAZ {} A LAS {}</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="539"/>
+        <location filename="../libdevicesinlan_gui.py" line="539"/>
         <source>This device</source>
         <translation>Este dispositivo</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="514"/>
+        <location filename="../libdevicesinlan_gui.py" line="514"/>
         <source>{} DEVICES IN DATABASE AT {}</source>
         <translation>{} DISPOSITIVOS EN LA BASE DE DATOS A LAS {}</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="564"/>
+        <location filename="../libdevicesinlan_gui.py" line="564"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="565"/>
+        <location filename="../libdevicesinlan_gui.py" line="565"/>
         <source>MAC</source>
         <translation>MAC</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="566"/>
+        <location filename="../libdevicesinlan_gui.py" line="566"/>
         <source>Alias</source>
         <translation>Alias</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="567"/>
+        <location filename="../libdevicesinlan_gui.py" line="567"/>
         <source>Hardware</source>
         <translation>Hardware</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="529"/>
+        <location filename="../libdevicesinlan_gui.py" line="529"/>
         <source>IP</source>
         <translation>IP</translation>
     </message>
@@ -158,12 +171,12 @@
 <context>
     <name>devicesinlan</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="886"/>
+        <location filename="../libdevicesinlan_gui.py" line="886"/>
         <source>True</source>
         <translation>Verdadero</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="889"/>
+        <location filename="../libdevicesinlan_gui.py" line="889"/>
         <source>False</source>
         <translation>Falso</translation>
     </message>
@@ -291,6 +304,176 @@
         <location filename="../devicesinlan.py" line="140"/>
         <source>This interface doesn&apos;t exist. Please remove the --interface parameter to use a wizard.</source>
         <translation>Este interfaz no existe. Por favor borre el parámetro --interface para usar un asistente.</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="166"/>
+        <source>DESCRIPTION</source>
+        <translation>DESCRIPCIÓN</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="163"/>
+        <source>Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net.</source>
+        <translation>Escanéa todos los dispositivos en tu red. Luego permite establecer un alias a tus dispositivos conocidos para que se pueda detectar dispositivos estraños en tu red.</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="136"/>
+        <source>In the app menu you have the followings features:</source>
+        <translation>En el menú del aplicación tienes las siguientes funcionalidades:</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="137"/>
+        <source>Devices &gt; New Scan</source>
+        <translation>Dispositivos -&gt; Nuevo escaneado</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="138"/>
+        <source>Searches all devices in tha LAN and show them in a new tab. If some device is not in the known devices list it will be shown with a red background. Devices with a green background are trusted devices</source>
+        <translation>Busca todos los dispositivos existentes en la red y los muestra en una nueva pestaña. Si algún dispositivo no está en la lista de dispositivos conocidos, será mostrado con un fondo rojo. Los dispositivos con un fondo verde son dispositivos confiables</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="139"/>
+        <source>Devices &gt; Show devices database</source>
+        <translation>Dispositivos &gt; Mostrar base de datos</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="140"/>
+        <source>Shows all known devices in a new tab.</source>
+        <translation>Muestra todos los dispositivos conocidos en una nueva pestaña.</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="141"/>
+        <source>Right click allows you to edit known devices database.</source>
+        <translation>Al hacer un click derecho, podrás editar la base de datos de dispositivos conocidos.</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="142"/>
+        <source>Devices &gt; Load devices list</source>
+        <translation>Dispositivos -&gt; Carga una lista de dispositivos</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="179"/>
+        <source>Loads a list of known devices in xml format.</source>
+        <translation>Carga una lista de dispositivos conocidos en formato XML.</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="144"/>
+        <source>Devices &gt; Save devices list</source>
+        <translation>Dispositivos -&gt; Guarda la lista de dispositivos</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="181"/>
+        <source>Saves the known devices list to a xml file.</source>
+        <translation>Guarda la lista de dispositivos conocidos a un fichero XML.</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="146"/>
+        <source>Devices &gt; Reset database</source>
+        <translation>Dispositivos &gt; Borrar base de datos</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="186"/>
+        <source>Removes all known devices.</source>
+        <translation>Borra todos los dispositivos conocidos.</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="148"/>
+        <source>This option erases all known devices in database.</source>
+        <translation>Esta opción borra todos los dispositivos conocidos de la base de datos.</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="149"/>
+        <source>Configuration &gt; Settings</source>
+        <translation>Configuración &gt; Preferencias</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="150"/>
+        <source>In this dialog you can select your prefered language and you can configure the number of concurrence request.</source>
+        <translation>En este dialogo, puedes seleccionar tu idioma favorita y puedes configurar el número de peticiones concurrentes.</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="151"/>
+        <source>Help &gt; Help</source>
+        <translation>Ayuda &gt; Ayuda</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="152"/>
+        <source>Shows this help information.</source>
+        <translation>Muestra esta ayuda.</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="153"/>
+        <source>Help &gt; About</source>
+        <translation>Ayuda &gt; Acerca de</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="154"/>
+        <source>Shows information about DevicesInLAN license and authors.</source>
+        <translation>Muestra información sobre la licencia y los autores de DevicesInLan.</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="155"/>
+        <source>Help &gt; Check for updates</source>
+        <translation>Ayuda -&gt; Buscar actualizaciones</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="156"/>
+        <source>Checks for updates in DevicesInLan repository.</source>
+        <translation>Busca actualizaciónes en el repositorio de DevicesInLan.</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="157"/>
+        <source>Help &gt; Exit</source>
+        <translation>Ayuda &gt; Salir</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="158"/>
+        <source>Exits from program.</source>
+        <translation>Sale del programa.</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="167"/>
+        <source>If you launch deviceslan without parameters a console wizard is launched.</source>
+        <translation>Si ejecuta devicesinlan sin parámetros será lanzado un asistente en consola.</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="168"/>
+        <source>Morever you can use one of this parameters.</source>
+        <translation>Además puedes usar uno de estos parámetros.</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="170"/>
+        <source>Scans the net of the interface parameter and prints a list of the detected devices.</source>
+        <translation>Escanéa la red del interfaz pasado como parámetro y lista los dispositivos detectados.</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="171"/>
+        <source>If a device is not known, it will be showed in red. Devices in green are trusted devices.</source>
+        <translation>Si un dispositivo es desconocido, será mostrado en rojo. Los dispositivos en verde son dispositivos confiables.</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="173"/>
+        <source>Allows to add a known device from console.</source>
+        <translation>Permite añadir un dispositivo conocido desde consola.</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="175"/>
+        <source>Allows to remove a known device from console.</source>
+        <translation>Permite borrar un dispositivo conocido desde consola.</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="177"/>
+        <source>Shows all known devices in database from console.</source>
+        <translation>Muestra todos los dispositivos conocidos en la base de datos, desde consola.</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="183"/>
+        <source>Gives debugging information when running DevicesInLAN. It&apos;s deactivated by default</source>
+        <translation>Muestra información de depuración cuando se ejecuta DevicesInLan. Está desactivada por defecto</translation>
+    </message>
+    <message>
+        <location filename="../Makefile.py" line="184"/>
+        <source>The parameter can take this options: CRITICAL, ERROR, WARNING, INFO, DEBUG.</source>
+        <translation>El parámetro puede tomar los siguientes valores: CRITICAL, ERROR, WARNING, INFO, DEBUG.</translation>
     </message>
 </context>
 <context>
@@ -614,179 +797,6 @@
         <location filename="../ui/Ui_frmSettings.py" line="98"/>
         <source>Concurrent requests</source>
         <translation>Peticiones concurrentes</translation>
-    </message>
-</context>
-<context>
-    <name>mangenerator</name>
-    <message>
-        <location filename="../mangenerator.py" line="88"/>
-        <source>Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net.</source>
-        <translation>Escanéa todos los dispositivos en tu red. Luego permite establecer un alias a tus dispositivos conocidos para que se pueda detectar dispositivos estraños en tu red.</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="73"/>
-        <source>This option erases all known devices in database.</source>
-        <translation>Esta opción borra todos los dispositivos conocidos de la base de datos.</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="75"/>
-        <source>In this dialog you can select your prefered language and you can configure the number of concurrence request.</source>
-        <translation>En este dialogo, puedes seleccionar tu idioma favorita y puedes configurar el número de peticiones concurrentes.</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="76"/>
-        <source>Help &gt; Help</source>
-        <translation>Ayuda &gt; Ayuda</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="78"/>
-        <source>Help &gt; About</source>
-        <translation>Ayuda &gt; Acerca de</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="82"/>
-        <source>Help &gt; Exit</source>
-        <translation>Ayuda &gt; Salir</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="95"/>
-        <source>Scans the net of the interface parameter and prints a list of the detected devices.</source>
-        <translation>Escanéa la red del interfaz pasado como parámetro y lista los dispositivos detectados.</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="96"/>
-        <source>If a device is not known, it will be showed in red. Devices in green are trusted devices.</source>
-        <translation>Si un dispositivo es desconocido, será mostrado en rojo. Los dispositivos en verde son dispositivos confiables.</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="61"/>
-        <source>In the app menu you have the followings features:</source>
-        <translation>En el menú del aplicación tienes las siguientes funcionalidades:</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="62"/>
-        <source>Devices &gt; New Scan</source>
-        <translation>Dispositivos -&gt; Nuevo escaneado</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="64"/>
-        <source>Devices &gt; Show devices database</source>
-        <translation>Dispositivos &gt; Mostrar base de datos</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="71"/>
-        <source>Devices &gt; Reset database</source>
-        <translation>Dispositivos &gt; Borrar base de datos</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="74"/>
-        <source>Configuration &gt; Settings</source>
-        <translation>Configuración &gt; Preferencias</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="67"/>
-        <source>Devices &gt; Load devices list</source>
-        <translation>Dispositivos -&gt; Carga una lista de dispositivos</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="69"/>
-        <source>Devices &gt; Save devices list</source>
-        <translation>Dispositivos -&gt; Guarda la lista de dispositivos</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="77"/>
-        <source>Shows this help information.</source>
-        <translation>Muestra esta ayuda.</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="79"/>
-        <source>Shows information about DevicesInLAN license and authors.</source>
-        <translation>Muestra información sobre la licencia y los autores de DevicesInLan.</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="80"/>
-        <source>Help &gt; Check for updates</source>
-        <translation>Ayuda -&gt; Buscar actualizaciones</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="83"/>
-        <source>Exits from program.</source>
-        <translation>Sale del programa.</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="98"/>
-        <source>Allows to add a known device from console.</source>
-        <translation>Permite añadir un dispositivo conocido desde consola.</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="100"/>
-        <source>Allows to remove a known device from console.</source>
-        <translation>Permite borrar un dispositivo conocido desde consola.</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="104"/>
-        <source>Loads a list of known devices in xml format.</source>
-        <translation>Carga una lista de dispositivos conocidos en formato XML.</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="106"/>
-        <source>Saves the known devices list to a xml file.</source>
-        <translation>Guarda la lista de dispositivos conocidos a un fichero XML.</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="111"/>
-        <source>Removes all known devices.</source>
-        <translation>Borra todos los dispositivos conocidos.</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="102"/>
-        <source>Shows all known devices in database from console.</source>
-        <translation>Muestra todos los dispositivos conocidos en la base de datos, desde consola.</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="65"/>
-        <source>Shows all known devices in a new tab.</source>
-        <translation>Muestra todos los dispositivos conocidos en una nueva pestaña.</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="66"/>
-        <source>Right click allows you to edit known devices database.</source>
-        <translation>Al hacer un click derecho, podrás editar la base de datos de dispositivos conocidos.</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="81"/>
-        <source>Checks for updates in DevicesInLan repository.</source>
-        <translation>Busca actualizaciónes en el repositorio de DevicesInLan.</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="108"/>
-        <source>Gives debugging information when running DevicesInLAN. It&apos;s deactivated by default</source>
-        <translation>Muestra información de depuración cuando se ejecuta DevicesInLan. Está desactivada por defecto</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="109"/>
-        <source>The parameter can take this options: CRITICAL, ERROR, WARNING, INFO, DEBUG.</source>
-        <translation>El parámetro puede tomar los siguientes valores: CRITICAL, ERROR, WARNING, INFO, DEBUG.</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="63"/>
-        <source>Searches all devices in tha LAN and show them in a new tab. If some device is not in the known devices list it will be shown with a red background. Devices with a green background are trusted devices</source>
-        <translation>Busca todos los dispositivos existentes en la red y los muestra en una nueva pestaña. Si algún dispositivo no está en la lista de dispositivos conocidos, será mostrado con un fondo rojo. Los dispositivos con un fondo verde son dispositivos confiables</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="91"/>
-        <source>DESCRIPTION</source>
-        <translation>DESCRIPCIÓN</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="92"/>
-        <source>If you launch deviceslan without parameters a console wizard is launched.</source>
-        <translation>Si ejecuta devicesinlan sin parámetros será lanzado un asistente en consola.</translation>
-    </message>
-    <message>
-        <location filename="../mangenerator.py" line="93"/>
-        <source>Morever you can use one of this parameters.</source>
-        <translation>Además puedes usar uno de estos parámetros.</translation>
     </message>
 </context>
 <context>

@@ -8,9 +8,7 @@ import platform
 import subprocess
 import time
 import socket
-from PyQt5.QtCore import QCoreApplication, QSettings, QTranslator, Qt, QObject
-from PyQt5.QtWidgets import QTableWidgetItem, QMessageBox
-from PyQt5.QtGui import QColor,  QPixmap, QIcon
+from PyQt5.QtCore import QCoreApplication, QSettings, QTranslator, QObject
 from PyQt5.QtNetwork import QNetworkInterface, QAbstractSocket,  QTcpSocket
 from colorama import Style, Fore
 from concurrent.futures import ThreadPoolExecutor,  as_completed
@@ -25,28 +23,17 @@ class TypesARP:
     Gratuitous = 1
     Standard = 2
 
-class Mem(QObject):
+class MemApp(QObject):
+    """
+        Basic mem for translating app 
+    """
     def __init__(self):
         QObject.__init__(self)
-        self.settings=QSettings()
         self.translator=QTranslator()
-        self.interfaces=SetInterfaces(self)
-        self.interfaces.load_all()
-        self.types=SetDeviceTypes(self)
-        self.types.load_all()
 
     def setApp(self, app):
         self.app=app#Link to app
 
-    def setInstallationUUID(self):
-        if self.settings.value("frmMain/uuid", "None")=="None":
-            self.settings.setValue("frmMain/uuid", str(uuid4()))
-        url='http://devicesinlan.sourceforge.net/php/devicesinlan_installations.php?uuid={}&version={}&platform={}'.format(self.settings.value("frmMain/uuid"), version, platform.system())
-        try:
-            web=b2s(urlopen(url).read())
-        except:
-            web=self.tr("Error collecting statistics")
-        logging.debug("{}, answering {}".format(web, url))
 
     def change_language(self, language):  
         """language es un string"""
@@ -60,6 +47,27 @@ class Mem(QObject):
         if language!="en":
             logging.warning(Style.BRIGHT+ Fore.CYAN+ self.tr("Language ({}) couldn't be loaded in {}. Using default (en).".format(language, urls)))
 
+class Mem(MemApp):
+    """
+        Mem for running app
+    """
+    def __init__(self):
+        MemApp.__init__(self)
+        self.settings=QSettings()
+        self.interfaces=SetInterfaces(self)
+        self.interfaces.load_all()
+        self.types=SetDeviceTypes(self)
+        self.types.load_all()
+    def setInstallationUUID(self):
+        if self.settings.value("frmMain/uuid", "None")=="None":
+            self.settings.setValue("frmMain/uuid", str(uuid4()))
+        url='http://devicesinlan.sourceforge.net/php/devicesinlan_installations.php?uuid={}&version={}&platform={}'.format(self.settings.value("frmMain/uuid"), version, platform.system())
+        try:
+            web=b2s(urlopen(url).read())
+        except:
+            web=self.tr("Error collecting statistics")
+        logging.debug("{}, answering {}".format(web, url))
+
 class DeviceType:
     def __init__(self, mem):
         self.mem=mem
@@ -71,35 +79,7 @@ class DeviceType:
         self.name=name
         return self
         
-    def qpixmap(self):
-        if self.id==0:
-            return QPixmap(":/devicesinlan.png")
-        elif self.id==1:
-            return QPixmap(":/devices/video-television.png")
-        elif self.id==2:
-            return QPixmap(":/devices/camera-photo.png")
-        elif self.id==3:
-            return QPixmap(":/devices/camera-web.png")
-        elif self.id==4:
-            return QPixmap(":/devices/computer-laptop.png")
-        elif self.id==5:
-            return QPixmap(":/devices/computer.png")
-        elif self.id==6:
-            return QPixmap(":/devices/modem.png")
-        elif self.id==7:
-            return QPixmap(":/devices/smartphone.png")
-        elif self.id==8:
-            return QPixmap(":/devices/printer.png")
-        elif self.id==9:
-            return QPixmap(":/devices/tablet.png")
-        elif self.id==10:
-            return QPixmap(":/devices/usb-wireless.png")
-        return None
-        
-    def qicon(self):
-        ico = QIcon()
-        ico.addPixmap(self.qpixmap(), QIcon.Normal, QIcon.Off) 
-        return ico
+
 
 
 class SetDeviceTypes(QObject):
@@ -122,7 +102,7 @@ class SetDeviceTypes(QObject):
     def append(self, o):
         self.arr.append(o)
         
-    def load_all(self):
+    def load_all(self):            
         self.append(DeviceType(self.mem).init__create(0, self.tr( "Unknown")))
         self.append(DeviceType(self.mem).init__create(1, self.tr( "Television")))
         self.append(DeviceType(self.mem).init__create(2, self.tr( "Digital camera")))
@@ -147,15 +127,6 @@ class SetDeviceTypes(QObject):
             return True
         except:
             return False       
-    def qcombobox(self, combo, selected=None):
-        """Selected is id"""
-        self.order_by_name()
-        for l in self.arr:
-            combo.addItem(l.qicon(), l.name, l.id)
-        if selected==None:
-            selected=0
-        if selected!=None:
-                combo.setCurrentIndex(combo.findData(selected))
 
 class Interface(QObject):
     """Union of Interface and networkaddressentry. Remember than a interface can have networkaddressentry. ipaddress is qhostaddress"""
@@ -242,18 +213,7 @@ class SetInterfaces:
             return True
         except:
             return False       
-            
-    def qcombobox(self, combo, selected=None):
-        """Selected is id"""
-        self.order_by_name()
-        for l in self.arr:
-            if l.name()==None:
-                name="Interfaz sin nombre"
-            else:
-                name=l.name()
-            combo.addItem(name, l.id())
-        if selected!=None:
-                combo.setCurrentIndex(combo.findData(selected))        
+              
                 
 class ArpScanMethod:
     PingArp=0 #Ping + ARP
@@ -518,61 +478,6 @@ class SetDevices(QObject):
             print ("{}  {}  {}  {}".format(h.type.name.ljust(maxtype), mac.center(17),   Style.BRIGHT + Fore.YELLOW+ h.alias.ljust(maxalias), Style.NORMAL + Fore.WHITE+  str(h.oui).ljust(maxoui)))    
         print (Style.BRIGHT+"="*(maxlength))
 
-    def qtablewidget(self, table):
-        self.order_by_ip() 
-        ##HEADERS
-        table.setColumnCount(5)
-        table.setHorizontalHeaderItem(0, QTableWidgetItem(self.tr("Type" )))
-        table.setHorizontalHeaderItem(1, QTableWidgetItem(self.tr("MAC" )))
-        table.setHorizontalHeaderItem(2,  QTableWidgetItem(self.tr("Alias" )))
-        table.setHorizontalHeaderItem(3, QTableWidgetItem(self.tr("Hardware" )))
-        table.setHorizontalHeaderItem(4, QTableWidgetItem(self.tr("IP" )))
-        ##DATA 
-        table.clearContents()   
-        table.setRowCount(self.length())
-        for rownumber, h in enumerate(self.arr):
-            alias=""
-            if h.alias!=None:
-                alias=h.alias
-            if h.ip==self.mem.interfaces.selected.ip():
-                alias=self.tr("This device")
-            if h.type!=None:#Error en Windows
-                table.setItem(rownumber, 0, qleft(h.type.name))
-                table.item(rownumber,0).setIcon(h.type.qicon())
-            else:
-                table.setItem(rownumber, 0, qleft("None"))
-            table.setItem(rownumber, 1, qleft(h.mac))
-            table.setItem(rownumber, 2, qleft(alias))
-            table.setItem(rownumber, 3, qleft(h.oui))
-            table.setItem(rownumber, 4, qleft(h.ip))
-            if alias!="":
-                for i in range(0, table.columnCount()):
-                    if h.ip==self.mem.interfaces.selected.ip():
-                        table.item(rownumber, i).setBackground( QColor(182, 182, 255))
-                    else:
-                        table.item(rownumber, i).setBackground( QColor(182, 255, 182))
-
-            else:
-                for i in range(0, table.columnCount()):
-                    table.item(rownumber, i).setBackground( QColor(255, 182, 182))       
-
-    def qtablewidget_devices_from_settings(self, table):
-        self.order_by_alias() 
-        ##HEADERS
-        table.setColumnCount(4)
-        table.setHorizontalHeaderItem(0, QTableWidgetItem(self.tr("Type" )))
-        table.setHorizontalHeaderItem(1, QTableWidgetItem(self.tr("MAC" )))
-        table.setHorizontalHeaderItem(2,  QTableWidgetItem(self.tr("Alias" )))
-        table.setHorizontalHeaderItem(3, QTableWidgetItem(self.tr("Hardware" )))
-        ##DATA 
-        table.clearContents()   
-        table.setRowCount(self.length())
-        for rownumber, h in enumerate(self.arr):
-            table.setItem(rownumber, 0, qleft(h.type.name))
-            table.item(rownumber, 0).setIcon(h.type.qicon())
-            table.setItem(rownumber, 1, qleft(h.mac))
-            table.setItem(rownumber, 2, qleft(h.alias))
-            table.setItem(rownumber, 3, qleft(h.oui))
 
     def saveXml(self, filename):
         """
@@ -868,24 +773,6 @@ def input_YN(pregunta, default="Y"):
 def input_string(text):
     return input(text)
 
-    
-def qbool(bool):
-    """Prints bool and check. Is read only and enabled"""
-    a=QTableWidgetItem()
-    a.setFlags( Qt.ItemIsSelectable |  Qt.ItemIsEnabled )#Set no editable
-    if bool:
-        a.setCheckState(Qt.Checked);
-        a.setText(QCoreApplication.translate("devicesinlan","True"))
-    else:
-        a.setCheckState(Qt.Unchecked);
-        a.setText(QCoreApplication.translate("devicesinlan","False"))
-    a.setTextAlignment(Qt.AlignVCenter|Qt.AlignCenter)
-    return a
-    
-def qleft(string):
-    a=QTableWidgetItem(str(string))
-    a.setTextAlignment(Qt.AlignVCenter|Qt.AlignLeft)
-    return a
 
 def b2s(b, code='UTF-8'):
     return bytes(b).decode(code)
@@ -895,19 +782,4 @@ def s2b(s, code='UTF8'):
         return "".encode(code)
     else:
         return s.encode(code)
-        
-def qmessagebox(message, type=QMessageBox.Information):
-    m=QMessageBox()
-    m.setWindowIcon(QIcon(":/devicesinlan.png"))
-    m.setIcon(type)
-    m.setText(str(message))
-    m.exec_() 
-    
-def qquestion(message, qicon ):
-    """
-        return can be QMessageBox.Yes, QMessageBox.No
-    """
-    m=QMessageBox()
-    m.setWindowIcon(qicon)
-    return m.question(None, "DevicesInLan", message, QMessageBox.Yes, QMessageBox.No)
         

@@ -1,6 +1,7 @@
 SOURCES         = libdevicesinlan.py \
+                  libdevicesinlan_gui.py \
                   libmangenerator.py \
-                  mangenerator.py \
+                  Makefile.py \
                   devicesinlan.py \
                   devicesinlan_gui.py \
                   ui/frmMain.py \

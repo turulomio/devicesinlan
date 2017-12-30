@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QDialog
 from Ui_frmDeviceCRUD import Ui_frmDeviceCRUD
+from libdevicesinlan_gui import SetDeviceTypes_qcombobox
 
 
 class frmDeviceCRUD(QDialog, Ui_frmDeviceCRUD):
@@ -12,7 +13,7 @@ class frmDeviceCRUD(QDialog, Ui_frmDeviceCRUD):
         self.txtMAC.setText(self.device.mac.upper())
         if self.device.alias:
             self.txtAlias.setText(self.device.alias)
-        self.mem.types.qcombobox(self.cmbType, self.device.type.id)
+        SetDeviceTypes_qcombobox(self.mem.types, self.cmbType, self.device.type.id)
         
     def on_buttonBox_accepted(self):
         self.device.alias=self.txtAlias.text()

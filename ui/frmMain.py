@@ -7,7 +7,8 @@ from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QMenu, QTabWidget, QTableWidget,  QDialog, QWidget, QVBoxLayout, QLabel,  QAbstractItemView, qApp, QMessageBox, QAction, QFileDialog
 
 from Ui_frmMain import Ui_frmMain
-from libdevicesinlan import dateversion, SetDevices,  ArpScanMethod, b2s,  version,  qmessagebox, qquestion
+from libdevicesinlan import dateversion,  ArpScanMethod, b2s,  version, SetDevices
+from libdevicesinlan_gui import  qmessagebox, qquestion,  SetDevices_qtablewidget,  SetDevices_qtablewidget_devices_from_settings
 from frmSettings import frmSettings
 from frmHelp import frmHelp
 from frmAbout import frmAbout
@@ -60,9 +61,9 @@ class myTab(QWidget):
     
     def table_update(self):
         if self.set.isDatabase==True:
-            self.set.qtablewidget_devices_from_settings(self.table)
+            SetDevices_qtablewidget_devices_from_settings(self.set, self.table)
         else:
-            self.set.qtablewidget(self.table)
+            SetDevices_qtablewidget(self.set, self.table)
         self.table.resizeColumnsToContents()
         
         
@@ -232,6 +233,7 @@ class frmMain(QMainWindow, Ui_frmMain):#
         inicio=datetime.datetime.now()
         set=SetDevices(self.mem)
         set.setMethod(ArpScanMethod.PingArp)
+        set.print()
         
         self.tab = myTab(set, self.tabWidget)
         self.tab.setLabelText(self.tr("It took {} to detect {} devices".format(datetime.datetime.now()-inicio, set.length())))
