@@ -216,7 +216,7 @@ def mangenerator(language):
 if __name__ == '__main__':
     start=datetime.datetime.now()
     parser=argparse.ArgumentParser(prog='Makefile.py', description='Makefile in python', epilog="Developed by Mariano Muñoz", formatter_class=argparse.RawTextHelpFormatter)
-    group=parser.add_mutually_exclusive_group()
+    group=parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--doc', help="Generate docs and i18n",action="store_true",default=False)
     group.add_argument('--compile', help="App compilation",action="store_true",default=False)
     group.add_argument('--compile_images', help="App images compilation",action="store_true",default=False)

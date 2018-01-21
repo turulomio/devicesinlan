@@ -144,8 +144,9 @@ class frmMain(QMainWindow, Ui_frmMain):#
     def on_actionListSave_triggered(self):
         devices=SetDevices(self.mem).init__from_settings()
         c=str(datetime.datetime.now()).replace("-","").replace(":","").replace(" ","_")[:-7]
-        filename = QFileDialog.getSaveFileName(self, self.tr("Save File"), "devicesinlan_{}.xml".format(c), self.tr("eXtensible Markup Language (*.xml)"))[0]
-        devices.saveXml(filename)
+        filename= QFileDialog.getSaveFileName(self, self.tr("Save File"), "devicesinlan_{}.xml".format(c), self.tr("eXtensible Markup Language (*.xml)"))[0]
+        if filename!="":
+            devices.saveXml(filename)
 
         
     def checkUpdates(self, showdialogwhennoupdates=False):
