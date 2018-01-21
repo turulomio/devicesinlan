@@ -4,4 +4,4 @@ recursive-include images *.png  devicesinlan.qrc *.py
 recursive-include ui  *.py
 recursive-include doc *.html *.1
 prune __pycache__
-global-exclude *.pyc libmangenerator.py
+global-exclude *.pyc
