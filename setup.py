@@ -52,10 +52,9 @@ if sys.platform=='win32':
            'data': msi_data
             }
       build_exe_options = dict(
-            optimize=2, 
-            includes = [],
-            excludes=[], 
-            include_files=include_files
+            include_files=include_files, 
+            zip_include_packages=["*"], 
+            zip_exclude_packages=[]
         )
       options={'bdist_msi': build_msi_options, 'build_exe': build_exe_options}
 
