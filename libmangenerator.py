@@ -1,8 +1,7 @@
 import datetime
 """
-    If you want to saveHTML you need to have in your path man2html
+    Este fichero pertenece al proyecto devicesinlan. Si es modificado debe ser ahí y volver a copiarse a otros proyectos
 """
-
 class Man:
     """
         Syntax
