@@ -147,6 +147,12 @@ def makefile_uninstall():
     shell("rm -Rf {}/ro/man1/devicesinlan_gui.1".format(prefixman))
     shell("rm -Rf {}/ru/man1/devicesinlan_gui.1".format(prefixman))
 
+def video():
+    os.chdir("doc/ttyrec")
+    shell("ttyrecgenerator --output devicesinlan_howto_es 'python3 howto.py --language es' --video")
+    shell("ttyrecgenerator --output devicesinlan_howto_en 'python3 howto.py --language en' --video")
+    os.chdir("../..")
+
 def mangenerator(language):
     """
         Create man pages for parameter language
@@ -227,6 +233,7 @@ if __name__ == '__main__':
     group.add_argument('--dist_linux', help="Make a Linux binary distribution", action="store_true",default=False)
     group.add_argument('--dist_windows', help="Make a Windows binary distribution", action="store_true",default=False)
     group.add_argument('--doxygen', help="Generate api documentation with doxygen",action="store_true",default=False)
+    group.add_argument('--video', help="Make a HOWTO video and gif", action="store_true",default=False)
     parser.add_argument('--python', help="Python path", action="store",default='/usr/bin/python3')
 
 
@@ -286,6 +293,8 @@ if __name__ == '__main__':
         os.chdir("doc")
         shell("doxygen Doxyfile")
         os.chdir("..")
+    elif args.video==True:
+        video()
 
     print ("*** Process took {} using {} processors ***".format(datetime.datetime.now()-start , cpu_count()))
 
