@@ -226,7 +226,10 @@ if __name__ == '__main__':
     group.add_argument('--dist_sources', help="Make a sources tar", action="store_true",default=False)
     group.add_argument('--dist_linux', help="Make a Linux binary distribution", action="store_true",default=False)
     group.add_argument('--dist_windows', help="Make a Windows binary distribution", action="store_true",default=False)
+    group.add_argument('--doxygen', help="Generate api documentation with doxygen",action="store_true",default=False)
     parser.add_argument('--python', help="Python path", action="store",default='/usr/bin/python3')
+
+
 
     args=parser.parse_args()
 
@@ -279,6 +282,10 @@ if __name__ == '__main__':
         makefile_compile()
     elif args.compile_images==True:
         makefile_compile_images()
+    elif args.doxygen==True:
+        os.chdir("doc")
+        shell("doxygen Doxyfile")
+        os.chdir("..")
 
     print ("*** Process took {} using {} processors ***".format(datetime.datetime.now()-start , cpu_count()))
 
