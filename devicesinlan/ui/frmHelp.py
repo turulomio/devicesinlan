@@ -1,8 +1,8 @@
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import QUrl, pyqtSlot
-from Ui_frmHelp import Ui_frmHelp
+from devicesinlan.ui.Ui_frmHelp import Ui_frmHelp
 import os
-from frmSettings import SetLanguages
+from devicesinlan.ui.frmSettings import SetLanguages
 
 class frmHelp(QDialog, Ui_frmHelp):
     def __init__(self, mem, parent = None, name = None, modal = False):
@@ -33,6 +33,7 @@ class frmHelp(QDialog, Ui_frmHelp):
             program="devicesinlan"
         else:
             program="devicesinlan_gui"
+        url=pkg_resources.resource_filename("devicesinlan")
         urls= ["{}.{}.1.html".format(program, self.languages.selected.id), "/usr/share/devicesinlan/{}.{}.1.html".format(program, self.languages.selected.id)]
         for url in urls:
             if os.path.exists(url)==True:

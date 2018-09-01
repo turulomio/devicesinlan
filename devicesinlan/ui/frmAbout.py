@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QDialog
-from Ui_frmAbout import Ui_frmAbout
-from  libdevicesinlan import version,  dateversion
+from devicesinlan.ui.Ui_frmAbout import Ui_frmAbout
+from devicesinlan.libdevicesinlan import version,  dateversion
 
 class frmAbout(QDialog, Ui_frmAbout):
     ##Constructor        

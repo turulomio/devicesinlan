@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/frmHelp.ui'
+# Form implementation generated from reading ui file 'devicesinlan/ui/frmHelp.ui'
 #
-# Created by: PyQt5 UI code generator 5.9.2
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -104,4 +104,4 @@ class Ui_frmHelp(object):
         self.cmbProgram.setItemText(0, _translate("frmHelp", "DevicesInLan Graphical Interface"))
         self.cmbProgram.setItemText(1, _translate("frmHelp", "DevicesInLan Console"))
 
-import devicesinlan_rc
+import devicesinlan.ui.devicesinlan_rc

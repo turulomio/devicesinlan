@@ -2,7 +2,7 @@ from PyQt5.QtCore import pyqtSlot, QObject
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import QDialog
 
-from Ui_frmSettings import Ui_frmSettings
+from devicesinlan.ui.Ui_frmSettings import Ui_frmSettings
 
 class Language:
     def __init__(self, id, name):

@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import pyqtSlot
-from Ui_frmInterfaceSelector import Ui_frmInterfaceSelector
-from libdevicesinlan_gui import SetInterfaces_qcombobox
+from devicesinlan.ui.Ui_frmInterfaceSelector import Ui_frmInterfaceSelector
+from devicesinlan.libdevicesinlan_gui import SetInterfaces_qcombobox
 
 
 class frmInterfaceSelector(QDialog, Ui_frmInterfaceSelector):

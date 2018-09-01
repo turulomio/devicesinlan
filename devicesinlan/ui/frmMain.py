@@ -6,14 +6,14 @@ from PyQt5.QtCore import pyqtSlot, Qt, QPoint, QEvent
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QMenu, QTabWidget, QTableWidget,  QDialog, QWidget, QVBoxLayout, QLabel,  QAbstractItemView, qApp, QMessageBox, QAction, QFileDialog
 
-from Ui_frmMain import Ui_frmMain
-from libdevicesinlan import dateversion,  ArpScanMethod, b2s,  version, SetDevices
-from libdevicesinlan_gui import  qmessagebox, qquestion,  SetDevices_qtablewidget,  SetDevices_qtablewidget_devices_from_settings
-from frmSettings import frmSettings
-from frmHelp import frmHelp
-from frmAbout import frmAbout
-from frmInterfaceSelector import frmInterfaceSelector
-from frmDeviceCRUD import frmDeviceCRUD
+from devicesinlan.ui.Ui_frmMain import Ui_frmMain
+from devicesinlan.libdevicesinlan import dateversion,  ArpScanMethod, b2s,  version, SetDevices
+from devicesinlan.libdevicesinlan_gui import  qmessagebox, qquestion,  SetDevices_qtablewidget,  SetDevices_qtablewidget_devices_from_settings
+from devicesinlan.ui.frmSettings import frmSettings
+from devicesinlan.ui.frmHelp import frmHelp
+from devicesinlan.ui.frmAbout import frmAbout
+from devicesinlan.ui.frmInterfaceSelector import frmInterfaceSelector
+from devicesinlan.ui.frmDeviceCRUD import frmDeviceCRUD
 
 
 

@@ -4,6 +4,7 @@ import threading
 import logging
 import os
 import re
+import pkg_resources
 import platform
 import subprocess
 import time
@@ -37,7 +38,7 @@ class MemApp(QObject):
 
     def change_language(self, language):  
         """language es un string"""
-        urls= ["i18n/devicesinlan_" + language + ".qm","/usr/lib/devicesinlan/devicesinlan_" + language + ".qm"]
+        urls= [pkg_resources.resource_filename("devicesinlan", "data/devicesinlan_{}.qm".format(language)),]
         for url in urls:
             if os.path.exists(url)==True:
                 self.translator.load(url)
@@ -533,10 +534,7 @@ class Device(QObject):
             print("I can't get oui of a None MAC")
             return self.__oui
 
-        if platform.system()=="Windows":
-            url="ieee-oui.txt"
-        elif platform.system()=="Linux":
-            url="/usr/share/devicesinlan/ieee-oui.txt"
+        url=pkg_resources.resource_filename("devicesinlan", "data/ieee-oui.txt")
 
         self.__oui=""
         mac=self.mac.replace(":", "")[:-6]

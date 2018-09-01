@@ -1,28 +1,26 @@
-SOURCES         = libdevicesinlan.py \
-                  libdevicesinlan_gui.py \
-                  libmangenerator.py \
-                  Makefile.py \
-                  devicesinlan.py \
-                  devicesinlan_gui.py \
-                  ui/frmMain.py \
-                  ui/Ui_frmMain.py \
-                  ui/frmHelp.py \
-                  ui/Ui_frmHelp.py \
-                  ui/frmDeviceCRUD.py \
-                  ui/Ui_frmDeviceCRUD.py \
-                  ui/frmAbout.py \
-                  ui/Ui_frmAbout.py \
-                  ui/frmInterfaceSelector.py \
-                  ui/Ui_frmInterfaceSelector.py \
-                  ui/frmSettings.py \
-                  ui/Ui_frmSettings.py 
+SOURCES         = devicesinlan/libdevicesinlan.py \
+                  devicesinlan/libdevicesinlan_gui.py \
+                  devicesinlan/devicesinlan.py \
+                  devicesinlan/devicesinlan_gui.py \
+                  devicesinlan/ui/frmMain.py \
+                  devicesinlan/ui/Ui_frmMain.py \
+                  devicesinlan/ui/frmHelp.py \
+                  devicesinlan/ui/Ui_frmHelp.py \
+                  devicesinlan/ui/frmDeviceCRUD.py \
+                  devicesinlan/ui/Ui_frmDeviceCRUD.py \
+                  devicesinlan/ui/frmAbout.py \
+                  devicesinlan/ui/Ui_frmAbout.py \
+                  devicesinlan/ui/frmInterfaceSelector.py \
+                  devicesinlan/ui/Ui_frmInterfaceSelector.py \
+                  devicesinlan/ui/frmSettings.py \
+                  devicesinlan/ui/Ui_frmSettings.py 
 
-FORMS           = ui/frmAbout.ui \
-                  ui/frmMain.ui \
-                  ui/frmHelp.ui \
-                  ui/frmInterfaceSelector.ui \
-                  ui/frmDeviceCRUD.ui \
-                  ui/frmSettings.ui
+FORMS           = devicesinlan/ui/frmAbout.ui \
+                  devicesinlan/ui/frmMain.ui \
+                  devicesinlan/ui/frmHelp.ui \
+                  devicesinlan/ui/frmInterfaceSelector.ui \
+                  devicesinlan/ui/frmDeviceCRUD.ui \
+                  devicesinlan/ui/frmSettings.ui
 
 
 TRANSLATIONS    = i18n/devicesinlan_es.ts \

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <author>Mariano Muñoz</author>
+ <class>frmMain</class>
+ <widget class="QMainWindow" name="frmMain">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>995</width>
+    <height>568</height>
+   </rect>
+  </property>
+  <property name="cursor">
+   <cursorShape>PointingHandCursor</cursorShape>
+  </property>
+  <property name="windowTitle">
+   <string/>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../images/devicesinlan.qrc">
+    <normaloff>:/devicesinlan.png</normaloff>:/devicesinlan.png</iconset>
+  </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonTextUnderIcon</enum>
+  </property>
+  <widget class="QWidget" name="wdg">
+   <layout class="QHBoxLayout" name="horizontalLayout"/>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>995</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuAyuda">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="actionHelp"/>
+    <addaction name="separator"/>
+    <addaction name="actionUpdates"/>
+    <addaction name="actionAbout"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuConfiguraci_n">
+    <property name="title">
+     <string>&amp;Configuration</string>
+    </property>
+    <addaction name="actionSettings"/>
+   </widget>
+   <widget class="QMenu" name="menuKnown_devices">
+    <property name="title">
+     <string>&amp;Devices</string>
+    </property>
+    <addaction name="actionScan"/>
+    <addaction name="separator"/>
+    <addaction name="actionShowDatabase"/>
+    <addaction name="separator"/>
+    <addaction name="actionListLoad"/>
+    <addaction name="actionListSave"/>
+    <addaction name="separator"/>
+    <addaction name="actionResetDatabase"/>
+   </widget>
+   <addaction name="menuKnown_devices"/>
+   <addaction name="menuConfiguraci_n"/>
+   <addaction name="menuAyuda"/>
+  </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>24</width>
+     <height>24</height>
+    </size>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonIconOnly</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionScan"/>
+   <addaction name="separator"/>
+   <addaction name="actionShowDatabase"/>
+   <addaction name="actionSettings"/>
+   <addaction name="separator"/>
+   <addaction name="actionAbout"/>
+   <addaction name="actionHelp"/>
+   <addaction name="actionExit"/>
+  </widget>
+  <widget class="QStatusBar" name="status"/>
+  <action name="actionExit">
+   <property name="icon">
+    <iconset resource="../../images/devicesinlan.qrc">
+     <normaloff>:/exit.png</normaloff>:/exit.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Exit</string>
+   </property>
+   <property name="toolTip">
+    <string>Exit</string>
+   </property>
+   <property name="shortcut">
+    <string>Esc</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="icon">
+    <iconset resource="../../images/devicesinlan.qrc">
+     <normaloff>:/devicesinlan.png</normaloff>:/devicesinlan.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;About</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="icon">
+    <iconset resource="../../images/devicesinlan.qrc">
+     <normaloff>:/configure.png</normaloff>:/configure.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Settings</string>
+   </property>
+  </action>
+  <action name="actionHelp">
+   <property name="icon">
+    <iconset resource="../../images/devicesinlan.qrc">
+     <normaloff>:/help.png</normaloff>:/help.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Help</string>
+   </property>
+   <property name="toolTip">
+    <string>Muestra la ayuda del juego</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
+  </action>
+  <action name="actionScan">
+   <property name="icon">
+    <iconset resource="../../images/devicesinlan.qrc">
+     <normaloff>:/update.png</normaloff>:/update.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;New scan</string>
+   </property>
+   <property name="toolTip">
+    <string>New scan</string>
+   </property>
+  </action>
+  <action name="actionShowDatabase">
+   <property name="icon">
+    <iconset resource="../../images/devicesinlan.qrc">
+     <normaloff>:/database.png</normaloff>:/database.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show &amp;devices database</string>
+   </property>
+   <property name="toolTip">
+    <string>Show devices database</string>
+   </property>
+  </action>
+  <action name="actionResetDatabase">
+   <property name="icon">
+    <iconset resource="../../images/devicesinlan.qrc">
+     <normaloff>:/cancel.png</normaloff>:/cancel.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Reset database</string>
+   </property>
+   <property name="toolTip">
+    <string>Reset database</string>
+   </property>
+  </action>
+  <action name="actionUpdates">
+   <property name="icon">
+    <iconset resource="../../images/devicesinlan.qrc">
+     <normaloff>:/update.png</normaloff>:/update.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Check for updates</string>
+   </property>
+   <property name="toolTip">
+    <string>Check for updates</string>
+   </property>
+  </action>
+  <action name="actionListLoad">
+   <property name="icon">
+    <iconset resource="../../images/devicesinlan.qrc">
+     <normaloff>:/open.png</normaloff>:/open.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Load devices list</string>
+   </property>
+   <property name="toolTip">
+    <string>Load devices list</string>
+   </property>
+  </action>
+  <action name="actionListSave">
+   <property name="icon">
+    <iconset resource="../../images/devicesinlan.qrc">
+     <normaloff>:/save.png</normaloff>:/save.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Save devices list</string>
+   </property>
+   <property name="toolTip">
+    <string>Save devices list</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="../../images/devicesinlan.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>actionExit</sender>
+   <signal>triggered()</signal>
+   <receiver>frmMain</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>497</x>
+     <y>283</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

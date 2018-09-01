@@ -153,6 +153,13 @@ def video():
     shell("ttyrecgenerator --output devicesinlan_howto_en 'python3 howto.py --language en' --video")
     os.chdir("../..")
 
+def doxygen():
+    os.chdir("doc")
+    shell("doxygen Doxyfile")
+    shell("rsync -avzP -e 'ssh -l turulomio' html/ frs.sourceforge.net:/home/users/t/tu/turulomio/userweb/htdocs/doxygen/devicesinlan/ --delete-after")
+    os.chdir("..")
+
+
 def mangenerator(language):
     """
         Create man pages for parameter language
@@ -290,9 +297,7 @@ if __name__ == '__main__':
     elif args.compile_images==True:
         makefile_compile_images()
     elif args.doxygen==True:
-        os.chdir("doc")
-        shell("doxygen Doxyfile")
-        os.chdir("..")
+        doxygen()
     elif args.video==True:
         video()
 

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/frmMain.ui'
+# Form implementation generated from reading ui file 'devicesinlan/ui/frmMain.ui'
 #
-# Created by: PyQt5 UI code generator 5.9.2
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -146,4 +146,4 @@ class Ui_frmMain(object):
         self.actionListSave.setText(_translate("frmMain", "&Save devices list"))
         self.actionListSave.setToolTip(_translate("frmMain", "Save devices list"))
 
-import devicesinlan_rc
+import devicesinlan.ui.devicesinlan_rc

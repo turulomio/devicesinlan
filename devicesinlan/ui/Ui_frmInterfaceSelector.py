@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/frmInterfaceSelector.ui'
+# Form implementation generated from reading ui file 'devicesinlan/ui/frmInterfaceSelector.ui'
 #
-# Created by: PyQt5 UI code generator 5.9.2
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_frmInterfaceSelector(object):
     def setupUi(self, frmInterfaceSelector):
         frmInterfaceSelector.setObjectName("frmInterfaceSelector")
-        frmInterfaceSelector.resize(539, 313)
+        frmInterfaceSelector.resize(539, 380)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/configure.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         frmInterfaceSelector.setWindowIcon(icon)
@@ -144,4 +144,4 @@ class Ui_frmInterfaceSelector(object):
         self.label_5.setText(_translate("frmInterfaceSelector", "Interface broadcast"))
         self.label_6.setText(_translate("frmInterfaceSelector", "Interface Mask"))
 
-import devicesinlan_rc
+import devicesinlan.ui.devicesinlan_rc

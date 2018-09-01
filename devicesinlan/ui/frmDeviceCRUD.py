@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QDialog
-from Ui_frmDeviceCRUD import Ui_frmDeviceCRUD
-from libdevicesinlan_gui import SetDeviceTypes_qcombobox
+from devicesinlan.ui.Ui_frmDeviceCRUD import Ui_frmDeviceCRUD
+from devicesinlan.libdevicesinlan_gui import SetDeviceTypes_qcombobox
 
 
 class frmDeviceCRUD(QDialog, Ui_frmDeviceCRUD):

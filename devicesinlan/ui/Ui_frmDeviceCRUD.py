@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/frmDeviceCRUD.ui'
+# Form implementation generated from reading ui file 'devicesinlan/ui/frmDeviceCRUD.ui'
 #
-# Created by: PyQt5 UI code generator 5.9.2
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_frmDeviceCRUD(object):
     def setupUi(self, frmDeviceCRUD):
         frmDeviceCRUD.setObjectName("frmDeviceCRUD")
-        frmDeviceCRUD.resize(539, 219)
+        frmDeviceCRUD.resize(539, 260)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/configure.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         frmDeviceCRUD.setWindowIcon(icon)
@@ -107,4 +107,4 @@ class Ui_frmDeviceCRUD(object):
         self.label.setText(_translate("frmDeviceCRUD", "Device alias"))
         self.label_4.setText(_translate("frmDeviceCRUD", "Interface MAC"))
 
-import devicesinlan_rc
+import devicesinlan.ui.devicesinlan_rc
