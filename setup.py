@@ -150,7 +150,7 @@ class Doc(Command):
         man.paragraph(QCoreApplication.translate("devicesinlan","Help > Exit"), 2, True)
         man.paragraph(QCoreApplication.translate("devicesinlan","Exits from program."), 3)
         man.save()
-        man.saveHTML()
+        man.saveHTML("devicesinlan/data/devicesinlan_gui.{}.html".format(language))
 
         man=Man("doc/devicesinlan.{}".format(language))
         man.setMetadata("devicesinlan",  1,   datetime.date.today(), "Mariano Muñoz", QCoreApplication.translate("devicesinlan","Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net."))
@@ -178,7 +178,7 @@ class Doc(Command):
         man.paragraph("--reset", 2, True)
         man.paragraph(QCoreApplication.translate("devicesinlan","Removes all known devices."), 3)
         man.save()
-        man.saveHTML()
+        man.saveHTML("devicesinlan/data/devicesinlan.{}.html".format(language))
 
     ########################################################################
 

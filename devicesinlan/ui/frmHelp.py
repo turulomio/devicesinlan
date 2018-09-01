@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import QUrl, pyqtSlot
 from devicesinlan.ui.Ui_frmHelp import Ui_frmHelp
-import os
+import pkg_resources
 from devicesinlan.ui.frmSettings import SetLanguages
 
 class frmHelp(QDialog, Ui_frmHelp):
@@ -27,15 +27,13 @@ class frmHelp(QDialog, Ui_frmHelp):
     def on_cmbProgram_currentIndexChanged(self, stri):
         self.setSource()
 
+    ## Sets html source
     def setSource(self):
         self.languages.selected=self.languages.find_by_name(self.cmbLanguage.currentText())
         if self.cmbProgram.currentIndex()==1:
             program="devicesinlan"
         else:
             program="devicesinlan_gui"
-        url=pkg_resources.resource_filename("devicesinlan")
-        urls= ["{}.{}.1.html".format(program, self.languages.selected.id), "/usr/share/devicesinlan/{}.{}.1.html".format(program, self.languages.selected.id)]
-        for url in urls:
-            if os.path.exists(url)==True:
-                self.viewer.setSource(QUrl(url))
+        url=pkg_resources.resource_filename("devicesinlan", "data/{}.{}.html".format(program, self.languages.selected.id))
+        self.viewer.setSource(QUrl(url))
         
