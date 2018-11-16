@@ -57,9 +57,14 @@ class PyInstaller(Command):
         pass
 
     def run(self):
-        shutil.rmtree("build")
-        os.system("""pyinstaller devicesinlan/devicesinlan.py -n devicesinlan-{}  --onefile   --windowed --icon devicesinlan/images/devicesinlan.ico""".format(__version__))
-
+        os.system("python setup.py uninstall")
+        os.system("python setup.py install")
+        f=open("build/run.py","w")
+        f.write("import devicesinlan\n")
+        f.write("devicesinlan.main()\n")
+        f.close()
+        os.chdir("build")
+        os.system("""pyinstaller run.py -n devicesinlan-{} --onefile --windowed --icon ../devicesinlan/images/devicesinlan.ico --distpath ../dist""".format(__version__))
 
 class Video(Command):
     description = "Create video/GIF from console ouput"
@@ -127,6 +132,12 @@ Nueva versión:
   * python setup.py sdist upload -r pypi
   * Crea un nuevo ebuild de Gentoo con la nueva versión
   * Subelo al repositorio del portage
+
+  * Change to windows. Enter in an Administrator console.
+  * Change to xulpymoney source directory and make git pull
+  * python setup.py pyinstaller
+  * Add file to github release
+
 """)
 
 
@@ -144,10 +155,24 @@ class Uninstall(Command):
         if platform.system()=="Linux":
             os.system("rm -Rf {}/devicesinlan*".format(site.getsitepackages()[0]))
             os.system("rm /usr/bin/devicesinlan")
+            os.system("rm /usr/share/pixmaps/devicesinlan.png")
+            os.system("rm /usr/share/applications/devicesinlan.desktop")
             os.system("rm /usr/share/man/man1/devicesinlan.1")
             os.system("rm /usr/share/man/es/man1/devicesinlan.1")
         else:
-            print(_("Uninstall command only works in Linux"))
+            print(site.getsitepackages())
+            for file in os.listdir(site.getsitepackages()[1]):#site packages
+                path=site.getsitepackages()[1]+"\\"+ file
+                if file.find("devicesinlan")!=-1:
+                    shutil.rmtree(path)
+                    print(path,  "Erased")
+            for file in os.listdir(site.getsitepackages()[0]+"\\Scripts\\"):#Scripts
+                path=site.getsitepackages()[0]+"\\scripts\\"+ file
+                if file.find("devicesinlan")!=-1:
+                    os.remove(path)
+                    print(path,  "Erased")
+
+
 
 class Doc(Command):
     description = "Update man pages and translations"
