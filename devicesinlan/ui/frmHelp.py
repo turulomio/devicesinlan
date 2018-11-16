@@ -35,7 +35,7 @@ class frmHelp(QDialog, Ui_frmHelp):
         else:
             program="devicesinlan_gui"
         url=pkg_resources.resource_filename("devicesinlan", "data/{}.{}.html".format(program, self.languages.selected.id))
-        f=open(url)
+        f=open(url, encoding="UTF-8")
         html=f.read()
         f.close()
         self.viewer.setHtml(html)
