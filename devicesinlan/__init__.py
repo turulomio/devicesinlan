@@ -1,5 +1,5 @@
-import datetime
-from . import * 
+from devicesinlan.version import __version__, __versiondate__
+from devicesinlan.devicesinlan import main
+from devicesinlan.devicesinlan_gui import main
 
-__version__ = '1.3.0'
-__versiondate__=datetime.date(2018,8,20)
+

@@ -43,7 +43,7 @@ You must open a console with Administrator privileges and type:
 
 `pip install devicesinlan`
 
-If you want to create a Desktop shortcut to launch Xulpymoney you must write:
+If you want to create a Desktop shortcut to launch Xulpymoney you must write in a console:
 
 `devicesinlan.exe --shortcuts-create`
 

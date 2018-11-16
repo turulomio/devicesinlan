@@ -14,7 +14,7 @@ def create():
     )
 
     icon=pkg_resources.resource_filename("devicesinlan","images/devicesinlan.ico")
-    shortcut.SetPath (r'devicesinlan.exe')
+    shortcut.SetPath (r'devicesinlan_gui.exe')
     shortcut.SetDescription ("Find devices in a lan")
     shortcut.SetIconLocation (icon, 0)
      
