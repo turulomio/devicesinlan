@@ -181,17 +181,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="111"/>
+        <location filename="../devicesinlan.py" line="126"/>
         <source>Device inserted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="119"/>
+        <location filename="../devicesinlan.py" line="134"/>
         <source>Mac removed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="152"/>
+        <location filename="../devicesinlan.py" line="167"/>
         <source>It took {} with DevicesInLAN scanner.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -201,22 +201,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="137"/>
+        <location filename="../devicesinlan.py" line="152"/>
         <source>There are not interfaces to scan.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="141"/>
+        <location filename="../devicesinlan.py" line="156"/>
         <source>Select an interface number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="145"/>
+        <location filename="../devicesinlan.py" line="160"/>
         <source>Input an integer with the request concurrence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="152"/>
+        <location filename="../devicesinlan.py" line="167"/>
         <source>seconds</source>
         <translation type="unfinished"></translation>
     </message>
@@ -226,12 +226,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="84"/>
+        <location filename="../devicesinlan.py" line="99"/>
         <source>Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="91"/>
+        <location filename="../devicesinlan.py" line="106"/>
         <source>N</source>
         <translation type="unfinished"></translation>
     </message>
@@ -251,17 +251,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="87"/>
+        <location filename="../devicesinlan.py" line="102"/>
         <source>File doesn&apos;t exist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="96"/>
+        <location filename="../devicesinlan.py" line="111"/>
         <source>Database was reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="91"/>
+        <location filename="../devicesinlan.py" line="106"/>
         <source>Are you sure you want to reset known devices database?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -271,7 +271,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../devicesinlan.py" line="132"/>
+        <location filename="../devicesinlan.py" line="147"/>
         <source>This interface doesn&apos;t exist. Please remove the --interface parameter to use a wizard.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -306,172 +306,172 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="249"/>
+        <location filename="../../setup.py" line="232"/>
         <source>DESCRIPTION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="246"/>
+        <location filename="../../setup.py" line="229"/>
         <source>Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="220"/>
+        <location filename="../../setup.py" line="203"/>
         <source>In the app menu you have the followings features:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="221"/>
+        <location filename="../../setup.py" line="204"/>
         <source>Devices &gt; New Scan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="222"/>
+        <location filename="../../setup.py" line="205"/>
         <source>Searches all devices in tha LAN and show them in a new tab. If some device is not in the known devices list it will be shown with a red background. Devices with a green background are trusted devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="223"/>
+        <location filename="../../setup.py" line="206"/>
         <source>Devices &gt; Show devices database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="224"/>
+        <location filename="../../setup.py" line="207"/>
         <source>Shows all known devices in a new tab.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="225"/>
+        <location filename="../../setup.py" line="208"/>
         <source>Right click allows you to edit known devices database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="226"/>
+        <location filename="../../setup.py" line="209"/>
         <source>Devices &gt; Load devices list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="262"/>
+        <location filename="../../setup.py" line="245"/>
         <source>Loads a list of known devices in xml format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="228"/>
+        <location filename="../../setup.py" line="211"/>
         <source>Devices &gt; Save devices list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="264"/>
+        <location filename="../../setup.py" line="247"/>
         <source>Saves the known devices list to a xml file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="230"/>
+        <location filename="../../setup.py" line="213"/>
         <source>Devices &gt; Reset database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="269"/>
+        <location filename="../../setup.py" line="252"/>
         <source>Removes all known devices.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="232"/>
+        <location filename="../../setup.py" line="215"/>
         <source>This option erases all known devices in database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="233"/>
+        <location filename="../../setup.py" line="216"/>
         <source>Configuration &gt; Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="234"/>
+        <location filename="../../setup.py" line="217"/>
         <source>In this dialog you can select your prefered language and you can configure the number of concurrence request.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="235"/>
+        <location filename="../../setup.py" line="218"/>
         <source>Help &gt; Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="236"/>
+        <location filename="../../setup.py" line="219"/>
         <source>Shows this help information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="237"/>
+        <location filename="../../setup.py" line="220"/>
         <source>Help &gt; About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="238"/>
+        <location filename="../../setup.py" line="221"/>
         <source>Shows information about DevicesInLAN license and authors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="239"/>
+        <location filename="../../setup.py" line="222"/>
         <source>Help &gt; Check for updates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="240"/>
+        <location filename="../../setup.py" line="223"/>
         <source>Checks for updates in DevicesInLan repository.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="241"/>
+        <location filename="../../setup.py" line="224"/>
         <source>Help &gt; Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="242"/>
+        <location filename="../../setup.py" line="225"/>
         <source>Exits from program.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="250"/>
+        <location filename="../../setup.py" line="233"/>
         <source>If you launch deviceslan without parameters a console wizard is launched.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="251"/>
+        <location filename="../../setup.py" line="234"/>
         <source>Morever you can use one of this parameters.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="253"/>
+        <location filename="../../setup.py" line="236"/>
         <source>Scans the net of the interface parameter and prints a list of the detected devices.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="254"/>
+        <location filename="../../setup.py" line="237"/>
         <source>If a device is not known, it will be showed in red. Devices in green are trusted devices.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="256"/>
+        <location filename="../../setup.py" line="239"/>
         <source>Allows to add a known device from console.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="258"/>
+        <location filename="../../setup.py" line="241"/>
         <source>Allows to remove a known device from console.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="260"/>
+        <location filename="../../setup.py" line="243"/>
         <source>Shows all known devices in database from console.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="266"/>
+        <location filename="../../setup.py" line="249"/>
         <source>Gives debugging information when running DevicesInLAN. It&apos;s deactivated by default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../setup.py" line="267"/>
+        <location filename="../../setup.py" line="250"/>
         <source>The parameter can take this options: CRITICAL, ERROR, WARNING, INFO, DEBUG.</source>
         <translation type="unfinished"></translation>
     </message>

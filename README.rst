@@ -169,3 +169,7 @@ devicesinlan 1.4.0 20181116
   * Changed Makefile.py to setuptools
   * Now setup.py pyinstaller generates a standalone windows executable
 
+devicesinlan 1.4.1 20181116
+---------------------------
+  * Fix little bugs with windows installation
+
