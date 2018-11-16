@@ -37,7 +37,7 @@ class MemApp(QObject):
 
     def change_language(self, language):  
         """language es un string"""
-        urls= [pkg_resources.resource_filename("devicesinlan", "data/devicesinlan_{}.qm".format(language)),]
+        urls= [pkg_resources.resource_filename("devicesinlan", "i18n/devicesinlan_{}.qm".format(language)),]
         for url in urls:
             if os.path.exists(url)==True:
                 self.translator.load(url)
