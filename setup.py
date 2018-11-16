@@ -29,7 +29,6 @@ class Doxygen(Command):
         os.system("""sed -i -e "41iPROJECT_NUMBER         = {}" doc/Doxyfile""".format(__version__))#Insert line 41
         os.chdir("doc")
         os.system("doxygen Doxyfile")
-        os.system("cp ttyrec/devicesinlan_howto_en.gif html")#Copies images
         os.system("rsync -avzP -e 'ssh -l turulomio' html/ frs.sourceforge.net:/home/users/t/tu/turulomio/userweb/htdocs/doxygen/too-many-files/ --delete-after")
         os.chdir("..")
 
@@ -52,22 +51,6 @@ class PyInstaller(Command):
         f.close()
         os.chdir("build")
         os.system("""pyinstaller run.py -n devicesinlan-{} --onefile --nowindowed --icon ../devicesinlan/images/devicesinlan.ico --distpath ../dist""".format(__version__))
-
-class Video(Command):
-    description = "Create video/GIF from console ouput"
-    user_options = []
-
-    def initialize_options(self):
-        pass
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        os.chdir("doc/ttyrec")
-        os.system("ttyrecgenerator --output devicesinlan_howto_es 'python3 howto.py' --lc_all es_ES.UTF-8")
-        os.system("ttyrecgenerator --output devicesinlan_howto_en 'python3 howto.py' --lc_all C")
-        os.chdir("../..")
 
 class Compile(Command):
     description = "Compile ui and images"
@@ -322,7 +305,6 @@ setup(name='devicesinlan',
                         'doxygen': Doxygen,
                         'doc': Doc,
                         'uninstall':Uninstall, 
-                        'video': Video, 
                         'compile': Compile, 
                         'pyinstaller': PyInstaller,
                         'procedure': Procedure,

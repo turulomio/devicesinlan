@@ -20,22 +20,42 @@ Dependencies
 ============
 * https://www.python.org/, as the main programming language.
 * https://pypi.org/project/colorama/, to give console colors.
+* https://pypi.org/project/PyQt5/, as the main library.
+* https://pypi.org/project/pywin32/, to create shortcuts.
 
-Developer Dependencies
-======================
-If you want to modify source code, you'll probably need
-* https://pypi.org/project/mangenerator/, to generate man files.
-* https://pypi.org/project/ttyrecgenerator/, to generate animated gifs.
+Install in Linux
+================
+If you use Gentoo you can find a ebuild in https://github.com/Turulomio/myportage/tree/master/net-analyzer/devicesinlan
 
-Usage
-=====
-You can see this animated gif to learn how to use it:
+If you use other distribution compatible con pip, you need to install PyQt5 and devicesinlan with the following commands:
 
-.. image:: https://sourceforge.net/p/devicesinlan/code/HEAD/tree/doc/ttyrec/devicesinlan_howto_en.gif?format=raw
-   :height: 800px
-   :width: 600px
-   :scale: 100 %
-   :align: center
+`pip install PyQt5`
+
+`pip install devicesinlan`
+
+You need to install PyQt5 first, because is not in Linux setup.py dependencies due to it doesn't use standard setup tools. So for compatibility reasons with distributions like Gentoo, we use this additional step.
+
+Install in Windows as a python module
+=====================================
+You need to install Python from https://www.python.org and add it to the PATH
+
+You must open a console with Administrator privileges and type:
+
+`pip install devicesinlan`
+
+If you want to create a Desktop shortcut to launch Xulpymoney you must write:
+
+`devicesinlan.exe --shortcuts-create`
+
+If you want to delete that Desktop shortcut you can write:
+
+`devicesinlan.exe --shortcuts-remove`
+
+Install in Windows as a standalone application
+==============================================
+You need to download devicesinlan-X.X.X.exe from github release
+
+Just execute it
 
 Authors
 =======
@@ -144,7 +164,8 @@ devicesinlan 1.3.0 20180121
 - Created documentation for both executables
 - Removed man2html dependency
 
-X.X.X
------
+devicesinlan 1.4.0 20181116
+---------------------------
   * Changed Makefile.py to setuptools
+  * Now setup.py pyinstaller generates a standalone windows executable
 

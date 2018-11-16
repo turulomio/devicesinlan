@@ -1,10 +1,10 @@
-#!/usr/bin/python3
 import argparse
 import datetime
 import os
 import sys
 import signal
 import logging
+import platform
 from colorama import init,  Style, Fore
 from PyQt5.QtCore import QCoreApplication
 
@@ -41,7 +41,22 @@ def main():
     group.add_argument('--save', help=app.translate("devicesinlan",'Save known devices list'), action='store')
     group.add_argument('--reset', help=app.translate("devicesinlan",'Reset known devices list'), action='store_true', default=False)
     parser.add_argument('--debug', help=app.translate("devicesinlan", "Debug program information"))
+
+    if platform.system()=="Windows":
+            parser.add_argument('--shortcuts-create', help="Create shortcuts for Windows", action='store_true', default=False)
+            parser.add_argument('--shortcuts-remove', help="Remove shortcuts for Windows", action='store_true', default=False)
+
     args=parser.parse_args()        
+
+    if platform.system()=="Windows":
+            if args.shortcuts_create:
+                    from devicesinlan.shortcuts import create
+                    create()
+                    sys.exit(0)
+            if args.shortcuts_remove:
+                    from devicesinlan.shortcuts import remove
+                    remove()
+                    sys.exit(0)
 
     #Por defecto se pone WARNING y mostrar´ia ERROR y CRITICAL
     logFormat = "%(asctime)s %(levelname)s %(module)s:%(lineno)d at %(funcName)s. %(message)s"
