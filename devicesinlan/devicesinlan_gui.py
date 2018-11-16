@@ -7,7 +7,8 @@ from PyQt5.QtWidgets import QApplication
 
 #############################
 
-from devicesinlan.libdevicesinlan import Mem, dateversion,  version 
+from devicesinlan.libdevicesinlan import Mem
+from devicesinlan.version import __version__, __versiondate__
 from devicesinlan.ui.frmMain  import frmMain
 def main():
     init(autoreset=True)
@@ -19,10 +20,10 @@ def main():
     app.setApplicationName("DevicesInLAN")
 
     parser=argparse.ArgumentParser(prog='devicesinlan_gui', description=app.translate("devicesinlan",'Show devices in a LAN making an ARP search to find them with a user interface'),  
-        epilog=app.translate("devicesinlan","If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).")+"\n" +app.translate("devicesinlan","Developed by Mariano Muñoz 2015-{}".format(dateversion.year)), 
+        epilog=app.translate("devicesinlan","If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).")+"\n" +app.translate("devicesinlan","Developed by Mariano Muñoz 2015-{}".format(__versiondate__.year)), 
         formatter_class=argparse.RawTextHelpFormatter
         )
-    parser.add_argument('--version', action='version', version="{} ({})".format(version, dateversion))
+    parser.add_argument('--version', action='version', version="{} ({})".format(__version__, __versiondate__))
     parser.add_argument('--debug', help=app.translate("devicesinlan", "Debug program information"))
     args=parser.parse_args()        
 

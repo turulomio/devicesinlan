@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QDialog
 from devicesinlan.ui.Ui_frmAbout import Ui_frmAbout
-from devicesinlan.libdevicesinlan import version,  dateversion
+from devicesinlan.version import __version__, __versiondate__
 
 class frmAbout(QDialog, Ui_frmAbout):
     ##Constructor        
@@ -12,7 +12,7 @@ class frmAbout(QDialog, Ui_frmAbout):
         if name:
             self.setObjectName(name)
         self.setupUi(self)
-        self.lblVersion.setText(self.tr("Version {} ({})".format(version,  dateversion)))
+        self.lblVersion.setText(self.tr("Version {} ({})".format(__version__,  __versiondate__)))
         self.textBrowser.setHtml(
             self.tr("Project web page is in <a href=\"http://devicesinlan.sourceforge.net\">http://devicesinlan.sourceforge.net</a><p> <p>")+
             self.tr("This program has been developed by Mariano Mu\xf1oz.<p>")+

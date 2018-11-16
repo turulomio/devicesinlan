@@ -7,7 +7,8 @@ from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QMenu, QTabWidget, QTableWidget,  QDialog, QWidget, QVBoxLayout, QLabel,  QAbstractItemView, qApp, QMessageBox, QAction, QFileDialog
 
 from devicesinlan.ui.Ui_frmMain import Ui_frmMain
-from devicesinlan.libdevicesinlan import dateversion,  ArpScanMethod, b2s,  version, SetDevices
+from devicesinlan.libdevicesinlan import ArpScanMethod, b2s, SetDevices
+from devicesinlan.version import __version__, __versiondate__
 from devicesinlan.libdevicesinlan_gui import  qmessagebox, qquestion,  SetDevices_qtablewidget,  SetDevices_qtablewidget_devices_from_settings
 from devicesinlan.ui.frmSettings import frmSettings
 from devicesinlan.ui.frmHelp import frmHelp
@@ -110,7 +111,7 @@ class frmMain(QMainWindow, Ui_frmMain):#
         QMainWindow.__init__(self)
         self.setupUi(self)
         self.showMaximized()
-        self.setWindowTitle("DevicesInLan 2015-{}. GNU General Public License".format(dateversion.year))
+        self.setWindowTitle("DevicesInLan 2015-{}. GNU General Public License".format(__versiondate__.year))
         self.mem=mem
         self.tabWidget = QTabWidget(self.wdg)
         self.tabWidget.setTabsClosable(True)
@@ -170,11 +171,11 @@ class frmMain(QMainWindow, Ui_frmMain):#
                 break
                 
         #Si no hay version sale
-        logging.info("Remote version {} against local {}".format (remoteversion,  version))
+        logging.info("Remote version {} against local {}".format (remoteversion, __version__))
         if remoteversion==None:
             return
                 
-        if remoteversion==version.replace("+", ""):#Quita el mas de desarrollo 
+        if remoteversion==__version__.replace("+", ""):#Quita el mas de desarrollo 
             if showdialogwhennoupdates==True:
                 qmessagebox(self.tr("You have the last version"))
         else:

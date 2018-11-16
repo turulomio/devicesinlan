@@ -13,7 +13,8 @@ def signal_handler(signal, frame):
         sys.exit(0)
 
 tr=QCoreApplication.translate
-from devicesinlan.libdevicesinlan import ArpScanMethod, Device, Mem, SetDevices, dateversion,  version,  input_int,  input_YN
+from devicesinlan.libdevicesinlan import ArpScanMethod, Device, Mem, SetDevices, input_int,  input_YN
+from devicesinlan.version import __version__, __versiondate__
 def main():
     init(autoreset=True)
 
@@ -27,10 +28,10 @@ def main():
     signal.signal(signal.SIGINT, signal_handler)
 
     parser=argparse.ArgumentParser(prog='devicesinlan', description=tr("devicesinlan",'Show devices in a LAN making an ARP search to find them'),  
-        epilog=app.translate("devicesinlan","If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).")+"\n" +app.translate("devicesinlan","Developed by Mariano Muñoz 2015-{}".format(dateversion.year)), 
+        epilog=app.translate("devicesinlan","If you like this app, please vote for it in Sourceforge (https://sourceforge.net/projects/devicesinlan/reviews/).")+"\n" +app.translate("devicesinlan","Developed by Mariano Muñoz 2015-{}".format(__versiondate__.year)), 
         formatter_class=argparse.RawTextHelpFormatter
         )
-    parser.add_argument('--version', action='version', version="{} ({})".format(version, dateversion))
+    parser.add_argument('--version', action='version', version="{} ({})".format(__version__, __versiondate__))
     group = parser.add_mutually_exclusive_group()
     group.add_argument('--interface', help=app.translate("devicesinlan",'Net interface name'))
     group.add_argument('--add', help=app.translate("devicesinlan",'Add a known device'), action='store_true')

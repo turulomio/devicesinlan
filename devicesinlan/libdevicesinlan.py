@@ -17,6 +17,7 @@ from xml.dom import minidom
 from uuid import  uuid4
 from urllib.request import urlopen
 from ipaddress import IPv4Network
+from devicesinlan.version import __version__
 
 class TypesARP:
     Gratuitous = 1
@@ -60,7 +61,7 @@ class Mem(MemApp):
     def setInstallationUUID(self):
         if self.settings.value("frmMain/uuid", "None")=="None":
             self.settings.setValue("frmMain/uuid", str(uuid4()))
-        url='http://devicesinlan.sourceforge.net/php/devicesinlan_installations.php?uuid={}&version={}&platform={}'.format(self.settings.value("frmMain/uuid"), version, platform.system())
+        url='http://devicesinlan.sourceforge.net/php/devicesinlan_installations.php?uuid={}&version={}&platform={}'.format(self.settings.value("frmMain/uuid"), __version__, platform.system())
         try:
             web=b2s(urlopen(url).read())
         except:
@@ -482,7 +483,7 @@ class SetDevices(QObject):
         """
             Returns a string with a xml of the array. Used to export data
         """
-        s='<devicesinlan version="{}">\n'.format(version)
+        s='<devicesinlan version="{}">\n'.format(__version__)
         s=s+"\t<devices>\n"
         for d in self.arr:
             s=s+'\t\t<device alias="{}" mac="{}" type="{}"/>\n'.format(d.alias, d.mac, d.type.id)
