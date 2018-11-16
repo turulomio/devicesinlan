@@ -51,7 +51,7 @@ class PyInstaller(Command):
         f.write("devicesinlan.devicesinlan_gui.main()\n")
         f.close()
         os.chdir("build")
-        os.system("""pyinstaller run.py -n devicesinlan-{} --onefile --windowed --icon ../devicesinlan/images/devicesinlan.ico --distpath ../dist""".format(__version__))
+        os.system("""pyinstaller run.py -n devicesinlan-{} --onefile --nowindowed --icon ../devicesinlan/images/devicesinlan.ico --distpath ../dist""".format(__version__))
 
 class Video(Command):
     description = "Create video/GIF from console ouput"
