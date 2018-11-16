@@ -104,4 +104,4 @@ class Ui_frmHelp(object):
         self.cmbProgram.setItemText(0, _translate("frmHelp", "DevicesInLan Graphical Interface"))
         self.cmbProgram.setItemText(1, _translate("frmHelp", "DevicesInLan Console"))
 
-import devicesinlan.ui.devicesinlan_rc
+import devicesinlan.images.devicesinlan_rc

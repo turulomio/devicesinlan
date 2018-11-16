@@ -144,4 +144,4 @@ class Ui_frmInterfaceSelector(object):
         self.label_5.setText(_translate("frmInterfaceSelector", "Interface broadcast"))
         self.label_6.setText(_translate("frmInterfaceSelector", "Interface Mask"))
 
-import devicesinlan.ui.devicesinlan_rc
+import devicesinlan.images.devicesinlan_rc

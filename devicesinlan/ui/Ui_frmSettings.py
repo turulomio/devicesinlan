@@ -97,4 +97,4 @@ class Ui_frmSettings(object):
         self.label_2.setText(_translate("frmSettings", "Select a language"))
         self.label.setText(_translate("frmSettings", "Concurrent requests"))
 
-import devicesinlan.ui.devicesinlan_rc
+import devicesinlan.images.devicesinlan_rc

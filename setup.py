@@ -1,6 +1,4 @@
-from devicesinlan import __version__
 from setuptools import setup, Command
-from mangenerator import Man
 
 import datetime
 import gettext
@@ -9,20 +7,24 @@ import os
 import platform
 import site
 import sys
-from PyQt5.QtCore import QCoreApplication,  QTranslator
-from colorama import Style, Fore
 from concurrent.futures import ProcessPoolExecutor
 from multiprocessing import cpu_count
+
 def change_language(language):  
     """language es un string"""
-    url= "devicesinlan/data/devicesinlan_{}.qm".format(language)
+    from PyQt5.QtCore import QCoreApplication,  QTranslator
+    translator=QTranslator()
+
+    url= "devicesinlan/i18n/devicesinlan_{}.qm".format(language)
     if os.path.exists(url)==True:
         translator.load(url)
         QCoreApplication.installTranslator(translator)
         logging.info(("Language changed to {} using {}".format(language, url)))
         return
     if language!="en":
-        logging.warning(Style.BRIGHT+ Fore.CYAN+ app.tr("Language ({}) couldn't be loaded in {}. Using default (en).".format(language, url)))
+        logging.warning(QCoreApplication.translate("Core", "Language ({}) couldn't be loaded in {}. Using default (en).".format(language, url)))
+
+
 
 class Doxygen(Command):
     description = "Create/update doxygen documentation in doc/html"
@@ -43,6 +45,21 @@ class Doxygen(Command):
         os.system("cp ttyrec/devicesinlan_howto_en.gif html")#Copies images
         os.system("rsync -avzP -e 'ssh -l turulomio' html/ frs.sourceforge.net:/home/users/t/tu/turulomio/userweb/htdocs/doxygen/too-many-files/ --delete-after")
         os.chdir("..")
+
+class PyInstaller(Command):
+    description = "pyinstaller file generator"
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        shutil.rmtree("build")
+        os.system("""pyinstaller devicesinlan/devicesinlan.py -n devicesinlan-{}  --onefile   --windowed --icon devicesinlan/images/devicesinlan.ico""".format(__version__))
+
 
 class Video(Command):
     description = "Create video/GIF from console ouput"
@@ -73,15 +90,45 @@ class Compile(Command):
     def run(self):
         futures=[]
         with ProcessPoolExecutor(max_workers=cpu_count()+1) as executor:
-            futures.append(executor.submit(os.system, "pyuic5 devicesinlan/ui/frmAbout.ui -o devicesinlan/ui/Ui_frmAbout.py"))
-            futures.append(executor.submit(os.system, "pyuic5 devicesinlan/ui/frmHelp.ui -o devicesinlan/ui/Ui_frmHelp.py"))
-            futures.append(executor.submit(os.system, "pyuic5 devicesinlan/ui/frmMain.ui -o devicesinlan/ui/Ui_frmMain.py"))
-            futures.append(executor.submit(os.system, "pyuic5 devicesinlan/ui/frmSettings.ui -o devicesinlan/ui/Ui_frmSettings.py"))
-            futures.append(executor.submit(os.system, "pyuic5 devicesinlan/ui/frmInterfaceSelector.ui -o devicesinlan/ui/Ui_frmInterfaceSelector.py"))
-            futures.append(executor.submit(os.system, "pyuic5 devicesinlan/ui/frmDeviceCRUD.ui -o devicesinlan/ui/Ui_frmDeviceCRUD.py"))
-            futures.append(executor.submit(os.system, "pyrcc5 images/devicesinlan.qrc -o devicesinlan/ui/devicesinlan_rc.py"))
-        for file in ['devicesinlan/ui/Ui_frmAbout.py', 'devicesinlan/ui/Ui_frmHelp.py', 'devicesinlan/ui/Ui_frmMain.py', 'devicesinlan/ui/Ui_frmSettings.py', 'devicesinlan/ui/Ui_frmInterfaceSelector.py', 'devicesinlan/ui/Ui_frmDeviceCRUD.py']:
-            os.system("sed -i -e 's/devicesinlan_rc/devicesinlan.ui.devicesinlan_rc/' {}".format(file))
+            for filename in os.listdir("devicesinlan/ui/"):
+                if filename.endswith(".ui"):
+                    without_extension=filename[:-3]
+                    futures.append(executor.submit(os.system, "pyuic5 devicesinlan/ui/{0}.ui -o devicesinlan/ui/Ui_{0}.py".format(without_extension)))
+            futures.append(executor.submit(os.system, "pyrcc5 devicesinlan/images/devicesinlan.qrc -o devicesinlan/images/devicesinlan_rc.py"))
+        # Overwriting devicesinlan_rc
+        for filename in os.listdir("devicesinlan/ui/"):
+             if filename.startswith("Ui_"):
+                 os.system("sed -i -e 's/devicesinlan_rc/devicesinlan.images.devicesinlan_rc/' devicesinlan/ui/{}".format(filename))
+
+class Procedure(Command):
+    description = "Uninstall installed files with install"
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        print("""
+Nueva versión:
+  * Cambiar la versión y la fecha en version.py
+  * Modificar el Changelog en README
+  * Update ieee-oui with get-oui
+  * python setup.py doc
+  * linguist
+  * python setup.py doc
+  * python setup.py install
+  * python setup.py doxygen
+  * git commit -a -m 'devicesinlan-version'
+  * git push
+  * Hacer un nuevo tag en GitHub
+  * python setup.py sdist upload -r pypi
+  * Crea un nuevo ebuild de Gentoo con la nueva versión
+  * Subelo al repositorio del portage
+""")
+
 
 class Uninstall(Command):
     description = "Uninstall installed files with install"
@@ -113,46 +160,62 @@ class Doc(Command):
         pass
 
     def run(self):
+        from PyQt5.QtCore import QCoreApplication,  QTranslator
+
+        app=QCoreApplication(sys.argv)
+        app.setOrganizationName("DevicesInLAN")
+        app.setOrganizationDomain("devicesinlan.sourceforge.net")
+        app.setApplicationName("DevicesInLAN")
+        translator=QTranslator()
+
         os.system("pylupdate5 -noobsolete -verbose devicesinlan.pro")
         os.system("lrelease -qt5 devicesinlan.pro")
         for language in ["en", "fr", "ro", "ru", "es"]:
             self.mangenerator(language)
 
     def mangenerator(self, language):
+        from mangenerator import Man
+        from PyQt5.QtCore import QCoreApplication,  QTranslator
+
         change_language(language)
         print("DESCRIPTION in {} is {}".format(language, QCoreApplication.translate("devicesinlan", "DESCRIPTION")))
 
-        man=Man("doc/devicesinlan_gui.{}".format(language))
-        man.setMetadata("devicesinlan_gui",  1,   datetime.date.today(), "Mariano Muñoz", QCoreApplication.translate("devicesinlan","Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net."))
-        man.setSynopsis("[--help] [--version] [--debug DEBUG]")
-        man.header(QCoreApplication.translate("devicesinlan","DESCRIPTION"), 1)
-        man.paragraph(QCoreApplication.translate("devicesinlan","In the app menu you have the followings features:"), 1)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Devices > New Scan"), 2, True)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Searches all devices in tha LAN and show them in a new tab. If some device is not in the known devices list it will be shown with a red background. Devices with a green background are trusted devices"), 3)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Devices > Show devices database"), 2, True)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Shows all known devices in a new tab."), 3)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Right click allows you to edit known devices database."), 3)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Devices > Load devices list"), 2, True)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Loads a list of known devices in xml format."), 3)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Devices > Save devices list"), 2, True)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Saves the known devices list to a xml file."), 3)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Devices > Reset database"), 2, True)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Removes all known devices."), 3)
-        man.paragraph(QCoreApplication.translate("devicesinlan","This option erases all known devices in database."), 3)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Configuration > Settings"), 2, True)
-        man.paragraph(QCoreApplication.translate("devicesinlan","In this dialog you can select your prefered language and you can configure the number of concurrence request."), 3)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Help > Help"), 2, True)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Shows this help information."), 3)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Help > About"), 2, True)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Shows information about DevicesInLAN license and authors."), 3)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Help > Check for updates"), 2, True)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Checks for updates in DevicesInLan repository."), 3)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Help > Exit"), 2, True)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Exits from program."), 3)
-        man.save()
-        man.saveHTML("devicesinlan/data/devicesinlan_gui.{}.html".format(language))
+        if language=="en":
+            man=Man("man/man1/devicesinlan")
+            mangui=Man("man/man1/devicesinlan_gui")
+        else:
+            man=Man("man/{}/man1/devicesinlan".format(language))
+            mangui=Man("man/{}/man1/devicesinlan_gui".format(language))
 
-        man=Man("doc/devicesinlan.{}".format(language))
+        mangui.setMetadata("devicesinlan_gui",  1,   datetime.date.today(), "Mariano Muñoz", QCoreApplication.translate("devicesinlan","Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net."))
+        mangui.setSynopsis("[--help] [--version] [--debug DEBUG]")
+        mangui.header(QCoreApplication.translate("devicesinlan","DESCRIPTION"), 1)
+        mangui.paragraph(QCoreApplication.translate("devicesinlan","In the app menu you have the followings features:"), 1)
+        mangui.paragraph(QCoreApplication.translate("devicesinlan","Devices > New Scan"), 2, True)
+        mangui.paragraph(QCoreApplication.translate("devicesinlan","Searches all devices in tha LAN and show them in a new tab. If some device is not in the known devices list it will be shown with a red background. Devices with a green background are trusted devices"), 3)
+        mangui.paragraph(QCoreApplication.translate("devicesinlan","Devices > Show devices database"), 2, True)
+        mangui.paragraph(QCoreApplication.translate("devicesinlan","Shows all known devices in a new tab."), 3)
+        mangui.paragraph(QCoreApplication.translate("devicesinlan","Right click allows you to edit known devices database."), 3)
+        mangui.paragraph(QCoreApplication.translate("devicesinlan","Devices > Load devices list"), 2, True)
+        mangui.paragraph(QCoreApplication.translate("devicesinlan","Loads a list of known devices in xml format."), 3)
+        mangui.paragraph(QCoreApplication.translate("devicesinlan","Devices > Save devices list"), 2, True)
+        mangui.paragraph(QCoreApplication.translate("devicesinlan","Saves the known devices list to a xml file."), 3)
+        mangui.paragraph(QCoreApplication.translate("devicesinlan","Devices > Reset database"), 2, True)
+        mangui.paragraph(QCoreApplication.translate("devicesinlan","Removes all known devices."), 3)
+        mangui.paragraph(QCoreApplication.translate("devicesinlan","This option erases all known devices in database."), 3)
+        mangui.paragraph(QCoreApplication.translate("devicesinlan","Configuration > Settings"), 2, True)
+        mangui.paragraph(QCoreApplication.translate("devicesinlan","In this dialog you can select your prefered language and you can configure the number of concurrence request."), 3)
+        mangui.paragraph(QCoreApplication.translate("devicesinlan","Help > Help"), 2, True)
+        mangui.paragraph(QCoreApplication.translate("devicesinlan","Shows this help information."), 3)
+        mangui.paragraph(QCoreApplication.translate("devicesinlan","Help > About"), 2, True)
+        mangui.paragraph(QCoreApplication.translate("devicesinlan","Shows information about DevicesInLAN license and authors."), 3)
+        mangui.paragraph(QCoreApplication.translate("devicesinlan","Help > Check for updates"), 2, True)
+        mangui.paragraph(QCoreApplication.translate("devicesinlan","Checks for updates in DevicesInLan repository."), 3)
+        mangui.paragraph(QCoreApplication.translate("devicesinlan","Help > Exit"), 2, True)
+        mangui.paragraph(QCoreApplication.translate("devicesinlan","Exits from program."), 3)
+        mangui.save()
+        mangui.saveHTML("devicesinlan/data/devicesinlan_gui.{}.html".format(language))
+
         man.setMetadata("devicesinlan",  1,   datetime.date.today(), "Mariano Muñoz", QCoreApplication.translate("devicesinlan","Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net."))
         man.setSynopsis("[--help] [--version] [--debug DEBUG] [ --interface | --add | --remove | --list | --load | --save | --reset ]")
 
@@ -182,20 +245,22 @@ class Doc(Command):
 
     ########################################################################
 
-app=QCoreApplication(sys.argv)
-
-app.setOrganizationName("DevicesInLAN")
-app.setOrganizationDomain("devicesinlan.sourceforge.net")
-app.setApplicationName("DevicesInLAN")
-translator=QTranslator()
 with open('README.rst', encoding='utf-8') as f:
     long_description = f.read()
 
+## Version captured from commons to avoid problems with package dependencies
+__version__= None
+with open('devicesinlan/version.py', encoding='utf-8') as f:
+    for line in f.readlines():
+        if line.find("__version__ =")!=-1:
+            __version__=line.split("'")[1]
+
+
 if platform.system()=="Linux":
-    data_files=[]
-    #('/usr/share/man/man1/', ['man/man1/devicesinlan.1']), 
-    #            ('/usr/share/man/es/man1/', ['man/es/man1/devicesinlan.1'])
-    #           ]
+    data_files=[
+                 ('/usr/share/man/man1/', ['man/man1/devicesinlan.1']), 
+                 ('/usr/share/man/es/man1/', ['man/es/man1/devicesinlan.1'])
+               ]
 else:
     data_files=[]
 
@@ -220,7 +285,11 @@ setup(name='devicesinlan',
                                                                         'devicesinlan_gui=devicesinlan.devicesinlan_gui:main',
                                     ],
                 },
-    install_requires=['colorama','setuptools'],
+    install_requires= [ 'setuptools',
+                        'colorama', 
+                        'PyQt5;platform_system=="Windows"',
+                        'pywin32;platform_system=="Windows"',
+                        ], #PyQt5 and PyQtChart doesn't have egg-info in Gentoo, so I remove it to install it with ebuild without making 2 installations. Should be added manually when using pip to install
     data_files=data_files,
     cmdclass={
                         'doxygen': Doxygen,

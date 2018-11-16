@@ -23,7 +23,7 @@ FORMS           = devicesinlan/ui/frmAbout.ui \
                   devicesinlan/ui/frmSettings.ui
 
 
-TRANSLATIONS    = i18n/devicesinlan_es.ts \
-                  i18n/devicesinlan_fr.ts \
-                  i18n/devicesinlan_ro.ts \
-                  i18n/devicesinlan_ru.ts
+TRANSLATIONS    = devicesinlan/i18n/devicesinlan_es.ts \
+                  devicesinlan/i18n/devicesinlan_fr.ts \
+                  devicesinlan/i18n/devicesinlan_ro.ts \
+                  devicesinlan/i18n/devicesinlan_ru.ts

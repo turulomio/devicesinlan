@@ -1,0 +1,106 @@
+.TH DEVICESINLAN 1 2018\-11\-16
+.SH NAME
+
+.B devicesinlan:
+Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net.
+.SH SYNOPSIS
+
+devicesinlan [\-\-help] [\-\-version] [\-\-debug DEBUG] [ \-\-interface | \-\-add | \-\-remove | \-\-list | \-\-load | \-\-save | \-\-reset ]
+.SH DESCRIPTION
+
+.PP
+If you launch deviceslan without parameters a console wizard is launched.
+.PP
+Morever you can use one of this parameters.
+.PP
+.RS
+.B \-\-interface
+.RE
+.PP
+.RS
+.RS
+Scans the net of the interface parameter and prints a list of the detected devices.
+.RE
+.RE
+.PP
+.RS
+.RS
+If a device is not known, it will be showed in red. Devices in green are trusted devices.
+.RE
+.RE
+.PP
+.RS
+.B \-\-add
+.RE
+.PP
+.RS
+.RS
+Allows to add a known device from console.
+.RE
+.RE
+.PP
+.RS
+.B \-\-remove
+.RE
+.PP
+.RS
+.RS
+Allows to remove a known device from console.
+.RE
+.RE
+.PP
+.RS
+.B \-\-list
+.RE
+.PP
+.RS
+.RS
+Shows all known devices in database from console.
+.RE
+.RE
+.PP
+.RS
+.B \-\-load
+.RE
+.PP
+.RS
+.RS
+Loads a list of known devices in xml format.
+.RE
+.RE
+.PP
+.RS
+.B \-\-save
+.RE
+.PP
+.RS
+.RS
+Saves the known devices list to a xml file.
+.RE
+.RE
+.PP
+.RS
+.B \-\-debug
+.RE
+.PP
+.RS
+.RS
+Gives debugging information when running DevicesInLAN. It's deactivated by default
+.RE
+.RE
+.PP
+.RS
+.RS
+The parameter can take this options: CRITICAL, ERROR, WARNING, INFO, DEBUG.
+.RE
+.RE
+.PP
+.RS
+.B \-\-reset
+.RE
+.PP
+.RS
+.RS
+Removes all known devices.
+.RE
+.RE

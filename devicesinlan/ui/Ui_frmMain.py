@@ -146,4 +146,4 @@ class Ui_frmMain(object):
         self.actionListSave.setText(_translate("frmMain", "&Save devices list"))
         self.actionListSave.setToolTip(_translate("frmMain", "Save devices list"))
 
-import devicesinlan.ui.devicesinlan_rc
+import devicesinlan.images.devicesinlan_rc

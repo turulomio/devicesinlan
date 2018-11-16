@@ -231,4 +231,4 @@ class Ui_frmAbout(object):
         self.tab.setTabText(self.tab.indexOf(self.tabGLParchis), _translate("frmAbout", "Credits"))
         self.tab.setTabText(self.tab.indexOf(self.tabLicense), _translate("frmAbout", "License"))
 
-import devicesinlan.ui.devicesinlan_rc
+import devicesinlan.images.devicesinlan_rc

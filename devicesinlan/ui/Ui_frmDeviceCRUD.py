@@ -107,4 +107,4 @@ class Ui_frmDeviceCRUD(object):
         self.label.setText(_translate("frmDeviceCRUD", "Device alias"))
         self.label_4.setText(_translate("frmDeviceCRUD", "Interface MAC"))
 
-import devicesinlan.ui.devicesinlan_rc
+import devicesinlan.images.devicesinlan_rc

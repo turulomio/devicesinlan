@@ -1,2 +1,0 @@
-Use to look for  help
-# python3 Makefile.py --help
