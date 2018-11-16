@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QDialog
-from PyQt5.QtCore import QUrl, pyqtSlot
+from PyQt5.QtCore import pyqtSlot
 from devicesinlan.ui.Ui_frmHelp import Ui_frmHelp
 import pkg_resources
 from devicesinlan.ui.frmSettings import SetLanguages
@@ -35,5 +35,8 @@ class frmHelp(QDialog, Ui_frmHelp):
         else:
             program="devicesinlan_gui"
         url=pkg_resources.resource_filename("devicesinlan", "data/{}.{}.html".format(program, self.languages.selected.id))
-        self.viewer.setSource(QUrl(url))
+        f=open(url)
+        html=f.read()
+        f.close()
+        self.viewer.setHtml(html)
         

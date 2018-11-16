@@ -5,6 +5,7 @@ import gettext
 import logging
 import os
 import platform
+import shutil
 import site
 import sys
 from concurrent.futures import ProcessPoolExecutor
@@ -60,8 +61,8 @@ class PyInstaller(Command):
         os.system("python setup.py uninstall")
         os.system("python setup.py install")
         f=open("build/run.py","w")
-        f.write("import devicesinlan\n")
-        f.write("devicesinlan.main()\n")
+        f.write("import devicesinlan.devicesinlan_gui\n")
+        f.write("devicesinlan.devicesinlan_gui.main()\n")
         f.close()
         os.chdir("build")
         os.system("""pyinstaller run.py -n devicesinlan-{} --onefile --windowed --icon ../devicesinlan/images/devicesinlan.ico --distpath ../dist""".format(__version__))
@@ -185,13 +186,12 @@ class Doc(Command):
         pass
 
     def run(self):
-        from PyQt5.QtCore import QCoreApplication,  QTranslator
+        from PyQt5.QtCore import QCoreApplication
 
         app=QCoreApplication(sys.argv)
         app.setOrganizationName("DevicesInLAN")
         app.setOrganizationDomain("devicesinlan.sourceforge.net")
         app.setApplicationName("DevicesInLAN")
-        translator=QTranslator()
 
         os.system("pylupdate5 -noobsolete -verbose devicesinlan.pro")
         os.system("lrelease -qt5 devicesinlan.pro")
@@ -200,7 +200,7 @@ class Doc(Command):
 
     def mangenerator(self, language):
         from mangenerator import Man
-        from PyQt5.QtCore import QCoreApplication,  QTranslator
+        from PyQt5.QtCore import QCoreApplication
 
         change_language(language)
         print("DESCRIPTION in {} is {}".format(language, QCoreApplication.translate("devicesinlan", "DESCRIPTION")))
@@ -322,6 +322,8 @@ setup(name='devicesinlan',
                         'uninstall':Uninstall, 
                         'video': Video, 
                         'compile': Compile, 
+                        'pyinstaller': PyInstaller,
+                        'procedure': Procedure,
                      },
     zip_safe=False,
     include_package_data=True
