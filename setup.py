@@ -11,20 +11,6 @@ import sys
 from concurrent.futures import ProcessPoolExecutor
 from multiprocessing import cpu_count
 
-def change_language(language):  
-    """language es un string"""
-    from PyQt5.QtCore import QCoreApplication,  QTranslator
-    translator=QTranslator()
-
-    url= "devicesinlan/i18n/devicesinlan_{}.qm".format(language)
-    if os.path.exists(url)==True:
-        translator.load(url)
-        QCoreApplication.installTranslator(translator)
-        logging.info(("Language changed to {} using {}".format(language, url)))
-        return
-    if language!="en":
-        logging.warning(QCoreApplication.translate("Core", "Language ({}) couldn't be loaded in {}. Using default (en).".format(language, url)))
-
 
 
 class Doxygen(Command):
@@ -185,9 +171,26 @@ class Doc(Command):
     def finalize_options(self):
         pass
 
+
+    def change_language(self,language):  
+        """language es un string"""
+        from PyQt5.QtCore import  QTranslator
+        translator=QTranslator(app)
+        url= os.getcwd()+"/devicesinlan/i18n/devicesinlan_{}.qm".format(language)
+        if os.path.exists(url)==True:
+            translator.load(url)
+            app.installTranslator(translator)
+            print(("Language changed to {} using {}".format(language, url)))
+            return
+        else:
+            print("I couldn't found {}".format(url))
+        if language!="en":
+            print(QCoreApplication.translate("Core", "Language ({}) couldn't be loaded in {}. Using default (en).".format(language, url)))
+
+
     def run(self):
         from PyQt5.QtCore import QCoreApplication
-
+        global app
         app=QCoreApplication(sys.argv)
         app.setOrganizationName("DevicesInLAN")
         app.setOrganizationDomain("devicesinlan.sourceforge.net")
@@ -200,10 +203,9 @@ class Doc(Command):
 
     def mangenerator(self, language):
         from mangenerator import Man
-        from PyQt5.QtCore import QCoreApplication
 
-        change_language(language)
-        print("DESCRIPTION in {} is {}".format(language, QCoreApplication.translate("devicesinlan", "DESCRIPTION")))
+        self.change_language(language)
+        print("DESCRIPTION in {} is {}".format(language, app.translate("devicesinlan", "DESCRIPTION")))
 
         if language=="en":
             man=Man("man/man1/devicesinlan")
@@ -212,59 +214,59 @@ class Doc(Command):
             man=Man("man/{}/man1/devicesinlan".format(language))
             mangui=Man("man/{}/man1/devicesinlan_gui".format(language))
 
-        mangui.setMetadata("devicesinlan_gui",  1,   datetime.date.today(), "Mariano Muñoz", QCoreApplication.translate("devicesinlan","Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net."))
+        mangui.setMetadata("devicesinlan_gui",  1,   datetime.date.today(), "Mariano Muñoz", app.translate("devicesinlan","Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net."))
         mangui.setSynopsis("[--help] [--version] [--debug DEBUG]")
-        mangui.header(QCoreApplication.translate("devicesinlan","DESCRIPTION"), 1)
-        mangui.paragraph(QCoreApplication.translate("devicesinlan","In the app menu you have the followings features:"), 1)
-        mangui.paragraph(QCoreApplication.translate("devicesinlan","Devices > New Scan"), 2, True)
-        mangui.paragraph(QCoreApplication.translate("devicesinlan","Searches all devices in tha LAN and show them in a new tab. If some device is not in the known devices list it will be shown with a red background. Devices with a green background are trusted devices"), 3)
-        mangui.paragraph(QCoreApplication.translate("devicesinlan","Devices > Show devices database"), 2, True)
-        mangui.paragraph(QCoreApplication.translate("devicesinlan","Shows all known devices in a new tab."), 3)
-        mangui.paragraph(QCoreApplication.translate("devicesinlan","Right click allows you to edit known devices database."), 3)
-        mangui.paragraph(QCoreApplication.translate("devicesinlan","Devices > Load devices list"), 2, True)
-        mangui.paragraph(QCoreApplication.translate("devicesinlan","Loads a list of known devices in xml format."), 3)
-        mangui.paragraph(QCoreApplication.translate("devicesinlan","Devices > Save devices list"), 2, True)
-        mangui.paragraph(QCoreApplication.translate("devicesinlan","Saves the known devices list to a xml file."), 3)
-        mangui.paragraph(QCoreApplication.translate("devicesinlan","Devices > Reset database"), 2, True)
-        mangui.paragraph(QCoreApplication.translate("devicesinlan","Removes all known devices."), 3)
-        mangui.paragraph(QCoreApplication.translate("devicesinlan","This option erases all known devices in database."), 3)
-        mangui.paragraph(QCoreApplication.translate("devicesinlan","Configuration > Settings"), 2, True)
-        mangui.paragraph(QCoreApplication.translate("devicesinlan","In this dialog you can select your prefered language and you can configure the number of concurrence request."), 3)
-        mangui.paragraph(QCoreApplication.translate("devicesinlan","Help > Help"), 2, True)
-        mangui.paragraph(QCoreApplication.translate("devicesinlan","Shows this help information."), 3)
-        mangui.paragraph(QCoreApplication.translate("devicesinlan","Help > About"), 2, True)
-        mangui.paragraph(QCoreApplication.translate("devicesinlan","Shows information about DevicesInLAN license and authors."), 3)
-        mangui.paragraph(QCoreApplication.translate("devicesinlan","Help > Check for updates"), 2, True)
-        mangui.paragraph(QCoreApplication.translate("devicesinlan","Checks for updates in DevicesInLan repository."), 3)
-        mangui.paragraph(QCoreApplication.translate("devicesinlan","Help > Exit"), 2, True)
-        mangui.paragraph(QCoreApplication.translate("devicesinlan","Exits from program."), 3)
+        mangui.header(app.translate("devicesinlan","DESCRIPTION"), 1)
+        mangui.paragraph(app.translate("devicesinlan","In the app menu you have the followings features:"), 1)
+        mangui.paragraph(app.translate("devicesinlan","Devices > New Scan"), 2, True)
+        mangui.paragraph(app.translate("devicesinlan","Searches all devices in tha LAN and show them in a new tab. If some device is not in the known devices list it will be shown with a red background. Devices with a green background are trusted devices"), 3)
+        mangui.paragraph(app.translate("devicesinlan","Devices > Show devices database"), 2, True)
+        mangui.paragraph(app.translate("devicesinlan","Shows all known devices in a new tab."), 3)
+        mangui.paragraph(app.translate("devicesinlan","Right click allows you to edit known devices database."), 3)
+        mangui.paragraph(app.translate("devicesinlan","Devices > Load devices list"), 2, True)
+        mangui.paragraph(app.translate("devicesinlan","Loads a list of known devices in xml format."), 3)
+        mangui.paragraph(app.translate("devicesinlan","Devices > Save devices list"), 2, True)
+        mangui.paragraph(app.translate("devicesinlan","Saves the known devices list to a xml file."), 3)
+        mangui.paragraph(app.translate("devicesinlan","Devices > Reset database"), 2, True)
+        mangui.paragraph(app.translate("devicesinlan","Removes all known devices."), 3)
+        mangui.paragraph(app.translate("devicesinlan","This option erases all known devices in database."), 3)
+        mangui.paragraph(app.translate("devicesinlan","Configuration > Settings"), 2, True)
+        mangui.paragraph(app.translate("devicesinlan","In this dialog you can select your prefered language and you can configure the number of concurrence request."), 3)
+        mangui.paragraph(app.translate("devicesinlan","Help > Help"), 2, True)
+        mangui.paragraph(app.translate("devicesinlan","Shows this help information."), 3)
+        mangui.paragraph(app.translate("devicesinlan","Help > About"), 2, True)
+        mangui.paragraph(app.translate("devicesinlan","Shows information about DevicesInLAN license and authors."), 3)
+        mangui.paragraph(app.translate("devicesinlan","Help > Check for updates"), 2, True)
+        mangui.paragraph(app.translate("devicesinlan","Checks for updates in DevicesInLan repository."), 3)
+        mangui.paragraph(app.translate("devicesinlan","Help > Exit"), 2, True)
+        mangui.paragraph(app.translate("devicesinlan","Exits from program."), 3)
         mangui.save()
         mangui.saveHTML("devicesinlan/data/devicesinlan_gui.{}.html".format(language))
 
-        man.setMetadata("devicesinlan",  1,   datetime.date.today(), "Mariano Muñoz", QCoreApplication.translate("devicesinlan","Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net."))
+        man.setMetadata("devicesinlan",  1,   datetime.date.today(), "Mariano Muñoz", app.translate("devicesinlan","Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net."))
         man.setSynopsis("[--help] [--version] [--debug DEBUG] [ --interface | --add | --remove | --list | --load | --save | --reset ]")
 
-        man.header(QCoreApplication.translate("devicesinlan","DESCRIPTION"), 1)
-        man.paragraph(QCoreApplication.translate("devicesinlan","If you launch deviceslan without parameters a console wizard is launched."), 1)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Morever you can use one of this parameters."), 1)
+        man.header(app.translate("devicesinlan","DESCRIPTION"), 1)
+        man.paragraph(app.translate("devicesinlan","If you launch deviceslan without parameters a console wizard is launched."), 1)
+        man.paragraph(app.translate("devicesinlan","Morever you can use one of this parameters."), 1)
         man.paragraph("--interface", 2, True)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Scans the net of the interface parameter and prints a list of the detected devices."), 3)
-        man.paragraph(QCoreApplication.translate("devicesinlan","If a device is not known, it will be showed in red. Devices in green are trusted devices."), 3)
+        man.paragraph(app.translate("devicesinlan","Scans the net of the interface parameter and prints a list of the detected devices."), 3)
+        man.paragraph(app.translate("devicesinlan","If a device is not known, it will be showed in red. Devices in green are trusted devices."), 3)
         man.paragraph("--add", 2, True)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Allows to add a known device from console."), 3)
+        man.paragraph(app.translate("devicesinlan","Allows to add a known device from console."), 3)
         man.paragraph("--remove", 2, True)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Allows to remove a known device from console."), 3)
+        man.paragraph(app.translate("devicesinlan","Allows to remove a known device from console."), 3)
         man.paragraph("--list", 2, True)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Shows all known devices in database from console."), 3)
+        man.paragraph(app.translate("devicesinlan","Shows all known devices in database from console."), 3)
         man.paragraph("--load", 2, True)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Loads a list of known devices in xml format."), 3)
+        man.paragraph(app.translate("devicesinlan","Loads a list of known devices in xml format."), 3)
         man.paragraph("--save", 2, True)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Saves the known devices list to a xml file."), 3)
+        man.paragraph(app.translate("devicesinlan","Saves the known devices list to a xml file."), 3)
         man.paragraph("--debug", 2, True)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Gives debugging information when running DevicesInLAN. It's deactivated by default"), 3)
-        man.paragraph(QCoreApplication.translate("devicesinlan","The parameter can take this options: CRITICAL, ERROR, WARNING, INFO, DEBUG."), 3)
+        man.paragraph(app.translate("devicesinlan","Gives debugging information when running DevicesInLAN. It's deactivated by default"), 3)
+        man.paragraph(app.translate("devicesinlan","The parameter can take this options: CRITICAL, ERROR, WARNING, INFO, DEBUG."), 3)
         man.paragraph("--reset", 2, True)
-        man.paragraph(QCoreApplication.translate("devicesinlan","Removes all known devices."), 3)
+        man.paragraph(app.translate("devicesinlan","Removes all known devices."), 3)
         man.save()
         man.saveHTML("devicesinlan/data/devicesinlan.{}.html".format(language))
 
