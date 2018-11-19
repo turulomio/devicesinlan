@@ -1,14 +1,10 @@
 Links
 =====
-Source code & Development:
-  * https://github.com/Turulomio/devicesinlan
 Doxygen documentation:
   * http://turulomio.users.sourceforge.net/doxygen/devicesinlan/
 Main developer web page:
   * https://github.com/Turulomio
   * http://turulomio.users.sourceforge.net/en/proyectos.html
-Gentoo ebuild
-    You can find a Gentoo ebuild in https://sourceforge.net/p/xulpymoney/code/HEAD/tree/myportage/app-admin/devicesinlan/
 
 Dependencies
 ============
