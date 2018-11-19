@@ -23,7 +23,7 @@ class Doxygen(Command):
         os.system("""sed -i -e "41iPROJECT_NUMBER         = {}" doc/Doxyfile""".format(__version__))#Insert line 41
         os.chdir("doc")
         os.system("doxygen Doxyfile")
-        os.system("rsync -avzP -e 'ssh -l turulomio' html/ frs.sourceforge.net:/home/users/t/tu/turulomio/userweb/htdocs/doxygen/too-many-files/ --delete-after")
+        os.system("rsync -avzP -e 'ssh -l turulomio' html/ frs.sourceforge.net:/home/users/t/tu/turulomio/userweb/htdocs/doxygen/devicesinlan/ --delete-after")
         os.chdir("..")
 
 class PyInstaller(Command):
@@ -118,7 +118,7 @@ class Uninstall(Command):
     def run(self):
         if platform.system()=="Linux":
             os.system("rm -Rf {}/devicesinlan*".format(site.getsitepackages()[0]))
-            os.system("rm /usr/bin/devicesinlan")
+            os.system("rm /usr/bin/devicesinlan*")
             os.system("rm /usr/share/pixmaps/devicesinlan.png")
             os.system("rm /usr/share/applications/devicesinlan.desktop")
             os.system("rm /usr/share/man/man1/devicesinlan.1")
@@ -174,8 +174,10 @@ with open('devicesinlan/version.py', encoding='utf-8') as f:
 #data_files
 if platform.system()=="Linux":
     data_files=[
-                 ('/usr/share/man/man1/', ['man/man1/devicesinlan.1']), 
-                 ('/usr/share/man/es/man1/', ['man/es/man1/devicesinlan.1'])
+                 ('/usr/share/man/man1/', ['man/man1/devicesinlan.1']),
+                 ('/usr/share/man/es/man1/', ['man/es/man1/devicesinlan.1']),
+                 ('/usr/share/pixmaps/', ['devicesinlan/images/devicesinlan.png']),
+                 ('/usr/share/applications/', ['devicesinlan.desktop']),
                ]
 else:
     data_files=[]
