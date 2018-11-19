@@ -6,7 +6,7 @@ import shutil
 import site
 from concurrent.futures import ProcessPoolExecutor
 from multiprocessing import cpu_count
-
+ 
 class Doxygen(Command):
     description = "Create/update doxygen documentation in doc/html"
     user_options = []
