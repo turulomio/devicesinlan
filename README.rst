@@ -1,3 +1,11 @@
+Snapshots
+=========
+
+.. image:: https://github.com/Turulomio/devicesinlan/blob/master/doc/devicesinlan_snapshots_01.png
+  :height: 100px
+  :width: 200 px
+  :scale: 50 %
+
 Links
 =====
 Doxygen documentation:
