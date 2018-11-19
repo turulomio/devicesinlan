@@ -162,7 +162,6 @@ class MemSetup(QObject):
             print(self.tr("Language changed to {} using {}".format(language, url)))
         elif language!="en":
             print("I couldn't found {}".format(url))
-        print(language, url)
 
 ## Mem object for console
 class MemConsole(MemSetup):

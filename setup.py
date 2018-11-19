@@ -40,8 +40,8 @@ class PyInstaller(Command):
         os.system("python setup.py uninstall")
         os.system("python setup.py install")
         f=open("build/run.py","w")
-        f.write("import devicesinlan.devicesinlan_gui\n")
-        f.write("devicesinlan.devicesinlan_gui.main()\n")
+        f.write("import devicesinlan.devicesinlan\n")
+        f.write("devicesinlan.devicesinlan.main_gui()\n")
         f.close()
         os.chdir("build")
         os.system("""pyinstaller run.py -n devicesinlan-{} --onefile --nowindowed --icon ../devicesinlan/images/devicesinlan.ico --distpath ../dist""".format(__version__))
@@ -164,14 +164,14 @@ class Doc(Command):
 with open('README.rst', encoding='utf-8') as f:
     long_description = f.read()
 
-## Version captured from commons to avoid problems with package dependencies
+#__version__
 __version__= None
 with open('devicesinlan/version.py', encoding='utf-8') as f:
     for line in f.readlines():
         if line.find("__version__ =")!=-1:
             __version__=line.split("'")[1]
 
-
+#data_files
 if platform.system()=="Linux":
     data_files=[
                  ('/usr/share/man/man1/', ['man/man1/devicesinlan.1']), 
@@ -179,6 +179,17 @@ if platform.system()=="Linux":
                ]
 else:
     data_files=[]
+#entry_points
+entry_points={
+    'gui_scripts': [   
+        'devicesinlan_gui=devicesinlan.devicesinlan:main_gui',
+    ],
+    'console_scripts': [    
+        'devicesinlan=devicesinlan.devicesinlan:main_console',
+    ],
+}
+if platform.system()=="Windows":
+    entry_points["console_scripts"].append('devicesinlan_shortcuts=devicesinlan.shortcuts:create')
 
 setup(name='devicesinlan',
     version=__version__,
@@ -197,15 +208,7 @@ setup(name='devicesinlan',
     author_email='turulomio@yahoo.es',
     license='GPL-3',
     packages=['devicesinlan'],
-    entry_points = {
-        'gui_scripts': [   
-            'devicesinlan_gui=devicesinlan.devicesinlan:main_gui',  
-            'devicesinlan_shortcuts=devicesinlan.shortcuts:create',  
-        ],
-        'console_scripts': [    
-            'devicesinlan=devicesinlan.devicesinlan:main_console',
-        ],
-    },
+    entry_points = entry_points,
     install_requires= [ 'setuptools',
                         'colorama', 
                         'PyQt5;platform_system=="Windows"',
