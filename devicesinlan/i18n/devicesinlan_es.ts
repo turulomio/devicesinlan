@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="es">
+<!DOCTYPE TS><TS version="2.0" language="es" sourcelanguage="">
 <context>
     <name>Device</name>
     <message>
@@ -208,7 +207,7 @@
     <message>
         <location filename="../libdevicesinlan.py" line="68"/>
         <source>Devices &gt; New Scan</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivo &gt; Nuevo escaneado</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="69"/>
@@ -218,17 +217,17 @@
     <message>
         <location filename="../libdevicesinlan.py" line="70"/>
         <source>Devices &gt; Show devices database</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivos &gt; Muestra la base de datos de dispositivos</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="71"/>
         <source>Shows all known devices in a new tab.</source>
-        <translation type="unfinished"></translation>
+        <translation>Muestra todo los dispositivos conocidos en una nueva pestaña.</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="72"/>
         <source>Right click allows you to edit known devices database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hacer click derecho te permite editar la base de datos de dispositivos conocidos.</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="73"/>
@@ -238,7 +237,7 @@
     <message>
         <location filename="../libdevicesinlan.py" line="109"/>
         <source>Loads a list of known devices in xml format.</source>
-        <translation type="unfinished"></translation>
+        <translation>Carga una lista de dispositivos conocidos en formato xml.</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="75"/>
@@ -534,7 +533,7 @@
     </message>
     <message>
         <location filename="../ui/frmAbout.py" line="16"/>
-        <source>This program has been developed by Mariano Muñoz.&lt;p&gt;</source>
+        <source>This program has been developed by Mariano Mu&#xf1;oz.&lt;p&gt;</source>
         <translation>El programa ha sido desarrollado por Mariano Muñoz.&lt;p&gt;</translation>
     </message>
     <message>

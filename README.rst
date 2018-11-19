@@ -163,3 +163,6 @@ devicesinlan 1.4.1 20181116
 ---------------------------
   * Fix little bugs with windows installation
 
+devicesinlan 1.5.0 20181129
+---------------------------
+  * Improved code quality
