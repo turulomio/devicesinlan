@@ -159,9 +159,9 @@ class MemSetup(QObject):
         if os.path.exists(url)==True:
             self.translator.load(url)
             self.app.installTranslator(self.translator)
-            print(self.tr("Language changed to {} using {}".format(language, url)))
+            logging.info(self.tr("Language changed to {} using {}".format(language, url)))
         elif language!="en":
-            print("I couldn't found {}".format(url))
+            logging.info("I couldn't found {}".format(url))
 
 ## Mem object for console
 class MemConsole(MemSetup):
