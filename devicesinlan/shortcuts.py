@@ -1,6 +1,7 @@
-## Creates windows shortcuts
+## @namespace devicesinlan.shortcuts
+## @brief Creates windows shortcuts
 
-import os, sys
+import os
 import pythoncom #Viene en pywin32
 import pkg_resources
 from win32com.shell import shell, shellcon
@@ -21,7 +22,6 @@ def create():
     desktop_path = shell.SHGetFolderPath (0, shellcon.CSIDL_DESKTOP, 0, 0)
     persist_file = shortcut.QueryInterface (pythoncom.IID_IPersistFile)
     persist_file.Save (os.path.join (desktop_path, "DevicesInLan.lnk"), 0)
-
 
 def remove():
     desktop_path = shell.SHGetFolderPath (0, shellcon.CSIDL_DESKTOP, 0, 0)

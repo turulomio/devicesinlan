@@ -2,7 +2,6 @@ SOURCES         = setup.py \
                   devicesinlan/libdevicesinlan.py \
                   devicesinlan/libdevicesinlan_gui.py \
                   devicesinlan/devicesinlan.py \
-                  devicesinlan/devicesinlan_gui.py \
                   devicesinlan/ui/frmMain.py \
                   devicesinlan/ui/Ui_frmMain.py \
                   devicesinlan/ui/frmHelp.py \

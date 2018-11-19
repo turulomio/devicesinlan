@@ -1,4 +1,6 @@
+import argparse
 import codecs
+from colorama import init as colorama_init,  Style, Fore
 import datetime
 import threading
 import logging
@@ -7,57 +9,269 @@ import re
 import pkg_resources
 import platform
 import subprocess
+import sys
 import time
 import socket
 from PyQt5.QtCore import QCoreApplication, QSettings, QTranslator, QObject
 from PyQt5.QtNetwork import QNetworkInterface, QAbstractSocket,  QTcpSocket
-from colorama import Style, Fore
 from concurrent.futures import ThreadPoolExecutor,  as_completed
 from xml.dom import minidom
 from uuid import  uuid4
 from urllib.request import urlopen
 from ipaddress import IPv4Network
-from devicesinlan.version import __version__
+from devicesinlan.version import __version__, __versiondate__
 
 class TypesARP:
     Gratuitous = 1
     Standard = 2
 
-class MemApp(QObject):
-    """
-        Basic mem for translating app 
-    """
+## Mem object for setup
+class MemSetup(QObject):
     def __init__(self):
-        QObject.__init__(self)
+        QObject.__init__(self)        
+        self.name="DevicesInLAN"
+        self.author=self.tr("Mariano Mu\\xf1oz")
+        self.description=self.tr('Show devices in a LAN making an ARP search to find them with a user interface')
+        self.epilog=self.tr("If you like this app, please give me a star in https://github.com/Turulomio/devicesinlan.")+"\n" +self.tr("Developed by {} 2015-{} \\xa9").format(self.author, __versiondate__.year)
+        colorama_init()
+
+    ## Sets QApplication Object to make a Qt application
+    def setQApplication(self):
+        if self.__class__.__name__ in ["MemSetup", "MemConsole"]:
+            self.app=QCoreApplication(sys.argv)
+        else:
+            from PyQt5.QtWidgets import QApplication
+            self.app=QApplication(sys.argv)
+            self.app.setQuitOnLastWindowClosed(True)
+        self.app.setOrganizationName(self.name)
+        self.app.setOrganizationDomain(self.name)
+        self.app.setApplicationName(self.name)
         self.translator=QTranslator()
-
-    def setApp(self, app):
-        self.app=app#Link to app
-
-
-    def change_language(self, language):  
-        """language es un string"""
-        urls= [pkg_resources.resource_filename("devicesinlan", "i18n/devicesinlan_{}.qm".format(language)),]
-        for url in urls:
-            if os.path.exists(url)==True:
-                self.translator.load(url)
-                QCoreApplication.installTranslator(self.translator)
-                logging.info(self.tr("Language changed to {} using {}".format(language, url)))
-                return
-        if language!="en":
-            logging.warning(Style.BRIGHT+ Fore.CYAN+ self.tr("Language ({}) couldn't be loaded in {}. Using default (en).".format(language, urls)))
-
-class Mem(MemApp):
-    """
-        Mem for running app
-    """
-    def __init__(self):
-        MemApp.__init__(self)
         self.settings=QSettings()
+
+    def mangenerator(self, language):
+        from mangenerator import Man
+
+        print("DESCRIPTION in {} is {}".format(language, self.tr("DESCRIPTION")))
+
+        if language=="en":
+            man=Man("man/man1/devicesinlan")
+            mangui=Man("man/man1/devicesinlan_gui")
+        else:
+            man=Man("man/{}/man1/devicesinlan".format(language))
+            mangui=Man("man/{}/man1/devicesinlan_gui".format(language))
+
+        mangui.setMetadata("devicesinlan_gui",  1,   datetime.date.today(), "Mariano Muñoz", self.tr("Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net."))
+        mangui.setSynopsis("[--help] [--version] [--debug DEBUG]")
+        mangui.header(self.tr("DESCRIPTION"), 1)
+        mangui.paragraph(self.tr("In the app menu you have the followings features:"), 1)
+        mangui.paragraph(self.tr("Devices > New Scan"), 2, True)
+        mangui.paragraph(self.tr("Searches all devices in tha LAN and show them in a new tab. If some device is not in the known devices list it will be shown with a red background. Devices with a green background are trusted devices"), 3)
+        mangui.paragraph(self.tr("Devices > Show devices database"), 2, True)
+        mangui.paragraph(self.tr("Shows all known devices in a new tab."), 3)
+        mangui.paragraph(self.tr("Right click allows you to edit known devices database."), 3)
+        mangui.paragraph(self.tr("Devices > Load devices list"), 2, True)
+        mangui.paragraph(self.tr("Loads a list of known devices in xml format."), 3)
+        mangui.paragraph(self.tr("Devices > Save devices list"), 2, True)
+        mangui.paragraph(self.tr("Saves the known devices list to a xml file."), 3)
+        mangui.paragraph(self.tr("Devices > Reset database"), 2, True)
+        mangui.paragraph(self.tr("Removes all known devices."), 3)
+        mangui.paragraph(self.tr("This option erases all known devices in database."), 3)
+        mangui.paragraph(self.tr("Configuration > Settings"), 2, True)
+        mangui.paragraph(self.tr("In this dialog you can select your prefered language and you can configure the number of concurrence request."), 3)
+        mangui.paragraph(self.tr("Help > Help"), 2, True)
+        mangui.paragraph(self.tr("Shows this help information."), 3)
+        mangui.paragraph(self.tr("Help > About"), 2, True)
+        mangui.paragraph(self.tr("Shows information about DevicesInLAN license and authors."), 3)
+        mangui.paragraph(self.tr("Help > Check for updates"), 2, True)
+        mangui.paragraph(self.tr("Checks for updates in DevicesInLan repository."), 3)
+        mangui.paragraph(self.tr("Help > Exit"), 2, True)
+        mangui.paragraph(self.tr("Exits from program."), 3)
+        mangui.save()
+        mangui.saveHTML("devicesinlan/data/devicesinlan_gui.{}.html".format(language))
+
+        man.setMetadata("devicesinlan",  1,   datetime.date.today(), "Mariano Muñoz", self.tr("Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net."))
+        man.setSynopsis("[--help] [--version] [--debug DEBUG] [ --interface | --add | --remove | --list | --load | --save | --reset ]")
+
+        man.header(self.tr("DESCRIPTION"), 1)
+        man.paragraph(self.tr("If you launch deviceslan without parameters a console wizard is launched."), 1)
+        man.paragraph(self.tr("Morever you can use one of this parameters."), 1)
+        man.paragraph("--interface", 2, True)
+        man.paragraph(self.tr("Scans the net of the interface parameter and prints a list of the detected devices."), 3)
+        man.paragraph(self.tr("If a device is not known, it will be showed in red. Devices in green are trusted devices."), 3)
+        man.paragraph("--add", 2, True)
+        man.paragraph(self.tr("Allows to add a known device from console."), 3)
+        man.paragraph("--remove", 2, True)
+        man.paragraph(self.tr("Allows to remove a known device from console."), 3)
+        man.paragraph("--list", 2, True)
+        man.paragraph(self.tr("Shows all known devices in database from console."), 3)
+        man.paragraph("--load", 2, True)
+        man.paragraph(self.tr("Loads a list of known devices in xml format."), 3)
+        man.paragraph("--save", 2, True)
+        man.paragraph(self.tr("Saves the known devices list to a xml file."), 3)
+        man.paragraph("--debug", 2, True)
+        man.paragraph(self.tr("Gives debugging information when running DevicesInLAN. It's deactivated by default"), 3)
+        man.paragraph(self.tr("The parameter can take this options: CRITICAL, ERROR, WARNING, INFO, DEBUG."), 3)
+        man.paragraph("--reset", 2, True)
+        man.paragraph(self.tr("Removes all known devices."), 3)
+        man.save()
+        man.saveHTML("devicesinlan/data/devicesinlan.{}.html".format(language))
+
+
+
+    ## Sets logging level for the app
+    def setLoggingLevel(self, level):        
+        #Por defecto se pone WARNING y mostrar´ia ERROR y CRITICAL
+        logFormat = "%(asctime)s %(levelname)s %(module)s:%(lineno)d at %(funcName)s. %(message)s"
+        dateFormat='%Y%m%d %I%M%S'
+
+        if level=="DEBUG":#Show detailed information that can help with program diagnosis and troubleshooting. CODE MARKS
+            logging.basicConfig(level=logging.DEBUG, format=logFormat, datefmt=dateFormat)
+        elif level=="INFO":#Everything is running as expected without any problem. TIME BENCHMARCKS
+            logging.basicConfig(level=logging.INFO, format=logFormat, datefmt=dateFormat)
+        elif level=="WARNING":#The program continues running, but something unexpected happened, which may lead to some problem down the road. THINGS TO DO
+            logging.basicConfig(level=logging.WARNING, format=logFormat, datefmt=dateFormat)
+        elif level=="ERROR":#The program fails to perform a certain function due to a bug.  SOMETHING BAD LOGIC
+            logging.basicConfig(level=logging.ERROR, format=logFormat, datefmt=dateFormat)
+        elif level=="CRITICAL":#The program encounters a serious error and may stop running. ERRORS
+            logging.basicConfig(level=logging.CRITICAL, format=logFormat, datefmt=dateFormat)
+        else:
+            if level:#Bad debug parameter
+                logging.basicConfig(level=logging.CRITICAL, format=logFormat, datefmt=dateFormat)
+                logging.critical("--debug parameter must be DEBUG, INFO, WARNING, ERROR or CRITICAL")
+                sys.exit(1)
+            else:     #No debug parameter
+                logging.propagate=False
+
+    def signal_handler(self, signal, frame):
+            print(Style.BRIGHT+Fore.RED+self.tr("You pressed 'Ctrl+C', exiting..."))
+            sys.exit(0)
+            
+    ## Changes Qt current Qtranslator
+    ## @param language String with en, es .... None by defautt and search in settings
+    ## @param url Stirng with the qm url. Useful in setup.py script. None by default
+    def setLanguage(self, language=None, url=None):  
+        if language==None:
+            language=self.settings.value("frmSettings/language", "en")
+        if url==None:
+            url=pkg_resources.resource_filename("devicesinlan", "i18n/devicesinlan_{}.qm".format(language))
+
+        if os.path.exists(url)==True:
+            self.translator.load(url)
+            self.app.installTranslator(self.translator)
+            print(self.tr("Language changed to {} using {}".format(language, url)))
+        elif language!="en":
+            print("I couldn't found {}".format(url))
+        print(language, url)
+
+## Mem object for console
+class MemConsole(MemSetup):
+    def __init__(self):
+        MemSetup.__init__(self)
         self.interfaces=SetInterfaces(self)
         self.interfaces.load_all()
         self.types=SetDeviceTypes(self)
         self.types.load_all()
+        
+    ## Sets parser, logging and args confitions. This one is for console command. gui commond overrides this method.
+    def parse_args(self):
+        parser=argparse.ArgumentParser(prog='devicesinlan', description=self.description,  epilog=self.epilog, formatter_class=argparse.RawTextHelpFormatter)
+        parser.add_argument('--version', action='version', version="{} ({})".format(__version__, __versiondate__))
+        group = parser.add_mutually_exclusive_group()
+        group.add_argument('--interface', help=self.tr('Net interface name'))
+        group.add_argument('--add', help=self.tr('Add a known device'), action='store_true')
+        group.add_argument('--remove', help=self.tr('Remove a known device'), action='store_true')
+        group.add_argument('--list', help=self.tr('List known devices'), action='store_true')
+        group.add_argument('--load', help=self.tr('Load known devices list'), action='store')
+        group.add_argument('--save', help=self.tr('Save known devices list'), action='store')
+        group.add_argument('--reset', help=self.tr('Reset known devices list'), action='store_true', default=False)
+        parser.add_argument('--debug', help=self.tr( "Debug program information"))
+
+        self.args=parser.parse_args()        
+
+        self.setLoggingLevel(self.args.debug)
+        
+        if self.args.load:
+            if os.path.exists(self.args.load):
+                current=SetDevices(self).init__from_settings()
+                new=SetDevices(self).init__from_xml(self.args.load)
+                for n in new.arr:
+                    c=current.find_by_mac(n.mac)
+                    if c==None:#Not found its mac so n is new
+                        if input_YN(self.tr( "Do you want to add this {} with MAC {} and set its name to {}?".format(n.type.name.lower(), n.mac, n.alias)), default=self.tr( "Y"))==True:
+                            n.link()
+                    else:
+                        if n!=c:
+                            if input_YN(self.tr( "We already have a device with this MAC: {}. Do you want to change its alias ({}) and type ({}) to a {} named {}?".format(c.mac, c.alias, c.type.name.lower(), n.type.name.lower(), n.alias)), default=self.tr( "Y"))==True:
+                                n.link()
+            else:
+                print (Style.BRIGHT+Fore.RED+self.tr( "File doesn't exist"))
+            sys.exit(0)
+
+        if self.args.reset:
+            result=input_YN(self.tr( "Are you sure you want to reset known devices database?"),  default=self.tr("N"))
+            if result==True:
+                set=SetDevices(self)
+                set.init__from_settings()
+                set.reset()
+                print (Style.BRIGHT+Fore.RED+self.tr( "Database was reset"))
+            sys.exit(0)
+
+        if self.args.save:
+            set=SetDevices(self)
+            set.init__from_settings()
+            set.saveXml(self.args.save)
+            sys.exit(0)
+
+        if self.args.add==True:
+            d=Device(self)
+            d.insert_mac()
+            d.insert_alias()
+            d.insert_type()
+            d.link()
+            print (Style.BRIGHT+ Fore.GREEN + self.tr("Device inserted"))
+            self.settings.sync()
+            sys.exit(0)
+
+        if self.args.remove==True:
+            d=Device(self)
+            d.insert_mac()
+            d.unlink()
+            print (Style.BRIGHT+Fore.GREEN+self.tr("Mac removed"))
+
+            self.settings.sync()
+            sys.exit(0)
+
+        if self.args.list==True:
+            set=SetDevices(self)
+            set.init__from_settings()
+            set.print_devices_from_settings()
+            sys.exit(0)
+        ## Load devices
+        if self.args.interface:
+            if self.interfaces.find_by_id(self.args.interface)==None:
+                print(Style.BRIGHT+Fore.RED+self.tr( "This interface doesn't exist. Please remove the --interface parameter to use a wizard."))
+                sys.exit(1)
+            self.interfaces.selected=self.interfaces.find_by_id(self.args.interface)
+        else:
+            if self.interfaces.length()==0:
+                print(Style.BRIGHT+ Fore.RED+self.tr( "There are not interfaces to scan."))
+                sys.exit(1)
+            self.interfaces.print()
+            while True:
+                id=input_int(self.tr( "Select an interface number"), 1)
+                if id<=self.interfaces.length():#Check id 
+                    break
+            self.interfaces.selected=self.interfaces.find_by_id(self.interfaces.arr[id-1].id())
+            self.settings.setValue("frmSettings/concurrence", input_int(self.tr( "Input an integer with the request concurrence"), self.settings.value("frmSettings/concurrence", 200)))
+            self.settings.sync()
+
+        inicio=datetime.datetime.now()
+        set=SetDevices(self)
+        set.setMethod(ArpScanMethod.PingArp)
+        set.print()
+        print (Style.BRIGHT+self.tr("It took {} with DevicesInLAN scanner.").format (Fore.GREEN+str(datetime.datetime.now()-inicio)+ " "+ self.tr( "seconds")+Fore.WHITE))
+
     def setInstallationUUID(self):
         if self.settings.value("frmMain/uuid", "None")=="None":
             self.settings.setValue("frmMain/uuid", str(uuid4()))
@@ -67,6 +281,21 @@ class Mem(MemApp):
         except:
             web=self.tr("Error collecting statistics")
         logging.debug("{}, answering {}".format(web, url))
+
+## devicesinlan_gui Mem object
+class MemGUI(MemConsole):
+    def __init__(self):
+        MemConsole.__init__(self)
+
+    ## Sets parser, logging and args confitions. This one is for devicesinlan_gui  command, that overrides supper method
+    def parse_args(self):
+        parser=argparse.ArgumentParser(prog='devicesinlan_gui', description=self.description,  epilog=self.epilog, formatter_class=argparse.RawTextHelpFormatter)
+        parser.add_argument('--version', action='version', version="{} ({})".format(__version__, __versiondate__))
+        parser.add_argument('--debug', help=self.tr( "Debug program information"))
+        self.args=parser.parse_args()        
+
+        self.setLoggingLevel(self.args.debug)
+
 
 class DeviceType:
     def __init__(self, mem):

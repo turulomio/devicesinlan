@@ -82,7 +82,7 @@ class frmSettings(QDialog, Ui_frmSettings):
     @pyqtSlot(str)      
     def on_cmbLanguage_currentIndexChanged(self, stri):        
         self.languages.selected=self.languages.find_by_name(stri)
-        self.mem.change_language( self.languages.selected.id)
+        self.mem.setLanguage( self.languages.selected.id)
         self.retranslateUi(self)
         
     def on_buttonBox_accepted(self):
