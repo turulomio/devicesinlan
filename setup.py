@@ -200,6 +200,7 @@ setup(name='devicesinlan',
     entry_points = {
         'gui_scripts': [   
             'devicesinlan_gui=devicesinlan.devicesinlan:main_gui',  
+            'devicesinlan_shortcuts=devicesinlan.shortcuts:create',  
         ],
         'console_scripts': [    
             'devicesinlan=devicesinlan.devicesinlan:main_console',

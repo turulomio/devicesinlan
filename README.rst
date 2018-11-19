@@ -1,3 +1,5 @@
+Links
+=====
 Source code & Development:
   * https://github.com/Turulomio/devicesinlan
 Doxygen documentation:
@@ -7,14 +9,6 @@ Main developer web page:
   * http://turulomio.users.sourceforge.net/en/proyectos.html
 Gentoo ebuild
     You can find a Gentoo ebuild in https://sourceforge.net/p/xulpymoney/code/HEAD/tree/myportage/app-admin/devicesinlan/
-
-Description
-===========
-Find all types of devices in a LAN, an allows to tag them to find if some of then shouldn't be there
-
-License
-=======
-GPL-3
 
 Dependencies
 ============
@@ -45,11 +39,7 @@ You must open a console with Administrator privileges and type:
 
 If you want to create a Desktop shortcut to launch Xulpymoney you must write in a console:
 
-`devicesinlan.exe --shortcuts-create`
-
-If you want to delete that Desktop shortcut you can write:
-
-`devicesinlan.exe --shortcuts-remove`
+`devicesinlan_shortcut.exe`
 
 Install in Windows as a standalone application
 ==============================================
