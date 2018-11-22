@@ -1,14 +1,13 @@
 import datetime
 import sys
 import logging
-from urllib.request import urlopen
 from PyQt5.QtCore import pyqtSlot, Qt, QPoint, QEvent
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QMenu, QTabWidget, QTableWidget,  QDialog, QWidget, QVBoxLayout, QLabel,  QAbstractItemView, qApp, QMessageBox, QAction, QFileDialog
 
 from devicesinlan.ui.Ui_frmMain import Ui_frmMain
-from devicesinlan.libdevicesinlan import ArpScanMethod, b2s, SetDevices
-from devicesinlan.version import __version__, __versiondate__
+from devicesinlan.libdevicesinlan import ArpScanMethod, SetDevices
+from devicesinlan.version import __version__, __versiondate__,  get_remote
 from devicesinlan.libdevicesinlan_gui import  qmessagebox, qquestion,  SetDevices_qtablewidget,  SetDevices_qtablewidget_devices_from_settings
 from devicesinlan.ui.frmSettings import frmSettings
 from devicesinlan.ui.frmHelp import frmHelp
@@ -55,8 +54,7 @@ class myTab(QWidget):
         icon6.addPixmap(QPixmap(":/cancel.png"), QIcon.Normal, QIcon.Off)
         self.actionDeviceUnlink.setIcon(icon6)
         self.actionDeviceUnlink.triggered.connect(self.on_actionDeviceUnlink_triggered)
-        
-        
+
     def setLabelText(self, t):
         self.label.setText(t)
     
@@ -66,8 +64,6 @@ class myTab(QWidget):
         else:
             SetDevices_qtablewidget(self.set, self.table)
         self.table.resizeColumnsToContents()
-        
-        
 
     def on_itemSelectionChanged(self):
         try:
@@ -149,33 +145,13 @@ class frmMain(QMainWindow, Ui_frmMain):#
         if filename!="":
             devices.saveXml(filename)
 
-        
     def checkUpdates(self, showdialogwhennoupdates=False):
-        #Chequea en Internet
-        try:
-            web=b2s(urlopen('https://sourceforge.net/projects/devicesinlan/files/devicesinlan/').read())
-        except:
-            web=None
-            
-        #Si hay error de internet avisa
-        if web==None:
-            if showdialogwhennoupdates==True:
-                qmessagebox(self.tr("I couldn't check updates. Try later."))
-            return
-            
-        #Saca la version de internet
-        remoteversion=None
-        for line in web.split("\n"):
-            if line.find('class="folder "')!=-1:
-                remoteversion=line.split('"') [1]
-                break
-                
-        #Si no hay version sale
-        logging.info("Remote version {} against local {}".format (remoteversion, __version__))
+        remoteversion=get_remote("https://raw.githubusercontent.com/Turulomio/devicesinlan/master/devicesinlan/version.py")
         if remoteversion==None:
+            qmessagebox(self.tr("I couldn't look for updates. Try it later.."))
             return
                 
-        if remoteversion==__version__.replace("+", ""):#Quita el mas de desarrollo 
+        if remoteversion.replace("+", "")==__version__.replace("+", ""):#Quita el más de desarrollo 
             if showdialogwhennoupdates==True:
                 qmessagebox(self.tr("You have the last version"))
         else:
@@ -183,10 +159,9 @@ class frmMain(QMainWindow, Ui_frmMain):#
             m.setIcon(QMessageBox.Information)
             m.setWindowIcon(QIcon(":/devicesinlan.png"))
             m.setTextFormat(Qt.RichText)#this is what makes the links clickable
-            m.setText(self.tr("There is a new DevicesInLan version. Please download it from <a href='http://glparchis.sourceforge.net'>http://glparchis.sourceforge.net</a> or directly from <a href='https://sourceforge.net/projects/devicesinlan/files/devicesinlan/")+remoteversion+"/'>Sourceforge</a>")
+            m.setText(self.tr("There is a new DevicesInLAN version. You can download it from <a href='https://github.com/Turulomio/devicesinlan/releases'>GitHub</a>."))
             m.exec_() 
         self.mem.settings.setValue("frmMain/lastupdate", datetime.date.today().toordinal())
-        
 
     @pyqtSlot(QEvent)   
     def closeEvent(self,event):   
