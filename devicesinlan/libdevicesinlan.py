@@ -572,7 +572,7 @@ class SetDevices(QObject):
                         if len(s)==17 and s.find(b"-")!=-1:
                             mac=s.decode().replace("-", ":").upper()
                 else:
-                    arpexit=subprocess.check_output(["/sbin/arp", ip])
+                    arpexit=subprocess.check_output(["arp", ip])
                     for s in arpexit.decode('utf-8').split(" "):
                         if len(s)==17 and s.find(":")!=-1:
                             mac=s.upper()
