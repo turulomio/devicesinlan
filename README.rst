@@ -13,6 +13,8 @@ Doxygen documentation:
 Main developer web page:
   * https://github.com/Turulomio
   * http://turulomio.users.sourceforge.net/en/proyectos.html
+App statistics
+  * http://devicesinlan.sourceforge.net/php/devicesinlan_statistics.php
 
 Dependencies
 ============
