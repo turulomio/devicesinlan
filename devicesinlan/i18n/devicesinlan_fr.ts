@@ -3,27 +3,27 @@
 <context>
     <name>Device</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="796"/>
+        <location filename="../libdevicesinlan.py" line="795"/>
         <source>Input an alias of the known device: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="801"/>
+        <location filename="../libdevicesinlan.py" line="800"/>
         <source>You need to add an alias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="786"/>
+        <location filename="../libdevicesinlan.py" line="785"/>
         <source>Input the MAC of the known device (XX:XX:XX:XX:XX:XX): </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="791"/>
+        <location filename="../libdevicesinlan.py" line="790"/>
         <source>You need to insert a mac with the next format: 2A:3B:4C:5D:6E:7A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="807"/>
+        <location filename="../libdevicesinlan.py" line="806"/>
         <source>Select a type for the known device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -31,7 +31,7 @@
 <context>
     <name>Interface</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="405"/>
+        <location filename="../libdevicesinlan.py" line="404"/>
         <source>Interface {} ({}) with ip {}/{} and mac {}</source>
         <translation type="unfinished"></translation>
     </message>
@@ -39,122 +39,122 @@
 <context>
     <name>MemConsole</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="181"/>
+        <location filename="../libdevicesinlan.py" line="180"/>
         <source>Net interface name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="182"/>
+        <location filename="../libdevicesinlan.py" line="181"/>
         <source>Add a known device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="183"/>
+        <location filename="../libdevicesinlan.py" line="182"/>
         <source>Remove a known device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="184"/>
+        <location filename="../libdevicesinlan.py" line="183"/>
         <source>List known devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="185"/>
+        <location filename="../libdevicesinlan.py" line="184"/>
         <source>Load known devices list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="186"/>
+        <location filename="../libdevicesinlan.py" line="185"/>
         <source>Save known devices list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="187"/>
+        <location filename="../libdevicesinlan.py" line="186"/>
         <source>Reset known devices list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="188"/>
+        <location filename="../libdevicesinlan.py" line="187"/>
         <source>Debug program information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="201"/>
+        <location filename="../libdevicesinlan.py" line="200"/>
         <source>Do you want to add this {} with MAC {} and set its name to {}?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="205"/>
+        <location filename="../libdevicesinlan.py" line="204"/>
         <source>Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="205"/>
+        <location filename="../libdevicesinlan.py" line="204"/>
         <source>We already have a device with this MAC: {}. Do you want to change its alias ({}) and type ({}) to a {} named {}?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="208"/>
+        <location filename="../libdevicesinlan.py" line="207"/>
         <source>File doesn&apos;t exist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="212"/>
+        <location filename="../libdevicesinlan.py" line="211"/>
         <source>Are you sure you want to reset known devices database?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="212"/>
+        <location filename="../libdevicesinlan.py" line="211"/>
         <source>N</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="217"/>
+        <location filename="../libdevicesinlan.py" line="216"/>
         <source>Database was reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="232"/>
+        <location filename="../libdevicesinlan.py" line="231"/>
         <source>Device inserted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="240"/>
+        <location filename="../libdevicesinlan.py" line="239"/>
         <source>Mac removed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="253"/>
+        <location filename="../libdevicesinlan.py" line="252"/>
         <source>This interface doesn&apos;t exist. Please remove the --interface parameter to use a wizard.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="258"/>
+        <location filename="../libdevicesinlan.py" line="257"/>
         <source>There are not interfaces to scan.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="262"/>
+        <location filename="../libdevicesinlan.py" line="261"/>
         <source>Select an interface number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="266"/>
+        <location filename="../libdevicesinlan.py" line="265"/>
         <source>Input an integer with the request concurrence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="273"/>
+        <location filename="../libdevicesinlan.py" line="272"/>
         <source>It took {} with DevicesInLAN scanner.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="273"/>
+        <location filename="../libdevicesinlan.py" line="272"/>
         <source>seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="282"/>
+        <location filename="../libdevicesinlan.py" line="281"/>
         <source>Error collecting statistics</source>
         <translation type="unfinished"></translation>
     </message>
@@ -162,7 +162,7 @@
 <context>
     <name>MemGUI</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="294"/>
+        <location filename="../libdevicesinlan.py" line="293"/>
         <source>Debug program information</source>
         <translation type="unfinished"></translation>
     </message>
@@ -373,57 +373,57 @@
 <context>
     <name>SetDeviceTypes</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="335"/>
+        <location filename="../libdevicesinlan.py" line="334"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="336"/>
+        <location filename="../libdevicesinlan.py" line="335"/>
         <source>Television</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="337"/>
+        <location filename="../libdevicesinlan.py" line="336"/>
         <source>Digital camera</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="338"/>
+        <location filename="../libdevicesinlan.py" line="337"/>
         <source>Web camera</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="339"/>
+        <location filename="../libdevicesinlan.py" line="338"/>
         <source>Laptop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="340"/>
+        <location filename="../libdevicesinlan.py" line="339"/>
         <source>Computer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="341"/>
+        <location filename="../libdevicesinlan.py" line="340"/>
         <source>Modem</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="342"/>
+        <location filename="../libdevicesinlan.py" line="341"/>
         <source>Smartphone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="343"/>
+        <location filename="../libdevicesinlan.py" line="342"/>
         <source>Printer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="344"/>
+        <location filename="../libdevicesinlan.py" line="343"/>
         <source>Tablet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="345"/>
+        <location filename="../libdevicesinlan.py" line="344"/>
         <source>Wireless USB dongle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -431,17 +431,17 @@
 <context>
     <name>SetDevices</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="677"/>
+        <location filename="../libdevicesinlan.py" line="676"/>
         <source>{} DEVICES IN LAN FROM {} INTERFACE AT {}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="681"/>
+        <location filename="../libdevicesinlan.py" line="680"/>
         <source>This device</source>
         <translation type="unfinished">Cet appareil</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="703"/>
+        <location filename="../libdevicesinlan.py" line="702"/>
         <source>{} DEVICES IN DATABASE AT {}</source>
         <translation type="unfinished"></translation>
     </message>
@@ -459,12 +459,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="990"/>
+        <location filename="../libdevicesinlan.py" line="989"/>
         <source>Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="991"/>
+        <location filename="../libdevicesinlan.py" line="990"/>
         <source>N</source>
         <translation type="unfinished"></translation>
     </message>
@@ -674,7 +674,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="240"/>
+        <location filename="../ui/frmMain.py" line="215"/>
         <source>It took {} to detect {} devices</source>
         <translation type="unfinished"></translation>
     </message>
@@ -699,7 +699,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="251"/>
+        <location filename="../ui/frmMain.py" line="226"/>
         <source>It took {} to show {} devices</source>
         <translation type="unfinished"></translation>
     </message>
@@ -714,12 +714,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="209"/>
+        <location filename="../ui/frmMain.py" line="184"/>
         <source>Erase database confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="209"/>
+        <location filename="../ui/frmMain.py" line="184"/>
         <source>This action will erase known devices database. Do you want to continue?.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -754,38 +754,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="137"/>
+        <location filename="../ui/frmMain.py" line="133"/>
         <source>Do you want to add this {} with MAC {} and set its name to {}?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="141"/>
+        <location filename="../ui/frmMain.py" line="137"/>
         <source>We already have a device with this MAC: {}. Do you want to change its alias ({}) and type ({}) to a {} named {}?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="148"/>
+        <location filename="../ui/frmMain.py" line="144"/>
         <source>Save File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="148"/>
+        <location filename="../ui/frmMain.py" line="144"/>
         <source>eXtensible Markup Language (*.xml)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="163"/>
-        <source>I couldn&apos;t check updates. Try later.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/frmMain.py" line="180"/>
+        <location filename="../ui/frmMain.py" line="156"/>
         <source>You have the last version</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/frmMain.py" line="186"/>
-        <source>There is a new DevicesInLan version. Please download it from &lt;a href=&apos;http://glparchis.sourceforge.net&apos;&gt;http://glparchis.sourceforge.net&lt;/a&gt; or directly from &lt;a href=&apos;https://sourceforge.net/projects/devicesinlan/files/devicesinlan/</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -801,6 +791,16 @@
     <message>
         <location filename="../ui/Ui_frmMain.py" line="146"/>
         <source>&amp;Save devices list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/frmMain.py" line="151"/>
+        <source>I couldn&apos;t look for updates. Try it later..</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/frmMain.py" line="162"/>
+        <source>There is a new DevicesInLAN version. You can download it from &lt;a href=&apos;https://github.com/Turulomio/devicesinlan/releases&apos;&gt;GitHub&lt;/a&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -825,27 +825,27 @@
 <context>
     <name>myTab</name>
     <message>
-        <location filename="../ui/frmMain.py" line="36"/>
+        <location filename="../ui/frmMain.py" line="35"/>
         <source>Database devices at {}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="38"/>
+        <location filename="../ui/frmMain.py" line="37"/>
         <source>Scanned at {}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="53"/>
+        <location filename="../ui/frmMain.py" line="52"/>
         <source>Remove known device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="101"/>
+        <location filename="../ui/frmMain.py" line="97"/>
         <source>Edit known device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="103"/>
+        <location filename="../ui/frmMain.py" line="99"/>
         <source>Set as a known device</source>
         <translation type="unfinished"></translation>
     </message>

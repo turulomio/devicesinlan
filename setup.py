@@ -90,7 +90,7 @@ Nueva versión:
   * python setup.py doc
   * python setup.py install
   * python setup.py doxygen
-  * git commit -a -m 'devicesinlan-version'
+  * git commit -a -m 'devicesinlan-{}'
   * git push
   * Hacer un nuevo tag en GitHub
   * python setup.py sdist upload -r pypi
@@ -101,8 +101,7 @@ Nueva versión:
   * Change to xulpymoney source directory and make git pull
   * python setup.py pyinstaller
   * Add file to github release
-
-""")
+""".format(__version__))
 
 
 class Uninstall(Command):

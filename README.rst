@@ -169,6 +169,12 @@ devicesinlan 1.4.1 20181116
 ---------------------------
 - Fix little bugs with windows installation
 
-devicesinlan 1.5.0 20181129
+devicesinlan 1.5.0 20181119
 ---------------------------
 - Improved code quality
+
+devicesinlan 1.6.0 20181126
+---------------------------
+- Added desktop files in Linux
+- arp command removes its absolut path to work in all Linux distributions
+- Fixed detection of new versions
