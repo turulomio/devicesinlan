@@ -186,10 +186,10 @@ class MemConsole(MemSetup):
         group.add_argument('--reset', help=self.tr('Reset known devices list'), action='store_true', default=False)
         parser.add_argument('--debug', help=self.tr( "Debug program information"))
 
-        self.args=parser.parse_args()        
+        self.args=parser.parse_args()
 
         self.setLoggingLevel(self.args.debug)
-        
+
         if self.args.load:
             if os.path.exists(self.args.load):
                 current=SetDevices(self).init__from_settings()
@@ -677,7 +677,7 @@ class SetDevices(QObject):
         print (Style.BRIGHT+ "{}  {}  {}  {}  {}".format(" IP ".center(16,'='),"TYPE".center(maxtype,"=")," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'=')))
         for h in self.arr:
             if h.ip==self.mem.interfaces.selected.ip():
-                print ("{}  {}  {}  {}  {}".format(Style.BRIGHT+Fore.MAGENTA + h.ip.ljust(16), h.type.name.ljust(maxtype), h.mac.center(17),   self.tr("This device").ljust(maxalias), h.oui.ljust(maxoui)))
+                print ("{}  {}  {}  {}  {}".format(Style.BRIGHT+Fore.MAGENTA + h.ip.ljust(16), h.type.name.ljust(maxtype), h.mac.center(17),   self.tr("This device").ljust(maxalias), h.oui.ljust(maxoui)+ Style.RESET_ALL))
             else:
                 if h.alias:
                     mac=Style.BRIGHT+Fore.GREEN + h.mac
