@@ -11,8 +11,7 @@ Links
 Doxygen documentation:
   * http://turulomio.users.sourceforge.net/doxygen/devicesinlan/
 Main developer web page:
-  * https://github.com/Turulomio
-  * http://turulomio.users.sourceforge.net/en/proyectos.html
+  * https://github.com/turulomio
 App statistics
   * http://devicesinlan.sourceforge.net/php/devicesinlan_statistics.php
 
