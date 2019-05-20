@@ -346,7 +346,7 @@ class SetDeviceTypes(QObject):
     def print(self):
         """Printed number is self.id+1"""
         for type in self.arr:
-            print (Style.BRIGHT + "{}. {}.".format(type.id+1, Style.BRIGHT+ Fore.GREEN+type.name))
+            print (Style.BRIGHT + "{}. {}.".format(type.id+1, Fore.GREEN+type.name + Style.RESET_ALL))
     
     def order_by_name(self):
         """Orders the Set using self.arr"""
@@ -448,7 +448,7 @@ class ArpScanMethod:
     Arping=1 #Arping utility
     Own=2#My own scan
     ArpScanner=3#Arpescanner
-                
+
 class SetDevices(QObject):
     def __init__(self, mem):
         """This constructor load /etc/devicesinlan/known.txt and executes arp-scan and parses its result"""
@@ -677,7 +677,7 @@ class SetDevices(QObject):
         print (Style.BRIGHT+ "{}  {}  {}  {}  {}".format(" IP ".center(16,'='),"TYPE".center(maxtype,"=")," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'=')))
         for h in self.arr:
             if h.ip==self.mem.interfaces.selected.ip():
-                print ("{}  {}  {}  {}  {}".format(Style.BRIGHT+Fore.MAGENTA + h.ip.ljust(16), h.type.name.ljust(maxtype), h.mac.center(17),   self.tr("This device").ljust(maxalias), h.oui.ljust(maxoui)+ Style.RESET_ALL))
+                print (Style.BRIGHT + Fore.MAGENTA + "{}  {}  {}  {}  {}".format(h.ip.ljust(16), h.type.name.ljust(maxtype), h.mac.center(17),   self.tr("This device").ljust(maxalias), h.oui.ljust(maxoui))+ Style.RESET_ALL)
             else:
                 if h.alias:
                     mac=Style.BRIGHT+Fore.GREEN + h.mac
