@@ -165,7 +165,7 @@ class Doc(Command):
         os.system("pylupdate5 -noobsolete -verbose devicesinlan.pro")
         os.system("lrelease -qt5 devicesinlan.pro")
         for language in ["en", "fr", "ro", "ru", "es"]:
-            mem.setLanguage(language, "{}/devicesinlan/i18n/devicesinlan_{}.qm".format(os.getcwd(), language))
+            mem.setLanguage(language)
             mem.mangenerator(language)
 
     ########################################################################

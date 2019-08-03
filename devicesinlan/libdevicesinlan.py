@@ -144,19 +144,19 @@ class MemSetup(QObject):
             
     ## Changes Qt current Qtranslator
     ## @param language String with en, es .... None by defautt and search in settings
-    ## @param url Stirng with the qm url. Useful in setup.py script. None by default
-    def setLanguage(self, language=None, url=None):  
+    def setLanguage(self, language=None):  
         if language==None:
             language=self.settings.value("frmSettings/language", "en")
-        if url==None:
-            url=package_filename("devicesinlan", "i18n/devicesinlan_{}.qm".format(language))
-
-        if os.path.exists(url)==True:
+        url=package_filename("devicesinlan", "i18n/devicesinlan_{}.qm".format(language))
+        
+        if language=="en":
+            logging.info("Changing to default language: en")
+            self.app.removeTranslator(self.translator)
+            self.translator=QTranslator()
+        else:
             self.translator.load(url)
             self.app.installTranslator(self.translator)
             logging.info(self.tr("Language changed to {} using {}".format(language, url)))
-        elif language!="en":
-            logging.info("I couldn't found {}".format(url))
 
 ## Mem object for console
 class MemConsole(MemSetup):
@@ -983,9 +983,10 @@ def package_filename(module, url):
         pkg_resources.resource_filename(module, url), #Used in pypi and Linux
         url, #Used in pyinstaller --onedir, becaouse pkg_resources is not supported
         pkg_resources.resource_filename(module,"../{}".format(url)), #Used in pyinstaller --onefile, becaouse pkg_resources is not supported
+        "{}/{}/{}".format(os.getcwd(),module,  url)# For setup.py translations
     ]:
         if filename!=None and os.path.exists(filename):
             logging.info("FOUND " +  filename) #When debugging in windows, change logging for printt
             return filename
         else:
-            logging.debug("NOT FOUND",  filename)
+            logging.debug("NOT FOUND",  module, url)
