@@ -199,7 +199,6 @@ class frmMain(QMainWindow, Ui_frmMain):#
         self.retranslateUi(self)
         self.repaint()
 
-
     @pyqtSlot()      
     def on_actionScan_triggered(self):
         f=frmInterfaceSelector(self.mem, self)
@@ -213,10 +212,9 @@ class frmMain(QMainWindow, Ui_frmMain):#
         
         self.tab = myTab(set, self.tabWidget)
         self.tab.setLabelText(self.tr("It took {} to detect {} devices".format(datetime.datetime.now()-inicio, set.length())))
-        
         set.print()
 
-    @pyqtSlot()      
+    @pyqtSlot()
     def on_actionShowDatabase_triggered(self):
         inicio=datetime.datetime.now()
         set=SetDevices(self.mem)
@@ -224,9 +222,7 @@ class frmMain(QMainWindow, Ui_frmMain):#
         
         self.tab = myTab(set, self.tabWidget)
         self.tab.setLabelText(self.tr("It took {} to show {} devices".format(datetime.datetime.now()-inicio, set.length())))
-        
         set.print_devices_from_settings()
 
     def on_tabWidget_tabCloseRequested(self, index):
-#        self.tabWidget.currentWidget().close()
         self.tabWidget.removeTab(index)

@@ -16,7 +16,7 @@ def main_console():
 ## @namespace devicesinlan.libdevicesinlan
 ## @brief Package GUI main function
 def main_gui():
-    from devicesinlan.libdevicesinlan import MemGUI
+    from devicesinlan.libdevicesinlan_gui import MemGUI
     from devicesinlan.ui.frmMain  import frmMain
 
     mem=MemGUI()

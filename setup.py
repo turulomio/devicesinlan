@@ -53,7 +53,7 @@ class PyInstaller(Command):
         f.write("devicesinlan.devicesinlan.main_gui()\n")
         f.close()
         os.chdir("build")
-        os.system("""pyinstaller run.py -n devicesinlan_gui-{} --onefile --windowed --icon ../devicesinlan/images/devicesinlan.ico --distpath ../dist""".format(__version__))
+        os.system("""pyinstaller run.py -n devicesinlan_gui-{} --onefile --nowindowed --icon ../devicesinlan/images/devicesinlan.ico --distpath ../dist""".format(__version__))
 
 class Compile(Command):
     description = "Compile ui and images"

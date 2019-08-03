@@ -6,8 +6,8 @@ import threading
 import logging
 import os
 import re
-import pkg_resources
 import platform
+import pkg_resources
 import subprocess
 import sys
 import time
@@ -29,20 +29,15 @@ class TypesARP:
 class MemSetup(QObject):
     def __init__(self):
         QObject.__init__(self)        
+        colorama_init()
         self.name="DevicesInLAN"
         self.author=self.tr("Mariano Mu\\xf1oz")
         self.description=self.tr('Show devices in a LAN making an ARP search to find them with a user interface')
         self.epilog=self.tr("If you like this app, please give me a star in https://github.com/Turulomio/devicesinlan.")+"\n" +self.tr("Developed by {} 2015-{} \\xa9").format(self.author, __versiondate__.year)
-        colorama_init()
 
     ## Sets QApplication Object to make a Qt application
-    def setQApplication(self):
-        if self.__class__.__name__ in ["MemSetup", "MemConsole"]:
-            self.app=QCoreApplication(sys.argv)
-        else:
-            from PyQt5.QtWidgets import QApplication
-            self.app=QApplication(sys.argv)
-            self.app.setQuitOnLastWindowClosed(True)
+    def setQApplication(self):        
+        self.app=QCoreApplication(sys.argv)
         self.app.setOrganizationName(self.name)
         self.app.setOrganizationDomain(self.name)
         self.app.setApplicationName(self.name)
@@ -154,7 +149,7 @@ class MemSetup(QObject):
         if language==None:
             language=self.settings.value("frmSettings/language", "en")
         if url==None:
-            url=pkg_resources.resource_filename("devicesinlan", "i18n/devicesinlan_{}.qm".format(language))
+            url=package_filename("devicesinlan", "i18n/devicesinlan_{}.qm".format(language))
 
         if os.path.exists(url)==True:
             self.translator.load(url)
@@ -281,20 +276,6 @@ class MemConsole(MemSetup):
             web=self.tr("Error collecting statistics")
         logging.debug("{}, answering {}".format(web, url))
 
-## devicesinlan_gui Mem object
-class MemGUI(MemConsole):
-    def __init__(self):
-        MemConsole.__init__(self)
-
-    ## Sets parser, logging and args confitions. This one is for devicesinlan_gui  command, that overrides supper method
-    def parse_args(self):
-        parser=argparse.ArgumentParser(prog='devicesinlan_gui', description=self.description,  epilog=self.epilog, formatter_class=argparse.RawTextHelpFormatter)
-        parser.add_argument('--version', action='version', version="{} ({})".format(__version__, __versiondate__))
-        parser.add_argument('--debug', help=self.tr( "Debug program information"))
-        self.args=parser.parse_args()        
-
-        self.setLoggingLevel(self.args.debug)
-
 
 class DeviceType:
     def __init__(self, mem):
@@ -306,9 +287,6 @@ class DeviceType:
         self.id=id
         self.name=name
         return self
-        
-
-
 
 class SetDeviceTypes(QObject):
     def __init__(self, mem):
@@ -361,13 +339,6 @@ class Interface(QObject):
     def __init__(self, mem):
         QObject.__init__(self)
         self.mem=mem
-        
-#        self.id=None#Id numerico de Windows o id de Linux
-#        self.name=None
-#        self.ip=None
-#        self.mac=None
-#        self.mask=None
-#        self.broadcast=None
     
     def addresses(self):
         """List of strings with all ip addresses in the net of the interface"""
@@ -436,7 +407,6 @@ class SetInterfaces:
                         Fore.WHITE+ interface.ip() + Fore.GREEN, 
                         Fore.WHITE + interface.netmask() + Fore.GREEN, 
                         Fore.WHITE + interface.mac() + Fore.GREEN ) + Style.RESET_ALL)
-
 
     def order_by_name(self):
         """Orders the Set using self.arr"""
@@ -554,18 +524,9 @@ class SetDevices(QObject):
             """
             pinged=True
             mac=None
-#            #PING
-#            if platform.system()=="Windows":
-#                output=subprocess.call(["ping", "-n", "1", ip], shell=False, stderr=subprocess.DEVNULL, creationflags=CREATE_NO_WINDOW)
-#            else:
-#                output=subprocess.call(["ping", "-c", "1", "-W", "1", ip], shell=False, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
-#            if output==0:
-#                pinged=True
             socket=QTcpSocket()
             socket.connectToHost(ip, 80)
             socket.close()
-
-
 
             #ARP
             if pinged==True:
@@ -604,6 +565,7 @@ class SetDevices(QObject):
                 if h.mac!=None and h.pinged==True:
                     h.alias=self.mem.settings.value("DeviceAlias/{}".format(h.macwithout2points(h.mac.upper())), None)
                     h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
+
                     self.arr.append(h)#Solo si se da alias
 
     def max_len_oui(self):
@@ -764,7 +726,7 @@ class Device(QObject):
             print("I can't get oui of a None MAC")
             return self.__oui
 
-        url=pkg_resources.resource_filename("devicesinlan", "data/ieee-oui.txt")
+        url=package_filename("devicesinlan", "data/ieee-oui.txt")
 
         self.__oui=""
         mac=self.mac.replace(":", "")[:-6]
@@ -1011,3 +973,19 @@ def s2b(s, code='UTF8'):
     else:
         return s.encode(code)
         
+## Returns the path searching in a pkg_resource model and a url. Due to PYinstaller packager doesn't supportpkg_resource
+## filename is differet if we are in LInux, Windows --onefile or Windows --onedir
+## @param module String
+## @param url String
+## @return string with the filename
+def package_filename(module, url):
+    for filename in [
+        pkg_resources.resource_filename(module, url), #Used in pypi and Linux
+        url, #Used in pyinstaller --onedir, becaouse pkg_resources is not supported
+        pkg_resources.resource_filename(module,"../{}".format(url)), #Used in pyinstaller --onefile, becaouse pkg_resources is not supported
+    ]:
+        if filename!=None and os.path.exists(filename):
+            logging.info("FOUND " +  filename) #When debugging in windows, change logging for printt
+            return filename
+        else:
+            logging.debug("NOT FOUND",  filename)

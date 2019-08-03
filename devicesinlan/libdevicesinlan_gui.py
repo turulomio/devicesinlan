@@ -1,7 +1,34 @@
-from PyQt5.QtCore import Qt,  QCoreApplication
-from PyQt5.QtWidgets import QTableWidgetItem, QMessageBox
+from PyQt5.QtCore import Qt,  QCoreApplication, QTranslator, QSettings
+from PyQt5.QtWidgets import QTableWidgetItem, QMessageBox, QApplication
 from PyQt5.QtGui import QColor,  QPixmap, QIcon
+from argparse import ArgumentParser, RawTextHelpFormatter
+from devicesinlan.libdevicesinlan import MemConsole
+from devicesinlan.version import __version__,  __versiondate__
+from sys import argv
 
+## devicesinlan_gui Mem object
+class MemGUI(MemConsole):
+    def __init__(self):
+        MemConsole.__init__(self)
+
+    ## Sets parser, logging and args confitions. This one is for devicesinlan_gui  command, that overrides supper method
+    def parse_args(self):
+        parser=ArgumentParser(prog='devicesinlan_gui', description=self.description,  epilog=self.epilog, formatter_class=RawTextHelpFormatter)
+        parser.add_argument('--version', action='version', version="{} ({})".format(__version__, __versiondate__))
+        parser.add_argument('--debug', help=self.tr( "Debug program information"))
+        self.args=parser.parse_args()        
+
+        self.setLoggingLevel(self.args.debug)
+        
+    ## Sets QApplication Object to make a Qt application
+    def setQApplication(self):
+        self.app=QApplication(argv)
+        self.app.setQuitOnLastWindowClosed(True)
+        self.app.setOrganizationName(self.name)
+        self.app.setOrganizationDomain(self.name)
+        self.app.setApplicationName(self.name)
+        self.translator=QTranslator()
+        self.settings=QSettings()
 
 def DeviceType_qpixmap(o):
     if o.id==0:
