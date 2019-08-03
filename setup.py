@@ -39,12 +39,21 @@ class PyInstaller(Command):
     def run(self):
         os.system("python setup.py uninstall")
         os.system("python setup.py install")
+        #Console
+        f=open("build/run.py","w")
+        f.write("import devicesinlan.devicesinlan\n")
+        f.write("devicesinlan.devicesinlan.main_console()\n")
+        f.close()
+        os.chdir("build")
+        os.system("""pyinstaller run.py -n devicesinlan-{} --onefile --nowindowed --icon ../devicesinlan/images/devicesinlan.ico --distpath ../dist""".format(__version__))
+        os.chdir("..")
+        #gui
         f=open("build/run.py","w")
         f.write("import devicesinlan.devicesinlan\n")
         f.write("devicesinlan.devicesinlan.main_gui()\n")
         f.close()
         os.chdir("build")
-        os.system("""pyinstaller run.py -n devicesinlan-{} --onefile --nowindowed --icon ../devicesinlan/images/devicesinlan.ico --distpath ../dist""".format(__version__))
+        os.system("""pyinstaller run.py -n devicesinlan_gui-{} --onefile --windowed --icon ../devicesinlan/images/devicesinlan.ico --distpath ../dist""".format(__version__))
 
 class Compile(Command):
     description = "Compile ui and images"

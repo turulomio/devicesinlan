@@ -425,7 +425,7 @@ class SetInterfaces:
     def load_all(self):
         for i in QNetworkInterface.allInterfaces():
                 for e in i.addressEntries():
-                    if e.ip().isLoopback()==False and i.isValid() and e.ip().isMulticast()==False and e.ip().isNull()==False and e.ip().protocol()==QAbstractSocket.IPv4Protocol:
+                    if e.ip().isLoopback()==False and i.isValid() and e.ip().isMulticast()==False and e.ip().isNull()==False and e.ip().protocol()==QAbstractSocket.IPv4Protocol and e.ip().isLinkLocal()==False:
                         self.append(Interface(self.mem).init__create(i, e))
         
     def print(self):
