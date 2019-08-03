@@ -3,27 +3,27 @@
 <context>
     <name>Device</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="795"/>
+        <location filename="../libdevicesinlan.py" line="797"/>
         <source>Input an alias of the known device: </source>
         <translation>Añada un alias del dispositivo conocido: </translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="800"/>
+        <location filename="../libdevicesinlan.py" line="802"/>
         <source>You need to add an alias</source>
         <translation>Necesita añadir un alias</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="785"/>
+        <location filename="../libdevicesinlan.py" line="787"/>
         <source>Input the MAC of the known device (XX:XX:XX:XX:XX:XX): </source>
         <translation>Introduzca la MAC de un dispositivo desconocido (XX:XX:XX:XX:XX:XX): </translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="790"/>
+        <location filename="../libdevicesinlan.py" line="792"/>
         <source>You need to insert a mac with the next format: 2A:3B:4C:5D:6E:7A</source>
         <translation>Necesita añadir una mac con el siguiente formato: 2A:3B:4C:5D:6E:7A</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="806"/>
+        <location filename="../libdevicesinlan.py" line="808"/>
         <source>Select a type for the known device</source>
         <translation>Selecciona un tipo para el dispositivo conocido</translation>
     </message>
@@ -210,11 +210,6 @@
         <translation>Dispositivo &gt; Nuevo escaneado</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="69"/>
-        <source>Searches all devices in tha LAN and show them in a new tab. If some device is not in the known devices list it will be shown with a red background. Devices with a green background are trusted devices</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../libdevicesinlan.py" line="70"/>
         <source>Devices &gt; Show devices database</source>
         <translation>Dispositivos &gt; Muestra la base de datos de dispositivos</translation>
@@ -272,7 +267,7 @@
     <message>
         <location filename="../libdevicesinlan.py" line="81"/>
         <source>In this dialog you can select your prefered language and you can configure the number of concurrence request.</source>
-        <translation type="unfinished"></translation>
+        <translation>En esta ventana puedes seleccionar tu idioma preferido y puedes configurar el número de peticicones concurrentes.</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="82"/>
@@ -292,7 +287,7 @@
     <message>
         <location filename="../libdevicesinlan.py" line="85"/>
         <source>Shows information about DevicesInLAN license and authors.</source>
-        <translation type="unfinished"></translation>
+        <translation>Muestra información sobre la licencia y los autores de DevicesInLAN.</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="86"/>
@@ -302,7 +297,7 @@
     <message>
         <location filename="../libdevicesinlan.py" line="87"/>
         <source>Checks for updates in DevicesInLan repository.</source>
-        <translation type="unfinished"></translation>
+        <translation>Busca actualizaciones en el repositorio de DevicesInLan.</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="88"/>
@@ -315,39 +310,34 @@
         <translation>Sale del programa.</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="97"/>
-        <source>If you launch deviceslan without parameters a console wizard is launched.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../libdevicesinlan.py" line="98"/>
         <source>Morever you can use one of this parameters.</source>
-        <translation type="unfinished"></translation>
+        <translation>Además puedes usar uno de estos parámetros.</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="100"/>
         <source>Scans the net of the interface parameter and prints a list of the detected devices.</source>
-        <translation type="unfinished"></translation>
+        <translation>Escanea la red del interfaz pasado como parámetro y lista los dispositivos detectados.</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="101"/>
         <source>If a device is not known, it will be showed in red. Devices in green are trusted devices.</source>
-        <translation type="unfinished"></translation>
+        <translation>Si un dispositivo no es conocido, se mostrará en rojo. Los dispositivos verdes son dispositivos confiables.</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="103"/>
         <source>Allows to add a known device from console.</source>
-        <translation type="unfinished"></translation>
+        <translation>Permite añadir un dispositivo conocido desde consola.</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="105"/>
         <source>Allows to remove a known device from console.</source>
-        <translation type="unfinished"></translation>
+        <translation>Permite borrar un dispositivo conocido desde consola.</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="107"/>
         <source>Shows all known devices in database from console.</source>
-        <translation type="unfinished"></translation>
+        <translation>Muestra todos los dispositivos conocidos de la base de datos desde consola.</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="113"/>
@@ -368,6 +358,16 @@
         <location filename="../libdevicesinlan.py" line="35"/>
         <source>Developed by {} 2015-{} \xa9</source>
         <translation>Desarrolado por {} 2015-{} \xa9</translation>
+    </message>
+    <message>
+        <location filename="../libdevicesinlan.py" line="69"/>
+        <source>Searches all devices in the LAN and show them in a new tab. If some device is not in the known devices list it will be shown with a red background. Devices with a green background are trusted devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../libdevicesinlan.py" line="97"/>
+        <source>If you launch DevicesInLan without parameters a console wizard is launched.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -431,17 +431,17 @@
 <context>
     <name>SetDevices</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="676"/>
+        <location filename="../libdevicesinlan.py" line="680"/>
         <source>{} DEVICES IN LAN FROM {} INTERFACE AT {}</source>
         <translation>{} DISPOSITIVOS EN RED DESDE EL INTERFAZ {} A LAS {}</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="680"/>
+        <location filename="../libdevicesinlan.py" line="684"/>
         <source>This device</source>
         <translation>Este dispositivo</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="702"/>
+        <location filename="../libdevicesinlan.py" line="705"/>
         <source>{} DEVICES IN DATABASE AT {}</source>
         <translation>{} DISPOSITIVOS EN LA BASE DE DATOS A LAS {}</translation>
     </message>
@@ -449,42 +449,42 @@
 <context>
     <name>devicesinlan</name>
     <message>
-        <location filename="../libdevicesinlan_gui.py" line="121"/>
+        <location filename="../libdevicesinlan_gui.py" line="120"/>
         <source>True</source>
         <translation>Verdadero</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan_gui.py" line="124"/>
+        <location filename="../libdevicesinlan_gui.py" line="123"/>
         <source>False</source>
         <translation>Falso</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="989"/>
+        <location filename="../libdevicesinlan.py" line="985"/>
         <source>Y</source>
         <translation>S</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="990"/>
+        <location filename="../libdevicesinlan.py" line="986"/>
         <source>N</source>
         <translation>N</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan_gui.py" line="79"/>
+        <location filename="../libdevicesinlan_gui.py" line="78"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan_gui.py" line="80"/>
+        <location filename="../libdevicesinlan_gui.py" line="79"/>
         <source>MAC</source>
         <translation>MAC</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan_gui.py" line="81"/>
+        <location filename="../libdevicesinlan_gui.py" line="80"/>
         <source>Alias</source>
         <translation>Alias</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan_gui.py" line="82"/>
+        <location filename="../libdevicesinlan_gui.py" line="81"/>
         <source>Hardware</source>
         <translation>Hardware</translation>
     </message>
@@ -494,7 +494,7 @@
         <translation>IP</translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan_gui.py" line="54"/>
+        <location filename="../libdevicesinlan_gui.py" line="53"/>
         <source>This device</source>
         <translation>Este dispositivo</translation>
     </message>
@@ -522,29 +522,29 @@
         <translation>Licencia</translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.py" line="15"/>
+        <location filename="../ui/frmAbout.py" line="11"/>
         <source>Version {} ({})</source>
         <translation>Versión {} ({})</translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.py" line="16"/>
-        <source>Project web page is in &lt;a href=&quot;http://devicesinlan.sourceforge.net&quot;&gt;http://devicesinlan.sourceforge.net&lt;/a&gt;&lt;p&gt; &lt;p&gt;</source>
-        <translation>La página web del proyecto está en &lt;a href=&quot;http://devicesinlan.sourceforge.net&quot;&gt;http://devicesinlan.sourceforge.net&lt;/a&gt;&lt;p&gt; &lt;p&gt;</translation>
-    </message>
-    <message>
-        <location filename="../ui/frmAbout.py" line="16"/>
+        <location filename="../ui/frmAbout.py" line="12"/>
         <source>This program has been developed by Mariano Mu&#xf1;oz.&lt;p&gt;</source>
         <translation>El programa ha sido desarrollado por Mariano Muñoz.&lt;p&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.py" line="16"/>
+        <location filename="../ui/frmAbout.py" line="12"/>
         <source>It has been translated by:</source>
         <translation>Ha sido traducido por:</translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.py" line="16"/>
+        <location filename="../ui/frmAbout.py" line="12"/>
         <source>to the following languages&lt;p&gt;</source>
         <translation>a los siguientes idiomas:&lt;p&gt;</translation>
+    </message>
+    <message>
+        <location filename="../ui/frmAbout.py" line="12"/>
+        <source>Project web page is in &lt;a href=&quot;http://github.com/turulomio/devicesinlan/&quot;&gt;http://github.com/turulomio/devicesinlan/&lt;/a&gt;&lt;p&gt; &lt;p&gt;</source>
+        <translation>La página web del proyecto está en &lt;a href=&quot;http://github.com/turulomio/devicesinlan/&quot;&gt;http://github.com/turulomio/devicesinlan/&lt;/a&gt;&lt;p&gt; &lt;p&gt;</translation>
     </message>
 </context>
 <context>
@@ -801,7 +801,7 @@
     <message>
         <location filename="../ui/frmMain.py" line="162"/>
         <source>There is a new DevicesInLAN version. You can download it from &lt;a href=&apos;https://github.com/Turulomio/devicesinlan/releases&apos;&gt;GitHub&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hay una nueva versión de DevicesInLan. Puedes descargarla desde &lt;a href=&apos;https://github.com/turulomio/devicesinlan/releases&apos;&gt;GitHub&lt;/a&gt;.</translation>
     </message>
 </context>
 <context>

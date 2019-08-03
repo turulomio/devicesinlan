@@ -3,27 +3,27 @@
 <context>
     <name>Device</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="795"/>
+        <location filename="../libdevicesinlan.py" line="797"/>
         <source>Input an alias of the known device: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="800"/>
+        <location filename="../libdevicesinlan.py" line="802"/>
         <source>You need to add an alias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="785"/>
+        <location filename="../libdevicesinlan.py" line="787"/>
         <source>Input the MAC of the known device (XX:XX:XX:XX:XX:XX): </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="790"/>
+        <location filename="../libdevicesinlan.py" line="792"/>
         <source>You need to insert a mac with the next format: 2A:3B:4C:5D:6E:7A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="806"/>
+        <location filename="../libdevicesinlan.py" line="808"/>
         <source>Select a type for the known device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -210,11 +210,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="69"/>
-        <source>Searches all devices in tha LAN and show them in a new tab. If some device is not in the known devices list it will be shown with a red background. Devices with a green background are trusted devices</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../libdevicesinlan.py" line="70"/>
         <source>Devices &gt; Show devices database</source>
         <translation type="unfinished"></translation>
@@ -315,11 +310,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="97"/>
-        <source>If you launch deviceslan without parameters a console wizard is launched.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../libdevicesinlan.py" line="98"/>
         <source>Morever you can use one of this parameters.</source>
         <translation type="unfinished"></translation>
@@ -367,6 +357,16 @@
     <message>
         <location filename="../libdevicesinlan.py" line="35"/>
         <source>Developed by {} 2015-{} \xa9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../libdevicesinlan.py" line="69"/>
+        <source>Searches all devices in the LAN and show them in a new tab. If some device is not in the known devices list it will be shown with a red background. Devices with a green background are trusted devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../libdevicesinlan.py" line="97"/>
+        <source>If you launch DevicesInLan without parameters a console wizard is launched.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -431,17 +431,17 @@
 <context>
     <name>SetDevices</name>
     <message>
-        <location filename="../libdevicesinlan.py" line="676"/>
+        <location filename="../libdevicesinlan.py" line="680"/>
         <source>{} DEVICES IN LAN FROM {} INTERFACE AT {}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="680"/>
+        <location filename="../libdevicesinlan.py" line="684"/>
         <source>This device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="702"/>
+        <location filename="../libdevicesinlan.py" line="705"/>
         <source>{} DEVICES IN DATABASE AT {}</source>
         <translation type="unfinished"></translation>
     </message>
@@ -449,42 +449,42 @@
 <context>
     <name>devicesinlan</name>
     <message>
-        <location filename="../libdevicesinlan_gui.py" line="121"/>
+        <location filename="../libdevicesinlan_gui.py" line="120"/>
         <source>True</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan_gui.py" line="124"/>
+        <location filename="../libdevicesinlan_gui.py" line="123"/>
         <source>False</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="989"/>
+        <location filename="../libdevicesinlan.py" line="985"/>
         <source>Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan.py" line="990"/>
+        <location filename="../libdevicesinlan.py" line="986"/>
         <source>N</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan_gui.py" line="79"/>
+        <location filename="../libdevicesinlan_gui.py" line="78"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan_gui.py" line="80"/>
+        <location filename="../libdevicesinlan_gui.py" line="79"/>
         <source>MAC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan_gui.py" line="81"/>
+        <location filename="../libdevicesinlan_gui.py" line="80"/>
         <source>Alias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan_gui.py" line="82"/>
+        <location filename="../libdevicesinlan_gui.py" line="81"/>
         <source>Hardware</source>
         <translation type="unfinished"></translation>
     </message>
@@ -494,7 +494,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../libdevicesinlan_gui.py" line="54"/>
+        <location filename="../libdevicesinlan_gui.py" line="53"/>
         <source>This device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -522,28 +522,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.py" line="15"/>
+        <location filename="../ui/frmAbout.py" line="11"/>
         <source>Version {} ({})</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.py" line="16"/>
-        <source>Project web page is in &lt;a href=&quot;http://devicesinlan.sourceforge.net&quot;&gt;http://devicesinlan.sourceforge.net&lt;/a&gt;&lt;p&gt; &lt;p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/frmAbout.py" line="16"/>
+        <location filename="../ui/frmAbout.py" line="12"/>
         <source>This program has been developed by Mariano Mu&#xf1;oz.&lt;p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.py" line="16"/>
+        <location filename="../ui/frmAbout.py" line="12"/>
         <source>It has been translated by:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.py" line="16"/>
+        <location filename="../ui/frmAbout.py" line="12"/>
         <source>to the following languages&lt;p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/frmAbout.py" line="12"/>
+        <source>Project web page is in &lt;a href=&quot;http://github.com/turulomio/devicesinlan/&quot;&gt;http://github.com/turulomio/devicesinlan/&lt;/a&gt;&lt;p&gt; &lt;p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

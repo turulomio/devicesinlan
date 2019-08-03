@@ -47,9 +47,9 @@ If you want to create a Desktop shortcut to launch Xulpymoney you must write in 
 
 Install in Windows as a standalone application
 ==============================================
-You need to download devicesinlan-X.X.X.exe from github release
+You need to download devicesinlan-X.X.X.exe to use console script or devicesinlan_gui-X.X.X.exe to use gui app, from github release
 
-Just execute it
+Just execute it. It's an standalone application, it took some time to launch due to it uncompress code first ;)
 
 Authors
 =======
@@ -176,3 +176,8 @@ devicesinlan 1.6.0 20181126
 - Added desktop files in Linux
 - arp command removes its absolut path to work in all Linux distributions
 - Fixed detection of new versions
+
+devicesinlan 1.7.0 20190803
+---------------------------
+- Fixed mixed colors in console outputs.
+- Added windows console and gui distributions.

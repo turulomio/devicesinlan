@@ -2,3 +2,4 @@
 *.ts binary
 *.qm binary
 devicesinlan_rc.py binary
+ieee-oui.txt binary

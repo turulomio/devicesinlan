@@ -66,7 +66,7 @@ class MemSetup(QObject):
         mangui.header(self.tr("DESCRIPTION"), 1)
         mangui.paragraph(self.tr("In the app menu you have the followings features:"), 1)
         mangui.paragraph(self.tr("Devices > New Scan"), 2, True)
-        mangui.paragraph(self.tr("Searches all devices in tha LAN and show them in a new tab. If some device is not in the known devices list it will be shown with a red background. Devices with a green background are trusted devices"), 3)
+        mangui.paragraph(self.tr("Searches all devices in the LAN and show them in a new tab. If some device is not in the known devices list it will be shown with a red background. Devices with a green background are trusted devices"), 3)
         mangui.paragraph(self.tr("Devices > Show devices database"), 2, True)
         mangui.paragraph(self.tr("Shows all known devices in a new tab."), 3)
         mangui.paragraph(self.tr("Right click allows you to edit known devices database."), 3)
@@ -94,7 +94,7 @@ class MemSetup(QObject):
         man.setSynopsis("[--help] [--version] [--debug DEBUG] [ --interface | --add | --remove | --list | --load | --save | --reset ]")
 
         man.header(self.tr("DESCRIPTION"), 1)
-        man.paragraph(self.tr("If you launch deviceslan without parameters a console wizard is launched."), 1)
+        man.paragraph(self.tr("If you launch DevicesInLan without parameters a console wizard is launched."), 1)
         man.paragraph(self.tr("Morever you can use one of this parameters."), 1)
         man.paragraph("--interface", 2, True)
         man.paragraph(self.tr("Scans the net of the interface parameter and prints a list of the detected devices."), 3)

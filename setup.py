@@ -84,7 +84,7 @@ class Procedure(Command):
 Nueva versión:
   * Cambiar la versión y la fecha en version.py
   * Modificar el Changelog en README
-  * Update ieee-oui with get-oui
+  * Update ieee-oui with get-oui from arp-scan package
   * python setup.py doc
   * linguist
   * python setup.py doc
@@ -94,6 +94,7 @@ Nueva versión:
   * git push
   * Hacer un nuevo tag en GitHub
   * python setup.py sdist upload -r pypi
+  * python setup.py uninstall
   * Crea un nuevo ebuild de Gentoo con la nueva versión
   * Subelo al repositorio del portage
 
