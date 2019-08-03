@@ -31,9 +31,9 @@ class MemSetup(QObject):
         QObject.__init__(self)        
         colorama_init()
         self.name="DevicesInLAN"
-        self.author=self.tr("Mariano Mu\\xf1oz")
+        self.author=self.tr("Mariano Mu\xf1oz")
         self.description=self.tr('Show devices in a LAN making an ARP search to find them with a user interface')
-        self.epilog=self.tr("If you like this app, please give me a star in https://github.com/Turulomio/devicesinlan.")+"\n" +self.tr("Developed by {} 2015-{} \\xa9").format(self.author, __versiondate__.year)
+        self.epilog=self.tr("If you like this app, please give me a star in https://github.com/turulomio/devicesinlan.")+"\n" +self.tr("Developed by {} 2015-{} \xa9").format(self.author, __versiondate__.year)
 
     ## Sets QApplication Object to make a Qt application
     def setQApplication(self):        
