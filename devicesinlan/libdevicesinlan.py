@@ -429,10 +429,14 @@ class SetInterfaces:
                         self.append(Interface(self.mem).init__create(i, e))
         
     def print(self):
-        i=1
-        for interface in self.arr:
-            print (Style.BRIGHT + "{}. {} ({}/{} and MAC: {})".format(i, Style.BRIGHT+ Fore.GREEN+str(interface.id()), interface.ip(), interface.netmask(), interface.mac()))
-            i=i+1
+        for i, interface in enumerate(self.arr):
+            print ("{}. {} ( {} / {} and MAC: {} )".format(
+                        Style.BRIGHT+ str(i+1), 
+                        Fore.GREEN+str(interface.id()), 
+                        Fore.WHITE+ interface.ip() + Fore.GREEN, 
+                        Fore.WHITE + interface.netmask() + Fore.GREEN, 
+                        Fore.WHITE + interface.mac() + Fore.GREEN ) + Style.RESET_ALL)
+
 
     def order_by_name(self):
         """Orders the Set using self.arr"""
@@ -672,9 +676,9 @@ class SetDevices(QObject):
         maxtype=self.max_len_type()
         maxlength=16+2+maxtype+2+17+2+maxalias+2+maxoui
         self.order_by_ip()
-        print (Style.BRIGHT+ "="*(maxlength))
-        print (Style.BRIGHT+ self.tr("{} DEVICES IN LAN FROM {} INTERFACE AT {}").format(self.length(), self.mem.interfaces.selected.id().upper(), str(datetime.datetime.now())[:-7]).center(maxlength))
-        print (Style.BRIGHT+ "{}  {}  {}  {}  {}".format(" IP ".center(16,'='),"TYPE".center(maxtype,"=")," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'=')))
+        print (Style.BRIGHT+ "="*(maxlength) + Style.RESET_ALL)
+        print (Style.BRIGHT+ self.tr("{} DEVICES IN LAN FROM {} INTERFACE AT {}").format(self.length(), self.mem.interfaces.selected.id().upper(), str(datetime.datetime.now())[:-7]).center(maxlength) + Style.RESET_ALL)
+        print (Style.BRIGHT+ "{}  {}  {}  {}  {}".format(" IP ".center(16,'='),"TYPE".center(maxtype,"=")," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'=')) + Style.RESET_ALL)
         for h in self.arr:
             if h.ip==self.mem.interfaces.selected.ip():
                 print (Style.BRIGHT + Fore.MAGENTA + "{}  {}  {}  {}  {}".format(h.ip.ljust(16), h.type.name.ljust(maxtype), h.mac.center(17),   self.tr("This device").ljust(maxalias), h.oui.ljust(maxoui))+ Style.RESET_ALL)
@@ -685,9 +689,8 @@ class SetDevices(QObject):
                 else:
                     mac=Style.BRIGHT+Fore.RED+ h.mac
                     alias=" "
-                print ("{}  {}  {}  {}  {}".format(h.ip.ljust(16), h.type.name.ljust(maxtype),  mac.center(17),   Style.BRIGHT+Fore.YELLOW +  alias.ljust(maxalias), Style.NORMAL+Fore.WHITE+ h.oui.ljust(maxoui)))
-        print (Style.BRIGHT + "="*(maxlength))
-                
+                print ("{}  {}  {}  {}  {}".format(h.ip.ljust(16), h.type.name.ljust(maxtype),  mac.center(17),   Style.BRIGHT+Fore.YELLOW +  alias.ljust(maxalias), Style.NORMAL+Fore.WHITE+ h.oui.ljust(maxoui)) + Style.RESET_ALL)
+        print (Style.BRIGHT + "="*(maxlength) + Style.RESET_ALL)
 
     def print_devices_from_settings(self):
         """
@@ -698,13 +701,13 @@ class SetDevices(QObject):
         maxtype=self.max_len_type()
         maxlength=maxtype+2+17+2+maxalias+2+maxoui
         self.order_by_alias()
-        print (Style.BRIGHT+"="*(maxlength))
-        print (Style.BRIGHT+self.tr("{} DEVICES IN DATABASE AT {}").format(self.length(), str(datetime.datetime.now())[:-7]).center (maxlength))
-        print (Style.BRIGHT+ "{}  {}  {}  {}".format(" TYPE ".center(maxtype,'=')," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'=')))
+        print (Style.BRIGHT+"="*(maxlength) + Style.RESET_ALL)
+        print (Style.BRIGHT+self.tr("{} DEVICES IN DATABASE AT {}").format(self.length(), str(datetime.datetime.now())[:-7]).center (maxlength) + Style.RESET_ALL)
+        print (Style.BRIGHT+ "{}  {}  {}  {}".format(" TYPE ".center(maxtype,'=')," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'=')) + Style.RESET_ALL)
         for h in self.arr:
             mac=Style.BRIGHT+ Fore.GREEN +h.mac
-            print ("{}  {}  {}  {}".format(h.type.name.ljust(maxtype), mac.center(17),   Style.BRIGHT + Fore.YELLOW+ h.alias.ljust(maxalias), Style.NORMAL + Fore.WHITE+  str(h.oui).ljust(maxoui)))    
-        print (Style.BRIGHT+"="*(maxlength))
+            print ("{}  {}  {}  {}".format(h.type.name.ljust(maxtype), mac.center(17),   Style.BRIGHT + Fore.YELLOW+ h.alias.ljust(maxalias), Style.NORMAL + Fore.WHITE+  str(h.oui).ljust(maxoui)) + Style.RESET_ALL)
+        print (Style.BRIGHT+"="*(maxlength) + Style.RESET_ALL)
 
 
     def saveXml(self, filename):
