@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file 'devicesinlan/ui/frmAbout.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_frmAbout(object):
     def setupUi(self, frmAbout):
@@ -230,5 +232,4 @@ class Ui_frmAbout(object):
         self.lblApp.setText(_translate("frmAbout", "DevicesInLan"))
         self.tab.setTabText(self.tab.indexOf(self.tabGLParchis), _translate("frmAbout", "Credits"))
         self.tab.setTabText(self.tab.indexOf(self.tabLicense), _translate("frmAbout", "License"))
-
 import devicesinlan.images.devicesinlan_rc

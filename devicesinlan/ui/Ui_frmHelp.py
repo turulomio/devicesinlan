@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file 'devicesinlan/ui/frmHelp.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_frmHelp(object):
     def setupUi(self, frmHelp):
@@ -103,5 +105,4 @@ class Ui_frmHelp(object):
         self.label_3.setText(_translate("frmHelp", "Select a program"))
         self.cmbProgram.setItemText(0, _translate("frmHelp", "DevicesInLan Graphical Interface"))
         self.cmbProgram.setItemText(1, _translate("frmHelp", "DevicesInLan Console"))
-
 import devicesinlan.images.devicesinlan_rc

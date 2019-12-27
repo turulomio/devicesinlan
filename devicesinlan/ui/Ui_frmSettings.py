@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file 'devicesinlan/ui/frmSettings.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_frmSettings(object):
     def setupUi(self, frmSettings):
@@ -96,5 +98,4 @@ class Ui_frmSettings(object):
         self.lblTitulo.setText(_translate("frmSettings", "DevicesInLan settings"))
         self.label_2.setText(_translate("frmSettings", "Select a language"))
         self.label.setText(_translate("frmSettings", "Concurrent requests"))
-
 import devicesinlan.images.devicesinlan_rc

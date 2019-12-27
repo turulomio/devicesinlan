@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file 'devicesinlan/ui/frmDeviceCRUD.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_frmDeviceCRUD(object):
     def setupUi(self, frmDeviceCRUD):
@@ -106,5 +108,4 @@ class Ui_frmDeviceCRUD(object):
         self.label_2.setText(_translate("frmDeviceCRUD", "Select a type"))
         self.label.setText(_translate("frmDeviceCRUD", "Device alias"))
         self.label_4.setText(_translate("frmDeviceCRUD", "Interface MAC"))
-
 import devicesinlan.images.devicesinlan_rc

@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file 'devicesinlan/ui/frmMain.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_frmMain(object):
     def setupUi(self, frmMain):
@@ -145,5 +147,4 @@ class Ui_frmMain(object):
         self.actionListLoad.setToolTip(_translate("frmMain", "Load devices list"))
         self.actionListSave.setText(_translate("frmMain", "&Save devices list"))
         self.actionListSave.setToolTip(_translate("frmMain", "Save devices list"))
-
 import devicesinlan.images.devicesinlan_rc
