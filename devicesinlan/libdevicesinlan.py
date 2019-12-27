@@ -171,11 +171,7 @@ class MemConsole(MemSetup):
     def parse_args(self):
         parser=argparse.ArgumentParser(prog='devicesinlan', description=self.description,  epilog=self.epilog, formatter_class=argparse.RawTextHelpFormatter)
         parser.add_argument('--version', action='version', version="{} ({})".format(__version__, __versiondate__))
-        if platform_system=="Windows":
-            default_method="PingArp"
-        else:
-            default_method="ScapyArping"
-        parser.add_argument('--method', action='store', choices=['PingArp', 'Arping', 'Own', 'ArpScanner', 'ScapyArping', 'Scapy'], default=default_method)
+        parser.add_argument('--method', action='store', choices=['PingArp', 'Arping', 'Own', 'ArpScanner', 'ScapyArping', 'Scapy'], default='PingArp')
         group = parser.add_mutually_exclusive_group()
         group.add_argument('--interface', help=self.tr('Net interface name'))
         group.add_argument('--add', help=self.tr('Add a known device'), action='store_true')
