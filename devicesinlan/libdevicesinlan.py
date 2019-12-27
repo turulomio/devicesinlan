@@ -262,7 +262,7 @@ class MemConsole(MemSetup):
 
         inicio=datetime.datetime.now()
         set=SetDevices(self)
-        set.setMethod(ArpScanMethod.PingArp)
+        set.setMethod(ArpScanMethod.ScapyArping)
         set.print()
         print (Style.BRIGHT+self.tr("It took {} with DevicesInLAN scanner.").format (Fore.GREEN+str(datetime.datetime.now()-inicio)+ " "+ self.tr( "seconds")+Fore.WHITE))
 
@@ -362,6 +362,33 @@ class Interface(QObject):
     def netmask(self):
         return self.qnetworkaddressentry.netmask().toString()
         
+    ##Conversts 255.255.255.0 to 24
+    def netmask_to_int(self):
+        sintegers=self.netmask().split(".")
+        sbits=""
+        for s in sintegers:
+            sbits=sbits+bin(int(s))[2:]#Converts to binary, prefix 0b that I remove
+        r=0
+        for s in sbits:
+            r=r+int(s)
+        return r
+    
+    ##If interface ip 192.168.1.12 and netmask 255.255.255.0 return 192.168.1.0/24
+    ##If interface ip 192.168.1.12 and netmask 255.255.254.0 return 192.168.0.0/23
+    ## If there is a 0 in the netmask result is 0
+    def network(self):
+        sip=self.ip().split(".")
+        smask=self.netmask().split(".")
+        r=[]
+        for i in range(len(sip)):
+            if bin(int(smask[i]))[2:].find("0")>=0:#Converts to binary, prefix 0b that I remove
+                r.append("0")
+            else:
+                r.append(sip[i])
+        net=".".join(r)
+        return "{}/{}".format(net, self.netmask_to_int())
+        
+        
     def broadcast(self):
         return self.qnetworkaddressentry.broadcast().toString()
     
@@ -422,6 +449,7 @@ class ArpScanMethod:
     Arping=1 #Arping utility
     Own=2#My own scan
     ArpScanner=3#Arpescanner
+    ScapyArping=4#Scapy python module arping function needs ROOT  and winpcap in windows
 
 class SetDevices(QObject):
     def __init__(self, mem):
@@ -476,6 +504,8 @@ class SetDevices(QObject):
             self.own()
         elif arpscanmethod==ArpScanMethod.ArpScanner:
             pass
+        elif arpscanmethod==ArpScanMethod.ScapyArping:
+            self.scapy_arping()
             
 
 
@@ -567,6 +597,27 @@ class SetDevices(QObject):
                     h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
 
                     self.arr.append(h)#Solo si se da alias
+                    
+    ## NEED ROOT PRIVILEGES AND PYTHON COMPILED WITH IPV6
+    def scapy_arping(self):
+        from scapy.layers.l2 import arping
+        for o in arping(self.mem.interfaces.selected.network(), verbose=False)[0]:
+            h=Device(self.mem)
+            h.ip=o[1].psrc
+            h.mac=o[1].src.upper()
+            h.pinged=True
+            if h.mac!=None and h.pinged==True:
+                h.alias=self.mem.settings.value("DeviceAlias/{}".format(h.macwithout2points(h.mac.upper())), None)
+                h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
+                self.arr.append(h)#Solo si se da alias
+        #Adds current interface ip
+        h=Device(self.mem)
+        h.ip=self.mem.interfaces.selected.ip()
+        h.mac=self.mem.interfaces.selected.mac().upper()
+        h.pinged=True     
+        h.alias=self.mem.settings.value("DeviceAlias/{}".format(h.macwithout2points(h.mac.upper())), None)
+        h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
+        self.arr.append(h)
 
     def max_len_oui(self):
         max=10
