@@ -262,7 +262,7 @@ class MemConsole(MemSetup):
 
         inicio=datetime.datetime.now()
         set=SetDevices(self)
-        set.setMethod(ArpScanMethod.ScapyArping)
+        set.setMethod(ArpScanMethod.Scapy)
         set.print()
         print (Style.BRIGHT+self.tr("It took {} with DevicesInLAN scanner.").format (Fore.GREEN+str(datetime.datetime.now()-inicio)+ " "+ self.tr( "seconds")+Fore.WHITE))
 
@@ -450,6 +450,7 @@ class ArpScanMethod:
     Own=2#My own scan
     ArpScanner=3#Arpescanner
     ScapyArping=4#Scapy python module arping function needs ROOT  and winpcap in windows
+    Scapy=5#A pelo with scapy
 
 class SetDevices(QObject):
     def __init__(self, mem):
@@ -506,6 +507,8 @@ class SetDevices(QObject):
             pass
         elif arpscanmethod==ArpScanMethod.ScapyArping:
             self.scapy_arping()
+        elif arpscanmethod==ArpScanMethod.Scapy:
+            self.scapy()
             
 
 
@@ -573,6 +576,45 @@ class SetDevices(QObject):
                             mac=s.upper()
             return(ip, mac, pinged)
             ###################################
+        futures=[]
+        concurrence=int(self.mem.settings.value("frmSettings/concurrence", 50))
+        with ThreadPoolExecutor(max_workers=concurrence) as executor:
+            for addr in self.mem.interfaces.selected.addresses():
+                if str(addr)==self.mem.interfaces.selected.ip() :#Adds device if ip is interface ip and jumps it
+                    h=Device(self.mem)
+                    h.ip=str(addr)
+                    h.mac=self.mem.interfaces.selected.mac().upper()
+                    h.pinged=True     
+                    h.alias=self.mem.settings.value("DeviceAlias/{}".format(h.macwithout2points(h.mac.upper())), None)
+                    h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
+                    self.arr.append(h)
+                    continue
+                else:
+                    futures.append(executor.submit(get_ip_mac_pinged,  str(addr)))
+                
+            for i,  future in enumerate(as_completed(futures)):
+                h=Device(self.mem)
+                (h.ip, h.mac, h.pinged)=future.result()
+                if h.mac!=None and h.pinged==True:
+                    h.alias=self.mem.settings.value("DeviceAlias/{}".format(h.macwithout2points(h.mac.upper())), None)
+                    h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
+
+                    self.arr.append(h)#Solo si se da alias
+
+    def scapy(self):
+        ## Returns a list  [ip,mac,pinged]
+        def get_ip_mac_pinged(ip):
+            pinged=True
+            mac=None
+            packet = srp(Ether(dst='ff:ff:ff:ff:ff:ff')/ARP(pdst=ip)/Padding(load='\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'),timeout=2, verbose=False)
+            try:
+                mac=packet[0][0][1].hwsrc.upper()
+            except IndexError:
+                mac=None
+            return(ip, mac, pinged)
+            ###################################
+        from scapy.layers.l2 import srp, Ether, ARP
+        from scapy.all import  Padding
         futures=[]
         concurrence=int(self.mem.settings.value("frmSettings/concurrence", 50))
         with ThreadPoolExecutor(max_workers=concurrence) as executor:
