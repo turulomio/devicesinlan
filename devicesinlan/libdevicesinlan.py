@@ -6,7 +6,6 @@ import threading
 import logging
 import os
 import re
-import platform
 import pkg_resources
 import subprocess
 import sys
@@ -15,6 +14,7 @@ import socket
 from PyQt5.QtCore import QCoreApplication, QSettings, QTranslator, QObject
 from PyQt5.QtNetwork import QNetworkInterface, QAbstractSocket,  QTcpSocket
 from concurrent.futures import ThreadPoolExecutor,  as_completed
+from platform import system as platform_system
 from xml.dom import minidom
 from uuid import  uuid4
 from urllib.request import urlopen
@@ -171,6 +171,11 @@ class MemConsole(MemSetup):
     def parse_args(self):
         parser=argparse.ArgumentParser(prog='devicesinlan', description=self.description,  epilog=self.epilog, formatter_class=argparse.RawTextHelpFormatter)
         parser.add_argument('--version', action='version', version="{} ({})".format(__version__, __versiondate__))
+        if platform_system=="Windows":
+            default_method="PingArp"
+        else:
+            default_method="ScapyArping"
+        parser.add_argument('--method', action='store', choices=['PingArp', 'Arping', 'Own', 'ArpScanner', 'ScapyArping', 'Scapy'], default=default_method)
         group = parser.add_mutually_exclusive_group()
         group.add_argument('--interface', help=self.tr('Net interface name'))
         group.add_argument('--add', help=self.tr('Add a known device'), action='store_true')
@@ -182,6 +187,7 @@ class MemConsole(MemSetup):
         parser.add_argument('--debug', help=self.tr( "Debug program information"))
 
         self.args=parser.parse_args()
+        self.method=ArpScanMethod.string2attribute(self.args.method)
 
         self.setLoggingLevel(self.args.debug)
 
@@ -262,14 +268,14 @@ class MemConsole(MemSetup):
 
         inicio=datetime.datetime.now()
         set=SetDevices(self)
-        set.setMethod(ArpScanMethod.Scapy)
+        set.setMethod(self.method)
         set.print()
-        print (Style.BRIGHT+self.tr("It took {} with DevicesInLAN scanner.").format (Fore.GREEN+str(datetime.datetime.now()-inicio)+ " "+ self.tr( "seconds")+Fore.WHITE))
+        print (Style.BRIGHT+self.tr("DevicesInLan took {} with method {}.").format (Fore.GREEN+str(datetime.datetime.now()-inicio)+ " "+ self.tr( "seconds")+Fore.WHITE, self.args.method))
 
     def setInstallationUUID(self):
         if self.settings.value("frmMain/uuid", "None")=="None":
             self.settings.setValue("frmMain/uuid", str(uuid4()))
-        url='http://devicesinlan.sourceforge.net/php/devicesinlan_installations.php?uuid={}&version={}&platform={}'.format(self.settings.value("frmMain/uuid"), __version__, platform.system())
+        url='http://devicesinlan.sourceforge.net/php/devicesinlan_installations.php?uuid={}&version={}&platform={}'.format(self.settings.value("frmMain/uuid"), __version__, platform_system())
         try:
             web=b2s(urlopen(url).read())
         except:
@@ -451,6 +457,12 @@ class ArpScanMethod:
     ArpScanner=3#Arpescanner
     ScapyArping=4#Scapy python module arping function needs ROOT  and winpcap in windows
     Scapy=5#A pelo with scapy
+    @classmethod
+    def string2attribute(self, s):
+        for attr, value in self.__dict__.items():
+            if attr==s:
+                return value
+        return None
 
 class SetDevices(QObject):
     def __init__(self, mem):
@@ -563,7 +575,7 @@ class SetDevices(QObject):
 
             #ARP
             if pinged==True:
-                if platform.system()=="Windows":
+                if platform_system()=="Windows":
                     CREATE_NO_WINDOW=0x08000000
                     arpexit=subprocess.check_output(["arp", "-a",  ip], creationflags=CREATE_NO_WINDOW)
                     for s in arpexit.split(b" "):

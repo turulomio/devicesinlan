@@ -14,6 +14,7 @@ from devicesinlan.ui.frmHelp import frmHelp
 from devicesinlan.ui.frmAbout import frmAbout
 from devicesinlan.ui.frmInterfaceSelector import frmInterfaceSelector
 from devicesinlan.ui.frmDeviceCRUD import frmDeviceCRUD
+from platform import system as platform_system
 
 
 
@@ -208,7 +209,10 @@ class frmMain(QMainWindow, Ui_frmMain):#
         
         inicio=datetime.datetime.now()
         set=SetDevices(self.mem)
-        set.setMethod(ArpScanMethod.PingArp)
+        if platform_system()=="Windows":
+            set.setMethod(ArpScanMethod.PingArp)
+        else:
+            set.setMethod(ArpScanMethod.ScapyArping)
         
         self.tab = myTab(set, self.tabWidget)
         self.tab.setLabelText(self.tr("It took {} to detect {} devices".format(datetime.datetime.now()-inicio, set.length())))
