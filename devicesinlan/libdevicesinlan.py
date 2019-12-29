@@ -2,15 +2,12 @@ import argparse
 import codecs
 from colorama import init as colorama_init,  Style, Fore
 import datetime
-import threading
 import logging
 import os
 import re
 import pkg_resources
 import subprocess
 import sys
-import time
-import socket
 from PyQt5.QtCore import QCoreApplication, QSettings, QTranslator, QObject
 from PyQt5.QtNetwork import QNetworkInterface, QAbstractSocket,  QTcpSocket
 from concurrent.futures import ThreadPoolExecutor,  as_completed
@@ -110,6 +107,15 @@ class MemSetup(QObject):
         man.paragraph(self.tr("The parameter can take this options: CRITICAL, ERROR, WARNING, INFO, DEBUG."), 3)
         man.paragraph("--reset", 2, True)
         man.paragraph(self.tr("Removes all known devices."), 3)
+
+        man.header(self.tr("SCAN METHOD"), 1)
+        man.paragraph(self.tr("DevicesInLan can use several methods to scan for devices."), 1)
+        man.paragraph("PingArp", 1, True)
+        man.paragraph(self.tr("It tries to make a socket connection with any device in the lan. Then it searches with arp command the mac information"), 2)
+        man.paragraph(self.tr("PingArp method is used in windows and linux versions by default."), 2)
+
+        man.paragraph("Scapy", 1, True)
+        man.paragraph("ScapyArping", 1, True)
         man.save()
         man.saveHTML("devicesinlan/data/devicesinlan.{}.html".format(language))
 
@@ -172,7 +178,7 @@ class MemConsole(MemSetup):
     def parse_args(self):
         parser=argparse.ArgumentParser(prog='devicesinlan', description=self.description,  epilog=self.epilog, formatter_class=argparse.RawTextHelpFormatter)
         parser.add_argument('--version', action='version', version="{} ({})".format(__version__, __versiondate__))
-        parser.add_argument('--method', action='store', choices=['PingArp', 'Arping', 'Own', 'ArpScanner', 'ScapyArping', 'Scapy'], default='PingArp')
+        parser.add_argument('--method', action='store', choices=['PingArp', 'ScapyArping', 'Scapy'], default='PingArp')
         group = parser.add_mutually_exclusive_group()
         group.add_argument('--interface', help=self.tr('Net interface name'))
         group.add_argument('--add', help=self.tr('Add a known device'), action='store_true')
@@ -449,9 +455,6 @@ class SetInterfaces:
                 
 class ArpScanMethod:
     PingArp=0 #Ping + ARP
-    Arping=1 #Arping utility
-    Own=2#My own scan
-    ArpScanner=3#Arpescanner
     ScapyArping=4#Scapy python module arping function needs ROOT  and winpcap in windows
     Scapy=5#A pelo with scapy
     @classmethod
@@ -503,62 +506,20 @@ class SetDevices(QObject):
         for d in self.arr:
             d.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(d.macwithout2points(d.mac.upper())), 0)))
         return self
-            
 
     def setMethod(self, arpscanmethod):
         if arpscanmethod==ArpScanMethod.PingArp:
-            self.pingarp()
-        elif arpscanmethod==ArpScanMethod.Arping:
-            pass
-        elif arpscanmethod==ArpScanMethod.Own:
-            self.own()
-        elif arpscanmethod==ArpScanMethod.ArpScanner:
-            pass
+            self.method_pingarp()
         elif arpscanmethod==ArpScanMethod.ScapyArping:
-            self.scapy_arping()
+            self.method_scapy_arping()
         elif arpscanmethod==ArpScanMethod.Scapy:
-            self.scapy()
-            
-
+            self.method_scapy()
 
     def length(self):
         """Number of devices in the set"""
         return len(self.arr)
         
-    def own(self):
-        """Load Devices from ping and my arp output"""
-        threads=[]
-        for addr in self.mem.interfaces.selected.addresses():
-            if str(addr)==self.mem.interfaces.selected.ip():#Adds device if ip is interface ip and jumps it
-                h=Device(self.mem)
-                h.ip=str(addr)
-                h.mac=self.mem.interfaces.selected.mac()
-                h.pinged=True     
-                h.alias=self.mem.settings.value("DeviceAlias/{}".format(h.macwithout2points(h.mac.upper())), None)
-                h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
-                self.arr.append(h)
-                continue
-            t=TRequest(str(addr), self.mem.interfaces.selected,  TypesARP.Standard)
-            t.start()
-            threads.append(t)
-            time.sleep(0.01)
-            
-        for t in threads:
-            t.join()
-            if t.mac!=None or t.pinged==True:
-                h=Device(self.mem)
-                h.ip=t.ip
-                h.mac=t.mac.replace("-", ":")#This is for windows 
-                h.oui=t.oui
-                h.pinged=t.pinged
-                if h.mac:
-                    h.alias=self.mem.settings.value("DeviceAlias/{}".format(h.macwithout2points(h.mac.upper())), None)
-                    h.type=self.mem.types.find_by_id(int(self.mem.settings.value("DeviceType/{}".format(h.macwithout2points(h.mac.upper())), 0)))
-                self.arr.append(h)
-                
-
-        
-    def pingarp(self):
+    def method_pingarp(self):
         """Load Devices from scan with ping and arp commands output"""
         def get_ip_mac_pinged(ip):
             """
@@ -566,9 +527,9 @@ class SetDevices(QObject):
             """
             pinged=True
             mac=None
-            socket=QTcpSocket()
-            socket.connectToHost(ip, 80)
-            socket.close()
+            sock=QTcpSocket()
+            sock.connectToHost(ip, 80)
+            sock.close()
 
             #ARP
             if pinged==True:
@@ -610,7 +571,7 @@ class SetDevices(QObject):
 
                     self.arr.append(h)#Solo si se da alias
 
-    def scapy(self):
+    def method_scapy(self):
         ## Returns a list  [ip,mac,pinged]
         def get_ip_mac_pinged(ip):
             pinged=True
@@ -650,7 +611,7 @@ class SetDevices(QObject):
                     self.arr.append(h)#Solo si se da alias
                     
     ## NEED ROOT PRIVILEGES AND PYTHON COMPILED WITH IPV6
-    def scapy_arping(self):
+    def method_scapy_arping(self):
         from scapy.layers.l2 import arping
         for o in arping(self.mem.interfaces.selected.network(), verbose=False)[0]:
             h=Device(self.mem)
@@ -897,137 +858,6 @@ class Device(QObject):
     def macwithout2points(self, macwith):
         return macwith.replace(":", "")
 
-class TRequest(threading.Thread):
-    def __init__(self, ip, interface, arp_type):
-        threading.Thread.__init__(self)
-        self.arp_type = arp_type
-        self.interface=interface
-        self.ip = ip
-        self.mac=None#Mac address string
-        self.arp_sent_frame=None
-        self.arp_received_frame=None
-        self.icmp_sent_frame=None
-        self.icmp_received_frame=None
-        self.pinged=False
-
-    def ping_process(self):
-        for i in range(1):
-            if self.pinged==False:
-                try: 
-                    output=subprocess.call(["ping", "-c", "1", "-W", "1", self.ip], shell=False, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
-                    if output==0:
-                        self.pinged=True
-                except: #if exit is not 0
-                    pass
-                time.sleep(.1*i)
-            else:
-                break    
-
-    def run(self):    
-        self.arp_process()
-        self.ping_process()
-
-    def arp_process(self):        
-        def arp_send():
-            """
-            00:06 HW address destination (broadcast)
-            06:12 HW address of interface
-            12:14 Protocolo type \x08\x06
-            14:16 Protocolo Ethernet \x00\x01
-            16:18 IPv4 que es \x08\x00
-            18:19 HW MAC length bytes 6
-            19:20 Protocol address length IPv4 es 4
-            20:22 Arp operation request 00 01
-            22:28 HW address of interface sender
-            28:32 Ip del Interface
-            32:38 Hardware address of target 00 00 00 00 00 00
-            38:42 Ip del objetivo        
-            """
-    
-            frame2=b"\xff\xff\xff\xff\xff\xff"+ \
-                socket_arp.getsockname()[4] + \
-                b"\x08\x06" + \
-                b"\x00\x01" + \
-                b"\x08\x00" + \
-                b"\x06" + \
-                b"\x04" + \
-                b"\x00\x01" + \
-                socket_arp.getsockname()[4] + \
-                self.ip2bytes(self.interface.ip) + \
-                b"\x00\x00\x00\x00\x00\x00" + \
-                self.ip2bytes(self.ip)
-            self.arp_sent_frame=frame2
-            socket_arp.send(frame2)
-
-        def arp_receive():
-            '''
-            00:06 Mac Destination FF:FF:FF:FF:FF:FF
-            06:12 MAC Origin 
-            12:14 Protocolo type \x08\x06
-            18:19 Hardware size 6 b'\x06'
-            19:20 IP size 4 b'\x04'
-            20:22 ARP operation \x00\x02, request es 1, reverse 3y 4
-            22:28 Returned MAC
-            28:32 Returned IP
-            32:38 Original MAC
-            38:42 Original IP
-            '''
-            frame = socket_arp.recv(1024)    
-            self.arp_received_frame=frame
-            
-            if frame[12:14] != b'\x08\x06': # Checks ARP protocol
-                return False
-    
-            if frame[20:22] != b'\x00\x02': #Checks ARP Answer
-                return False
-    
-            #Compare ip whith ip of the trame
-            if self.ip==self.bytes2ip(frame[28:32]):    
-                self.mac=self.bytes2mac(frame[22:28])
-                return True
-                
-            return False
-        ##############################################
-        for i in range(3):
-            if self.mac==None:
-                socket_arp = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.SOCK_RAW)
-                socket_arp.bind((self.interface.id, socket.SOCK_RAW)) 
-                arp_send()
-                time.sleep(.1*i)
-                arp_receive()
-                socket_arp.close()
-
-    def bytes2mac(self, bytes):     
-        """Bytes to mac address"""   
-        b=codecs.encode(bytes, 'hex_codec') #Obtenemos b'008cfa7019b7'
-        s=b.decode('utf-8')
-        arr=[s[i:i+2] for i in range(0, len(s), 2)]
-        return "{0[0]}:{0[1]}:{0[2]}:{0[3]}:{0[4]}:{0[5]}".format(arr)
-        
-    def bytes2ip(self, bytes):
-        """Bytes to ip address"""
-        s=""
-        for b in bytes:#b is an int
-            s=s+"{}.".format(b)
-        return s[:-1]
-    
-    def ip2bytes(self, ipstr):
-        arr=[int(x) for x in ipstr.split('.')]
-        s=b""
-        for a in arr:
-            s=s+bytes([a]) #To be treated as an byte of integer
-        return s
-
-    def bytes2text(self, bytes):
-        """Bytes to string"""
-        s=""
-        for b in bytes:
-            try:
-                if b>32:
-                    s=s+chr(b)
-            except:
-                pass
-        return s
 
 def input_int(text, default=None):
     while True:

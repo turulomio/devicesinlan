@@ -1,4 +1,4 @@
-.TH DEVICESINLAN 1 2019\-08\-03
+.TH DEVICESINLAN 1 2019\-12\-29
 .SH NAME
 
 .B devicesinlan:
@@ -103,4 +103,18 @@ The parameter can take this options: CRITICAL, ERROR, WARNING, INFO, DEBUG.
 .RS
 Removes all known devices.
 .RE
+.RE
+.SH SCAN METHOD
+
+.PP
+DevicesInLan can use several methods to scan for devices.
+.PP
+.B PingArp
+.PP
+.RS
+It tries to make a socket connection with any device in the lan. Then it searches with arp command the mac information
+.RE
+.PP
+.RS
+PingArp metho is used in windows and linux versions by default.
 .RE
