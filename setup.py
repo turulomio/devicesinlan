@@ -55,6 +55,29 @@ class PyInstaller(Command):
         os.chdir("build")
         os.system("""pyinstaller run.py -n devicesinlan_gui-{} --onefile --nowindowed --icon ../devicesinlan/images/devicesinlan.ico --distpath ../dist""".format(__version__))
 
+
+class Reusing(Command):
+    description = "Update code from https://github.com/turulomio/reusingcode"
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        from sys import path
+        path.append("devicesinlan")
+        from github import download_from_github
+        download_from_github('turulomio','reusingcode','python/decorators.py', 'devicesinlan')
+        download_from_github('turulomio','reusingcode','python/libmanagers.py', 'devicesinlan')
+        download_from_github('turulomio','reusingcode','python/github.py', 'devicesinlan')
+        download_from_github('turulomio','reusingcode','python/datetime_functions.py', 'devicesinlan')
+
+
+
+
 class Compile(Command):
     description = "Compile ui and images"
     user_options = []
@@ -234,6 +257,7 @@ setup(name='devicesinlan',
                         'compile': Compile, 
                         'pyinstaller': PyInstaller,
                         'procedure': Procedure,
+                        'reusing': Reusing,
                      },
     zip_safe=False,
     include_package_data=True
