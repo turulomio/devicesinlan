@@ -19,6 +19,7 @@ from xml.dom import minidom
 from uuid import  uuid4
 from urllib.request import urlopen
 from ipaddress import IPv4Network
+from devicesinlan.casts import string2xml, b2s, xml2string
 from devicesinlan.version import __version__, __versiondate__
 
 class TypesARP:
@@ -477,7 +478,7 @@ class SetDevices(QObject):
         itemlist = xmldoc.getElementsByTagName('device')
         for item in itemlist:
             d=Device(self.mem)
-            d.alias=item.attributes['alias'].value
+            d.alias=xml2string(item.attributes['alias'].value)
             d.mac=item.attributes['mac'].value
             d.type=self.mem.types.find_by_id(int(item.attributes['type'].value))
             self.append(d)
@@ -780,7 +781,7 @@ class SetDevices(QObject):
         s='<devicesinlan version="{}">\n'.format(__version__)
         s=s+"\t<devices>\n"
         for d in self.arr:
-            s=s+'\t\t<device alias="{}" mac="{}" type="{}"/>\n'.format(d.alias, d.mac, d.type.id)
+            s=s+'\t\t<device alias="{}" mac="{}" type="{}"/>\n'.format(string2xml(d.alias), d.mac, d.type.id)
         s=s+"\t</devices>\n"
         s=s+"</devicesinlan>\n"
         with codecs.open(filename, "w", "utf-8") as f:
@@ -1063,16 +1064,6 @@ def input_YN(pregunta, default="Y"):
 
 def input_string(text):
     return input(text)
-
-
-def b2s(b, code='UTF-8'):
-    return bytes(b).decode(code)
-    
-def s2b(s, code='UTF8'):
-    if s==None:
-        return "".encode(code)
-    else:
-        return s.encode(code)
         
 ## Returns the path searching in a pkg_resource model and a url. Due to PYinstaller packager doesn't supportpkg_resource
 ## filename is differet if we are in LInux, Windows --onefile or Windows --onedir
