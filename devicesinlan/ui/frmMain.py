@@ -6,9 +6,9 @@ from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QMenu, QTabWidget, QTableWidget,  QDialog, QWidget, QVBoxLayout, QLabel,  QAbstractItemView, qApp, QMessageBox, QAction, QFileDialog
 
 from devicesinlan.ui.Ui_frmMain import Ui_frmMain
-from devicesinlan.libdevicesinlan import ArpScanMethod, SetDevices
+from devicesinlan.libdevicesinlan import ArpScanMethod, DeviceManager
 from devicesinlan.version import __version__, __versiondate__,  get_remote
-from devicesinlan.libdevicesinlan_gui import  qmessagebox, qquestion,  SetDevices_qtablewidget,  SetDevices_qtablewidget_devices_from_settings
+from devicesinlan.libdevicesinlan_gui import  qmessagebox, qquestion,  DeviceManager_qtablewidget,  DeviceManager_qtablewidget_devices_from_settings
 from devicesinlan.ui.frmSettings import frmSettings
 from devicesinlan.ui.frmHelp import frmHelp
 from devicesinlan.ui.frmAbout import frmAbout
@@ -61,9 +61,9 @@ class myTab(QWidget):
     
     def table_update(self):
         if self.set.isDatabase==True:
-            SetDevices_qtablewidget_devices_from_settings(self.set, self.table)
+            DeviceManager_qtablewidget_devices_from_settings(self.set, self.table)
         else:
-            SetDevices_qtablewidget(self.set, self.table)
+            DeviceManager_qtablewidget(self.set, self.table)
         self.table.resizeColumnsToContents()
 
     def on_itemSelectionChanged(self):
@@ -126,8 +126,8 @@ class frmMain(QMainWindow, Ui_frmMain):#
     def on_actionListLoad_triggered(self):
         filename=QFileDialog.getOpenFileName(self, "", "", "eXtensible Markup Language (*.xml)")[0]
         if filename!="":
-            current=SetDevices(self.mem).init__from_settings()
-            new=SetDevices(self.mem).init__from_xml(filename)
+            current=DeviceManager(self.mem).init__from_settings()
+            new=DeviceManager(self.mem).init__from_xml(filename)
             for n in new.arr:
                 c=current.find_by_mac(n.mac)
                 if c==None:#Not found its mac so n is new
@@ -140,7 +140,7 @@ class frmMain(QMainWindow, Ui_frmMain):#
     
     @pyqtSlot()      
     def on_actionListSave_triggered(self):
-        devices=SetDevices(self.mem).init__from_settings()
+        devices=DeviceManager(self.mem).init__from_settings()
         c=str(datetime.datetime.now()).replace("-","").replace(":","").replace(" ","_")[:-7]
         filename= QFileDialog.getSaveFileName(self, self.tr("Save File"), "devicesinlan_{}.xml".format(c), self.tr("eXtensible Markup Language (*.xml)"))[0]
         if filename!="":
@@ -184,7 +184,7 @@ class frmMain(QMainWindow, Ui_frmMain):#
         m.setWindowIcon(icon6)
         confirm=m.question(self, self.tr("Erase database confirmation"), self.tr("This action will erase known devices database. Do you want to continue?."), QMessageBox.Yes, QMessageBox.No)
         if confirm==QMessageBox.Yes:
-            devices=SetDevices(self.mem).init__from_settings()
+            devices=DeviceManager(self.mem).init__from_settings()
             devices.reset()
             self.on_actionShowDatabase_triggered()
         
@@ -208,7 +208,7 @@ class frmMain(QMainWindow, Ui_frmMain):#
             return
         
         inicio=datetime.datetime.now()
-        set=SetDevices(self.mem)
+        set=DeviceManager(self.mem)
         if platform_system()=="Windows":
             set.setMethod(ArpScanMethod.PingArp)
         else:
@@ -221,7 +221,7 @@ class frmMain(QMainWindow, Ui_frmMain):#
     @pyqtSlot()
     def on_actionShowDatabase_triggered(self):
         inicio=datetime.datetime.now()
-        set=SetDevices(self.mem)
+        set=DeviceManager(self.mem)
         set.init__from_settings()
         
         self.tab = myTab(set, self.tabWidget)

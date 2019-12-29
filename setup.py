@@ -74,6 +74,8 @@ class Reusing(Command):
         download_from_github('turulomio','reusingcode','python/libmanagers.py', 'devicesinlan')
         download_from_github('turulomio','reusingcode','python/github.py', 'devicesinlan')
         download_from_github('turulomio','reusingcode','python/datetime_functions.py', 'devicesinlan')
+        download_from_github('turulomio','reusingcode','python/text_inputs.py', 'devicesinlan')
+        download_from_github('turulomio','reusingcode','python/package_resources.py', 'devicesinlan')
 
 
 

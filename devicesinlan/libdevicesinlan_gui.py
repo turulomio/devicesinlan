@@ -60,7 +60,7 @@ def DeviceType_qicon(o):
     ico.addPixmap(DeviceType_qpixmap(o), QIcon.Normal, QIcon.Off) 
     return ico
 
-def SetDevices_qtablewidget(set, table):
+def DeviceManager_qtablewidget(set, table):
     set.order_by_ip() 
     ##HEADERS
     table.setColumnCount(5)
@@ -98,7 +98,7 @@ def SetDevices_qtablewidget(set, table):
             for i in range(0, table.columnCount()):
                 table.item(rownumber, i).setBackground( QColor(255, 182, 182))       
 
-def SetDevices_qtablewidget_devices_from_settings(set, table):
+def DeviceManager_qtablewidget_devices_from_settings(set, table):
     set.order_by_alias() 
     ##HEADERS
     table.setColumnCount(4)
@@ -117,7 +117,7 @@ def SetDevices_qtablewidget_devices_from_settings(set, table):
         table.setItem(rownumber, 3, qleft(h.oui))
 
 
-def SetDeviceTypes_qcombobox(set, combo, selected=None):
+def DeviceTypeManager_qcombobox(set, combo, selected=None):
     """Selected is id"""
     set.order_by_name()
     for l in set.arr:
@@ -127,7 +127,7 @@ def SetDeviceTypes_qcombobox(set, combo, selected=None):
     if selected!=None:
             combo.setCurrentIndex(combo.findData(selected))
     
-def SetInterfaces_qcombobox(set, combo, selected=None):
+def InterfaceManager_qcombobox(set, combo, selected=None):
     """Selected is id"""
     set.order_by_name()
     for l in set.arr:

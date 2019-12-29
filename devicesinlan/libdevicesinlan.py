@@ -5,19 +5,21 @@ import datetime
 import logging
 import os
 import re
-import pkg_resources
 import subprocess
 import sys
 from PyQt5.QtCore import QCoreApplication, QSettings, QTranslator, QObject
 from PyQt5.QtNetwork import QNetworkInterface, QAbstractSocket,  QTcpSocket
 from concurrent.futures import ThreadPoolExecutor,  as_completed
+from devicesinlan.casts import string2xml, b2s, xml2string
+from devicesinlan.libmanagers import ObjectManager_With_IdName, ObjectManager_Selectable
+from devicesinlan.version import __version__, __versiondate__
+from devicesinlan.package_resources import package_filename
+from devicesinlan.text_inputs import input_YN, input_int
+from ipaddress import IPv4Network
 from platform import system as platform_system
-from xml.dom import minidom
 from uuid import  uuid4
 from urllib.request import urlopen
-from ipaddress import IPv4Network
-from devicesinlan.casts import string2xml, b2s, xml2string
-from devicesinlan.version import __version__, __versiondate__
+from xml.dom import minidom
 
 ## Mem object for setup
 class MemSetup(QObject):
@@ -165,9 +167,9 @@ class MemSetup(QObject):
 class MemConsole(MemSetup):
     def __init__(self):
         MemSetup.__init__(self)
-        self.interfaces=SetInterfaces(self)
+        self.interfaces=InterfaceManager(self)
         self.interfaces.load_all()
-        self.types=SetDeviceTypes(self)
+        self.types=DeviceTypeManager(self)
         self.types.load_all()
         
     ## Sets parser, logging and args confitions. This one is for console command. gui commond overrides this method.
@@ -192,8 +194,8 @@ class MemConsole(MemSetup):
 
         if self.args.load:
             if os.path.exists(self.args.load):
-                current=SetDevices(self).init__from_settings()
-                new=SetDevices(self).init__from_xml(self.args.load)
+                current=DeviceManager(self).init__from_settings()
+                new=DeviceManager(self).init__from_xml(self.args.load)
                 for n in new.arr:
                     c=current.find_by_mac(n.mac)
                     if c==None:#Not found its mac so n is new
@@ -210,14 +212,14 @@ class MemConsole(MemSetup):
         if self.args.reset:
             result=input_YN(self.tr( "Are you sure you want to reset known devices database?"),  default=self.tr("N"))
             if result==True:
-                set=SetDevices(self)
+                set=DeviceManager(self)
                 set.init__from_settings()
                 set.reset()
                 print (Style.BRIGHT+Fore.RED+self.tr( "Database was reset"))
             sys.exit(0)
 
         if self.args.save:
-            set=SetDevices(self)
+            set=DeviceManager(self)
             set.init__from_settings()
             set.saveXml(self.args.save)
             sys.exit(0)
@@ -242,7 +244,7 @@ class MemConsole(MemSetup):
             sys.exit(0)
 
         if self.args.list==True:
-            set=SetDevices(self)
+            set=DeviceManager(self)
             set.init__from_settings()
             set.print_devices_from_settings()
             sys.exit(0)
@@ -266,7 +268,7 @@ class MemConsole(MemSetup):
             self.settings.sync()
 
         inicio=datetime.datetime.now()
-        set=SetDevices(self)
+        set=DeviceManager(self)
         set.setMethod(self.method)
         set.print()
         print (Style.BRIGHT+self.tr("DevicesInLan took {} with method {}.").format (Fore.GREEN+str(datetime.datetime.now()-inicio)+ " "+ self.tr( "seconds")+Fore.WHITE, self.args.method))
@@ -293,25 +295,11 @@ class DeviceType:
         self.name=name
         return self
 
-class SetDeviceTypes(QObject):
+class DeviceTypeManager(QObject, ObjectManager_With_IdName):
     def __init__(self, mem):
         QObject.__init__(self)
+        ObjectManager_With_IdName.__init__(self)
         self.mem=mem
-        self.arr=[]
-        
-    def length(self):
-        return len (self.arr)
-        
-    def find_by_id(self, id):
-        if id==None:
-            id=0
-        for type in self.arr:
-            if type.id==id:
-                return type
-        return None
-        
-    def append(self, o):
-        self.arr.append(o)
         
     def load_all(self):            
         self.append(DeviceType(self.mem).init__create(0, self.tr( "Unknown")))
@@ -406,17 +394,10 @@ class Interface(QObject):
     def __str__(self):
         return (self.tr("Interface {} ({}) with ip {}/{} and mac {}".format(self.name, self.id(), self.ip(), self.netmask(), self.mac())))
         
-class SetInterfaces:
+class InterfaceManager(ObjectManager_Selectable):
     def __init__(self, mem):
-        self.arr=[]
+        ObjectManager_Selectable.__init__(self)
         self.mem=mem
-        self.selected=None
-        
-    def length(self):
-        return len(self.arr)
-        
-    def append(self, o):
-        self.arr.append(o)
         
     def find_by_id(self, id):
         for interface in self.arr:
@@ -447,8 +428,7 @@ class SetInterfaces:
             return True
         except:
             return False       
-              
-                
+
 class ArpScanMethod:
     PingArp=0 #Ping + ARP
     ScapyArping=4#Scapy python module arping function needs ROOT  and winpcap in windows
@@ -460,13 +440,12 @@ class ArpScanMethod:
                 return value
         return None
 
-class SetDevices(QObject):
+class DeviceManager(QObject, ObjectManager_Selectable):
     def __init__(self, mem):
         """This constructor load /etc/devicesinlan/known.txt and executes arp-scan and parses its result"""
         QObject.__init__(self)
+        ObjectManager_Selectable.__init__(self)
         self.mem=mem
-        self.arr=[]
-        self.selected=None
         self.isDatabase=False#Returns True if is init__from_settings
 
     def init__from_xml(self, filename):
@@ -510,10 +489,6 @@ class SetDevices(QObject):
             self.method_scapy_arping()
         elif arpscanmethod==ArpScanMethod.Scapy:
             self.method_scapy()
-
-    def length(self):
-        """Number of devices in the set"""
-        return len(self.arr)
         
     def method_pingarp(self):
         """Load Devices from scan with ping and arp commands output"""
@@ -640,10 +615,6 @@ class SetDevices(QObject):
             if len(h.type.name)>max:
                 max=len(h.type.name)
         return max
-        
-        
-    def append(self, o):
-        self.arr.append(o)
         
     def reset(self):
         todelete=[]#No puedo borrar de un for iterando
@@ -853,58 +824,3 @@ class Device(QObject):
         
     def macwithout2points(self, macwith):
         return macwith.replace(":", "")
-
-
-def input_int(text, default=None):
-    while True:
-        if default==None:
-            res=input(Style.BRIGHT+text+": ")
-        else:
-            print(Style.BRIGHT+ Fore.WHITE+"{} [{}]: ".format(text, Fore.GREEN+str(default)+Fore.WHITE), end="")
-            res=input()
-        try:
-            if res==None or res=="":
-                res=default
-            res=int(res)
-            return res
-        except:
-            pass
-            
-
-def input_YN(pregunta, default="Y"):
-    ansyes=QCoreApplication.translate("devicesinlan","Y")
-    ansno=QCoreApplication.translate("devicesinlan","N")
-    
-    bracket="{}|{}".format(ansyes.upper(), ansno.lower()) if default.upper()==ansyes else "{}|{}".format(ansyes.lower(), ansno.upper())
-    while True:
-        print(Style.BRIGHT+ Fore.WHITE+"{} [{}]: ".format(pregunta,  Fore.GREEN+bracket+Fore.WHITE), end="")
-        user_input = input().strip().upper()
-        if not user_input or user_input=="":
-            user_input=default
-        if user_input == ansyes:
-                return True
-        elif user_input == ansno:
-                return False
-        else:
-                print (QCoreApplication.translate("devicesinlan","Please enter '{}' or '{}'".format(ansyes, ansno)))
-
-def input_string(text):
-    return input(text)
-        
-## Returns the path searching in a pkg_resource model and a url. Due to PYinstaller packager doesn't supportpkg_resource
-## filename is differet if we are in LInux, Windows --onefile or Windows --onedir
-## @param module String
-## @param url String
-## @return string with the filename
-def package_filename(module, url):
-    for filename in [
-        pkg_resources.resource_filename(module, url), #Used in pypi and Linux
-        url, #Used in pyinstaller --onedir, becaouse pkg_resources is not supported
-        pkg_resources.resource_filename(module,"../{}".format(url)), #Used in pyinstaller --onefile, becaouse pkg_resources is not supported
-        "{}/{}/{}".format(os.getcwd(),module,  url)# For setup.py translations
-    ]:
-        if filename!=None and os.path.exists(filename):
-            logging.info("FOUND " +  filename) #When debugging in windows, change logging for printt
-            return filename
-        else:
-            logging.debug("NOT FOUND",  module, url)

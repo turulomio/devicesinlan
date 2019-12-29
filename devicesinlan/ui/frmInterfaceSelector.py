@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import pyqtSlot
 from devicesinlan.ui.Ui_frmInterfaceSelector import Ui_frmInterfaceSelector
-from devicesinlan.libdevicesinlan_gui import SetInterfaces_qcombobox
+from devicesinlan.libdevicesinlan_gui import InterfaceManager_qcombobox
 
 
 class frmInterfaceSelector(QDialog, Ui_frmInterfaceSelector):
@@ -9,7 +9,7 @@ class frmInterfaceSelector(QDialog, Ui_frmInterfaceSelector):
         QDialog.__init__(self, parent)
         self.mem=mem
         self.setupUi(self)
-        SetInterfaces_qcombobox(self.mem.interfaces, self.cmbName, self.mem.settings.value("frmInterfaceSelector/interface_id", None))
+        InterfaceManager_qcombobox(self.mem.interfaces, self.cmbName, self.mem.settings.value("frmInterfaceSelector/interface_id", None))
 
     @pyqtSlot(int)      
     def on_cmbName_currentIndexChanged(self, id): 
