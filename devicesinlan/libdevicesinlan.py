@@ -19,10 +19,6 @@ from ipaddress import IPv4Network
 from devicesinlan.casts import string2xml, b2s, xml2string
 from devicesinlan.version import __version__, __versiondate__
 
-class TypesARP:
-    Gratuitous = 1
-    Standard = 2
-
 ## Mem object for setup
 class MemSetup(QObject):
     def __init__(self):
