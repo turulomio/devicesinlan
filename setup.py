@@ -194,10 +194,6 @@ class Doc(Command):
             mem.mangenerator(language)
 
     ########################################################################
-
-with open('README.md', encoding='utf-8') as f:
-    long_description = f.read()
-
 #__version__
 __version__= None
 with open('devicesinlan/version.py', encoding='utf-8') as f:
@@ -230,9 +226,9 @@ if platform.system()=="Windows":
 setup(name='devicesinlan',
     version=__version__,
     description='Find devices in a lan',
-    long_description=long_description,
+    long_description='Project web page is at https://github.com/turulomio/devicesinlan/',
     long_description_content_type='text/markdown',
-    classifiers=['Development Status :: 5 - Production/Stable ',
+    classifiers=['Development Status :: 5 - Production/Stable',
               'Intended Audience :: End Users/Desktop',
               'Topic :: System :: Networking :: Monitoring',
               'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
@@ -262,7 +258,7 @@ setup(name='devicesinlan',
                         'reusing': Reusing,
                      },
     zip_safe=False,
-    include_package_data=True
+    include_package_data=True, 
     )
 
 _=gettext.gettext#To avoid warnings
