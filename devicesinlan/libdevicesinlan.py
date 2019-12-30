@@ -8,8 +8,8 @@ import subprocess
 import sys
 from PyQt5.QtCore import QCoreApplication, QSettings, QTranslator, QObject
 from PyQt5.QtNetwork import QNetworkInterface, QAbstractSocket,  QTcpSocket
-from concurrent.futures import ThreadPoolExecutor,  as_completed
-from datetime import datetime               
+from concurrent.futures import ThreadPoolExecutor,  as_completed                            
+from datetime import datetime, date     
 from devicesinlan.casts import string2xml, b2s, xml2string
 from devicesinlan.decorators import need_administrator
 from devicesinlan.libmanagers import ObjectManager_With_IdName, ObjectManager_Selectable
@@ -53,7 +53,7 @@ class MemSetup(QObject):
             man=Man("man/{}/man1/devicesinlan".format(language))
             mangui=Man("man/{}/man1/devicesinlan_gui".format(language))
 
-        mangui.setMetadata("devicesinlan_gui",  1,   datetime.date.today(), self.author, self.tr("Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net."))
+        mangui.setMetadata("devicesinlan_gui",  1,   date.today(), self.author, self.tr("Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net."))
         mangui.setSynopsis("[--help] [--version] [--debug DEBUG]")
         mangui.header(self.tr("DESCRIPTION"), 1)
         mangui.paragraph(self.tr("In the app menu you have the followings features:"), 1)
@@ -82,7 +82,7 @@ class MemSetup(QObject):
         mangui.save()
         mangui.saveHTML("devicesinlan/data/devicesinlan_gui.{}.html".format(language))
 
-        man.setMetadata("devicesinlan",  1,   datetime.date.today(), self.author, self.tr("Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net."))
+        man.setMetadata("devicesinlan",  1,   date.today(), self.author, self.tr("Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net."))
         man.setSynopsis("[-h] [--version] [--method {PingArp,ScapyArping,Scapy}] [--interface INTERFACE | --add | --remove | --list | --load LOAD | --save SAVE | --reset] [--debug DEBUG]")
 
         man.header(self.tr("DESCRIPTION"), 1)

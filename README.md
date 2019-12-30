@@ -181,3 +181,10 @@ devicesinlan 1.7.0 20190803
 ---------------------------
 - Fixed mixed colors in console outputs.
 - Added windows console and gui distributions.
+
+devicesinlan 1.8.0 20191230
+---------------------------
+- Added scapy methods.
+- Fix bug loading unescaped data from XML.
+- Addapting code to reusing project.
+- Improved doc and translations

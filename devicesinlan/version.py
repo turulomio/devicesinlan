@@ -1,7 +1,7 @@
 ## @brief Package with xulpymoney version information
 import datetime
 
-__version__ ='1.7.9999'
+__version__ ='1.8.0'
 __versiondate__=datetime.date(2019,12,30)
 
 
