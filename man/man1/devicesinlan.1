@@ -1,11 +1,11 @@
-.TH DEVICESINLAN 1 2019\-12\-29
+.TH DEVICESINLAN 1 2019\-12\-30
 .SH NAME
 
 .B devicesinlan:
 Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net.
 .SH SYNOPSIS
 
-devicesinlan [\-\-help] [\-\-version] [\-\-debug DEBUG] [ \-\-interface | \-\-add | \-\-remove | \-\-list | \-\-load | \-\-save | \-\-reset ]
+devicesinlan [\-h] [\-\-version] [\-\-method {PingArp,ScapyArping,Scapy}] [\-\-interface INTERFACE | \-\-add | \-\-remove | \-\-list | \-\-load LOAD | \-\-save SAVE | \-\-reset] [\-\-debug DEBUG]
 .SH DESCRIPTION
 
 .PP
@@ -13,108 +13,114 @@ If you launch DevicesInLan without parameters a console wizard is launched.
 .PP
 Morever you can use one of this parameters.
 .PP
-.RS
 .B \-\-interface
-.RE
 .PP
-.RS
 .RS
 Scans the net of the interface parameter and prints a list of the detected devices.
 .RE
-.RE
 .PP
-.RS
 .RS
 If a device is not known, it will be showed in red. Devices in green are trusted devices.
 .RE
-.RE
 .PP
-.RS
 .B \-\-add
-.RE
 .PP
-.RS
 .RS
 Allows to add a known device from console.
 .RE
-.RE
 .PP
-.RS
 .B \-\-remove
-.RE
 .PP
-.RS
 .RS
 Allows to remove a known device from console.
 .RE
-.RE
 .PP
-.RS
 .B \-\-list
-.RE
 .PP
-.RS
 .RS
 Shows all known devices in database from console.
 .RE
-.RE
 .PP
-.RS
 .B \-\-load
-.RE
 .PP
-.RS
 .RS
 Loads a list of known devices in xml format.
 .RE
-.RE
 .PP
-.RS
 .B \-\-save
-.RE
 .PP
-.RS
 .RS
 Saves the known devices list to a xml file.
 .RE
-.RE
 .PP
-.RS
 .B \-\-debug
-.RE
 .PP
-.RS
 .RS
 Gives debugging information when running DevicesInLAN. It's deactivated by default
 .RE
-.RE
 .PP
-.RS
 .RS
 The parameter can take this options: CRITICAL, ERROR, WARNING, INFO, DEBUG.
 .RE
-.RE
 .PP
-.RS
 .B \-\-reset
-.RE
 .PP
-.RS
 .RS
 Removes all known devices.
 .RE
-.RE
-.SH SCAN METHOD
+.SH SCAN METHODS
 
 .PP
-DevicesInLan can use several methods to scan for devices.
+DevicesInLan can use several methods to scan for devices. You just need to add the \-\-method in console mode.
 .PP
 .B PingArp
 .PP
 .RS
-It tries to make a socket connection with any device in the lan. Then it searches with arp command the mac information
+It tries to make a socket connection with any device in the lan. Then it searches with 'arp' command the mac information
 .RE
 .PP
 .RS
-PingArp metho is used in windows and linux versions by default.
+PingArp method is used in windows and linux versions by default.
+.RE
+.PP
+.B Scapy
+.PP
+.RS
+Uses Scapy to create an ARP request and capture its answer for each ip in the subnet to get macs information.
+.RE
+.PP
+.RS
+This method can be used in windows and linux versions, but it needs to be executed with administrator role.
+.RE
+.PP
+.RS
+Morever, you need to install 'npcap' in order to execute it in Windows.
+.RE
+.PP
+.B ScapyArping
+.PP
+.RS
+Uses Scapy arping function to create ARP request and capture its answer for each ip in the subnet to get macs information.
+.RE
+.PP
+.RS
+This method can be used in windows and linux versions, but it needs to be executed with administrator role.
+.RE
+.PP
+.RS
+Morever, you need to install 'npcap' in order to execute it in Windows.
+.RE
+.SH EXAMPLES
+
+.PP
+.B devicesinlan
+.PP
+.RS
+Default command. It uses PingArp method.
+.RE
+.PP
+.B devicesinlan \-\-method ScapyArping
+.PP
+.RS
+It uses ScapyArping method.
 .RE
