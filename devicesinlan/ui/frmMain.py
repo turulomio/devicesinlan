@@ -14,9 +14,6 @@ from devicesinlan.ui.frmHelp import frmHelp
 from devicesinlan.ui.frmAbout import frmAbout
 from devicesinlan.ui.frmInterfaceSelector import frmInterfaceSelector
 from devicesinlan.ui.frmDeviceCRUD import frmDeviceCRUD
-from platform import system as platform_system
-
-
 
 class myTab(QWidget):
     """Widget to add tabs and vinculate set and,table"""
@@ -209,10 +206,7 @@ class frmMain(QMainWindow, Ui_frmMain):#
         
         inicio=datetime.datetime.now()
         set=DeviceManager(self.mem)
-        if platform_system()=="Windows":
-            set.setMethod(ArpScanMethod.PingArp)
-        else:
-            set.setMethod(ArpScanMethod.ScapyArping)
+        set.setMethod(ArpScanMethod.PingArp)
         
         self.tab = myTab(set, self.tabWidget)
         self.tab.setLabelText(self.tr("It took {} to detect {} devices".format(datetime.datetime.now()-inicio, set.length())))
