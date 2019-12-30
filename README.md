@@ -20,6 +20,7 @@ Dependencies
 * https://pypi.org/project/colorama/, to give console colors.
 * https://pypi.org/project/PyQt5/, as the main library.
 * https://pypi.org/project/pywin32/, to create shortcuts.
+* https://github.com/secdev/scapy, for Scapy scan methods.
 
 Install in Linux
 ================
@@ -53,7 +54,8 @@ Just execute it. It's an standalone application, it took some time to launch due
 
 Authors
 =======
-Turulomio <turulomio@yahoo.es>. Idea and spanish translation
+
+* Turulomio (<turulomio@yahoo.es>). Idea and spanish translation
 
 Changelog
 =========
