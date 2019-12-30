@@ -1,7 +1,6 @@
 import argparse
 import codecs
 from colorama import init as colorama_init,  Style, Fore
-import datetime
 import logging
 import os
 import re
@@ -10,7 +9,9 @@ import sys
 from PyQt5.QtCore import QCoreApplication, QSettings, QTranslator, QObject
 from PyQt5.QtNetwork import QNetworkInterface, QAbstractSocket,  QTcpSocket
 from concurrent.futures import ThreadPoolExecutor,  as_completed
+from datetime import datetime               
 from devicesinlan.casts import string2xml, b2s, xml2string
+from devicesinlan.decorators import need_administrator
 from devicesinlan.libmanagers import ObjectManager_With_IdName, ObjectManager_Selectable
 from devicesinlan.version import __version__, __versiondate__
 from devicesinlan.package_resources import package_filename
@@ -280,11 +281,11 @@ class MemConsole(MemSetup):
             self.settings.setValue("frmSettings/concurrence", input_int(self.tr( "Input an integer with the request concurrence"), self.settings.value("frmSettings/concurrence", 200)))
             self.settings.sync()
 
-        inicio=datetime.datetime.now()
+        inicio=datetime.now()
         set=DeviceManager(self)
         set.setMethod(self.method)
         set.print()
-        print (Style.BRIGHT+self.tr("DevicesInLan took {} with method {}.").format (Fore.GREEN+str(datetime.datetime.now()-inicio)+ " "+ self.tr( "seconds")+Fore.WHITE, self.args.method))
+        print (Style.BRIGHT+self.tr("DevicesInLan took {} with method {}.").format (Fore.GREEN+str(datetime.now()-inicio)+ " "+ self.tr( "seconds")+Fore.WHITE, self.args.method))
 
     def setInstallationUUID(self):
         if self.settings.value("frmMain/uuid", "None")=="None":
@@ -555,6 +556,7 @@ class DeviceManager(QObject, ObjectManager_Selectable):
 
                     self.arr.append(h)#Solo si se da alias
 
+    @need_administrator
     def method_scapy(self):
         ## Returns a list  [ip,mac,pinged]
         def get_ip_mac_pinged(ip):
@@ -595,6 +597,7 @@ class DeviceManager(QObject, ObjectManager_Selectable):
                     self.arr.append(h)#Solo si se da alias
                     
     ## NEED ROOT PRIVILEGES AND PYTHON COMPILED WITH IPV6
+    @need_administrator
     def method_scapy_arping(self):
         from scapy.layers.l2 import arping
         for o in arping(self.mem.interfaces.selected.network(), verbose=False)[0]:
@@ -682,7 +685,7 @@ class DeviceManager(QObject, ObjectManager_Selectable):
         maxlength=16+2+maxtype+2+17+2+maxalias+2+maxoui
         self.order_by_ip()
         print (Style.BRIGHT+ "="*(maxlength) + Style.RESET_ALL)
-        print (Style.BRIGHT+ self.tr("{} DEVICES IN LAN FROM {} INTERFACE AT {}").format(self.length(), self.mem.interfaces.selected.id().upper(), str(datetime.datetime.now())[:-7]).center(maxlength) + Style.RESET_ALL)
+        print (Style.BRIGHT+ self.tr("{} DEVICES IN LAN FROM {} INTERFACE AT {}").format(self.length(), self.mem.interfaces.selected.id().upper(), str(datetime.now())[:-7]).center(maxlength) + Style.RESET_ALL)
         print (Style.BRIGHT+ "{}  {}  {}  {}  {}".format(" IP ".center(16,'='),"TYPE".center(maxtype,"=")," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'=')) + Style.RESET_ALL)
         for h in self.arr:
             if h.ip==self.mem.interfaces.selected.ip():
@@ -707,7 +710,7 @@ class DeviceManager(QObject, ObjectManager_Selectable):
         maxlength=maxtype+2+17+2+maxalias+2+maxoui
         self.order_by_alias()
         print (Style.BRIGHT+"="*(maxlength) + Style.RESET_ALL)
-        print (Style.BRIGHT+self.tr("{} DEVICES IN DATABASE AT {}").format(self.length(), str(datetime.datetime.now())[:-7]).center (maxlength) + Style.RESET_ALL)
+        print (Style.BRIGHT+self.tr("{} DEVICES IN DATABASE AT {}").format(self.length(), str(datetime.now())[:-7]).center (maxlength) + Style.RESET_ALL)
         print (Style.BRIGHT+ "{}  {}  {}  {}".format(" TYPE ".center(maxtype,'=')," MAC ".center(17,'='), " ALIAS ".center(maxalias,'='), " HARDWARE ".center(maxoui,'=')) + Style.RESET_ALL)
         for h in self.arr:
             mac=Style.BRIGHT+ Fore.GREEN +h.mac
