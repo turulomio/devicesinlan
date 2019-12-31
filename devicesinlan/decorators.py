@@ -4,7 +4,6 @@
 from time import time
 from socket import create_connection
 from logging import error, debug, warning
-from os import geteuid
 from platform import system as platform_system
 from sys import exit
 
@@ -55,6 +54,7 @@ def need_administrator(method):
             if IsUserAnAdmin()!=True:
                 warning("You need to be an Administrator to execute this code.")
         else:
+            from os import geteuid
             if geteuid() !=0:
                 warning("You need to be root to execute this code.")
                 exit(-1)
