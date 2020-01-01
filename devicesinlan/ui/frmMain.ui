@@ -21,7 +21,7 @@
    <string/>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../images/devicesinlan.qrc">
+   <iconset resource="../images/devicesinlan.qrc">
     <normaloff>:/devicesinlan.png</normaloff>:/devicesinlan.png</iconset>
   </property>
   <property name="toolButtonStyle">
@@ -44,8 +44,10 @@
      <string>&amp;Help</string>
     </property>
     <addaction name="actionHelp"/>
+    <addaction name="actionReportIssue"/>
     <addaction name="separator"/>
     <addaction name="actionUpdates"/>
+    <addaction name="separator"/>
     <addaction name="actionAbout"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
@@ -104,7 +106,7 @@
   <widget class="QStatusBar" name="status"/>
   <action name="actionExit">
    <property name="icon">
-    <iconset resource="../../images/devicesinlan.qrc">
+    <iconset resource="../images/devicesinlan.qrc">
      <normaloff>:/exit.png</normaloff>:/exit.png</iconset>
    </property>
    <property name="text">
@@ -119,7 +121,7 @@
   </action>
   <action name="actionAbout">
    <property name="icon">
-    <iconset resource="../../images/devicesinlan.qrc">
+    <iconset resource="../images/devicesinlan.qrc">
      <normaloff>:/devicesinlan.png</normaloff>:/devicesinlan.png</iconset>
    </property>
    <property name="text">
@@ -128,7 +130,7 @@
   </action>
   <action name="actionSettings">
    <property name="icon">
-    <iconset resource="../../images/devicesinlan.qrc">
+    <iconset resource="../images/devicesinlan.qrc">
      <normaloff>:/configure.png</normaloff>:/configure.png</iconset>
    </property>
    <property name="text">
@@ -137,7 +139,7 @@
   </action>
   <action name="actionHelp">
    <property name="icon">
-    <iconset resource="../../images/devicesinlan.qrc">
+    <iconset resource="../images/devicesinlan.qrc">
      <normaloff>:/help.png</normaloff>:/help.png</iconset>
    </property>
    <property name="text">
@@ -152,7 +154,7 @@
   </action>
   <action name="actionScan">
    <property name="icon">
-    <iconset resource="../../images/devicesinlan.qrc">
+    <iconset resource="../images/devicesinlan.qrc">
      <normaloff>:/update.png</normaloff>:/update.png</iconset>
    </property>
    <property name="text">
@@ -164,7 +166,7 @@
   </action>
   <action name="actionShowDatabase">
    <property name="icon">
-    <iconset resource="../../images/devicesinlan.qrc">
+    <iconset resource="../images/devicesinlan.qrc">
      <normaloff>:/database.png</normaloff>:/database.png</iconset>
    </property>
    <property name="text">
@@ -176,7 +178,7 @@
   </action>
   <action name="actionResetDatabase">
    <property name="icon">
-    <iconset resource="../../images/devicesinlan.qrc">
+    <iconset resource="../images/devicesinlan.qrc">
      <normaloff>:/cancel.png</normaloff>:/cancel.png</iconset>
    </property>
    <property name="text">
@@ -188,7 +190,7 @@
   </action>
   <action name="actionUpdates">
    <property name="icon">
-    <iconset resource="../../images/devicesinlan.qrc">
+    <iconset resource="../images/devicesinlan.qrc">
      <normaloff>:/update.png</normaloff>:/update.png</iconset>
    </property>
    <property name="text">
@@ -200,7 +202,7 @@
   </action>
   <action name="actionListLoad">
    <property name="icon">
-    <iconset resource="../../images/devicesinlan.qrc">
+    <iconset resource="../images/devicesinlan.qrc">
      <normaloff>:/open.png</normaloff>:/open.png</iconset>
    </property>
    <property name="text">
@@ -212,7 +214,7 @@
   </action>
   <action name="actionListSave">
    <property name="icon">
-    <iconset resource="../../images/devicesinlan.qrc">
+    <iconset resource="../images/devicesinlan.qrc">
      <normaloff>:/save.png</normaloff>:/save.png</iconset>
    </property>
    <property name="text">
@@ -222,9 +224,21 @@
     <string>Save devices list</string>
    </property>
   </action>
+  <action name="actionReportIssue">
+   <property name="icon">
+    <iconset resource="../images/devicesinlan.qrc">
+     <normaloff>:/alarm_clock.png</normaloff>:/alarm_clock.png</iconset>
+   </property>
+   <property name="text">
+    <string>Report an issue</string>
+   </property>
+   <property name="toolTip">
+    <string>Report an issue</string>
+   </property>
+  </action>
  </widget>
  <resources>
-  <include location="../../images/devicesinlan.qrc"/>
+  <include location="../images/devicesinlan.qrc"/>
  </resources>
  <connections>
   <connection>

@@ -1,10 +1,7 @@
-import datetime
-import sys
-import logging
-from PyQt5.QtCore import pyqtSlot, Qt, QPoint, QEvent
-from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5.QtCore import pyqtSlot, Qt, QPoint, QEvent, QUrl
+from PyQt5.QtGui import QIcon, QPixmap, QDesktopServices
 from PyQt5.QtWidgets import QMainWindow, QMenu, QTabWidget, QTableWidget,  QDialog, QWidget, QVBoxLayout, QLabel,  QAbstractItemView, qApp, QMessageBox, QAction, QFileDialog
-
+from datetime import datetime, date, timedelta
 from devicesinlan.ui.Ui_frmMain import Ui_frmMain
 from devicesinlan.libdevicesinlan import ArpScanMethod, DeviceManager
 from devicesinlan.version import __version__, __versiondate__,  get_remote
@@ -14,6 +11,8 @@ from devicesinlan.ui.frmHelp import frmHelp
 from devicesinlan.ui.frmAbout import frmAbout
 from devicesinlan.ui.frmInterfaceSelector import frmInterfaceSelector
 from devicesinlan.ui.frmDeviceCRUD import frmDeviceCRUD
+from logging import warning
+from sys import exit
 
 class myTab(QWidget):
     """Widget to add tabs and vinculate set and,table"""
@@ -30,9 +29,9 @@ class myTab(QWidget):
         self.verticalLayout.addWidget(self.table)        
         self.table.setAlternatingRowColors(True)
         if self.set.isDatabase==True:
-            self.tabWidget.addTab(self, QIcon(":/database.png"),self.tr("Database devices at {}").format(str(datetime.datetime.now()).split(".")[0]))
+            self.tabWidget.addTab(self, QIcon(":/database.png"),self.tr("Database devices at {}").format(str(datetime.now()).split(".")[0]))
         else:
-            self.tabWidget.addTab(self, QIcon(":/open.png"),self.tr("Scanned at {}").format(str(datetime.datetime.now()).split(".")[0]))
+            self.tabWidget.addTab(self, QIcon(":/open.png"),self.tr("Scanned at {}").format(str(datetime.now()).split(".")[0]))
         self.tabWidget.setCurrentWidget(self)
         self.table_update()
         self.label=QLabel(self)
@@ -112,7 +111,7 @@ class frmMain(QMainWindow, Ui_frmMain):#
         self.horizontalLayout.addWidget(self.tabWidget)
         self.showMaximized()
         self.tabWidget.tabCloseRequested.connect(self.on_tabWidget_tabCloseRequested)
-        if datetime.date.today()-datetime.date.fromordinal(int(self.mem.settings.value("frmMain/lastupdate", 1)))>=datetime.timedelta(days=7):
+        if date.today()-date.fromordinal(int(self.mem.settings.value("frmMain/lastupdate", 1)))>=timedelta(days=7):
             self.checkUpdates(False)
                 
     @pyqtSlot()      
@@ -138,7 +137,7 @@ class frmMain(QMainWindow, Ui_frmMain):#
     @pyqtSlot()      
     def on_actionListSave_triggered(self):
         devices=DeviceManager(self.mem).init__from_settings()
-        c=str(datetime.datetime.now()).replace("-","").replace(":","").replace(" ","_")[:-7]
+        c=str(datetime.now()).replace("-","").replace(":","").replace(" ","_")[:-7]
         filename= QFileDialog.getSaveFileName(self, self.tr("Save File"), "devicesinlan_{}.xml".format(c), self.tr("eXtensible Markup Language (*.xml)"))[0]
         if filename!="":
             devices.saveXml(filename)
@@ -159,19 +158,23 @@ class frmMain(QMainWindow, Ui_frmMain):#
             m.setTextFormat(Qt.RichText)#this is what makes the links clickable
             m.setText(self.tr("There is a new DevicesInLAN version. You can download it from <a href='https://github.com/Turulomio/devicesinlan/releases'>GitHub</a>."))
             m.exec_() 
-        self.mem.settings.setValue("frmMain/lastupdate", datetime.date.today().toordinal())
+        self.mem.settings.setValue("frmMain/lastupdate", date.today().toordinal())
 
     @pyqtSlot(QEvent)   
     def closeEvent(self,event):   
-        logging.warning ("Exiting")
+        warning ("Exiting")
         qApp.closeAllWindows()
         qApp.exit()
-        sys.exit(0)
+        exit(0)
 
     @pyqtSlot()      
     def on_actionAbout_triggered(self):
         fr=frmAbout(self,"frmAbout")
         fr.open()
+
+    @pyqtSlot()  
+    def on_actionReportIssue_triggered(self):        
+            QDesktopServices.openUrl(QUrl("https://github.com/turulomio/devicesinlan/issues/new"))
 
     @pyqtSlot()      
     def on_actionResetDatabase_triggered(self):
@@ -204,22 +207,22 @@ class frmMain(QMainWindow, Ui_frmMain):#
         if f.result()!=QDialog.Accepted:
             return
         
-        inicio=datetime.datetime.now()
+        inicio=datetime.now()
         set=DeviceManager(self.mem)
         set.setMethod(ArpScanMethod.PingArp)
         
         self.tab = myTab(set, self.tabWidget)
-        self.tab.setLabelText(self.tr("It took {} to detect {} devices".format(datetime.datetime.now()-inicio, set.length())))
+        self.tab.setLabelText(self.tr("It took {} to detect {} devices".format(datetime.now()-inicio, set.length())))
         set.print()
 
     @pyqtSlot()
     def on_actionShowDatabase_triggered(self):
-        inicio=datetime.datetime.now()
+        inicio=datetime.now()
         set=DeviceManager(self.mem)
         set.init__from_settings()
         
         self.tab = myTab(set, self.tabWidget)
-        self.tab.setLabelText(self.tr("It took {} to show {} devices".format(datetime.datetime.now()-inicio, set.length())))
+        self.tab.setLabelText(self.tr("It took {} to show {} devices".format(datetime.now()-inicio, set.length())))
         set.print_devices_from_settings()
 
     def on_tabWidget_tabCloseRequested(self, index):
