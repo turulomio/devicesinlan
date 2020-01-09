@@ -4,8 +4,8 @@ from PyQt5.QtWidgets import QDialog
 from colorama import __version__ as colorama__version__
 from devicesinlan.ui.Ui_frmAbout import Ui_frmAbout
 from devicesinlan.version import __version__, __versiondate__
-from platform import python_version
-from scapy import __version__ as scapy__version__
+from platform import python_version, system as  platform_system
+from scapy import __version__ as scapy__version__,  VERSION
 from xulpymoney.ui.qtablewidgetitems import qright, qleft
 
 class frmAbout(QDialog, Ui_frmAbout):
@@ -41,8 +41,11 @@ class frmAbout(QDialog, Ui_frmAbout):
                 
         self.tblSoftware.setItem(2, 0, qright(python_version()))
         self.tblSoftware.setItem(2, 1, qleft("https://www.python.org"))
-                
-        self.tblSoftware.setItem(3, 0, qright(scapy__version__[:-1]))
+        
+        if platform_system()=="Windows":
+            self.tblSoftware.setItem(3, 0, qright(VERSION))
+        else:
+            self.tblSoftware.setItem(3, 0, qright(scapy__version__[:-1]))
         self.tblSoftware.setItem(3, 1, qleft("https://github.com/secdev/scapy"))
         
         self.tblSoftware.applySettings()
