@@ -169,7 +169,7 @@ class frmMain(QMainWindow, Ui_frmMain):#
 
     @pyqtSlot()      
     def on_actionAbout_triggered(self):
-        fr=frmAbout(self,"frmAbout")
+        fr=frmAbout(self.mem, self, "frmAbout")
         fr.open()
 
     @pyqtSlot()  

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'devicesinlan/ui/frmAbout.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.2
+# Created by: PyQt5 UI code generator 5.14.0
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -61,6 +61,34 @@ class Ui_frmAbout(object):
         self.textBrowser.setObjectName("textBrowser")
         self.hboxlayout.addWidget(self.textBrowser)
         self.tab.addTab(self.tabGLParchis, "")
+        self.tab_2 = QtWidgets.QWidget()
+        self.tab_2.setObjectName("tab_2")
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.tab_2)
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.label = QtWidgets.QLabel(self.tab_2)
+        self.label.setObjectName("label")
+        self.verticalLayout_2.addWidget(self.label)
+        self.tblSoftware = myQTableWidget(self.tab_2)
+        self.tblSoftware.setObjectName("tblSoftware")
+        self.tblSoftware.setColumnCount(2)
+        self.tblSoftware.setRowCount(4)
+        item = QtWidgets.QTableWidgetItem()
+        self.tblSoftware.setVerticalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tblSoftware.setVerticalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tblSoftware.setVerticalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tblSoftware.setVerticalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tblSoftware.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tblSoftware.setHorizontalHeaderItem(1, item)
+        self.verticalLayout_2.addWidget(self.tblSoftware)
+        self.horizontalLayout_3.addLayout(self.verticalLayout_2)
+        self.tab.addTab(self.tab_2, "")
         self.tabLicense = QtWidgets.QWidget()
         self.tabLicense.setObjectName("tabLicense")
         self.vboxlayout = QtWidgets.QVBoxLayout(self.tabLicense)
@@ -231,5 +259,21 @@ class Ui_frmAbout(object):
         frmAbout.setWindowTitle(_translate("frmAbout", "About DevicesInLan"))
         self.lblApp.setText(_translate("frmAbout", "DevicesInLan"))
         self.tab.setTabText(self.tab.indexOf(self.tabGLParchis), _translate("frmAbout", "Credits"))
+        self.label.setText(_translate("frmAbout", "DevicesInLan is an Open Source application. It uses the following software:"))
+        self.tblSoftware.setToolTip(_translate("frmAbout", "<html><head/><body><p>Make click in the url to open link to the project main page</p></body></html>"))
+        item = self.tblSoftware.verticalHeaderItem(0)
+        item.setText(_translate("frmAbout", "Colorama"))
+        item = self.tblSoftware.verticalHeaderItem(1)
+        item.setText(_translate("frmAbout", "PyQt"))
+        item = self.tblSoftware.verticalHeaderItem(2)
+        item.setText(_translate("frmAbout", "Python"))
+        item = self.tblSoftware.verticalHeaderItem(3)
+        item.setText(_translate("frmAbout", "Scapy"))
+        item = self.tblSoftware.horizontalHeaderItem(0)
+        item.setText(_translate("frmAbout", "Version"))
+        item = self.tblSoftware.horizontalHeaderItem(1)
+        item.setText(_translate("frmAbout", "Url"))
+        self.tab.setTabText(self.tab.indexOf(self.tab_2), _translate("frmAbout", "Software used"))
         self.tab.setTabText(self.tab.indexOf(self.tabLicense), _translate("frmAbout", "License"))
+from devicesinlan.ui.myqtablewidget import myQTableWidget
 import devicesinlan.images.devicesinlan_rc

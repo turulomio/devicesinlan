@@ -17,7 +17,7 @@
    <string>About DevicesInLan</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../images/devicesinlan.qrc">
+   <iconset resource="../images/devicesinlan.qrc">
     <normaloff>:/devicesinlan.png</normaloff>:/devicesinlan.png</iconset>
   </property>
   <property name="modal">
@@ -67,7 +67,7 @@
           </size>
          </property>
          <property name="pixmap">
-          <pixmap resource="../../images/devicesinlan.qrc">:/devicesinlan.png</pixmap>
+          <pixmap resource="../images/devicesinlan.qrc">:/devicesinlan.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -115,6 +115,61 @@
             <bool>true</bool>
            </property>
           </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="tab_2">
+        <attribute name="title">
+         <string>Software used</string>
+        </attribute>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>DevicesInLan is an Open Source application. It uses the following software:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="myQTableWidget" name="tblSoftware">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Make click in the url to open link to the project main page&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <row>
+              <property name="text">
+               <string>Colorama</string>
+              </property>
+             </row>
+             <row>
+              <property name="text">
+               <string>PyQt</string>
+              </property>
+             </row>
+             <row>
+              <property name="text">
+               <string>Python</string>
+              </property>
+             </row>
+             <row>
+              <property name="text">
+               <string>Scapy</string>
+              </property>
+             </row>
+             <column>
+              <property name="text">
+               <string>Version</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Url</string>
+              </property>
+             </column>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </widget>
@@ -298,10 +353,18 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>myQTableWidget</class>
+   <extends>QTableWidget</extends>
+   <header location="global">myqtablewidget</header>
+  </customwidget>
+ </customwidgets>
  <resources>
-  <include location="../../images/devicesinlan.qrc"/>
-  <include location="../../images/devicesinlan.qrc"/>
   <include location="../images/devicesinlan.qrc"/>
+  <include location="../images/devicesinlan.qrc"/>
+  <include location="../images/devicesinlan.qrc"/>
+  <include location="../../images/devicesinlan.qrc"/>
  </resources>
  <connections/>
 </ui>

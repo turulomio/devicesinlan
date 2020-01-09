@@ -70,6 +70,8 @@ class Reusing(Command):
         from sys import path
         path.append("devicesinlan")
         from github import download_from_github
+        download_from_github('turulomio','reusingcode','python/myqtablewidget.py', 'devicesinlan/ui')
+        download_from_github('turulomio','reusingcode','python/qtablewidgetitems.py', 'devicesinlan/ui')
         download_from_github('turulomio','reusingcode','python/decorators.py', 'devicesinlan')
         download_from_github('turulomio','reusingcode','python/libmanagers.py', 'devicesinlan')
         download_from_github('turulomio','reusingcode','python/github.py', 'devicesinlan')
@@ -102,6 +104,8 @@ class Compile(Command):
         for filename in os.listdir("devicesinlan/ui/"):
              if filename.startswith("Ui_"):
                  os.system("sed -i -e 's/devicesinlan_rc/devicesinlan.images.devicesinlan_rc/' devicesinlan/ui/{}".format(filename))
+                 os.system("sed -i -e 's/from myqtablewidget/from devicesinlan.ui.myqtablewidget/' devicesinlan/ui/{}".format(filename))
+
 
 class Procedure(Command):
     description = "Uninstall installed files with install"
