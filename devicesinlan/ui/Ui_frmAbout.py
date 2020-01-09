@@ -14,7 +14,7 @@ class Ui_frmAbout(object):
     def setupUi(self, frmAbout):
         frmAbout.setObjectName("frmAbout")
         frmAbout.setWindowModality(QtCore.Qt.WindowModal)
-        frmAbout.resize(628, 472)
+        frmAbout.resize(683, 583)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/devicesinlan.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         frmAbout.setWindowIcon(icon)

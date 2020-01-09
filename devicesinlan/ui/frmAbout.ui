@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>628</width>
-    <height>472</height>
+    <width>683</width>
+    <height>583</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -364,7 +364,7 @@ p, li { white-space: pre-wrap; }
   <include location="../images/devicesinlan.qrc"/>
   <include location="../images/devicesinlan.qrc"/>
   <include location="../images/devicesinlan.qrc"/>
-  <include location="../../images/devicesinlan.qrc"/>
+  <include location="../images/devicesinlan.qrc"/>
  </resources>
  <connections/>
 </ui>
