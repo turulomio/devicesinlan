@@ -27,31 +27,22 @@ class frmAbout(QDialog, Ui_frmAbout):
         self.load_tblSoftware()
         self.tblSoftware.itemClicked.connect(self.OpenLink)
 
-
-
-    def OpenLink(self,item):
-        print(item.text())
+    def OpenLink(self, item):
         if item.column() == 1:
             QDesktopServices.openUrl(QUrl(item.text()));
 
     ##Function that fills tblSoftware with data 
     def load_tblSoftware(self):
-
-        # Ui
         self.tblSoftware.setItem(0, 0, qright(colorama__version__))
         self.tblSoftware.setItem(0, 1, qleft("https://github.com/tartley/colorama"))
-                
-        
+                        
         self.tblSoftware.setItem(1, 0, qright(PYQT_VERSION_STR))
         self.tblSoftware.setItem(1, 1, qleft("https://riverbankcomputing.com/software/pyqt/intro"))
-        
-        
+                
         self.tblSoftware.setItem(2, 0, qright(python_version()))
         self.tblSoftware.setItem(2, 1, qleft("https://www.python.org"))
-        
-
-        
-        self.tblSoftware.setItem(3, 0, qright(scapy__version__))
+                
+        self.tblSoftware.setItem(3, 0, qright(scapy__version__[:-1]))
         self.tblSoftware.setItem(3, 1, qleft("https://github.com/secdev/scapy"))
         
         self.tblSoftware.applySettings()
