@@ -428,7 +428,7 @@
     <message>
         <location filename="../libdevicesinlan.py" line="89"/>
         <source>If you launch DevicesInLan without parameters a console wizard is launched.</source>
-        <translation type="unfinished"></translation>
+        <translation>Si lanzas DevicesInLan sin parámetros se ejecuta un asistente.</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="31"/>
@@ -458,7 +458,7 @@
     <message>
         <location filename="../libdevicesinlan.py" line="117"/>
         <source>Uses Scapy to create an ARP request and capture its answer for each ip in the subnet to get macs information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Usa Scapy para crear una peticion ARP y capturar su respuesta por cada ip en la subred, para conseguir la información de las MAC.</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="123"/>
@@ -547,49 +547,94 @@
 <context>
     <name>frmAbout</name>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="231"/>
+        <location filename="../ui/Ui_frmAbout.py" line="259"/>
         <source>About DevicesInLan</source>
         <translation>Acerca de DevicesInLan</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="232"/>
+        <location filename="../ui/Ui_frmAbout.py" line="260"/>
         <source>DevicesInLan</source>
         <translation>DevicesInLan</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="233"/>
+        <location filename="../ui/Ui_frmAbout.py" line="261"/>
         <source>Credits</source>
         <translation>Créditos</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="234"/>
+        <location filename="../ui/Ui_frmAbout.py" line="277"/>
         <source>License</source>
         <translation>Licencia</translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.py" line="11"/>
+        <location filename="../ui/frmAbout.py" line="18"/>
         <source>Version {} ({})</source>
         <translation>Versión {} ({})</translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.py" line="12"/>
+        <location filename="../ui/frmAbout.py" line="19"/>
         <source>This program has been developed by Mariano Mu&#xf1;oz.&lt;p&gt;</source>
         <translation>El programa ha sido desarrollado por Mariano Muñoz.&lt;p&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.py" line="12"/>
+        <location filename="../ui/frmAbout.py" line="19"/>
         <source>It has been translated by:</source>
         <translation>Ha sido traducido por:</translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.py" line="12"/>
+        <location filename="../ui/frmAbout.py" line="19"/>
         <source>to the following languages&lt;p&gt;</source>
         <translation>a los siguientes idiomas:&lt;p&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.py" line="12"/>
+        <location filename="../ui/frmAbout.py" line="19"/>
         <source>Project web page is in &lt;a href=&quot;http://github.com/turulomio/devicesinlan/&quot;&gt;http://github.com/turulomio/devicesinlan/&lt;/a&gt;&lt;p&gt; &lt;p&gt;</source>
         <translation>La página web del proyecto está en &lt;a href=&quot;http://github.com/turulomio/devicesinlan/&quot;&gt;http://github.com/turulomio/devicesinlan/&lt;/a&gt;&lt;p&gt; &lt;p&gt;</translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmAbout.py" line="276"/>
+        <source>Software used</source>
+        <translation>Software usado</translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmAbout.py" line="262"/>
+        <source>DevicesInLan is an Open Source application. It uses the following software:</source>
+        <translation>DevicesInLan es un aplicación Open Source. Usa el siguiente software:</translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmAbout.py" line="263"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Make click in the url to open link to the project main page&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Haz click en el enlace para abrir la página principal del proyecto&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmAbout.py" line="265"/>
+        <source>Colorama</source>
+        <translation>Colorama</translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmAbout.py" line="267"/>
+        <source>PyQt</source>
+        <translation>PyQt</translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmAbout.py" line="269"/>
+        <source>Python</source>
+        <translation>Python</translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmAbout.py" line="271"/>
+        <source>Scapy</source>
+        <translation>Scapy</translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmAbout.py" line="273"/>
+        <source>Version</source>
+        <translation>Versión</translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmAbout.py" line="275"/>
+        <source>Url</source>
+        <translation>Dirección</translation>
     </message>
 </context>
 <context>
@@ -679,174 +724,179 @@
 <context>
     <name>frmMain</name>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="129"/>
+        <location filename="../ui/Ui_frmMain.py" line="136"/>
         <source>toolBar</source>
         <translation>toolBar</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="132"/>
+        <location filename="../ui/Ui_frmMain.py" line="139"/>
         <source>Esc</source>
         <translation>Esc</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="136"/>
+        <location filename="../ui/Ui_frmMain.py" line="143"/>
         <source>Muestra la ayuda del juego</source>
         <translation>Muestra la ayuda del juego</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="137"/>
+        <location filename="../ui/Ui_frmMain.py" line="144"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="135"/>
+        <location filename="../ui/Ui_frmMain.py" line="142"/>
         <source>&amp;Help</source>
         <translation>&amp;Ayuda</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="130"/>
+        <location filename="../ui/Ui_frmMain.py" line="137"/>
         <source>&amp;Exit</source>
         <translation>&amp;Salir</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="131"/>
+        <location filename="../ui/Ui_frmMain.py" line="138"/>
         <source>Exit</source>
         <translation>Salir</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="139"/>
+        <location filename="../ui/Ui_frmMain.py" line="146"/>
         <source>New scan</source>
         <translation>Nuevo escaneo</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="212"/>
+        <location filename="../ui/frmMain.py" line="215"/>
         <source>It took {} to detect {} devices</source>
         <translation>Duró {} detectar {} dispositivos</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="127"/>
+        <location filename="../ui/Ui_frmMain.py" line="134"/>
         <source>&amp;Configuration</source>
         <translation>&amp;Configuración</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="133"/>
+        <location filename="../ui/Ui_frmMain.py" line="140"/>
         <source>&amp;About</source>
         <translation>&amp;Acerca de</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="134"/>
+        <location filename="../ui/Ui_frmMain.py" line="141"/>
         <source>&amp;Settings</source>
         <translation>&amp;Preferencias</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="141"/>
+        <location filename="../ui/Ui_frmMain.py" line="148"/>
         <source>Show devices database</source>
         <translation>Mostrar la base de datos de dispositivos</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="222"/>
+        <location filename="../ui/frmMain.py" line="225"/>
         <source>It took {} to show {} devices</source>
         <translation>Duró {} mostrar {} dispositivos</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="140"/>
+        <location filename="../ui/Ui_frmMain.py" line="147"/>
         <source>Show &amp;devices database</source>
         <translation>Mostrar la base de datos de &amp;dispositivos</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="143"/>
+        <location filename="../ui/Ui_frmMain.py" line="150"/>
         <source>Reset database</source>
         <translation>Reiniciar la base de datos</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="182"/>
+        <location filename="../ui/frmMain.py" line="185"/>
         <source>Erase database confirmation</source>
         <translation>Confirmación de borrado de la base de datos</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="182"/>
+        <location filename="../ui/frmMain.py" line="185"/>
         <source>This action will erase known devices database. Do you want to continue?.</source>
         <translation>Esta acción borrará la base de datos de dispositivos conocidos. ¿Quiere continuar?.</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="128"/>
+        <location filename="../ui/Ui_frmMain.py" line="135"/>
         <source>&amp;Devices</source>
         <translation>&amp;Dispositivos</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="138"/>
+        <location filename="../ui/Ui_frmMain.py" line="145"/>
         <source>&amp;New scan</source>
         <translation>&amp;Nuevo escaneado</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="142"/>
+        <location filename="../ui/Ui_frmMain.py" line="149"/>
         <source>&amp;Reset database</source>
         <translation>&amp;Borrar la base de datos</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="145"/>
+        <location filename="../ui/Ui_frmMain.py" line="152"/>
         <source>Check for updates</source>
         <translation>Busca actualizaciones</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="147"/>
+        <location filename="../ui/Ui_frmMain.py" line="154"/>
         <source>Load devices list</source>
         <translation>Carga una lista de dispositivos</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="149"/>
+        <location filename="../ui/Ui_frmMain.py" line="156"/>
         <source>Save devices list</source>
         <translation>Guarda la lista de dispositivos</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="131"/>
+        <location filename="../ui/frmMain.py" line="130"/>
         <source>Do you want to add this {} with MAC {} and set its name to {}?</source>
         <translation>¿Quieres añadir este {} con MAC {} y nombrarlo como {}?</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="135"/>
+        <location filename="../ui/frmMain.py" line="134"/>
         <source>We already have a device with this MAC: {}. Do you want to change its alias ({}) and type ({}) to a {} named {}?</source>
         <translation>Ya existe un dispositivo con esta MAC: {}. ¿Quieres cambiar su alias ({}) y su tipo ({}) a un {} de nombre {}?</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="142"/>
+        <location filename="../ui/frmMain.py" line="141"/>
         <source>Save File</source>
         <translation>Guardar fichero</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="142"/>
+        <location filename="../ui/frmMain.py" line="141"/>
         <source>eXtensible Markup Language (*.xml)</source>
         <translation>eXtensible Markup Language (*.xml)</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="154"/>
+        <location filename="../ui/frmMain.py" line="153"/>
         <source>You have the last version</source>
         <translation>Tienes la última versión</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="144"/>
+        <location filename="../ui/Ui_frmMain.py" line="151"/>
         <source>&amp;Check for updates</source>
         <translation>Bus&amp;ca actualizaciones</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="146"/>
+        <location filename="../ui/Ui_frmMain.py" line="153"/>
         <source>&amp;Load devices list</source>
         <translation>&amp;Carga una lista de dispositivos</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="148"/>
+        <location filename="../ui/Ui_frmMain.py" line="155"/>
         <source>&amp;Save devices list</source>
         <translation>&amp;Guarda la lista de dispositivos</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="149"/>
+        <location filename="../ui/frmMain.py" line="148"/>
         <source>I couldn&apos;t look for updates. Try it later..</source>
         <translation>No he podido encontrar actualizaciones. Inténtelo más tarde..</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="160"/>
+        <location filename="../ui/frmMain.py" line="159"/>
         <source>There is a new DevicesInLAN version. You can download it from &lt;a href=&apos;https://github.com/Turulomio/devicesinlan/releases&apos;&gt;GitHub&lt;/a&gt;.</source>
         <translation>Hay una nueva versión de DevicesInLan. Puedes descargarla desde &lt;a href=&apos;https://github.com/turulomio/devicesinlan/releases&apos;&gt;GitHub&lt;/a&gt;.</translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmMain.py" line="158"/>
+        <source>Report an issue</source>
+        <translation>Informar de un problema</translation>
     </message>
 </context>
 <context>
@@ -870,27 +920,27 @@
 <context>
     <name>myTab</name>
     <message>
-        <location filename="../ui/frmMain.py" line="33"/>
+        <location filename="../ui/frmMain.py" line="32"/>
         <source>Database devices at {}</source>
         <translation>Base de datos de dispositivos a las {}</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="35"/>
+        <location filename="../ui/frmMain.py" line="34"/>
         <source>Scanned at {}</source>
         <translation>Escaneado a las {}</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="50"/>
+        <location filename="../ui/frmMain.py" line="49"/>
         <source>Remove known device</source>
         <translation>Borrar dispositivo conocido</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="95"/>
+        <location filename="../ui/frmMain.py" line="94"/>
         <source>Edit known device</source>
         <translation>Modificar dispositivo conocido</translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="97"/>
+        <location filename="../ui/frmMain.py" line="96"/>
         <source>Set as a known device</source>
         <translation>Establecer como dispositivo conocido</translation>
     </message>

@@ -547,48 +547,93 @@
 <context>
     <name>frmAbout</name>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="231"/>
+        <location filename="../ui/Ui_frmAbout.py" line="259"/>
         <source>About DevicesInLan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="232"/>
+        <location filename="../ui/Ui_frmAbout.py" line="260"/>
         <source>DevicesInLan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="233"/>
+        <location filename="../ui/Ui_frmAbout.py" line="261"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmAbout.py" line="234"/>
+        <location filename="../ui/Ui_frmAbout.py" line="277"/>
         <source>License</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.py" line="11"/>
+        <location filename="../ui/frmAbout.py" line="18"/>
         <source>Version {} ({})</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.py" line="12"/>
+        <location filename="../ui/frmAbout.py" line="19"/>
         <source>This program has been developed by Mariano Mu&#xf1;oz.&lt;p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.py" line="12"/>
+        <location filename="../ui/frmAbout.py" line="19"/>
         <source>It has been translated by:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.py" line="12"/>
+        <location filename="../ui/frmAbout.py" line="19"/>
         <source>to the following languages&lt;p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmAbout.py" line="12"/>
+        <location filename="../ui/frmAbout.py" line="19"/>
         <source>Project web page is in &lt;a href=&quot;http://github.com/turulomio/devicesinlan/&quot;&gt;http://github.com/turulomio/devicesinlan/&lt;/a&gt;&lt;p&gt; &lt;p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmAbout.py" line="276"/>
+        <source>Software used</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmAbout.py" line="262"/>
+        <source>DevicesInLan is an Open Source application. It uses the following software:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmAbout.py" line="263"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Make click in the url to open link to the project main page&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmAbout.py" line="265"/>
+        <source>Colorama</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmAbout.py" line="267"/>
+        <source>PyQt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmAbout.py" line="269"/>
+        <source>Python</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmAbout.py" line="271"/>
+        <source>Scapy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmAbout.py" line="273"/>
+        <source>Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmAbout.py" line="275"/>
+        <source>Url</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -679,173 +724,178 @@
 <context>
     <name>frmMain</name>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="129"/>
+        <location filename="../ui/Ui_frmMain.py" line="136"/>
         <source>toolBar</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="132"/>
+        <location filename="../ui/Ui_frmMain.py" line="139"/>
         <source>Esc</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="136"/>
+        <location filename="../ui/Ui_frmMain.py" line="143"/>
         <source>Muestra la ayuda del juego</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="137"/>
+        <location filename="../ui/Ui_frmMain.py" line="144"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="135"/>
+        <location filename="../ui/Ui_frmMain.py" line="142"/>
         <source>&amp;Help</source>
         <translation>&amp;Помощь</translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="130"/>
+        <location filename="../ui/Ui_frmMain.py" line="137"/>
         <source>&amp;Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="131"/>
+        <location filename="../ui/Ui_frmMain.py" line="138"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="139"/>
+        <location filename="../ui/Ui_frmMain.py" line="146"/>
         <source>New scan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="212"/>
+        <location filename="../ui/frmMain.py" line="215"/>
         <source>It took {} to detect {} devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="127"/>
+        <location filename="../ui/Ui_frmMain.py" line="134"/>
         <source>&amp;Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="133"/>
+        <location filename="../ui/Ui_frmMain.py" line="140"/>
         <source>&amp;About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="134"/>
+        <location filename="../ui/Ui_frmMain.py" line="141"/>
         <source>&amp;Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="141"/>
+        <location filename="../ui/Ui_frmMain.py" line="148"/>
         <source>Show devices database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="222"/>
+        <location filename="../ui/frmMain.py" line="225"/>
         <source>It took {} to show {} devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="140"/>
+        <location filename="../ui/Ui_frmMain.py" line="147"/>
         <source>Show &amp;devices database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="143"/>
+        <location filename="../ui/Ui_frmMain.py" line="150"/>
         <source>Reset database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="182"/>
+        <location filename="../ui/frmMain.py" line="185"/>
         <source>Erase database confirmation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="182"/>
+        <location filename="../ui/frmMain.py" line="185"/>
         <source>This action will erase known devices database. Do you want to continue?.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="128"/>
+        <location filename="../ui/Ui_frmMain.py" line="135"/>
         <source>&amp;Devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="138"/>
+        <location filename="../ui/Ui_frmMain.py" line="145"/>
         <source>&amp;New scan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="142"/>
+        <location filename="../ui/Ui_frmMain.py" line="149"/>
         <source>&amp;Reset database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="145"/>
+        <location filename="../ui/Ui_frmMain.py" line="152"/>
         <source>Check for updates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="147"/>
+        <location filename="../ui/Ui_frmMain.py" line="154"/>
         <source>Load devices list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="149"/>
+        <location filename="../ui/Ui_frmMain.py" line="156"/>
         <source>Save devices list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="131"/>
+        <location filename="../ui/frmMain.py" line="130"/>
         <source>Do you want to add this {} with MAC {} and set its name to {}?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="135"/>
+        <location filename="../ui/frmMain.py" line="134"/>
         <source>We already have a device with this MAC: {}. Do you want to change its alias ({}) and type ({}) to a {} named {}?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="142"/>
+        <location filename="../ui/frmMain.py" line="141"/>
         <source>Save File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="142"/>
+        <location filename="../ui/frmMain.py" line="141"/>
         <source>eXtensible Markup Language (*.xml)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="154"/>
+        <location filename="../ui/frmMain.py" line="153"/>
         <source>You have the last version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="144"/>
+        <location filename="../ui/Ui_frmMain.py" line="151"/>
         <source>&amp;Check for updates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="146"/>
+        <location filename="../ui/Ui_frmMain.py" line="153"/>
         <source>&amp;Load devices list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/Ui_frmMain.py" line="148"/>
+        <location filename="../ui/Ui_frmMain.py" line="155"/>
         <source>&amp;Save devices list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="149"/>
+        <location filename="../ui/frmMain.py" line="148"/>
         <source>I couldn&apos;t look for updates. Try it later..</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="160"/>
+        <location filename="../ui/frmMain.py" line="159"/>
         <source>There is a new DevicesInLAN version. You can download it from &lt;a href=&apos;https://github.com/Turulomio/devicesinlan/releases&apos;&gt;GitHub&lt;/a&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/Ui_frmMain.py" line="158"/>
+        <source>Report an issue</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -870,27 +920,27 @@
 <context>
     <name>myTab</name>
     <message>
-        <location filename="../ui/frmMain.py" line="33"/>
+        <location filename="../ui/frmMain.py" line="32"/>
         <source>Database devices at {}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="35"/>
+        <location filename="../ui/frmMain.py" line="34"/>
         <source>Scanned at {}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="50"/>
+        <location filename="../ui/frmMain.py" line="49"/>
         <source>Remove known device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="95"/>
+        <location filename="../ui/frmMain.py" line="94"/>
         <source>Edit known device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/frmMain.py" line="97"/>
+        <location filename="../ui/frmMain.py" line="96"/>
         <source>Set as a known device</source>
         <translation type="unfinished"></translation>
     </message>

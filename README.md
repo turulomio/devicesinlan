@@ -190,3 +190,9 @@ devicesinlan 1.8.0 20191230
 - Fix bug loading unescaped data from XML.
 - Addapting code to reusing project.
 - Improved doc and translations
+
+devicesinlan 1.9.0 20190109
+---------------------------
+- Added 'Report issue' action.
+- Windows console version now ask for a key to end app.
+- Added used software information in about dialog.
