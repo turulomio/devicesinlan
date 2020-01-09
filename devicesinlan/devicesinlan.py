@@ -3,6 +3,8 @@
 
 import signal
 import sys
+from devicesinlan.text_inputs import press_key_to_continue
+from platform import system as platform_system
 
 def main_console():
     from devicesinlan.libdevicesinlan import MemConsole
@@ -12,6 +14,8 @@ def main_console():
     mem.setLanguage()
     mem.setInstallationUUID()
     mem.parse_args()
+    if platform_system()=="Windows":
+        press_key_to_continue()
 
 ## @namespace devicesinlan.libdevicesinlan
 ## @brief Package GUI main function
