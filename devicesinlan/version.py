@@ -2,7 +2,7 @@
 import datetime
 
 __version__ ='1.9.0'
-__versiondate__=datetime.date(2019,1, 9)
+__versiondate__=datetime.date(2020,1, 9)
 
 
 ## This function expectss __version__= 'VERSION' file
