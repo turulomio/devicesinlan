@@ -37,8 +37,20 @@ def download_from_github_to_path(user,repository,path_filename, destiny_path):
     f.close()
     print("Updating {} from https://github.com/turulomio/reusingcode/{}".format(destiny_path,path_filename))
 
+## Get the latest release tag of code releases in a repository
+def get_latest_release(user, repository):
+    url="https://api.github.com/repos/{}/{}/releases/latest".format(user,repository)
+    try:
+        b_json=urlopen(url).read()
+        j=loads(b_json.decode('UTF-8'))
+        return j['tag_name']
+    except:
+        return None
 
 if __name__ == '__main__':
     print(get_file_modification_dtaware("turulomio","xulpymoney","products.xlsx"))
     download_from_github("turulomio", "xulpymoney", "doc/xulpymoney.odt", "./")
     download_from_github_to_path("turulomio", "xulpymoney", "doc/xulpymoney.odt", "xulpymoney.odt")
+    print("Latest xulpymoney release:", get_latest_release("turulomio","xulpymoney"))
+    print("Latest caloriestracker release:", get_latest_release("turulomio","caloriestracker"))
+    print("Latest reusingcode release:", get_latest_release("turulomio","reusingcode"))
