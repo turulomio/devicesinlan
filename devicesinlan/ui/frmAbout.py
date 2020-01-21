@@ -3,10 +3,10 @@ from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtWidgets import QDialog
 from colorama import __version__ as colorama__version__
 from devicesinlan.ui.Ui_frmAbout import Ui_frmAbout
+from devicesinlan.ui.myqtablewidget import qright, qleft
 from devicesinlan.version import __version__, __versiondate__
 from platform import python_version, system as  platform_system
 from scapy import __version__ as scapy__version__,  VERSION
-from xulpymoney.ui.qtablewidgetitems import qright, qleft
 
 class frmAbout(QDialog, Ui_frmAbout):
     def __init__(self, mem, parent = None, name = None, modal = False):

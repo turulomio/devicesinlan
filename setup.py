@@ -71,7 +71,6 @@ class Reusing(Command):
         path.append("devicesinlan")
         from github import download_from_github
         download_from_github('turulomio','reusingcode','python/myqtablewidget.py', 'devicesinlan/ui')
-        download_from_github('turulomio','reusingcode','python/qtablewidgetitems.py', 'devicesinlan/ui')
         download_from_github('turulomio','reusingcode','python/decorators.py', 'devicesinlan')
         download_from_github('turulomio','reusingcode','python/libmanagers.py', 'devicesinlan')
         download_from_github('turulomio','reusingcode','python/github.py', 'devicesinlan')

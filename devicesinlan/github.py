@@ -5,7 +5,7 @@
 from datetime import datetime, timezone
 from urllib.request import urlopen
 from json import loads
-from os import system, path, chdir, getcwd
+from os import  path
 
 ## Get Github file modification datetime
 ## https://api.github.com/repos/turulomio/xulpymoney/commits?path=products.xlsx
