@@ -1,6 +1,4 @@
-[![PyPI](https://img.shields.io/pypi/v/devicesinlan)](https://pypi.org/project/devicesinlan/) [![PyPI - Downloads](https://img.shields.io/pypi/dm/devicesinlan)](https://pypi.org/project/devicesinlan/)
-
-[![Github](https://img.shields.io/github/stars/turulomio/devicesinlan?style=social)](https://github.com/turulomio/devicesinlan/) [![Github - Downloads](https://shields.io/github/downloads/turulomio/devicesinlan/total )](https://github.com/turulomio/devicesinlan/)
+# DevicesInLan [![PyPI - Downloads](https://img.shields.io/pypi/dm/devicesinlan?label=Pypi%20downloads)](https://pypi.org/project/devicesinlan/) [![Github - Downloads](https://shields.io/github/downloads/turulomio/devicesinlan/total?label=Github%20downloads )](https://github.com/turulomio/devicesinlan/)
 
 Snapshots
 =========
