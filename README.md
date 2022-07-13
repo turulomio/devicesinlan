@@ -198,3 +198,8 @@ devicesinlan 1.9.0 20190109
 - Added 'Report issue' action.
 - Windows console version now ask for a key to end app.
 - Added used software information in about dialog.
+
+devicesinlan 1.9.2 20220713
+---------------------------
+- Updated to last qt5
+
