@@ -1,5 +1,6 @@
-## THIS IS FILE IS FROM https://github.com/turulomio/reusingcode IF YOU NEED TO UPDATE IT PLEASE MAKE A PULL REQUEST IN THAT PROJECT
-## DO NOT UPDATE IT IN YOUR CODE IT WILL BE REPLACED USING FUNCTION IN README
+## THIS IS FILE IS FROM https://github.com/turulomio/reusingcode/python/decorators.py
+## IF YOU NEED TO UPDATE IT PLEASE MAKE A PULL REQUEST IN THAT PROJECT AND DOWNLOAD FROM IT
+## DO NOT UPDATE IT IN YOUR CODE
 
 from time import time
 from socket import create_connection
@@ -8,7 +9,24 @@ from platform import system as platform_system
 from sys import exit
 
 ## allows you to measure the execution time of the method/function by just adding the @timeit decorator on the method.
-## @timeit
+## Difference with timeit it's that output is a print command
+## @param method
+def ptimeit(method):
+    def timed(*args, **kw):
+        ts = time()
+        result = method(*args, **kw)
+        te = time()
+
+        if 'log_time' in kw:
+            name = kw.get('log_name', method.__name__.upper())
+            kw['log_time'][name] = int((te - ts) * 1000)
+        else:
+            print('%r took  %2.2f ms' % (method.__name__, (te - ts) * 1000))
+        return result
+    return timed
+
+## allows you to measure the execution time of the method/function by just adding the @timeit decorator on the method.
+## @param method
 def timeit(method):
     def timed(*args, **kw):
         ts = time()
@@ -19,9 +37,8 @@ def timeit(method):
             name = kw.get('log_name', method.__name__.upper())
             kw['log_time'][name] = int((te - ts) * 1000)
         else:
-            print ('%r  %2.2f ms' % (method.__name__, (te - ts) * 1000))
+            debug('%r took  %2.2f ms' % (method.__name__, (te - ts) * 1000))
         return result
-
     return timed
 
 ## Checks if there is internet

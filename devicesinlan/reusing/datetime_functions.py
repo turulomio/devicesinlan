@@ -1,5 +1,6 @@
-## THIS IS FILE IS FROM https://github.com/turulomio/reusingcode IF YOU NEED TO UPDATE IT PLEASE MAKE A PULL REQUEST IN THAT PROJECT
-## DO NOT UPDATE IT IN YOUR CODE IT WILL BE REPLACED USING FUNCTION IN README
+## THIS IS FILE IS FROM https://github.com/turulomio/reusingcode/python/datetime_functions.py
+## IF YOU NEED TO UPDATE IT PLEASE MAKE A PULL REQUEST IN THAT PROJECT AND DOWNLOAD FROM IT
+## DO NOT UPDATE IT IN YOUR CODE
 
 ## If a function only can be used by dtaware or naive it will have its prefix dtaware_ or dtnaive_
 ## If a function can use both of them its prefix will be dt_
@@ -28,6 +29,11 @@ def dtaware(date, hour, tz_name):
     a=dtnaive(date, hour)
     a=z.localize(a)
     return a
+
+def dtnaive2dtaware(dtnaive, tz_name):
+    z=timezone(tz_name)
+    return z.localize(dtnaive)
+
 
 def dtaware_now(tzname='UTC'):
     return timezone(tzname).localize(dtnaive_now())
@@ -77,7 +83,17 @@ def date_last_of_the_month(year, month):
     if month==12:
         return date(year, month, 31)
     return date(year, month+1, 1)-timedelta(days=1)
-    
+
+## Returns a date with the first date of the year
+## @param year Year to search first day
+def date_first_of_the_year(year):
+    return date_first_of_the_month(year,12)
+
+## Returns a date with the last date of the year
+## @param year Year to search last day
+def date_last_of_the_year(year):
+    return date_last_of_the_month(year,12)
+
 ## Returns a date with the first date of the month after x months
 ## @param year Year to search  day
 ## @param month Month to search day
@@ -227,7 +243,7 @@ def string2date(iso, format="YYYY-MM-DD"):
         error("I can't convert this format '{}'. I only support this {}".format(format, allowed))
 
 def string2dtnaive(s, format):
-    allowed=["%Y%m%d%H%M","%Y-%m-%d %H:%M:%S","%d/%m/%Y %H:%M","%d %m %H:%M %Y","%Y-%m-%d %H:%M:%S.","%H:%M:%S"]
+    allowed=["%Y%m%d%H%M","%Y-%m-%d %H:%M:%S","%d/%m/%Y %H:%M","%d %m %H:%M %Y","%Y-%m-%d %H:%M:%S.","%H:%M:%S", '%b %d %H:%M:%S']
     if format in allowed:
         if format=="%Y%m%d%H%M":
             dat=datetime.strptime( s, format )
@@ -241,7 +257,7 @@ def string2dtnaive(s, format):
         if format=="%Y-%m-%d %H:%M:%S.":#2017-11-20 23:00:00.000000  ==>  microsecond. Notice the point in format
             arrPunto=s.split(".")
             s=arrPunto[0]
-            micro=int(arrPunto[1])
+            micro=int(arrPunto[1]) if len(arrPunto)==2 else 0
             dt=datetime.strptime( s, "%Y-%m-%d %H:%M:%S" )
             dt=dt+timedelta(microseconds=micro)
             return dt
@@ -249,11 +265,14 @@ def string2dtnaive(s, format):
             tod=date.today()
             a=s.split(":")
             return datetime(tod.year, tod.month, tod.day, int(a[0]), int(a[1]), int(a[2]))
+        if format=='%b %d %H:%M:%S': #Apr 26 07:50:44. Year is missing so I set to current
+            s=f"{date.today().year} {s}"
+            return datetime.strptime(s, '%Y %b %d %H:%M:%S')
     else:
         error("I can't convert this format '{}'. I only support this {}".format(format, allowed))
 
 def string2dtaware(s, format, tz_name='UTC'):
-    allowed=["%Y-%m-%d %H:%M:%S%z","%Y-%m-%d %H:%M:%S.%z"]
+    allowed=["%Y-%m-%d %H:%M:%S%z","%Y-%m-%d %H:%M:%S.%z", "JsUtcIso"]
     if format in allowed:
         if format=="%Y-%m-%d %H:%M:%S%z":#2017-11-20 23:00:00+00:00
             s=s[:-3]+s[-2:]
@@ -267,6 +286,12 @@ def string2dtaware(s, format, tz_name='UTC'):
             dt=datetime.strptime( s, "%Y-%m-%d %H:%M:%S%z" )
             dt=dt+timedelta(microseconds=micro)
             return dtaware_changes_tz(dt, tz_name)
+        if format=="JsUtcIso": #2021-08-21T06:27:38.294Z
+            s=s.replace("T"," ").replace("Z","")
+            dtnaive=string2dtnaive(s,"%Y-%m-%d %H:%M:%S.")
+            dtaware_utc=dtnaive2dtaware(dtnaive, 'UTC')
+            return dtaware_changes_tz(dtaware_utc, tz_name)
+
     else:
         return timezone(tz_name).localize(string2dtnaive(s,format))
 
@@ -278,6 +303,16 @@ def dtaware2epochms(d):
 ## Return a UTC datetime aware
 def epochms2dtaware(n, tz="UTC"):
     utc_unaware=datetime.utcfromtimestamp(n/1000)
+    utc_aware=utc_unaware.replace(tzinfo=timezone('UTC'))#Due to epoch is in UTC
+    return dtaware_changes_tz(utc_aware, tz)
+
+## epoch is the time from 1,1,1970 in UTC
+## return now(timezone(self.name))
+def dtaware2epochmicros(d):
+    return int(d.timestamp()*1000000)
+## Return a UTC datetime aware
+def epochmicros2dtaware(n, tz="UTC"):
+    utc_unaware=datetime.utcfromtimestamp(n/1000000)
     utc_aware=utc_unaware.replace(tzinfo=timezone('UTC'))#Due to epoch is in UTC
     return dtaware_changes_tz(utc_aware, tz)
 
@@ -296,7 +331,7 @@ def dtaware2string(dt, format):
 ## @param format String in ["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M"]
 ## @return String
 def dtnaive2string(dt, format):
-    allowed=["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M"]
+    allowed=["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M", "JsUtcIso"]
     if dt==None:
         return "None"
     elif format in allowed:
@@ -308,6 +343,8 @@ def dtnaive2string(dt, format):
             return dt.strftime("%Y%m%d %H%M")
         elif format=="%Y%m%d%H%M":
             return dt.strftime("%Y%m%d%H%M")
+        elif format=="JsUtcIso":
+            return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
     else:
         error("I can't convert this format '{}'. I only support this {}".format(format, allowed))
 
@@ -317,7 +354,7 @@ def dtnaive2string(dt, format):
 ## - libcaloriestrackerfunctions.dtaware_changes_tz(a,"Europe/London")
 ## - datetime.datetime(2018, 5, 18, 7, 12, tzinfo=<DstTzInfo 'Europe/London' BST+1:00:00 DST>)
 ## @param dt datetime aware object
-## @tzname String with datetime zone. For example: "Europe/Madrid"
+## @param tzname String with datetime zone. For example: "Europe/Madrid"
 ## @return datetime aware object
 def dtaware_changes_tz(dt,  tzname):
     if dt==None:
@@ -326,17 +363,38 @@ def dtaware_changes_tz(dt,  tzname):
     tarjet=tzt.normalize(dt.astimezone(tzt))
     return tarjet
 
+## Returns a list of tuples (year, month) from a month to another month, both included
+## @param year_from Integer
+## @param month_from Integer
+## @param year_to Integer If none uses current year
+## @param month_to Integer If none uses current month
+def months(year_from, month_from, year_to=None, month_to=None):
+    if year_to is None or month_to is None:
+        year_to=date.today().year
+        month_to=date.today().month
+    r=[]
+    end=date_first_of_the_month(year_to, month_to)
+    current=date_first_of_the_month(year_from, month_from)
+    while True:
+        if current>end:
+            break
+        r.append((current.year,current.month))
+        current=date_first_of_the_next_x_months(current.year, current.month, 1)
+    return r
 
 if __name__ == "__main__":
     tz="Europe/Madrid"
-    now=datetime.now()
+    now=dtnaive_now()
     print("Current localzone is", tz)
     print ("DtNaive:",  now)
     now_aware=dtaware(now.date(), now.time(), tz)
-    print("DtAware:", now_aware)
+    print("DtAware:", now_aware, "With dtaware_now", dtaware_now(tz))
     epochms=dtaware2epochms(now_aware)
     print("Epoch in miliseconds:", epochms)
     print("Dtaware reconverting epoch {}".format(epochms2dtaware(epochms, tz)) )
+    epochmicros=dtaware2epochmicros(now_aware)
+    print("Epoch in microseconds:", epochmicros)
+    print("Dtaware reconverting epoch in microseconds {}".format(epochmicros2dtaware(epochmicros, tz)) )
     now_aware_in_utc=dtaware_changes_tz(now_aware, 'UTC')
     print("Datetime '{}' changes to UTC '{}'".format(now_aware, now_aware_in_utc))
     print()
@@ -372,3 +430,9 @@ if __name__ == "__main__":
     a="2019-10-03 2:22:09.267"
     format="%Y-%m-%d %H:%M:%S."
     print("  - {}: {} and {}".format(a,string2dtnaive(a,format),string2dtaware(a,format)))
+    
+    print("Js UTC ISO 2 DTAWARE")
+    a="2021-08-21T06:27:38.294Z"
+    print(f"  - {a}: {string2dtaware(a,'JsUtcIso','Europe/Madrid')}")
+
+

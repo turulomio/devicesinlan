@@ -68,18 +68,20 @@ class Reusing(Command):
 
     def run(self):
         from sys import path
-        path.append("devicesinlan")
+        path.append("devicesinlan/reusing")
         from github import download_from_github
-        download_from_github('turulomio','reusingcode','python/myqtablewidget.py', 'devicesinlan/ui')
-        download_from_github('turulomio','reusingcode','python/decorators.py', 'devicesinlan')
-        download_from_github('turulomio','reusingcode','python/libmanagers.py', 'devicesinlan')
-        download_from_github('turulomio','reusingcode','python/github.py', 'devicesinlan')
-        download_from_github('turulomio','reusingcode','python/datetime_functions.py', 'devicesinlan')
-        download_from_github('turulomio','reusingcode','python/text_inputs.py', 'devicesinlan')
-        download_from_github('turulomio','reusingcode','python/package_resources.py', 'devicesinlan')
+        from file_functions import replace_in_file
 
-
-
+        download_from_github('turulomio','reusingcode','PyQt5/myqtablewidget.py', 'devicesinlan/reusing')
+        download_from_github('turulomio','reusingcode','python/decorators.py', 'devicesinlan/reusing')
+        download_from_github('turulomio','reusingcode','python/file_functions.py', 'devicesinlan/reusing')
+        download_from_github('turulomio','reusingcode','python/github.py', 'devicesinlan/reusing')
+        download_from_github('turulomio','reusingcode','python/libmanagers.py', 'devicesinlan/reusing')
+        download_from_github('turulomio','reusingcode','python/datetime_functions.py', 'devicesinlan/reusing')
+        download_from_github('turulomio','reusingcode','python/text_inputs.py', 'devicesinlan/reusing')
+        download_from_github('turulomio','reusingcode','python/package_resources.py', 'devicesinlan/reusing')
+        
+        replace_in_file("devicesinlan/reusing/libmanagers.py",  "from datetime_functions",  "from .datetime_functions")
 
 class Compile(Command):
     description = "Compile ui and images"
