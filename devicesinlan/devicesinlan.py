@@ -3,7 +3,7 @@
 
 import signal
 import sys
-from devicesinlan.text_inputs import press_key_to_continue
+from devicesinlan.reusing.text_inputs import press_key_to_continue
 from platform import system as platform_system
 
 def main_console():

@@ -4,11 +4,10 @@
 from PyQt5.QtCore import Qt,  pyqtSlot, QObject,  pyqtSignal
 from PyQt5.QtGui import QKeySequence, QColor, QIcon, QBrush, QFont
 from PyQt5.QtWidgets import QApplication, QHeaderView, QTableWidget, QFileDialog,  QTableWidgetItem, QWidget, QCheckBox, QHBoxLayout, QVBoxLayout, QLabel, QLineEdit, QAction, QMenu, QToolButton, QAbstractItemView
-from .. call_by_name import call_by_name
-from .. datetime_functions import dtaware2string, dtaware_changes_tz, time2string
-from .. libmanagers import ManagerSelectionMode
-from .. casts import lor_remove_columns
-from officegenerator import ODS_Write
+from .call_by_name import call_by_name
+from .datetime_functions import dtaware2string, dtaware_changes_tz, time2string
+from .libmanagers import ManagerSelectionMode
+from .casts import lor_remove_columns
 from logging import info, debug, error
 from datetime import datetime, date,  timedelta
 
@@ -224,6 +223,7 @@ class mqtw(QWidget):
         elif event.matches(QKeySequence.Print):
             filename = QFileDialog.getSaveFileName(self, self.tr("Save File"), "table.ods", self.tr("Libreoffice calc (*.ods)"))[0]
             if filename:
+                from officegenerator import ODS_Write
                 ods=ODS_Write(filename)
                 self.officegeneratorModel( "My table").ods_sheet(ods)
                 ods.save()
@@ -461,6 +461,8 @@ class mqtw(QWidget):
     def on_actionExport_triggered(self):
         filename = QFileDialog.getSaveFileName(self, self.tr("Save File"), "table.ods", self.tr("Libreoffice calc (*.ods)"))[0]
         if filename:
+        
+            from officegenerator import ODS_Write
             ods=ODS_Write(filename)
             self.officegeneratorModel("My table").ods_sheet(ods)
             ods.save()

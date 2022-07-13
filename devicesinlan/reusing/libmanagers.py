@@ -7,7 +7,7 @@
 from datetime import datetime, timedelta, date
 from logging import critical, debug
 from .datetime_functions import dtaware_day_end_from_date, dtaware_day_start_from_date, dtnaive_day_end_from_date, dtnaive_day_start_from_date
-from call_by_name import call_by_name
+from .call_by_name import call_by_name
 
 ## Defines who self.selected is managed
 ## If can take the following values

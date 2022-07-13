@@ -10,12 +10,12 @@ from PyQt5.QtCore import QCoreApplication, QSettings, QTranslator, QObject
 from PyQt5.QtNetwork import QNetworkInterface, QAbstractSocket,  QTcpSocket
 from concurrent.futures import ThreadPoolExecutor,  as_completed                            
 from datetime import datetime, date     
-from devicesinlan.casts import string2xml, b2s, xml2string
-from devicesinlan.decorators import need_administrator
-from devicesinlan.libmanagers import ObjectManager_With_IdName, ObjectManager_Selectable
+from devicesinlan.reusing.casts import string2xml, b2s, xml2string
+from devicesinlan.reusing.decorators import need_administrator
+from devicesinlan.reusing.libmanagers import ObjectManager_With_IdName, ObjectManager_Selectable
 from devicesinlan.version import __version__, __versiondate__
-from devicesinlan.package_resources import package_filename
-from devicesinlan.text_inputs import input_YN, input_int
+from devicesinlan.reusing.package_resources import package_filename
+from devicesinlan.reusing.text_inputs import input_YN, input_int
 from ipaddress import IPv4Network
 from platform import system as platform_system
 from uuid import  uuid4

@@ -73,6 +73,8 @@ class Reusing(Command):
         from file_functions import replace_in_file
 
         download_from_github('turulomio','reusingcode','PyQt5/myqtablewidget.py', 'devicesinlan/reusing')
+        download_from_github('turulomio','reusingcode','python/call_by_name.py', 'devicesinlan/reusing')
+        download_from_github('turulomio','reusingcode','python/casts.py', 'devicesinlan/reusing')
         download_from_github('turulomio','reusingcode','python/decorators.py', 'devicesinlan/reusing')
         download_from_github('turulomio','reusingcode','python/file_functions.py', 'devicesinlan/reusing')
         download_from_github('turulomio','reusingcode','python/github.py', 'devicesinlan/reusing')
@@ -82,6 +84,8 @@ class Reusing(Command):
         download_from_github('turulomio','reusingcode','python/package_resources.py', 'devicesinlan/reusing')
         
         replace_in_file("devicesinlan/reusing/libmanagers.py",  "from datetime_functions",  "from .datetime_functions")
+        replace_in_file("devicesinlan/reusing/libmanagers.py",  "from call_by_name",  "from .call_by_name")
+        replace_in_file("devicesinlan/reusing/myqtablewidget.py",  "from .. ",  "from .")
 
 class Compile(Command):
     description = "Compile ui and images"
@@ -105,7 +109,7 @@ class Compile(Command):
         for filename in os.listdir("devicesinlan/ui/"):
              if filename.startswith("Ui_"):
                  os.system("sed -i -e 's/devicesinlan_rc/devicesinlan.images.devicesinlan_rc/' devicesinlan/ui/{}".format(filename))
-                 os.system("sed -i -e 's/from myqtablewidget/from devicesinlan.ui.myqtablewidget/' devicesinlan/ui/{}".format(filename))
+                 os.system("sed -i -e 's/from myqtablewidget/from devicesinlan.reusing.myqtablewidget/' devicesinlan/ui/{}".format(filename))
 
 
 class Procedure(Command):
