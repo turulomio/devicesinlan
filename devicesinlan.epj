@@ -1,0 +1,183 @@
+{
+  "header": {
+    "comment": "eric project file for project devicesinlan",
+    "copyright": "Copyright (C) 2022 , ",
+    "saved": "2022-07-13, 19:38:14"
+  },
+  "project": {
+    "AUTHOR": "",
+    "CHECKERSPARMS": {},
+    "DESCRIPTION": "",
+    "DOCSTRING": "",
+    "DOCUMENTATIONPARMS": {},
+    "EMAIL": "",
+    "EOL": 0,
+    "FILETYPES": {
+      "*.e4p": "OTHERS",
+      "*.idl": "INTERFACES",
+      "*.md": "OTHERS",
+      "*.proto": "PROTOCOLS",
+      "*.py": "SOURCES",
+      "*.py3": "SOURCES",
+      "*.pyw": "SOURCES",
+      "*.pyw3": "SOURCES",
+      "*.qm": "TRANSLATIONS",
+      "*.qrc": "RESOURCES",
+      "*.rst": "OTHERS",
+      "*.ts": "TRANSLATIONS",
+      "*.txt": "OTHERS",
+      "*.ui": "FORMS",
+      "README": "OTHERS",
+      "README.*": "OTHERS"
+    },
+    "FORMS": [
+      "devicesinlan/ui/frmAbout.ui",
+      "devicesinlan/ui/frmDeviceCRUD.ui",
+      "devicesinlan/ui/frmHelp.ui",
+      "devicesinlan/ui/frmInterfaceSelector.ui",
+      "devicesinlan/ui/frmMain.ui",
+      "devicesinlan/ui/frmSettings.ui"
+    ],
+    "HASH": "d38da4b2a4d54e1ffae814e0ef3d1c77bf3cefc4",
+    "IDLPARAMS": {
+      "DefinedNames": [],
+      "IncludeDirs": [],
+      "UndefinedNames": []
+    },
+    "INTERFACES": [],
+    "LEXERASSOCS": {},
+    "LICENSE": "",
+    "MAINSCRIPT": "setup.py",
+    "MAKEPARAMS": {
+      "MakeEnabled": false,
+      "MakeExecutable": "",
+      "MakeFile": "",
+      "MakeParameters": "",
+      "MakeTarget": "",
+      "MakeTestOnly": true
+    },
+    "MIXEDLANGUAGE": 0,
+    "OTHERS": [
+      "LICENSE.txt",
+      "README.md",
+      "devicesinlan.egg-info/SOURCES.txt",
+      "devicesinlan.egg-info/dependency_links.txt",
+      "devicesinlan.egg-info/entry_points.txt",
+      "devicesinlan.egg-info/requires.txt",
+      "devicesinlan.egg-info/top_level.txt",
+      "devicesinlan/data/ieee-oui.txt"
+    ],
+    "OTHERTOOLSPARMS": {},
+    "PACKAGERSPARMS": {},
+    "PROGLANGUAGE": "Python3",
+    "PROJECTTYPE": "PyQt5",
+    "PROJECTTYPESPECIFICDATA": {},
+    "PROTOCOLS": [],
+    "RCCPARAMS": {
+      "CompressLevel": 0,
+      "CompressionDisable": false,
+      "CompressionThreshold": 70,
+      "PathPrefix": ""
+    },
+    "RESOURCES": [
+      "devicesinlan/images/devicesinlan.qrc"
+    ],
+    "SOURCES": [
+      "devicesinlan/__init__.py",
+      "devicesinlan/casts.py",
+      "devicesinlan/datetime_functions.py",
+      "devicesinlan/decorators.py",
+      "devicesinlan/devicesinlan.py",
+      "devicesinlan/github.py",
+      "devicesinlan/images/devicesinlan_rc.py",
+      "devicesinlan/libdevicesinlan.py",
+      "devicesinlan/libdevicesinlan_gui.py",
+      "devicesinlan/libmanagers.py",
+      "devicesinlan/package_resources.py",
+      "devicesinlan/shortcuts.py",
+      "devicesinlan/text_inputs.py",
+      "devicesinlan/ui/Ui_frmAbout.py",
+      "devicesinlan/ui/Ui_frmDeviceCRUD.py",
+      "devicesinlan/ui/Ui_frmHelp.py",
+      "devicesinlan/ui/Ui_frmInitGame.py",
+      "devicesinlan/ui/Ui_frmInterfaceSelector.py",
+      "devicesinlan/ui/Ui_frmMain.py",
+      "devicesinlan/ui/Ui_frmSettings.py",
+      "devicesinlan/ui/__init__.py",
+      "devicesinlan/ui/devicesinlan_rc.py",
+      "devicesinlan/ui/frmAbout.py",
+      "devicesinlan/ui/frmDeviceCRUD.py",
+      "devicesinlan/ui/frmHelp.py",
+      "devicesinlan/ui/frmInterfaceSelector.py",
+      "devicesinlan/ui/frmMain.py",
+      "devicesinlan/ui/frmSettings.py",
+      "devicesinlan/ui/myqtablewidget.py",
+      "devicesinlan/ui/qtablewidgetitems.py",
+      "devicesinlan/version.py",
+      "setup.py"
+    ],
+    "SPELLEXCLUDES": "",
+    "SPELLLANGUAGE": "en_US",
+    "SPELLWORDS": "",
+    "TESTING_FRAMEWORK": "",
+    "TRANSLATIONEXCEPTIONS": [],
+    "TRANSLATIONPATTERN": "devicesinlan/i18n/devicesinlan_%language%.ts",
+    "TRANSLATIONS": [
+      "devicesinlan/i18n/devicesinlan_es.qm",
+      "devicesinlan/i18n/devicesinlan_es.ts",
+      "devicesinlan/i18n/devicesinlan_fr.qm",
+      "devicesinlan/i18n/devicesinlan_fr.ts",
+      "devicesinlan/i18n/devicesinlan_ro.qm",
+      "devicesinlan/i18n/devicesinlan_ro.ts",
+      "devicesinlan/i18n/devicesinlan_ru.qm",
+      "devicesinlan/i18n/devicesinlan_ru.ts"
+    ],
+    "TRANSLATIONSBINPATH": "",
+    "UICPARAMS": {
+      "Package": "",
+      "PackagesRoot": "",
+      "RcSuffix": ""
+    },
+    "VCS": "Git",
+    "VCSOPTIONS": {
+      "add": [
+        ""
+      ],
+      "checkout": [
+        ""
+      ],
+      "commit": [
+        ""
+      ],
+      "diff": [
+        ""
+      ],
+      "export": [
+        ""
+      ],
+      "global": [
+        ""
+      ],
+      "history": [
+        ""
+      ],
+      "log": [
+        ""
+      ],
+      "remove": [
+        ""
+      ],
+      "status": [
+        ""
+      ],
+      "tag": [
+        ""
+      ],
+      "update": [
+        ""
+      ]
+    },
+    "VCSOTHERDATA": {},
+    "VERSION": "0.1"
+  }
+}

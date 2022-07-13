@@ -1,4 +1,3 @@
-.eric6project/
 .ropeproject/
 .directory/
 *.pyc
@@ -11,3 +10,9 @@ cur/
 tmp/
 __pycache__/
 *.DS_Store
+.eric7project/
+build/
+devicesinlan.egg-info/
+dist/
+doc/html/
+doc/ttyrec/
