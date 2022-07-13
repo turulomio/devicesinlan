@@ -71,7 +71,7 @@ class Ui_frmAbout(object):
         self.label = QtWidgets.QLabel(self.tab_2)
         self.label.setObjectName("label")
         self.verticalLayout_2.addWidget(self.label)
-        self.tblSoftware = mqtw(self.tab_2)
+        self.tblSoftware = QtWidgets.QTableWidget(self.tab_2)
         self.tblSoftware.setObjectName("tblSoftware")
         self.tblSoftware.setColumnCount(2)
         self.tblSoftware.setRowCount(4)
@@ -276,5 +276,4 @@ class Ui_frmAbout(object):
         item.setText(_translate("frmAbout", "Url"))
         self.tab.setTabText(self.tab.indexOf(self.tab_2), _translate("frmAbout", "Software used"))
         self.tab.setTabText(self.tab.indexOf(self.tabLicense), _translate("frmAbout", "License"))
-from devicesinlan.reusing.myqtablewidget import mqtw
 import devicesinlan.images.devicesinlan_rc

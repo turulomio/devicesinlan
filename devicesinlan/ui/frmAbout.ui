@@ -133,7 +133,7 @@
             </widget>
            </item>
            <item>
-            <widget class="mqtw" name="tblSoftware">
+            <widget class="QTableWidget" name="tblSoftware">
              <property name="toolTip">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Make click in the url to open link to the project main page&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
@@ -353,13 +353,6 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>mqtw</class>
-   <extends>QTableWidget</extends>
-   <header location="global">myqtablewidget</header>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="../images/devicesinlan.qrc"/>
   <include location="../images/devicesinlan.qrc"/>

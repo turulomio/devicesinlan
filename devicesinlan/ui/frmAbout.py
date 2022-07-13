@@ -23,7 +23,7 @@ class frmAbout(QDialog, Ui_frmAbout):
             "<ul><li>Mariano Mu\xf1oz</li><li>Nadejda Adam</li></ul><p>\n"+
             self.tr("to the following languages<p>")+
             "<ul><li>English</li><li>Fran\xe7ais</li><li>Espa\xf1ol</li><li>Rom\xe2n</li><li>\u0420\u0443\u0441\u0441\u043a\u0438\u0439</li></ul><p>")
-        self.tblSoftware.settings(self.mem, "frmAbout")
+        #self.tblSoftware.settings(self.mem, "frmAbout")
         self.load_tblSoftware()
         self.tblSoftware.itemClicked.connect(self.OpenLink)
 
@@ -48,4 +48,4 @@ class frmAbout(QDialog, Ui_frmAbout):
             self.tblSoftware.setItem(3, 0, qright(scapy__version__[:-1]))
         self.tblSoftware.setItem(3, 1, qleft("https://github.com/secdev/scapy"))
         
-        self.tblSoftware.applySettings()
+        #self.tblSoftware.applySettings()
