@@ -1,4 +1,4 @@
-from PyQt6.QtCore import Qt,  QCoreApplication, QTranslator, QSettings
+from PyQt6.QtCore import Qt,  QCoreApplication, QTranslator, QSettings, QDir
 from PyQt6.QtWidgets import QTableWidgetItem, QMessageBox, QApplication
 from PyQt6.QtGui import QColor,  QPixmap, QIcon
 from argparse import ArgumentParser, RawTextHelpFormatter
@@ -23,6 +23,9 @@ class MemGUI(MemConsole):
     ## Sets QApplication Object to make a Qt application
     def setQApplication(self):
         self.app=QApplication(argv)
+        print(__file__)
+        
+        QDir.addSearchPath("images",  f"{self.BASE_DIR}/images")
         self.app.setQuitOnLastWindowClosed(True)
         self.app.setOrganizationName(self.name)
         self.app.setOrganizationDomain(self.name)
@@ -57,7 +60,7 @@ def DeviceType_qpixmap(o):
     
 def DeviceType_qicon(o):
     ico = QIcon()
-    ico.addPixmap(DeviceType_qpixmap(o), QIcon.Normal, QIcon.Off) 
+    ico.addPixmap(DeviceType_qpixmap(o), QIcon.Mode.Normal, QIcon.State.Off) 
     return ico
 
 def DeviceManager_qtablewidget(set, table):
@@ -148,12 +151,12 @@ def qbool(bool):
     else:
         a.setCheckState(Qt.Unchecked);
         a.setText(QCoreApplication.translate("devicesinlan","False"))
-    a.setTextAlignment(Qt.AlignVCenter|Qt.AlignCenter)
+    a.setTextAlignment(Qt.AlignmentFlag.AlignVCenter|Qt.AlignmentFlag.AlignCenter)
     return a
     
 def qleft(string):
     a=QTableWidgetItem(str(string))
-    a.setTextAlignment(Qt.AlignVCenter|Qt.AlignLeft)
+    a.setTextAlignment(Qt.AlignmentFlag.AlignVCenter|Qt.AlignmentFlag.AlignLeft)
     return a
     
 def qmessagebox(message, type=QMessageBox.Icon.Information):

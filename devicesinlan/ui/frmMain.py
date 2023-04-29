@@ -22,10 +22,10 @@ class myTab(QWidget):
         self.tabWidget=tabWidget
         self.table=QTableWidget(self.tabWidget)
         self.verticalLayout = QVBoxLayout(self)
-        self.table.setContextMenuPolicy(Qt.CustomContextMenu)
-        self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        self.table.setSelectionMode(QAbstractItemView.SingleSelection)
-        self.table.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.table.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        self.table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.table.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
+        self.table.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
         self.verticalLayout.addWidget(self.table)        
         self.table.setAlternatingRowColors(True)
         if self.set.isDatabase==True:
@@ -41,14 +41,14 @@ class myTab(QWidget):
         
         self.actionDeviceLink = QAction(self)
         icon5 = QIcon()
-        icon5.addPixmap(QPixmap(":/save.png"), QIcon.Normal, QIcon.Off)
+        icon5.addPixmap(QPixmap(":/save.png"), QIcon.Mode.Normal, QIcon.State.Off)
         self.actionDeviceLink.setIcon(icon5)
         self.actionDeviceLink.triggered.connect(self.on_actionDeviceLink_triggered)
         
         self.actionDeviceUnlink = QAction(self)
         self.actionDeviceUnlink.setText(self.tr("Remove known device"))
         icon6 = QIcon()
-        icon6.addPixmap(QPixmap(":/cancel.png"), QIcon.Normal, QIcon.Off)
+        icon6.addPixmap(QPixmap(":/cancel.png"), QIcon.Mode.Normal, QIcon.State.Off)
         self.actionDeviceUnlink.setIcon(icon6)
         self.actionDeviceUnlink.triggered.connect(self.on_actionDeviceUnlink_triggered)
 
@@ -180,7 +180,7 @@ class frmMain(QMainWindow, Ui_frmMain):#
     def on_actionResetDatabase_triggered(self):
         m=QMessageBox()
         icon6 = QIcon()
-        icon6.addPixmap(QPixmap(":/cancel.png"), QIcon.Normal, QIcon.Off)
+        icon6.addPixmap(QPixmap(":/cancel.png"), QIcon.Mode.Normal, QIcon.State.Off)
         m.setWindowIcon(icon6)
         confirm=m.question(self, self.tr("Erase database confirmation"), self.tr("This action will erase known devices database. Do you want to continue?."), QMessageBox.Yes, QMessageBox.No)
         if confirm==QMessageBox.Yes:
@@ -204,7 +204,7 @@ class frmMain(QMainWindow, Ui_frmMain):#
     def on_actionScan_triggered(self):
         f=frmInterfaceSelector(self.mem, self)
         f.exec()
-        if f.result()!=QDialog.Accepted:
+        if f.result()!=QDialog.DialogCode.Accepted:
             return
         
         inicio=datetime.now()

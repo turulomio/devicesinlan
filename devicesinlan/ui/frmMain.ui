@@ -36,7 +36,7 @@
      <x>0</x>
      <y>0</y>
      <width>995</width>
-     <height>30</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuAyuda">
@@ -154,8 +154,8 @@
   </action>
   <action name="actionScan">
    <property name="icon">
-    <iconset resource="../images/devicesinlan.qrc">
-     <normaloff>:/update.png</normaloff>:/update.png</iconset>
+    <iconset>
+     <normaloff>../images/update.png</normaloff>../images/update.png</iconset>
    </property>
    <property name="text">
     <string>&amp;New scan</string>

@@ -23,7 +23,7 @@ class Language:
             
     def qicon(self):
         ico = QIcon()
-        ico.addPixmap(self.qpixmap(), QIcon.Normal, QIcon.Off) 
+        ico.addPixmap(self.qpixmap(), QIcon.Mode.Normal, QIcon.State.Off) 
         return ico
 
 class SetLanguages(QObject):

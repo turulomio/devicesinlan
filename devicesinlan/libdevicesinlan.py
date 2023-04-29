@@ -17,6 +17,7 @@ from devicesinlan import __version__, __versiondate__
 from devicesinlan.reusing.package_resources import package_filename
 from devicesinlan.reusing.text_inputs import input_YN, input_int
 from ipaddress import IPv4Network
+from os import path
 from platform import system as platform_system
 from uuid import  uuid4
 from urllib.request import urlopen
@@ -26,6 +27,8 @@ from xml.dom import minidom
 class MemSetup(QObject):
     def __init__(self):
         QObject.__init__(self)        
+        
+        self.BASE_DIR=path.dirname(__file__)
         colorama_init()
         self.name="DevicesInLAN"
         self.author=self.tr("Mariano Mu\xf1oz")
