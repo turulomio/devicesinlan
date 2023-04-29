@@ -729,7 +729,7 @@ def qbool(bool):
     else:
         a.setCheckState(Qt.Unchecked);
         a.setText(QApplication.translate("Core","False"))
-    a.setTextAlignment(Qt.AlignVCenter|Qt.AlignCenter)
+    a.setTextAlignment(Qt.AlignmentFlag.AlignVCenter|Qt.AlignmentFlag.AlignCenter)
     return a
 
 ## Center checkbox
@@ -747,7 +747,7 @@ def wdgBool(bool):
         pCheckBox.setCheckState(Qt.Unchecked);
     pLayout = QHBoxLayout(pWidget);
     pLayout.addWidget(pCheckBox);
-    pLayout.setAlignment(Qt.AlignCenter);
+    pLayout.setAlignment(Qt.AlignmentFlag.AlignCenter);
     pLayout.setContentsMargins(0,0,0,0);
     pWidget.setLayout(pLayout)
     return pWidget
@@ -764,7 +764,7 @@ def qcenter(string):
     if string==None:
         return qnone()
     a=QTableWidgetItem(str(string))
-    a.setTextAlignment(Qt.AlignVCenter|Qt.AlignCenter)
+    a.setTextAlignment(Qt.AlignmentFlag.AlignVCenter|Qt.AlignmentFlag.AlignCenter)
     return a
     
 def qcrossedout():
@@ -779,7 +779,7 @@ def qcurrency(currency, decimals=2):
     if currency is None or currency.amount is None:
         return qnone()
     a=QTableWidgetItem(currency.string(decimals))
-    a.setTextAlignment(Qt.AlignVCenter|Qt.AlignRight)
+    a.setTextAlignment(Qt.AlignmentFlag.AlignVCenter|Qt.AlignmentFlag.AlignRight)
     if currency.amount==None:
         a.setForeground(QColor(0, 0, 255))
     elif currency.amount<0:
@@ -790,14 +790,14 @@ def qleft(string):
     if string==None:
         return qnone()
     a=QTableWidgetItem(str(string))
-    a.setTextAlignment(Qt.AlignVCenter|Qt.AlignLeft)
+    a.setTextAlignment(Qt.AlignmentFlag.AlignVCenter|Qt.AlignmentFlag.AlignLeft)
     return a
 
 def qright(string):
     if string==None:
         return qnone()
     a=QTableWidgetItem(str(string))
-    a.setTextAlignment(Qt.AlignVCenter|Qt.AlignRight)
+    a.setTextAlignment(Qt.AlignmentFlag.AlignVCenter|Qt.AlignmentFlag.AlignRight)
     return a
 
 ## Creates a QTableWidgetItem with the date
@@ -813,7 +813,7 @@ def qdatetime(dt, tz_name):
     if newdt==None:
         return qnone()
     a=QTableWidgetItem(dtaware2string(newdt, "%Y-%m-%d %H:%M:%S"))
-    a.setTextAlignment(Qt.AlignVCenter|Qt.AlignRight)
+    a.setTextAlignment(Qt.AlignmentFlag.AlignVCenter|Qt.AlignmentFlag.AlignRight)
     return a
 
 

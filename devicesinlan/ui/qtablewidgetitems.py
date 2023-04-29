@@ -18,7 +18,7 @@ def qbool(bool):
     else:
         a.setCheckState(Qt.Unchecked);
         a.setText(QApplication.translate("Core","False"))
-    a.setTextAlignment(Qt.AlignVCenter|Qt.AlignCenter)
+    a.setTextAlignment(Qt.AlignmentFlag.AlignVCenter|Qt.AlignmentFlag.AlignCenter)
     return a
 
 ## Center checkbox
@@ -33,7 +33,7 @@ def wdgBool(bool):
         pCheckBox.setCheckState(Qt.Unchecked);
     pLayout = QHBoxLayout(pWidget);
     pLayout.addWidget(pCheckBox);
-    pLayout.setAlignment(Qt.AlignCenter);
+    pLayout.setAlignment(Qt.AlignmentFlag.AlignCenter);
     pLayout.setContentsMargins(0,0,0,0);
     pWidget.setLayout(pLayout);
     pCheckBox.setEnabled(False)
@@ -49,7 +49,7 @@ def qcenter(string, digits=None):
     if string==None:
         return qempty()
     a=QTableWidgetItem(str(string))
-    a.setTextAlignment(Qt.AlignVCenter|Qt.AlignCenter)
+    a.setTextAlignment(Qt.AlignmentFlag.AlignVCenter|Qt.AlignmentFlag.AlignCenter)
     return a
     
 def qleft(string):
