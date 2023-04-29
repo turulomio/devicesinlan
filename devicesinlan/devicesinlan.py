@@ -33,4 +33,4 @@ def main_gui():
     f = frmMain(mem) 
     f.show()
 
-    sys.exit(mem.app.exec_())
+    sys.exit(mem.app.exec())

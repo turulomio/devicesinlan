@@ -52,7 +52,7 @@ def dtnaive(date, hour):
 ## @param days Integer with the number of days
 ## @return String like " 0 years, 1 month and 3 days"
 def days2string(days):
-    from PyQt5.QtWidgets import QApplication
+    from PyQt6.QtWidgets import QApplication
     years=days//365
     months=(days-years*365)//30
     days=int(days -years*365 -months*30)

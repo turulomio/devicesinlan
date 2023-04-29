@@ -75,7 +75,7 @@ class Reusing(Command):
         from github import download_from_github
         from file_functions import replace_in_file
 
-        download_from_github('turulomio','reusingcode','PyQt5/myqtablewidget.py', 'devicesinlan/reusing')
+        download_from_github('turulomio','reusingcode','PyQt6/myqtablewidget.py', 'devicesinlan/reusing')
         download_from_github('turulomio','reusingcode','python/call_by_name.py', 'devicesinlan/reusing')
         download_from_github('turulomio','reusingcode','python/casts.py', 'devicesinlan/reusing')
         download_from_github('turulomio','reusingcode','python/decorators.py', 'devicesinlan/reusing')
@@ -256,10 +256,10 @@ setup(name='devicesinlan',
     install_requires= [ 'setuptools',
                         'colorama', 
                         'scapy', 
-                        'PyQt5',
+                        'PyQt6',
                         'pywin32;platform_system=="Windows"',
                         'pytz', 
-                        ], #PyQt5 and PyQtChart doesn't have egg-info in Gentoo, so I remove it to install it with ebuild without making 2 installations. Should be added manually when using pip to install
+                        ], #PyQt6 and PyQtChart doesn't have egg-info in Gentoo, so I remove it to install it with ebuild without making 2 installations. Should be added manually when using pip to install
     data_files=data_files,
     cmdclass={
                         'doxygen': Doxygen,

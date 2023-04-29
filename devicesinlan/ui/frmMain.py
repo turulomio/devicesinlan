@@ -1,10 +1,10 @@
-from PyQt5.QtCore import pyqtSlot, Qt, QPoint, QEvent, QUrl
-from PyQt5.QtGui import QIcon, QPixmap, QDesktopServices
-from PyQt5.QtWidgets import QMainWindow, QMenu, QTabWidget, QTableWidget,  QDialog, QWidget, QVBoxLayout, QLabel,  QAbstractItemView, qApp, QMessageBox, QAction, QFileDialog
+from PyQt6.QtCore import pyqtSlot, Qt, QPoint, QEvent, QUrl
+from PyQt6.QtGui import QIcon, QPixmap, QDesktopServices, QAction
+from PyQt6.QtWidgets import QMainWindow, QMenu, QTabWidget, QTableWidget,  QDialog, QWidget, QVBoxLayout, QLabel,  QAbstractItemView, QApplication, QMessageBox, QFileDialog
 from datetime import datetime, date, timedelta
 from devicesinlan.ui.Ui_frmMain import Ui_frmMain
 from devicesinlan.libdevicesinlan import ArpScanMethod, DeviceManager
-from devicesinlan.version import __version__, __versiondate__,  get_remote
+from devicesinlan import __version__, __versiondate__,  get_remote
 from devicesinlan.libdevicesinlan_gui import  qmessagebox, qquestion,  DeviceManager_qtablewidget,  DeviceManager_qtablewidget_devices_from_settings
 from devicesinlan.ui.frmSettings import frmSettings
 from devicesinlan.ui.frmHelp import frmHelp
@@ -75,7 +75,7 @@ class myTab(QWidget):
     def on_actionDeviceLink_triggered(self):
         f=frmDeviceCRUD(self.set.mem, self.set)
         f.lblTitle.setText(self.actionDeviceLink.text())
-        f.exec_() 
+        f.exec() 
         self.table_update()
         
     @pyqtSlot()      
@@ -97,7 +97,7 @@ class myTab(QWidget):
         menu=QMenu()
         menu.addAction(self.actionDeviceLink)
         menu.addAction(self.actionDeviceUnlink)
-        menu.exec_(self.table.mapToGlobal(pos))
+        menu.exec(self.table.mapToGlobal(pos))
 
 class frmMain(QMainWindow, Ui_frmMain):#    
     def __init__(self, mem, parent = 0,  flags = False):
@@ -153,18 +153,18 @@ class frmMain(QMainWindow, Ui_frmMain):#
                 qmessagebox(self.tr("You have the last version"))
         else:
             m=QMessageBox()
-            m.setIcon(QMessageBox.Information)
+            m.setIcon(QMessageBox.Icon.Information)
             m.setWindowIcon(QIcon(":/devicesinlan.png"))
-            m.setTextFormat(Qt.RichText)#this is what makes the links clickable
+            m.setTextFormat(Qt.TextFormat.RichText)#this is what makes the links clickable
             m.setText(self.tr("There is a new DevicesInLAN version. You can download it from <a href='https://github.com/Turulomio/devicesinlan/releases'>GitHub</a>."))
-            m.exec_() 
+            m.exec() 
         self.mem.settings.setValue("frmMain/lastupdate", date.today().toordinal())
 
     @pyqtSlot(QEvent)   
     def closeEvent(self,event):   
         warning ("Exiting")
-        qApp.closeAllWindows()
-        qApp.exit()
+        QApplication.closeAllWindows()
+        QApplication.exit()
         exit(0)
 
     @pyqtSlot()      
@@ -196,14 +196,14 @@ class frmMain(QMainWindow, Ui_frmMain):#
     @pyqtSlot()      
     def on_actionSettings_triggered(self):
         f=frmSettings(self.mem, self)
-        f.exec_()
+        f.exec()
         self.retranslateUi(self)
         self.repaint()
 
     @pyqtSlot()      
     def on_actionScan_triggered(self):
         f=frmInterfaceSelector(self.mem, self)
-        f.exec_()
+        f.exec()
         if f.result()!=QDialog.Accepted:
             return
         

@@ -1,13 +1,13 @@
 ## THIS IS FILE IS FROM https://github.com/turulomio/reusingcode IF YOU NEED TO UPDATE IT PLEASE MAKE A PULL REQUEST IN THAT PROJECT
 ## DO NOT UPDATE IT IN YOUR CODE IT WILL BE REPLACED USING FUNCTION IN README
 
-from PyQt5.QtCore import Qt,  pyqtSlot, QObject,  pyqtSignal
-from PyQt5.QtGui import QKeySequence, QColor, QIcon, QBrush, QFont
-from PyQt5.QtWidgets import QApplication, QHeaderView, QTableWidget, QFileDialog,  QTableWidgetItem, QWidget, QCheckBox, QHBoxLayout, QVBoxLayout, QLabel, QLineEdit, QAction, QMenu, QToolButton, QAbstractItemView
-from .call_by_name import call_by_name
-from .datetime_functions import dtaware2string, dtaware_changes_tz, time2string
-from .libmanagers import ManagerSelectionMode
-from .casts import lor_remove_columns
+from PyQt6.QtCore import Qt,  pyqtSlot, QObject,  pyqtSignal
+from PyQt6.QtGui import QKeySequence, QColor, QIcon, QBrush, QFont, QAction
+from PyQt6.QtWidgets import QApplication, QHeaderView, QTableWidget, QFileDialog,  QTableWidgetItem, QWidget, QCheckBox, QHBoxLayout, QVBoxLayout, QLabel, QLineEdit, QMenu, QToolButton, QAbstractItemView
+from ..reusing.call_by_name import call_by_name
+from ..reusing.datetime_functions import dtaware2string, dtaware_changes_tz, time2string
+from ..reusing.libmanagers import ManagerSelectionMode
+from ..reusing.casts import lor_remove_columns
 from logging import info, debug, error
 from datetime import datetime, date,  timedelta
 
@@ -138,7 +138,7 @@ class mqtw(QWidget):
         return self.data[item.row()][item.column()]
 
     def on_generic_customContextMenuRequested(self, pos):
-        self.qmenu().exec_(self.table.mapToGlobal(pos))
+        self.qmenu().exec(self.table.mapToGlobal(pos))
         
     def setGenericContextMenu(self):
         self.table.customContextMenuRequested.connect(self.on_generic_customContextMenuRequested)
@@ -885,7 +885,7 @@ def qtwiSetStrikeOut(qtwi):
 
 def example():
     from libmanagers import ObjectManager_With_IdName_Selectable
-    from PyQt5.QtCore import QSettings
+    from PyQt6.QtCore import QSettings
     from base64 import b64encode
 
     class Mem:
@@ -928,7 +928,7 @@ def example():
         menu.addMenu(mqtw_manager.qmenu())
         menu.addSeparator()
         menu.addMenu(mqtw_manager.qmenu())
-        menu.exec_(mqtw_manager.table.mapToGlobal(pos))
+        menu.exec(mqtw_manager.table.mapToGlobal(pos))
 
     manager_manager=PruebaManager()
     for i in range(100):

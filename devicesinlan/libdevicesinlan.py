@@ -6,14 +6,14 @@ import os
 import re
 import subprocess
 import sys
-from PyQt5.QtCore import QCoreApplication, QSettings, QTranslator, QObject
-from PyQt5.QtNetwork import QNetworkInterface, QAbstractSocket,  QTcpSocket
+from PyQt6.QtCore import QCoreApplication, QSettings, QTranslator, QObject
+from PyQt6.QtNetwork import QNetworkInterface, QAbstractSocket,  QTcpSocket
 from concurrent.futures import ThreadPoolExecutor,  as_completed                            
 from datetime import datetime, date     
 from devicesinlan.reusing.casts import string2xml, b2s, xml2string
 from devicesinlan.reusing.decorators import need_administrator
 from devicesinlan.reusing.libmanagers import ObjectManager_With_IdName, ObjectManager_Selectable
-from devicesinlan.version import __version__, __versiondate__
+from devicesinlan import __version__, __versiondate__
 from devicesinlan.reusing.package_resources import package_filename
 from devicesinlan.reusing.text_inputs import input_YN, input_int
 from ipaddress import IPv4Network
@@ -423,7 +423,7 @@ class InterfaceManager(ObjectManager_Selectable):
     def load_all(self):
         for i in QNetworkInterface.allInterfaces():
                 for e in i.addressEntries():
-                    if e.ip().isLoopback()==False and i.isValid() and e.ip().isMulticast()==False and e.ip().isNull()==False and e.ip().protocol()==QAbstractSocket.IPv4Protocol and e.ip().isLinkLocal()==False:
+                    if e.ip().isLoopback()==False and i.isValid() and e.ip().isMulticast()==False and e.ip().isNull()==False and e.ip().protocol()==QAbstractSocket.NetworkLayerProtocol.IPv4Protocol and e.ip().isLinkLocal()==False:
                         self.append(Interface(self.mem).init__create(i, e))
         
     def print(self):

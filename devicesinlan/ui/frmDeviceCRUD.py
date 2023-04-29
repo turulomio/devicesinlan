@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QDialog
+from PyQt6.QtWidgets import QDialog
 from devicesinlan.ui.Ui_frmDeviceCRUD import Ui_frmDeviceCRUD
 from devicesinlan.libdevicesinlan_gui import DeviceTypeManager_qcombobox
 

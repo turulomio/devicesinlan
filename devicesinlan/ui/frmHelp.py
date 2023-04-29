@@ -1,5 +1,5 @@
-from PyQt5.QtWidgets import QDialog
-from PyQt5.QtCore import pyqtSlot
+from PyQt6.QtWidgets import QDialog
+from PyQt6.QtCore import pyqtSlot
 from devicesinlan.ui.Ui_frmHelp import Ui_frmHelp
 from devicesinlan.ui.frmSettings import SetLanguages
 from devicesinlan.libdevicesinlan import package_filename

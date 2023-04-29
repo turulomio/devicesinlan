@@ -61,7 +61,7 @@ def string2decimal(s, type=1):
 
 ## Converts a decimal to a localized number string
 def l10nDecimal(dec, digits=2):
-    from PyQt5.QtCore import QLocale
+    from PyQt6.QtCore import QLocale
     l=QLocale()
     return l.toCurrencyString(float(dec))
 
@@ -107,7 +107,7 @@ def s2b(s, code='UTF8'):
 
 def c2b(state):
     """QCheckstate to python bool"""
-    from PyQt5.QtCore import Qt
+    from PyQt6.QtCore import Qt
     if state==Qt.Checked:
         return True
     else:
@@ -115,7 +115,7 @@ def c2b(state):
 
 def b2c(booleano):
     """Bool to QCheckstate"""
-    from PyQt5.QtCore import Qt
+    from PyQt6.QtCore import Qt
     if booleano==True:
         return Qt.Checked
     else:

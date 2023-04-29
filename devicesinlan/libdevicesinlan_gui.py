@@ -1,9 +1,9 @@
-from PyQt5.QtCore import Qt,  QCoreApplication, QTranslator, QSettings
-from PyQt5.QtWidgets import QTableWidgetItem, QMessageBox, QApplication
-from PyQt5.QtGui import QColor,  QPixmap, QIcon
+from PyQt6.QtCore import Qt,  QCoreApplication, QTranslator, QSettings
+from PyQt6.QtWidgets import QTableWidgetItem, QMessageBox, QApplication
+from PyQt6.QtGui import QColor,  QPixmap, QIcon
 from argparse import ArgumentParser, RawTextHelpFormatter
 from devicesinlan.libdevicesinlan import MemConsole
-from devicesinlan.version import __version__,  __versiondate__
+from devicesinlan import __version__,  __versiondate__
 from sys import argv
 
 ## devicesinlan_gui Mem object
@@ -156,12 +156,12 @@ def qleft(string):
     a.setTextAlignment(Qt.AlignVCenter|Qt.AlignLeft)
     return a
     
-def qmessagebox(message, type=QMessageBox.Information):
+def qmessagebox(message, type=QMessageBox.Icon.Information):
     m=QMessageBox()
     m.setWindowIcon(QIcon(":/devicesinlan.png"))
     m.setIcon(type)
     m.setText(str(message))
-    m.exec_() 
+    m.exec() 
     
 def qquestion(message, qicon ):
     """

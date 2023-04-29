@@ -1,9 +1,9 @@
 ## THIS IS FILE IS FROM https://github.com/turulomio/reusingcode IF YOU NEED TO UPDATE IT PLEASE MAKE A PULL REQUEST IN THAT PROJECT
 ## DO NOT UPDATE IT IN YOUR CODE IT WILL BE REPLACED USING FUNCTION IN README
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import  QColor
-from PyQt5.QtWidgets import QWidget, QCheckBox, QHBoxLayout, QTableWidgetItem, QApplication
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import  QColor
+from PyQt6.QtWidgets import QWidget, QCheckBox, QHBoxLayout, QTableWidgetItem, QApplication
 from .. datetime_functions import dtaware2string, dtaware_changes_tz, time2string
 
 def qbool(bool):

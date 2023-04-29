@@ -1,6 +1,6 @@
-from PyQt5.QtCore import pyqtSlot, QObject
-from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtWidgets import QDialog
+from PyQt6.QtCore import pyqtSlot, QObject
+from PyQt6.QtGui import QIcon, QPixmap
+from PyQt6.QtWidgets import QDialog
 
 from devicesinlan.ui.Ui_frmSettings import Ui_frmSettings
 
