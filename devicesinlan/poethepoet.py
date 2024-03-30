@@ -2,13 +2,13 @@ from gettext import translation
 from importlib.resources import files
 from devicesinlan import __version__
 from devicesinlan.reusing.github import download_from_github
-from os import system, environ, listdir
+from os import system, listdir
 from sys import argv
 from concurrent.futures import ProcessPoolExecutor
 from multiprocessing import cpu_count
 
 try:
-    t=translation('mymoviebook', files("mymoviebook") / "locale")
+    t=translation('devicesinlan', files("devicesinlan") / "locale")
     _=t.gettext
 except:
     _=str
@@ -39,20 +39,8 @@ def reusing():
         local=True
         print("Update code in local without downloading was selected with --local")
     if local==False:
-        download_from_github("turulomio", "reusingcode", "python/casts.py", "mymoviebook/reusing")
-        download_from_github("turulomio", "reusingcode", "python/github.py", "mymoviebook/reusing")
-        download_from_github("turulomio", "reusingcode", "python/text_inputs.py", "mymoviebook/reusing")
-
-def django_manage():
-    """
-        Allos to use django manage.py
-    """
-    environ.setdefault("DJANGO_SETTINGS_MODULE", "mymoviebook.settings")
-
-    from django.core.management import execute_from_command_line
-
-    execute_from_command_line(argv)
-
+        download_from_github("turulomio", "reusingcode", "python/github.py", "devicesinlan/reusing")
+        download_from_github("turulomio", "reusingcode", "python/text_inputs.py", "devicesinlan/reusing")
 
 def release():
         print(_("New Release:"))
@@ -60,11 +48,11 @@ def release():
         print(_("  * Change version and date in pyproject.toml"))
         print(_("  * Edit Changelog in README"))
         print("  * poe translate")
-        print("  * mcedit mymoviebook/locale/es.po")
+        print("  * mcedit devicesinlan/locale/es.po")
         print("  * poe translate")
         print("  * poetry install")
 #        print("  * python setup.py doxygen")
-        print("  * git commit -a -m 'mymoviebook-{}'".format(__version__))
+        print("  * git commit -a -m 'devicesinlan-{}'".format(__version__))
         print("  * git push")
         print(_("  * Make a new tag in github"))
         print("  * poetry build")
@@ -74,10 +62,10 @@ def release():
 
 def translate():
         #es
-        system("xgettext -L Python --no-wrap --no-location --from-code='UTF-8' -o mymoviebook/locale/mymoviebook.pot mymoviebook/*.py")
-        system("msgmerge -N --no-wrap -U mymoviebook/locale/es.po mymoviebook/locale/mymoviebook.pot")
-        system("msgfmt -cv -o mymoviebook/locale/es/LC_MESSAGES/mymoviebook.mo mymoviebook/locale/es.po")
-        system("msgfmt -cv -o mymoviebook/locale/fr/LC_MESSAGES/mymoviebook.mo mymoviebook/locale/fr.po")
+        system("xgettext -L Python --no-wrap --no-location --from-code='UTF-8' -o devicesinlan/locale/devicesinlan.pot devicesinlan/*.py")
+        system("msgmerge -N --no-wrap -U devicesinlan/locale/es.po devicesinlan/locale/devicesinlan.pot")
+        system("msgfmt -cv -o devicesinlan/locale/es/LC_MESSAGES/devicesinlan.mo devicesinlan/locale/es.po")
+        system("msgfmt -cv -o devicesinlan/locale/fr/LC_MESSAGES/devicesinlan.mo devicesinlan/locale/fr.po")
 #
 #from setuptools import setup, Command
 #import gettext
