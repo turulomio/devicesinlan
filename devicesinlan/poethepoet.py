@@ -2,7 +2,7 @@ from gettext import translation
 from importlib.resources import files
 from devicesinlan import __version__
 from devicesinlan.reusing.github import download_from_github
-from os import system, listdir, path
+from os import system, listdir, path, chdir, getcwd
 from shutil import which
 from sys import argv
 from concurrent.futures import ProcessPoolExecutor
@@ -102,44 +102,41 @@ def translate():
 
 
 def pyinstaller():
-        # Check if wine is installed
-        if which("wine") is None:
-            raise Exception("Wine is not in your system")
+    cwd=getcwd()
+    # Check if wine is installed
+    if which("wine") is None:
+        raise Exception("Wine is not in your system")
+    
+    # Download python executable
+    url_download_exe="https://www.python.org/ftp/python/3.11.8/python-3.11.8-amd64.exe"
+    filename=url_download_exe.split("/")[-1]
+    print (filename)
+    if not path.exists(filename):
+        system("wget {filename}")
+    
+    # Create a new wine, install pythonon and the whole devicesinlan dependencies
+    with TemporaryDirectory() as tmpdir:
+        wineprefix=f"WINEPREFIX={tmpdir}"
+        ## Copies sourcerces
+        system(f"rsync -avzP . {tmpdir}")
         
-        # Download python executable
-        url_download_exe="https://www.python.org/ftp/python/3.11.8/python-3.11.8-amd64.exe"
-        filename=url_download_exe.split("/")[-1]
-        print (filename)
-        if not path.exists(filename):
-            system("wget {filename}")
+        ## Install windows environment
+        system (f"{wineprefix} wine python-3.11.8-amd64.exe /passive AppendPath=1")
+        system (f"{wineprefix} wine pip install .")
+        system (f"{wineprefix} wine pip install pyinstaller")
         
-        # Create a new wine
-        with TemporaryDirectory() as tmpdir:
-            winepath=f"WINEPREFIX={tmpdir}"
-            system (f"{winepath} wine python-3.11.8-amd64.exe /passive AppendPath=1")
-            system (f"{winepath} wine pip install .")
+        chdir(tmpdir)
+        #gui
+        with open(f"{tmpdir}/run_gui.py","w") as f:
+            f.write("import devicesinlan.devicesinlan\n")
+            f.write("devicesinlan.devicesinlan.main_gui()\n")
+        system(f"""{wineprefix} wine pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile --windowed  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
+        SystemError
+        #console
+        with open(f"{tmpdir}/run.py","w") as f:
+            f.write("import devicesinlan.devicesinlan\n")
+            f.write("devicesinlan.devicesinlan.main_console()\n")
+        system(f"""{wineprefix} wine pyinstaller {tmpdir}/run.py -n devicesinlan-{__version__} --nowindowed --onefile  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
+        
+        system(f"cp {tmpdir}/dist/* {cwd}/dist/")
             
-        
-#        wine msiexec /i python-3.x.x.msi /L*v log.txt
-#    
-#        system("python setup.py uninstall")
-#        system("python setup.py install")
-#        #gui
-#        f=open("build/run.py","w")
-#        f.write("import devicesinlan.devicesinlan\n")
-#        f.write("devicesinlan.devicesinlan.main_gui()\n")
-#        f.close()
-#        chdir("build")
-#        system("""pyinstaller run.py -n devicesinlan_gui-{} --onefile --windowed  --icon ../devicesinlan/images/devicesinlan.ico --distpath ../dist""".format(__version__))
-#        chdir("..")
-#
-#
-#        #Console
-#        f=open("build/run.py","w")
-#        f.write("import devicesinlan.devicesinlan\n")
-#        f.write("devicesinlan.devicesinlan.main_console()\n")
-#        f.close()
-#        chdir("build")
-#        system("""pyinstaller run.py -n devicesinlan-{} --onefile --nowindowed --icon ../devicesinlan/images/devicesinlan.ico --distpath ../dist""".format(__version__))
-#        chdir("..")
-
