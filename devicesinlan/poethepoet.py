@@ -2,7 +2,7 @@ from gettext import translation
 from importlib.resources import files
 from devicesinlan import __version__
 from devicesinlan.reusing.github import download_from_github
-from os import system, listdir
+from os import system, listdir, chdir
 from sys import argv
 from concurrent.futures import ProcessPoolExecutor
 from multiprocessing import cpu_count
@@ -60,143 +60,6 @@ def release():
         print("  * poetry publish --username turulomio --password")
         print(_("  * Create a new gentoo ebuild with the new version"))
         print(_("  * Upload to portage repository")) 
-
-def translate():
-        #es
-        system("xgettext -L Python --no-wrap --no-location --from-code='UTF-8' -o devicesinlan/locale/devicesinlan.pot devicesinlan/*.py")
-        system("msgmerge -N --no-wrap -U devicesinlan/locale/es.po devicesinlan/locale/devicesinlan.pot")
-        system("msgfmt -cv -o devicesinlan/locale/es/LC_MESSAGES/devicesinlan.mo devicesinlan/locale/es.po")
-        system("msgfmt -cv -o devicesinlan/locale/fr/LC_MESSAGES/devicesinlan.mo devicesinlan/locale/fr.po")
-#
-#from setuptools import setup, Command
-#import gettext
-#import os
-#import platform
-#import shutil
-#import site
-#from concurrent.futures import ProcessPoolExecutor
-#from multiprocessing import cpu_count
-# 
-#class Doxygen(Command):
-#    description = "Create/update doxygen documentation in doc/html"
-#    user_options = []
-#
-#    def initialize_options(self):
-#        pass
-#
-#    def finalize_options(self):
-#        pass
-#
-#    def run(self):
-#        print("Creating Doxygen Documentation")
-#        os.system("""sed -i -e "41d" doc/Doxyfile""")#Delete line 41
-#        os.system("""sed -i -e "41iPROJECT_NUMBER         = {}" doc/Doxyfile""".format(__version__))#Insert line 41
-#        os.chdir("doc")
-#        os.system("doxygen Doxyfile")
-#        os.system("rsync -avzP -e 'ssh -l turulomio' html/ frs.sourceforge.net:/home/users/t/tu/turulomio/userweb/htdocs/doxygen/devicesinlan/ --delete-after")
-#        os.chdir("..")
-#
-#class PyInstaller(Command):
-#    description = "pyinstaller file generator"
-#    user_options = []
-#
-#    def initialize_options(self):
-#        pass
-#
-#    def finalize_options(self):
-#        pass
-#
-#    def run(self):
-#        os.system("python setup.py uninstall")
-#        os.system("python setup.py install")
-#        #gui
-#        f=open("build/run.py","w")
-#        f.write("import devicesinlan.devicesinlan\n")
-#        f.write("devicesinlan.devicesinlan.main_gui()\n")
-#        f.close()
-#        os.chdir("build")
-#        os.system("""pyinstaller run.py -n devicesinlan_gui-{} --onefile --windowed  --icon ../devicesinlan/images/devicesinlan.ico --distpath ../dist""".format(__version__))
-#        os.chdir("..")
-#
-#
-#        #Console
-#        f=open("build/run.py","w")
-#        f.write("import devicesinlan.devicesinlan\n")
-#        f.write("devicesinlan.devicesinlan.main_console()\n")
-#        f.close()
-#        os.chdir("build")
-#        os.system("""pyinstaller run.py -n devicesinlan-{} --onefile --nowindowed --icon ../devicesinlan/images/devicesinlan.ico --distpath ../dist""".format(__version__))
-#        os.chdir("..")
-#
-#
-#class Reusing(Command):
-#    description = "Update code from https://github.com/turulomio/reusingcode"
-#    user_options = []
-#
-#    def initialize_options(self):
-#        pass
-#
-#    def finalize_options(self):
-#        pass
-#
-#    def run(self):
-#        from sys import path
-#        path.append("devicesinlan/reusing")
-#        from github import download_from_github
-#        from file_functions import replace_in_file
-#
-#        download_from_github('turulomio','reusingcode','PyQt6/myqtablewidget.py', 'devicesinlan/reusing')
-#        download_from_github('turulomio','reusingcode','python/call_by_name.py', 'devicesinlan/reusing')
-#        download_from_github('turulomio','reusingcode','python/casts.py', 'devicesinlan/reusing')
-#        download_from_github('turulomio','reusingcode','python/decorators.py', 'devicesinlan/reusing')
-#        download_from_github('turulomio','reusingcode','python/file_functions.py', 'devicesinlan/reusing')
-#        download_from_github('turulomio','reusingcode','python/github.py', 'devicesinlan/reusing')
-#        download_from_github('turulomio','reusingcode','python/libmanagers.py', 'devicesinlan/reusing')
-#        download_from_github('turulomio','reusingcode','python/datetime_functions.py', 'devicesinlan/reusing')
-#        download_from_github('turulomio','reusingcode','python/text_inputs.py', 'devicesinlan/reusing')
-#        download_from_github('turulomio','reusingcode','python/package_resources.py', 'devicesinlan/reusing')
-#        
-#        replace_in_file("devicesinlan/reusing/libmanagers.py",  "from datetime_functions",  "from .datetime_functions")
-#        replace_in_file("devicesinlan/reusing/libmanagers.py",  "from call_by_name",  "from .call_by_name")
-#        replace_in_file("devicesinlan/reusing/myqtablewidget.py",  "from .. ",  "from .")
-#
-#class Compile(Command):
-#    description = "Compile ui and images"
-#    user_options = []
-#
-#    def initialize_options(self):
-#        pass
-#
-#    def finalize_options(self):
-#        pass
-#
-#    def run(self):
-#        futures=[]
-#        with ProcessPoolExecutor(max_workers=cpu_count()+1) as executor:
-#            for filename in os.listdir("devicesinlan/ui/"):
-#                if filename.endswith(".ui"):
-#                    without_extension=filename[:-3]
-#                    futures.append(executor.submit(os.system, "pyuic5 devicesinlan/ui/{0}.ui -o devicesinlan/ui/Ui_{0}.py".format(without_extension)))
-#            futures.append(executor.submit(os.system, "pyrcc5 devicesinlan/images/devicesinlan.qrc -o devicesinlan/images/devicesinlan_rc.py"))
-#        # Overwriting devicesinlan_rc
-#        for filename in os.listdir("devicesinlan/ui/"):
-#             if filename.startswith("Ui_"):
-#                 os.system("sed -i -e 's/devicesinlan_rc/devicesinlan.images.devicesinlan_rc/' devicesinlan/ui/{}".format(filename))
-#                 os.system("sed -i -e 's/from myqtablewidget/from devicesinlan.reusing.myqtablewidget/' devicesinlan/ui/{}".format(filename))
-#
-#
-#class Procedure(Command):
-#    description = "Uninstall installed files with install"
-#    user_options = []
-#
-#    def initialize_options(self):
-#        pass
-#
-#    def finalize_options(self):
-#        pass
-#
-#    def run(self):
-#        print("""
 #Nueva versión:
 #  * Cambiar la versión y la fecha en version.py
 #  * Modificar el Changelog en README
@@ -218,53 +81,13 @@ def translate():
 #  * Change to xulpymoney source directory and make git pull
 #  * python setup.py pyinstaller
 #  * Add file to github release
-#""".format(__version__))
-#
-#
-#class Uninstall(Command):
-#    description = "Uninstall installed files with install"
-#    user_options = []
-#
-#    def initialize_options(self):
-#        pass
-#
-#    def finalize_options(self):
-#        pass
-#
-#    def run(self):
-#        if platform.system()=="Linux":
-#            os.system("rm -Rf {}/devicesinlan*".format(site.getsitepackages()[0]))
-#            os.system("rm /usr/bin/devicesinlan*")
-#            os.system("rm /usr/share/pixmaps/devicesinlan.png")
-#            os.system("rm /usr/share/applications/devicesinlan.desktop")
-#            os.system("rm /usr/share/man/man1/devicesinlan.1")
-#            os.system("rm /usr/share/man/es/man1/devicesinlan.1")
-#        else:
-#            print(site.getsitepackages())
-#            for file in os.listdir(site.getsitepackages()[1]):#site packages
-#                path=site.getsitepackages()[1]+"\\"+ file
-#                if file.find("devicesinlan")!=-1:
-#                    shutil.rmtree(path)
-#                    print(path,  "Erased")
-#            for file in os.listdir(site.getsitepackages()[0]+"\\Scripts\\"):#Scripts
-#                path=site.getsitepackages()[0]+"\\scripts\\"+ file
-#                if file.find("devicesinlan")!=-1:
-#                    os.remove(path)
-#                    print(path,  "Erased")
-#
-#
-#
-#class Doc(Command):
-#    description = "Update man pages and translations"
-#    user_options = []
-#
-#    def initialize_options(self):
-#        pass
-#
-#    def finalize_options(self):
-#        pass
-#
-#    def run(self):
+
+def translate():
+        #es
+        system("xgettext -L Python --no-wrap --no-location --from-code='UTF-8' -o devicesinlan/locale/devicesinlan.pot devicesinlan/*.py")
+        system("msgmerge -N --no-wrap -U devicesinlan/locale/es.po devicesinlan/locale/devicesinlan.pot")
+        system("msgfmt -cv -o devicesinlan/locale/es/LC_MESSAGES/devicesinlan.mo devicesinlan/locale/es.po")
+        system("msgfmt -cv -o devicesinlan/locale/fr/LC_MESSAGES/devicesinlan.mo devicesinlan/locale/fr.po")
 #        from devicesinlan.libdevicesinlan import MemSetup
 #        mem=MemSetup()
 #        mem.setQApplication()
@@ -274,3 +97,27 @@ def translate():
 #        for language in ["en", "fr", "ro", "ru", "es"]:
 #            mem.setLanguage(language)
 #            mem.mangenerator(language)
+
+
+def pyinstaller():
+        system("python setup.py uninstall")
+        system("python setup.py install")
+        #gui
+        f=open("build/run.py","w")
+        f.write("import devicesinlan.devicesinlan\n")
+        f.write("devicesinlan.devicesinlan.main_gui()\n")
+        f.close()
+        chdir("build")
+        system("""pyinstaller run.py -n devicesinlan_gui-{} --onefile --windowed  --icon ../devicesinlan/images/devicesinlan.ico --distpath ../dist""".format(__version__))
+        chdir("..")
+
+
+        #Console
+        f=open("build/run.py","w")
+        f.write("import devicesinlan.devicesinlan\n")
+        f.write("devicesinlan.devicesinlan.main_console()\n")
+        f.close()
+        chdir("build")
+        system("""pyinstaller run.py -n devicesinlan-{} --onefile --nowindowed --icon ../devicesinlan/images/devicesinlan.ico --distpath ../dist""".format(__version__))
+        chdir("..")
+

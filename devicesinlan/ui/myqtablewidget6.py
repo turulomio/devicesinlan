@@ -842,7 +842,6 @@ def qnumber_limited(n, limit, digits=2, reverse=False):
     return a
 
 ## Shows the time of a datetime
-## See function time2string of datetime_functions to see formats
 ## @param ti must be a time object
 ## @param format
 def qtime(ti, format="HH:MM:SS"):
