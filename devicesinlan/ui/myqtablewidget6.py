@@ -807,10 +807,10 @@ def qdate(date):
 ## dt es un datetime con timezone, que se mostrara con la zone pasado como parametro
 ## Convierte un datetime a string, teniendo en cuenta los microsehgundos, para ello se convierte a datetime local
 def qdatetime(dt, tz_name):
-    newdt=dtaware_changes_tz(dt, tz_name)
+    newdt=casts.dtaware_changes_tz(dt, tz_name)
     if newdt==None:
         return qnone()
-    a=QTableWidgetItem(dtaware2string(newdt, "%Y-%m-%d %H:%M:%S"))
+    a=QTableWidgetItem(casts.dtaware2str(newdt, "%Y-%m-%d %H:%M:%S"))
     a.setTextAlignment(Qt.AlignmentFlag.AlignVCenter|Qt.AlignmentFlag.AlignRight)
     return a
 
@@ -848,7 +848,7 @@ def qnumber_limited(n, limit, digits=2, reverse=False):
 def qtime(ti, format="HH:MM:SS"):
     if ti==None:
         return qnone()
-    item=qright(time2string(ti, format))
+    item=qright(casts.time2str(ti, format))
     if format=="Xulpymoney":
         if ti.microsecond==5:
             item.setBackground(QColor(255, 255, 148))
