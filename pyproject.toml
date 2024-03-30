@@ -9,7 +9,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = ">=3.10,<3.13"
 colorama = "^0.4.6"
-pyqt6 = "^6.6.1"
+PyQt6 = "^6.6.1"
 scapy = "^2.5.0"
 pydicts = "^0.15.0"
 
