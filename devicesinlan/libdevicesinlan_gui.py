@@ -6,6 +6,8 @@ from devicesinlan.libdevicesinlan import MemConsole
 from devicesinlan import __version__,  __versiondate__
 from sys import argv
 
+import devicesinlan.ui.devicesinlan_rc #Loads resources in memory and works
+
 ## devicesinlan_gui Mem object
 class MemGUI(MemConsole):
     def __init__(self):

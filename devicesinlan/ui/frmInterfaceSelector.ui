@@ -14,7 +14,7 @@
    <string>Interface configuration</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../images/devicesinlan.qrc">
+   <iconset resource="../images/devicesinlan.qrc">
     <normaloff>:/configure.png</normaloff>:/configure.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -37,7 +37,6 @@
        <property name="font">
         <font>
          <pointsize>12</pointsize>
-         <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
@@ -85,7 +84,7 @@
           </size>
          </property>
          <property name="pixmap">
-          <pixmap resource="../../images/devicesinlan.qrc">:/configure.png</pixmap>
+          <pixmap resource="../images/devicesinlan.qrc">:/configure.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -288,7 +287,8 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../images/devicesinlan.qrc"/>
+  <include location="../images/devicesinlan.qrc"/>
+  <include location="../images/devicesinlan.qrc"/>
   <include location="../images/devicesinlan.qrc"/>
  </resources>
  <connections>

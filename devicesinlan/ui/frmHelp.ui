@@ -17,7 +17,7 @@
    <string>DevicesInLan help</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../images/devicesinlan.qrc">
+   <iconset resource="../images/devicesinlan.qrc">
     <normaloff>:/help.png</normaloff>:/help.png</iconset>
   </property>
   <property name="sizeGripEnabled">
@@ -34,7 +34,6 @@
        <property name="font">
         <font>
          <pointsize>20</pointsize>
-         <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
@@ -70,7 +69,7 @@
           </size>
          </property>
          <property name="pixmap">
-          <pixmap resource="../../images/devicesinlan.qrc">:/help.png</pixmap>
+          <pixmap resource="../images/devicesinlan.qrc">:/help.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -183,7 +182,7 @@
            <string>DevicesInLan Graphical Interface</string>
           </property>
           <property name="icon">
-           <iconset resource="../../images/devicesinlan.qrc">
+           <iconset resource="../images/devicesinlan.qrc">
             <normaloff>:/devicesinlan.png</normaloff>:/devicesinlan.png</iconset>
           </property>
          </item>
@@ -192,7 +191,7 @@
            <string>DevicesInLan Console</string>
           </property>
           <property name="icon">
-           <iconset resource="../../images/devicesinlan.qrc">
+           <iconset resource="../images/devicesinlan.qrc">
             <normaloff>:/devicesinlan.png</normaloff>:/devicesinlan.png</iconset>
           </property>
          </item>
@@ -221,9 +220,10 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../images/devicesinlan.qrc"/>
-  <include location="../../images/devicesinlan.qrc"/>
   <include location="../images/devicesinlan.qrc"/>
+  <include location="../images/devicesinlan.qrc"/>
+  <include location="../images/devicesinlan.qrc"/>
+  <include location="../../images/devicesinlan.qrc"/>
  </resources>
  <connections/>
 </ui>

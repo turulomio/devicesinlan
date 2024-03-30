@@ -1,0 +1,40 @@
+<RCC>
+  <qresource>
+    <file>alarm_clock.png</file>
+    <file>database.png</file>
+    <file>cancel.png</file>
+    <file>add.png</file>
+    <file>configure.png</file>
+    <file>update.png</file>
+    <file>exit.png</file>
+    <file>help.png</file>
+    <file>open.png</file>
+    <file>save.png</file>
+    <file>devicesinlan.png</file>
+  </qresource>
+  <qresource prefix="flags">
+    <file>rusia.png</file>
+    <file>rumania.png</file>
+    <file>france.png</file>
+    <file>spain.png</file>
+    <file>uk.png</file>
+  </qresource>
+  <qresource prefix="devices">
+    <file>camera-photo.png</file>
+    <file>camera-web.png</file>
+    <file>computer-laptop.png</file>
+    <file>computer.png</file>
+    <file>modem.png</file>
+    <file>multimedia-player-apple-ipod.png</file>
+    <file>multimedia-player.png</file>
+    <file>pda.png</file>
+    <file>phone.png</file>
+    <file>printer.png</file>
+    <file>scanner.png</file>
+    <file>smartphone.png</file>
+    <file>tablet.png</file>
+    <file>usb-wireless.png</file>
+    <file>video-projector.png</file>
+    <file>video-television.png</file>
+  </qresource>
+</RCC>

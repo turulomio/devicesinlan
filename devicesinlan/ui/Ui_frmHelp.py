@@ -27,7 +27,6 @@ class Ui_frmHelp(object):
         font = QtGui.QFont()
         font.setPointSize(20)
         font.setBold(True)
-        font.setWeight(75)
         self.lblApp.setFont(font)
         self.lblApp.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.lblApp.setObjectName("lblApp")
