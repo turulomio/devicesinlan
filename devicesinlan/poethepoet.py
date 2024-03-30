@@ -40,6 +40,7 @@ def reusing():
         print("Update code in local without downloading was selected with --local")
     if local==False:
         download_from_github("turulomio", "reusingcode", "python/github.py", "devicesinlan/reusing")
+        download_from_github("turulomio", "reusingcode", "python/libmanagers.py", "devicesinlan/reusing")
         download_from_github("turulomio", "reusingcode", "python/text_inputs.py", "devicesinlan/reusing")
 
 def release():

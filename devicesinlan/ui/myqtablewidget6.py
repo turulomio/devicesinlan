@@ -4,10 +4,8 @@
 from PyQt6.QtCore import Qt,  pyqtSlot, QObject,  pyqtSignal
 from PyQt6.QtGui import QKeySequence, QColor, QIcon, QBrush, QFont, QAction
 from PyQt6.QtWidgets import QApplication, QHeaderView, QTableWidget, QFileDialog,  QTableWidgetItem, QWidget, QCheckBox, QHBoxLayout, QVBoxLayout, QLabel, QLineEdit, QMenu, QToolButton, QAbstractItemView
-from ..reusing.call_by_name import call_by_name
-from ..reusing.datetime_functions import dtaware2string, dtaware_changes_tz, time2string
 from ..reusing.libmanagers import ManagerSelectionMode
-from ..reusing.casts import lor_remove_columns
+from pydicts import lol, casts
 from logging import info, debug, error
 from datetime import datetime, date,  timedelta
 
@@ -541,7 +539,7 @@ class mqtw(QWidget):
         m.setHorizontalHeaders(self.listHorizontalHeaders(), widths)
         m.setVerticalHeaders(self.listVerticalHeaders(),vwidth)
         if len(self.data)>0 and self.__class__==mqtwObjects: #Need to remove last column (object column)
-            data=lor_remove_columns(self.data, [len(self.data[0])-1, ])
+            data=lol.lol_remove_columns(self.data, [len(self.data[0])-1, ])
         else:
             data=self.data
         m.setData(data)
@@ -692,7 +690,7 @@ class mqtwManager(mqtw):
         for o in manager.arr:
             row=[]
             for attribute in self.manager_attributes:
-                row.append(call_by_name(o,attribute))
+                row.append(getattr(o,attribute))
             data.append(row)
         self.setData(header_horizontal, header_vertical, data, decimals, zonename)
 
