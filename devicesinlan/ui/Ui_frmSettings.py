@@ -24,7 +24,6 @@ class Ui_frmSettings(object):
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
-        font.setWeight(75)
         self.lblTitulo.setFont(font)
         self.lblTitulo.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.lblTitulo.setObjectName("lblTitulo")

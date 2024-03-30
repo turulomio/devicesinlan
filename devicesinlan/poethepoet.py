@@ -101,7 +101,7 @@ def pyinstaller():
         
                 
         ## Linux gui. Good for debugging pyinstaller issues from cwd
-        system(f"""pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile  --windowed --add-data 'devicesinlan/images:devicesinlan/images'  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
+        system(f"""pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile  --windowed --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
 
         ## Copies sourcerces
         system(f"rsync -avzP . {tmpdir}")
