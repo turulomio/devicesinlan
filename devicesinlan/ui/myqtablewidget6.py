@@ -4,10 +4,8 @@
 from PyQt6.QtCore import Qt,  pyqtSlot, QObject,  pyqtSignal
 from PyQt6.QtGui import QKeySequence, QColor, QIcon, QBrush, QFont, QAction
 from PyQt6.QtWidgets import QApplication, QHeaderView, QTableWidget, QFileDialog,  QTableWidgetItem, QWidget, QCheckBox, QHBoxLayout, QVBoxLayout, QLabel, QLineEdit, QMenu, QToolButton, QAbstractItemView
-from ..reusing.call_by_name import call_by_name
-from ..reusing.datetime_functions import dtaware2string, dtaware_changes_tz, time2string
 from ..reusing.libmanagers import ManagerSelectionMode
-from ..reusing.casts import lor_remove_columns
+from pydicts import lol, casts
 from logging import info, debug, error
 from datetime import datetime, date,  timedelta
 
@@ -541,7 +539,7 @@ class mqtw(QWidget):
         m.setHorizontalHeaders(self.listHorizontalHeaders(), widths)
         m.setVerticalHeaders(self.listVerticalHeaders(),vwidth)
         if len(self.data)>0 and self.__class__==mqtwObjects: #Need to remove last column (object column)
-            data=lor_remove_columns(self.data, [len(self.data[0])-1, ])
+            data=lol.lol_remove_columns(self.data, [len(self.data[0])-1, ])
         else:
             data=self.data
         m.setData(data)
@@ -692,7 +690,7 @@ class mqtwManager(mqtw):
         for o in manager.arr:
             row=[]
             for attribute in self.manager_attributes:
-                row.append(call_by_name(o,attribute))
+                row.append(getattr(o,attribute))
             data.append(row)
         self.setData(header_horizontal, header_vertical, data, decimals, zonename)
 
@@ -809,10 +807,10 @@ def qdate(date):
 ## dt es un datetime con timezone, que se mostrara con la zone pasado como parametro
 ## Convierte un datetime a string, teniendo en cuenta los microsehgundos, para ello se convierte a datetime local
 def qdatetime(dt, tz_name):
-    newdt=dtaware_changes_tz(dt, tz_name)
+    newdt=casts.dtaware_changes_tz(dt, tz_name)
     if newdt==None:
         return qnone()
-    a=QTableWidgetItem(dtaware2string(newdt, "%Y-%m-%d %H:%M:%S"))
+    a=QTableWidgetItem(casts.dtaware2str(newdt, "%Y-%m-%d %H:%M:%S"))
     a.setTextAlignment(Qt.AlignmentFlag.AlignVCenter|Qt.AlignmentFlag.AlignRight)
     return a
 
@@ -844,13 +842,12 @@ def qnumber_limited(n, limit, digits=2, reverse=False):
     return a
 
 ## Shows the time of a datetime
-## See function time2string of datetime_functions to see formats
 ## @param ti must be a time object
 ## @param format
 def qtime(ti, format="HH:MM:SS"):
     if ti==None:
         return qnone()
-    item=qright(time2string(ti, format))
+    item=qright(casts.time2str(ti, format))
     if format=="Xulpymoney":
         if ti.microsecond==5:
             item.setBackground(QColor(255, 255, 148))

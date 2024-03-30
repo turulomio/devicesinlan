@@ -1,10 +1,7 @@
-## THIS IS FILE IS FROM https://github.com/turulomio/reusingcode IF YOU NEED TO UPDATE IT PLEASE MAKE A PULL REQUEST IN THAT PROJECT
-## DO NOT UPDATE IT IN YOUR CODE IT WILL BE REPLACED USING FUNCTION IN README
-
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import  QColor
 from PyQt6.QtWidgets import QWidget, QCheckBox, QHBoxLayout, QTableWidgetItem, QApplication
-from .. datetime_functions import dtaware2string, dtaware_changes_tz, time2string
+from pydicts import casts
 
 def qbool(bool):
     """Prints bool and check. Is read only and enabled"""
@@ -89,10 +86,10 @@ def qdate(date):
 ## dt es un datetime con timezone, que se mostrara con la zone pasado como parametro
 ## Convierte un datetime a string, teniendo en cuenta los microsehgundos, para ello se convierte a datetime local
 def qdatetime(dt, tz_name):
-    newdt=dtaware_changes_tz(dt, tz_name)
+    newdt=casts.dtaware_changes_tz(dt, tz_name)
     if newdt==None:
         return qempty()
-    a=QTableWidgetItem(dtaware2string(newdt))
+    a=QTableWidgetItem(casts.dtaware2str(newdt))
     a.setTextAlignment(Qt.AlignVCenter|Qt.AlignRight)
     return a
 
@@ -124,12 +121,11 @@ def qnumber_limited(n, limit, digits=2, reverse=False):
     return a
 
 ## Shows the time of a datetime
-## See function time2string of datetime_functions to see formats
 ## @param ti must be a time object
 def qtime(ti, format="HH:MM"):
     if ti==None:
         return qempty()
-    item=qright(time2string(ti, format))
+    item=qright(casts.time2str(ti, format))
     if format=="Xulpymoney":
         if ti.microsecond==5:
             item.setBackground(QColor(255, 255, 148))
