@@ -46,43 +46,26 @@ def reusing():
         download_from_github("turulomio", "reusingcode", "python/text_inputs.py", "devicesinlan/reusing")
 
 def release():
-        print(_("New Release:"))
-        print(_("  * Change version and date in __init__.py"))
-        print(_("  * Change version and date in pyproject.toml"))
-        print(_("  * Edit Changelog in README"))
-        print("  * poe translate")
-        print("  * mcedit devicesinlan/locale/es.po")
-        print("  * poe translate")
-        print("  * poetry install")
-#        print("  * python setup.py doxygen")
-        print("  * git commit -a -m 'devicesinlan-{}'".format(__version__))
-        print("  * git push")
-        print(_("  * Make a new tag in github"))
-        print("  * poetry build")
-        print("  * poetry publish --username turulomio --password")
-        print(_("  * Create a new gentoo ebuild with the new version"))
-        print(_("  * Upload to portage repository")) 
-#Nueva versión:
-#  * Cambiar la versión y la fecha en version.py
-#  * Modificar el Changelog en README
-#  * Update ieee-oui with get-oui from arp-scan package
-#  * python setup.py doc
-#  * linguist
-#  * python setup.py doc
-#  * python setup.py install
-#  * python setup.py doxygen
-#  * git commit -a -m 'devicesinlan-{}'
-#  * git push
-#  * Hacer un nuevo tag en GitHub
-#  * python setup.py sdist upload -r pypi
-#  * python setup.py uninstall
-#  * Crea un nuevo ebuild de Gentoo con la nueva versión
-#  * Subelo al repositorio del portage
-#
-#  * Change to windows. Enter in an Administrator console.
-#  * Change to xulpymoney source directory and make git pull
-#  * python setup.py pyinstaller
-#  * Add file to github release
+    print("""New Release:
+    * Change version and date in __init__.py"))
+    * Change version and date in pyproject.toml"))
+    * Edit Changelog in README"))
+    * Update ieee-oui with get-oui from arp-scan package
+    * poe translate")
+    * mcedit devicesinlan/locale/es.po")
+    * poe translate")
+    * poetry install")
+    * git commit -a -m 'devicesinlan-{}'".format(__version__))
+    * git push")
+    * Make a new tag in github"))
+    * poetry pyinstaller
+    * Upload wine created files
+    * poetry build")
+    * poetry publish --username turulomio --password")
+    * Create a new gentoo ebuild with the new version"))
+    * Upload to portage repository")) 
+""")
+
 
 def translate():
         #es
