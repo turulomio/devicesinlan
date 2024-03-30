@@ -7,7 +7,7 @@ license = "GPL-3.0 license"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = ">=3.10,<3.13"
 colorama = "^0.4.6"
 pyqt6 = "^6.6.1"
 scapy = "^2.5.0"
@@ -31,3 +31,4 @@ release = { script = "devicesinlan.poethepoet:release" }
 translate = { script = "devicesinlan.poethepoet:translate" }
 compile = { script = "devicesinlan.poethepoet:compile" }
 reusing = { script = "devicesinlan.poethepoet:reusing" }
+pyinstaller = { script = "devicesinlan.poethepoet:pyinstaller" }

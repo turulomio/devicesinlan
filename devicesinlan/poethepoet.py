@@ -2,10 +2,12 @@ from gettext import translation
 from importlib.resources import files
 from devicesinlan import __version__
 from devicesinlan.reusing.github import download_from_github
-from os import system, listdir, chdir
+from os import system, listdir, path
+from shutil import which
 from sys import argv
 from concurrent.futures import ProcessPoolExecutor
 from multiprocessing import cpu_count
+from tempfile import TemporaryDirectory
 
 try:
     t=translation('devicesinlan', files("devicesinlan") / "locale")
@@ -100,24 +102,44 @@ def translate():
 
 
 def pyinstaller():
-        system("python setup.py uninstall")
-        system("python setup.py install")
-        #gui
-        f=open("build/run.py","w")
-        f.write("import devicesinlan.devicesinlan\n")
-        f.write("devicesinlan.devicesinlan.main_gui()\n")
-        f.close()
-        chdir("build")
-        system("""pyinstaller run.py -n devicesinlan_gui-{} --onefile --windowed  --icon ../devicesinlan/images/devicesinlan.ico --distpath ../dist""".format(__version__))
-        chdir("..")
-
-
-        #Console
-        f=open("build/run.py","w")
-        f.write("import devicesinlan.devicesinlan\n")
-        f.write("devicesinlan.devicesinlan.main_console()\n")
-        f.close()
-        chdir("build")
-        system("""pyinstaller run.py -n devicesinlan-{} --onefile --nowindowed --icon ../devicesinlan/images/devicesinlan.ico --distpath ../dist""".format(__version__))
-        chdir("..")
+        # Check if wine is installed
+        if which("wine") is None:
+            raise Exception("Wine is not in your system")
+        
+        # Download python executable
+        url_download_exe="https://www.python.org/ftp/python/3.11.8/python-3.11.8-amd64.exe"
+        filename=url_download_exe.split("/")[-1]
+        print (filename)
+        if not path.exists(filename):
+            system("wget {filename}")
+        
+        # Create a new wine
+        with TemporaryDirectory() as tmpdir:
+            winepath=f"WINEPREFIX={tmpdir}"
+            system (f"{winepath} wine python-3.11.8-amd64.exe /passive AppendPath=1")
+            system (f"{winepath} wine pip install .")
+            
+        
+#        wine msiexec /i python-3.x.x.msi /L*v log.txt
+#    
+#        system("python setup.py uninstall")
+#        system("python setup.py install")
+#        #gui
+#        f=open("build/run.py","w")
+#        f.write("import devicesinlan.devicesinlan\n")
+#        f.write("devicesinlan.devicesinlan.main_gui()\n")
+#        f.close()
+#        chdir("build")
+#        system("""pyinstaller run.py -n devicesinlan_gui-{} --onefile --windowed  --icon ../devicesinlan/images/devicesinlan.ico --distpath ../dist""".format(__version__))
+#        chdir("..")
+#
+#
+#        #Console
+#        f=open("build/run.py","w")
+#        f.write("import devicesinlan.devicesinlan\n")
+#        f.write("devicesinlan.devicesinlan.main_console()\n")
+#        f.close()
+#        chdir("build")
+#        system("""pyinstaller run.py -n devicesinlan-{} --onefile --nowindowed --icon ../devicesinlan/images/devicesinlan.ico --distpath ../dist""".format(__version__))
+#        chdir("..")
 
