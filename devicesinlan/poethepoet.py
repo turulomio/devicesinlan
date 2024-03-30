@@ -22,7 +22,7 @@ def compile():
             if filename.endswith(".ui"):
                 without_extension=filename[:-3]
                 futures.append(executor.submit(system, "pyuic6 devicesinlan/ui/{0}.ui -o devicesinlan/ui/Ui_{0}.py".format(without_extension)))
-        futures.append(executor.submit(system, "/usr/lib64/qt6/libexec/rcc -g python devicesinlan/images/devicesinlan.qrc -o devicesinlan/images/devicesinlan_rc.py"))
+        futures.append(executor.submit(system, "/usr/lib64/qt6/libexec/rcc -g python devicesinlan/images/devicesinlan.qrc | sed '0,/PySide6/s//PyQt6/' > devicesinlan/images/devicesinlan_rc.py"))
     # Overwriting devicesinlan_rc
     for filename in listdir("devicesinlan/ui/"):
          if filename.startswith("Ui_"):
@@ -101,7 +101,7 @@ def pyinstaller():
         
                 
         ## Linux gui. Good for debugging pyinstaller issues from cwd
-        system(f"""pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__}  --windowed --add-data 'devicesinlan/images:devicesinlan/images'  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
+        system(f"""pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile  --windowed --add-data 'devicesinlan/images:devicesinlan/images'  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
 
         ## Copies sourcerces
         system(f"rsync -avzP . {tmpdir}")
