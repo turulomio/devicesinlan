@@ -101,7 +101,7 @@ def pyinstaller():
         
                 
         ## Linux gui. Good for debugging pyinstaller issues from cwd
-        system(f"""pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile  --windowed --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
+        system(f"""pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --windowed --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
 
         ## Copies sourcerces
         system(f"rsync -avzP . {tmpdir}")
@@ -126,10 +126,10 @@ def pyinstaller():
         
 
         # Windows gui
-        system(f"""{wineprefix} wine pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile --windowed  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
+        system(f"""{wineprefix} wine pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --windowed  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
         
         # Windows console
-        system(f"""{wineprefix} wine pyinstaller {tmpdir}/run.py -n devicesinlan-{__version__} --nowindowed --onefile  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
+        system(f"""{wineprefix} wine pyinstaller {tmpdir}/run.py -n devicesinlan-{__version__} --nowindowed --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --onefile  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
         
         system(f"cp {tmpdir}/dist/* {cwd}/dist/")
             
