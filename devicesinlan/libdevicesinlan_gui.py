@@ -143,6 +143,17 @@ def InterfaceManager_qcombobox(set, combo, selected=None):
         combo.addItem(name, l.id())
     if selected!=None:
             combo.setCurrentIndex(combo.findData(selected))      
+            
+            
+def Languages_qcombobox(combo,  mem, selected=None):
+    """Selected is id"""
+    for d in mem.lod_languages:
+        ico=QIcon()
+        ico.addPixmap(QPixmap(d["flag"]), QIcon.Mode.Normal, QIcon.State.Off) 
+        combo.addItem(ico, d["name"], d["code"])
+    if selected!=None:
+            combo.setCurrentIndex(combo.findData(selected))        
+            
 def qbool(bool):
     """Prints bool and check. Is read only and enabled"""
     a=QTableWidgetItem()

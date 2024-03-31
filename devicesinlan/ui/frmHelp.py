@@ -1,8 +1,8 @@
 from PyQt6.QtWidgets import QDialog
 from PyQt6.QtCore import pyqtSlot
 from devicesinlan.ui.Ui_frmHelp import Ui_frmHelp
-from devicesinlan.ui.frmSettings import SetLanguages
 from devicesinlan.libdevicesinlan import package_filename
+from devicesinlan.libdevicesinlan_gui import Languages_qcombobox
 
 class frmHelp(QDialog, Ui_frmHelp):
     def __init__(self, mem, parent = None, name = None, modal = False):
@@ -16,8 +16,7 @@ class frmHelp(QDialog, Ui_frmHelp):
         QDialog.__init__(self, parent)
         self.mem=mem
         self.setupUi(self)
-        self.languages=SetLanguages()
-        self.languages.qcombobox(self.cmbLanguage, self.mem.settings.value("frmSettings/language", "en"))         
+        Languages_qcombobox(self.cmbLanguage, self.mem, self.mem.settings.value("frmSettings/language", "en"))
         
     @pyqtSlot(str)      
     def on_cmbLanguage_currentIndexChanged(self, stri):    
