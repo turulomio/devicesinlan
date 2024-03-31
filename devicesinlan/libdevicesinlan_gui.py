@@ -25,9 +25,8 @@ class MemGUI(MemConsole):
     ## Sets QApplication Object to make a Qt application
     def setQApplication(self):
         self.app=QApplication(argv)
-        print(__file__)
         
-        QDir.addSearchPath("images",  f"{self.BASE_DIR}/images")
+#        QDir.addSearchPath("images",  f"{self.BASE_DIR}/images")
         self.app.setQuitOnLastWindowClosed(True)
         self.app.setOrganizationName(self.name)
         self.app.setOrganizationDomain(self.name)

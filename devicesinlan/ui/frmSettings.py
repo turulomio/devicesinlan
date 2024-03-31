@@ -12,7 +12,6 @@ class frmSettings(QDialog, Ui_frmSettings):
         self.spnConcurrent.setValue(int(self.mem.settings.value("frmSettings/concurrence", 50)))
 
     def on_cmbLanguage_currentIndexChanged(self, index):
-        print("CURRENT INDEX CHANGED")
         self.selected_language=self.mem.lod_languages[index]
         self.mem.setLanguage( self.selected_language["code"])
         self.retranslateUi(self)
