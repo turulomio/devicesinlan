@@ -1,5 +1,4 @@
 from PyQt6.QtWidgets import QDialog
-from PyQt6.QtCore import pyqtSlot
 from devicesinlan.ui.Ui_frmHelp import Ui_frmHelp
 from devicesinlan.libdevicesinlan import package_filename
 from devicesinlan.libdevicesinlan_gui import Languages_qcombobox
@@ -17,25 +16,23 @@ class frmHelp(QDialog, Ui_frmHelp):
         self.mem=mem
         self.setupUi(self)
         Languages_qcombobox(self.cmbLanguage, self.mem, self.mem.settings.value("frmSettings/language", "en"))
+        self.selected_language=self.mem.dod_languages[self.mem.settings.value("frmSettings/language", "en")]
         
-    @pyqtSlot(str)      
-    def on_cmbLanguage_currentIndexChanged(self, stri):    
+    def on_cmbLanguage_currentIndexChanged(self, index):    
+        print("CHANGING", index)
+        self.selected_language=self.mem.lod_languages[index]
         self.setSource()
         
-    @pyqtSlot(str)      
-    def on_cmbProgram_currentIndexChanged(self, stri):
+    def on_cmbProgram_currentIndexChanged(self, index):
         self.setSource()
 
     ## Sets html source
-    def setSource(self):
-        self.languages.selected=self.languages.find_by_name(self.cmbLanguage.currentText())
+    def setSource(self):        
         if self.cmbProgram.currentIndex()==1:
             program="devicesinlan"
         else:
             program="devicesinlan_gui"
-        url=package_filename("devicesinlan", "data/{}.{}.html".format(program, self.languages.selected.id))
-        f=open(url, encoding="UTF-8")
-        html=f.read()
-        f.close()
-        self.viewer.setHtml(html)
-        
+        url=package_filename("devicesinlan", "data/{}.{}.html".format(program, self.selected_language["code"]))
+        with open(url, encoding="UTF-8") as f:
+            self.viewer.setHtml(f.read())
+

@@ -99,7 +99,7 @@ def pyinstaller():
         
                 
         ## Linux gui. Good for debugging pyinstaller issues from cwd
-        system(f"""pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --windowed --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
+        system(f"""pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --add-data="devicesinlan/data:devicesinlan/data"  --windowed --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
 
         ## Copies sourcerces
         system(f"rsync -avzP . {tmpdir}")
