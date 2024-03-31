@@ -4,7 +4,7 @@
 
 from pkg_resources import resource_filename
 from os import path, listdir
-from logging import info, debug
+from logging import info, debug, error
 import sys
 ## Returns the path searching in a pkg_resource model and a url. Due to PYinstaller packager doesn't supportpkg_resource
 ## filename is differet if we are in LInux, Windows --onefile or Windows --onedir
@@ -27,11 +27,11 @@ def package_filename(module, url):
     
     for filename in posible_urls:
         if filename!=None and path.exists(filename):
-            print("Package filename '{}' found".format(filename)) #When debugging in windows, change logging for printt
+            info("Package filename '{}' found".format(filename)) #When debugging in windows, change logging for printt
             return filename
         else:
-            print("Package filename '{}' NOT found".format(filename)) #When debugging in windows, change logging for printt
-    print("Not found {} in module {}".format(url, module))
+            debug("Package filename '{}' NOT found".format(filename)) #When debugging in windows, change logging for printt
+    error("Not found {} in module {}".format(url, module))
 
 def package_listdir(module, url):
     for dirname in [

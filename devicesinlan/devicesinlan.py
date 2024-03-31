@@ -4,10 +4,13 @@
 import signal
 import sys
 from devicesinlan.reusing.text_inputs import press_key_to_continue
+
 from platform import system as platform_system
 
+
 def main_console():
-    from devicesinlan.libdevicesinlan import MemConsole
+    from devicesinlan.libdevicesinlan import MemConsole, setLoggingLevel
+    setLoggingLevel("DEBUG")
     mem=MemConsole()
     signal.signal(signal.SIGINT, mem.signal_handler)
     mem.setQApplication()
@@ -23,6 +26,8 @@ def main_gui():
     from devicesinlan.libdevicesinlan_gui import MemGUI
     from devicesinlan.ui.frmMain  import frmMain
 
+    from devicesinlan.libdevicesinlan import setLoggingLevel
+    setLoggingLevel("DEBUG")
     mem=MemGUI()
     signal.signal(signal.SIGINT, mem.signal_handler)
     mem.setQApplication()

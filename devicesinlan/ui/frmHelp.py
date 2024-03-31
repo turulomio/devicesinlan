@@ -18,8 +18,7 @@ class frmHelp(QDialog, Ui_frmHelp):
         Languages_qcombobox(self.cmbLanguage, self.mem, self.mem.settings.value("frmSettings/language", "en"))
         self.selected_language=self.mem.dod_languages[self.mem.settings.value("frmSettings/language", "en")]
         
-    def on_cmbLanguage_currentIndexChanged(self, index):    
-        print("CHANGING", index)
+    def on_cmbLanguage_currentIndexChanged(self, index):
         self.selected_language=self.mem.lod_languages[index]
         self.setSource()
         
