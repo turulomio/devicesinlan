@@ -172,8 +172,8 @@ class MemSetup(QObject):
                 logging.basicConfig(level=logging.CRITICAL, format=logFormat, datefmt=dateFormat)
                 logging.critical("--debug parameter must be DEBUG, INFO, WARNING, ERROR or CRITICAL")
                 sys.exit(1)
-            else:     #No debug parameter
-                logging.propagate=False
+#            else:     #No debug parameter
+#                logging.propagate=False
                 
         print("LOGGING ACTIVATED",  level)
 
