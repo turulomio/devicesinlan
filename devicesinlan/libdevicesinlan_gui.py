@@ -2,7 +2,7 @@ from PyQt6.QtCore import Qt,  QCoreApplication, QTranslator, QSettings, QDir
 from PyQt6.QtWidgets import QTableWidgetItem, QMessageBox, QApplication
 from PyQt6.QtGui import QColor,  QPixmap, QIcon
 from argparse import ArgumentParser, RawTextHelpFormatter
-from devicesinlan.libdevicesinlan import MemConsole
+from devicesinlan.libdevicesinlan import MemConsole, setLoggingLevel
 from devicesinlan import __version__,  __versiondate__
 from sys import argv
 
@@ -20,7 +20,7 @@ class MemGUI(MemConsole):
         parser.add_argument('--debug', help=self.tr( "Debug program information"))
         self.args=parser.parse_args()        
 
-        self.setLoggingLevel(self.args.debug)
+        setLoggingLevel(self.args.debug)
         
     ## Sets QApplication Object to make a Qt application
     def setQApplication(self):

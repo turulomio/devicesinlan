@@ -150,33 +150,6 @@ class MemSetup(QObject):
         man.saveHTML("devicesinlan/data/devicesinlan.{}.html".format(language))
 
 
-
-    ## Sets logging level for the app
-    def setLoggingLevel(self, level):        
-        #Por defecto se pone WARNING y mostrar´ia ERROR y CRITICAL
-        logFormat = "%(asctime)s %(levelname)s %(module)s:%(lineno)d at %(funcName)s. %(message)s"
-        dateFormat='%Y%m%d %I%M%S'
-
-        if level=="DEBUG":#Show detailed information that can help with program diagnosis and troubleshooting. CODE MARKS
-            logging.basicConfig(level=logging.DEBUG, format=logFormat, datefmt=dateFormat)
-        elif level=="INFO":#Everything is running as expected without any problem. TIME BENCHMARCKS
-            logging.basicConfig(level=logging.INFO, format=logFormat, datefmt=dateFormat)
-        elif level=="WARNING":#The program continues running, but something unexpected happened, which may lead to some problem down the road. THINGS TO DO
-            logging.basicConfig(level=logging.WARNING, format=logFormat, datefmt=dateFormat)
-        elif level=="ERROR":#The program fails to perform a certain function due to a bug.  SOMETHING BAD LOGIC
-            logging.basicConfig(level=logging.ERROR, format=logFormat, datefmt=dateFormat)
-        elif level=="CRITICAL":#The program encounters a serious error and may stop running. ERRORS
-            logging.basicConfig(level=logging.CRITICAL, format=logFormat, datefmt=dateFormat)
-        else:
-            if level:#Bad debug parameter
-                logging.basicConfig(level=logging.CRITICAL, format=logFormat, datefmt=dateFormat)
-                logging.critical("--debug parameter must be DEBUG, INFO, WARNING, ERROR or CRITICAL")
-                sys.exit(1)
-#            else:     #No debug parameter
-#                logging.propagate=False
-                
-        print("LOGGING ACTIVATED",  level)
-
     def signal_handler(self, signal, frame):
             print(Style.BRIGHT+Fore.RED+self.tr("You pressed 'Ctrl+C', exiting..."))
             sys.exit(0)
@@ -224,8 +197,7 @@ class MemConsole(MemSetup):
 
         self.args=parser.parse_args()
         self.method=ArpScanMethod.string2attribute(self.args.method)
-
-        self.setLoggingLevel(self.args.debug)
+        setLoggingLevel(self.args.debug)
 
         if self.args.load:
             if os.path.exists(self.args.load):
@@ -862,16 +834,74 @@ class Device(QObject):
     def macwithout2points(self, macwith):
         return macwith.replace(":", "")
         
-def resource_path(relative_path):
-    """ Get absolute path to resource, works for dev and for PyInstaller """
-    try:
-        # PyInstaller creates a temp folder and stores path in _MEIPASS
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-        
-        
 
-    r=os.path.join(base_path, relative_path)
-    print("Loading",  r)
-    return r
+    ## Sets logging level for the app
+    def setLoggingLevel(self, level):        
+        #Por defecto se pone WARNING y mostrar´ia ERROR y CRITICAL
+        logFormat = "%(asctime)s %(levelname)s %(module)s:%(lineno)d at %(funcName)s. %(message)s"
+        dateFormat='%Y%m%d %I%M%S'
+
+        if level=="DEBUG":#Show detailed information that can help with program diagnosis and troubleshooting. CODE MARKS
+            logging.basicConfig(level=logging.DEBUG, format=logFormat, datefmt=dateFormat)
+        elif level=="INFO":#Everything is running as expected without any problem. TIME BENCHMARCKS
+            logging.basicConfig(level=logging.INFO, format=logFormat, datefmt=dateFormat)
+        elif level=="WARNING":#The program continues running, but something unexpected happened, which may lead to some problem down the road. THINGS TO DO
+            logging.basicConfig(level=logging.WARNING, format=logFormat, datefmt=dateFormat)
+        elif level=="ERROR":#The program fails to perform a certain function due to a bug.  SOMETHING BAD LOGIC
+            logging.basicConfig(level=logging.ERROR, format=logFormat, datefmt=dateFormat)
+        elif level=="CRITICAL":#The program encounters a serious error and may stop running. ERRORS
+            logging.basicConfig(level=logging.CRITICAL, format=logFormat, datefmt=dateFormat)
+        else:
+            if level:#Bad debug parameter
+                logging.basicConfig(level=logging.CRITICAL, format=logFormat, datefmt=dateFormat)
+                logging.critical("--debug parameter must be DEBUG, INFO, WARNING, ERROR or CRITICAL")
+                sys.exit(1)
+#            else:     #No debug parameter
+#                logging.propagate=False
+                
+        print("LOGGING ACTIVATED",  level)
+
+    def signal_handler(self, signal, frame):
+            print(Style.BRIGHT+Fore.RED+self.tr("You pressed 'Ctrl+C', exiting..."))
+            sys.exit(0)
+            
+    ## Changes Qt current Qtranslator
+    ## @param language String with en, es .... None by defautt and search in settings
+    def setLanguage(self, language=None):  
+        print("SET LANGUAGE",  language)
+        if language==None:
+            language=self.settings.value("frmSettings/language", "en")
+        url=package_filename("devicesinlan", "i18n/devicesinlan_{}.qm".format(language))
+        
+        if language=="en":
+            logging.info("Changing to default language: en")
+            self.app.removeTranslator(self.translator)
+            self.translator=QTranslator()
+        else:
+            self.translator.load(url)
+            self.app.installTranslator(self.translator)
+            logging.info(self.tr("Language changed to {} using {}".format(language, url)))
+            
+
+## Sets logging level for the app
+def setLoggingLevel(level):        
+    #Por defecto se pone WARNING y mostrar´ia ERROR y CRITICAL
+    logFormat = "%(asctime)s %(levelname)s %(module)s:%(lineno)d at %(funcName)s. %(message)s"
+    dateFormat='%Y%m%d %I%M%S'
+
+    if level=="DEBUG":#Show detailed information that can help with program diagnosis and troubleshooting. CODE MARKS
+        logging.basicConfig(level=logging.DEBUG, format=logFormat, datefmt=dateFormat)
+    elif level=="INFO":#Everything is running as expected without any problem. TIME BENCHMARCKS
+        logging.basicConfig(level=logging.INFO, format=logFormat, datefmt=dateFormat)
+    elif level=="WARNING":#The program continues running, but something unexpected happened, which may lead to some problem down the road. THINGS TO DO
+        logging.basicConfig(level=logging.WARNING, format=logFormat, datefmt=dateFormat)
+    elif level=="ERROR":#The program fails to perform a certain function due to a bug.  SOMETHING BAD LOGIC
+        logging.basicConfig(level=logging.ERROR, format=logFormat, datefmt=dateFormat)
+    elif level=="CRITICAL":#The program encounters a serious error and may stop running. ERRORS
+        logging.basicConfig(level=logging.CRITICAL, format=logFormat, datefmt=dateFormat)
+    else:
+        if level:#Bad debug parameter
+            logging.basicConfig(level=logging.CRITICAL, format=logFormat, datefmt=dateFormat)
+            logging.critical("--debug parameter must be DEBUG, INFO, WARNING, ERROR or CRITICAL")
+            sys.exit(1)
+#            else:     #No debug parameter
