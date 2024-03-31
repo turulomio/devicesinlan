@@ -19,6 +19,7 @@ from devicesinlan.reusing.text_inputs import input_YN, input_int
 from ipaddress import IPv4Network
 from os import path
 from platform import system as platform_system
+from pydicts import lod
 from uuid import  uuid4
 from urllib.request import urlopen
 from xml.dom import minidom
@@ -34,6 +35,20 @@ class MemSetup(QObject):
         self.author=self.tr("Mariano Mu\xf1oz")
         self.description=self.tr('Show devices in a LAN making an ARP search to find them with a user interface')
         self.epilog=self.tr("If you like this app, please give me a star in https://github.com/turulomio/devicesinlan.")+"\n" +self.tr("Developed by {} 2015-{} \xa9").format(self.author, __versiondate__.year)
+
+
+        self.lod_languages=[
+            {"code":"en",  "flag": ":/flags/uk.png", "name":"English"}, 
+            {"code":"es",  "flag": ":/flags/spain.png", "name":"Espa\xf1ol"}, 
+            {"code":"fr",  "flag": ":/flags/france.png", "name":"Fran\xe7ais"}, 
+            {"code":"ro",  "flag": ":/flags/rumania.png", "name":"Rom\xe2n"}, 
+            {"code":"ru",  "flag": ":/flags/rusia.png", "name":"\u0420\u0443\u0441\u0441\u043a\u0438\u0439"}, 
+
+        ]
+
+        self.dod_languages=lod.lod2dod(self.lod_languages,  "code")
+
+
 
     ## Sets QApplication Object to make a Qt application
     def setQApplication(self):        
@@ -159,6 +174,8 @@ class MemSetup(QObject):
                 sys.exit(1)
             else:     #No debug parameter
                 logging.propagate=False
+                
+        print("LOGGING ACTIVATED",  level)
 
     def signal_handler(self, signal, frame):
             print(Style.BRIGHT+Fore.RED+self.tr("You pressed 'Ctrl+C', exiting..."))
@@ -167,6 +184,7 @@ class MemSetup(QObject):
     ## Changes Qt current Qtranslator
     ## @param language String with en, es .... None by defautt and search in settings
     def setLanguage(self, language=None):  
+        print("SET LANGUAGE",  language)
         if language==None:
             language=self.settings.value("frmSettings/language", "en")
         url=package_filename("devicesinlan", "i18n/devicesinlan_{}.qm".format(language))

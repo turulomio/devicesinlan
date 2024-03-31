@@ -16,3 +16,4 @@ devicesinlan.egg-info/
 dist/
 doc/html/
 doc/ttyrec/
+.jedi/

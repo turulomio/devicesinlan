@@ -590,6 +590,16 @@ files = [
 altgraph = ">=0.17"
 
 [[package]]
+name = "mangenerator"
+version = "0.4.0"
+description = "Python module to generate man documentation"
+optional = false
+python-versions = "*"
+files = [
+    {file = "mangenerator-0.4.0.tar.gz", hash = "sha256:7a3413d1b3a4cd3e8d04de6145ac0d9011b54023a9a49a9ed2e5f55cdbd51dc9"},
+]
+
+[[package]]
 name = "more-itertools"
 version = "10.2.0"
 description = "More routines for operating on iterables, beyond itertools"
@@ -1435,4 +1445,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.13"
-content-hash = "62256533eeacc421ddfb8112bf7d0534a3f0e600deec8ab42952bf94a4bbad98"
+content-hash = "d7469d1bf68d7230b2434d4b59959dce840753128c4653edcf840dc6907a3b81"

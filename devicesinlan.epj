@@ -1,8 +1,8 @@
 {
   "header": {
     "comment": "eric project file for project devicesinlan",
-    "copyright": "Copyright (C) 2022 , ",
-    "saved": "2022-07-14, 05:53:54"
+    "copyright": "Copyright (C) 2024 , ",
+    "saved": "2024-03-30, 21:03:50"
   },
   "project": {
     "AUTHOR": "",
@@ -11,6 +11,7 @@
     "DOCSTRING": "",
     "DOCUMENTATIONPARMS": {},
     "EMAIL": "",
+    "EMBEDDED_VENV": false,
     "EOL": 0,
     "FILETYPES": {
       "*.e4p": "OTHERS",
@@ -60,11 +61,6 @@
     "OTHERS": [
       "LICENSE.txt",
       "README.md",
-      "devicesinlan.egg-info/SOURCES.txt",
-      "devicesinlan.egg-info/dependency_links.txt",
-      "devicesinlan.egg-info/entry_points.txt",
-      "devicesinlan.egg-info/requires.txt",
-      "devicesinlan.egg-info/top_level.txt",
       "devicesinlan/data/ieee-oui.txt"
     ],
     "OTHERTOOLSPARMS": {},
@@ -84,28 +80,19 @@
     ],
     "SOURCES": [
       "devicesinlan/__init__.py",
-      "devicesinlan/casts.py",
-      "devicesinlan/datetime_functions.py",
-      "devicesinlan/decorators.py",
       "devicesinlan/devicesinlan.py",
-      "devicesinlan/github.py",
       "devicesinlan/images/devicesinlan_rc.py",
       "devicesinlan/libdevicesinlan.py",
       "devicesinlan/libdevicesinlan_gui.py",
-      "devicesinlan/libmanagers.py",
-      "devicesinlan/package_resources.py",
-      "devicesinlan/reusing/call_by_name.py",
+      "devicesinlan/poethepoet.py",
       "devicesinlan/reusing/casts.py",
-      "devicesinlan/reusing/datetime_functions.py",
       "devicesinlan/reusing/decorators.py",
       "devicesinlan/reusing/file_functions.py",
       "devicesinlan/reusing/github.py",
       "devicesinlan/reusing/libmanagers.py",
-      "devicesinlan/reusing/myqtablewidget.py",
       "devicesinlan/reusing/package_resources.py",
       "devicesinlan/reusing/text_inputs.py",
       "devicesinlan/shortcuts.py",
-      "devicesinlan/text_inputs.py",
       "devicesinlan/ui/Ui_frmAbout.py",
       "devicesinlan/ui/Ui_frmDeviceCRUD.py",
       "devicesinlan/ui/Ui_frmHelp.py",
@@ -121,11 +108,10 @@
       "devicesinlan/ui/frmInterfaceSelector.py",
       "devicesinlan/ui/frmMain.py",
       "devicesinlan/ui/frmSettings.py",
-      "devicesinlan/ui/myqtablewidget.py",
-      "devicesinlan/ui/qtablewidgetitems.py",
-      "devicesinlan/version.py",
-      "setup.py"
+      "devicesinlan/ui/myqtablewidget6.py",
+      "devicesinlan/ui/qtablewidgetitems.py"
     ],
+    "SOURCESDIR": "",
     "SPELLEXCLUDES": "",
     "SPELLLANGUAGE": "en_US",
     "SPELLWORDS": "",
@@ -143,6 +129,7 @@
       "devicesinlan/i18n/devicesinlan_ru.ts"
     ],
     "TRANSLATIONSBINPATH": "",
+    "TRANSLATIONSOURCESTARTPATH": "",
     "UICPARAMS": {
       "Package": "",
       "PackagesRoot": "",

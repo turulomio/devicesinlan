@@ -2,6 +2,7 @@ from gettext import translation
 from importlib.resources import files
 from devicesinlan import __version__
 from devicesinlan.reusing.github import download_from_github
+from devicesinlan.libdevicesinlan import MemSetup
 from os import system, listdir, path, chdir, getcwd
 from shutil import which
 from sys import argv
@@ -68,20 +69,17 @@ def release():
 
 
 def translate():
-        #es
-        system("xgettext -L Python --no-wrap --no-location --from-code='UTF-8' -o devicesinlan/locale/devicesinlan.pot devicesinlan/*.py")
-        system("msgmerge -N --no-wrap -U devicesinlan/locale/es.po devicesinlan/locale/devicesinlan.pot")
-        system("msgfmt -cv -o devicesinlan/locale/es/LC_MESSAGES/devicesinlan.mo devicesinlan/locale/es.po")
-        system("msgfmt -cv -o devicesinlan/locale/fr/LC_MESSAGES/devicesinlan.mo devicesinlan/locale/fr.po")
-#        from devicesinlan.libdevicesinlan import MemSetup
-#        mem=MemSetup()
-#        mem.setQApplication()
-#
-#        os.system("pylupdate5 -noobsolete -verbose devicesinlan.pro")
-#        os.system("lrelease -qt5 devicesinlan.pro")
-#        for language in ["en", "fr", "ro", "ru", "es"]:
-#            mem.setLanguage(language)
-#            mem.mangenerator(language)
+    """
+        I couldn't do it with qt6
+    """
+    mem=MemSetup()
+    mem.setQApplication()
+
+    system("pylupdate5 -noobsolete -verbose devicesinlan.pro")
+    system("/usr/lib64/qt5/bin/lrelease devicesinlan.pro")
+    for language in ["en", "fr", "ro", "ru", "es"]:
+        mem.setLanguage(language)
+        mem.mangenerator(language)
 
 
 def pyinstaller():
@@ -101,7 +99,7 @@ def pyinstaller():
         
                 
         ## Linux gui. Good for debugging pyinstaller issues from cwd
-        system(f"""pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile  --windowed --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
+        system(f"""pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --windowed --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
 
         ## Copies sourcerces
         system(f"rsync -avzP . {tmpdir}")
@@ -126,10 +124,10 @@ def pyinstaller():
         
 
         # Windows gui
-        system(f"""{wineprefix} wine pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile --windowed  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
+        system(f"""{wineprefix} wine pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --windowed  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
         
         # Windows console
-        system(f"""{wineprefix} wine pyinstaller {tmpdir}/run.py -n devicesinlan-{__version__} --nowindowed --onefile  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
+        system(f"""{wineprefix} wine pyinstaller {tmpdir}/run.py -n devicesinlan-{__version__} --nowindowed --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --onefile  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
         
         system(f"cp {tmpdir}/dist/* {cwd}/dist/")
             
