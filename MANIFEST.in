@@ -1,7 +1,0 @@
-include LICENSE.txt devicesinlan.desktop devicesinlan.pro *.py
-recursive-include devicesinlan *.py *.txt *.qm *.html *.ts *.png  devicesinlan.qrc *.ico
-recursive-include man  *.1
-prune */__pycache__/*
-prune doc
-prune database
-global-exclude *.pyc
