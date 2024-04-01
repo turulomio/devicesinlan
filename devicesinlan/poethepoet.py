@@ -87,8 +87,6 @@ def pyinstaller():
     
     # Create a new wine, install pythonon and the whole devicesinlan dependencies
     with TemporaryDirectory() as tmpdir:
-        
-        
         ## Generate launchers
         with open(f"{tmpdir}/run_gui.py","w") as f:
             f.write("import devicesinlan.devicesinlan\n")
@@ -97,13 +95,14 @@ def pyinstaller():
             f.write("import devicesinlan.devicesinlan\n")
             f.write("devicesinlan.devicesinlan.main_console()\n")
         
-                
-        ## Linux gui. Good for debugging pyinstaller issues from cwd
-        system(f"""pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --add-data="devicesinlan/data:devicesinlan/data"  --windowed --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
-
-        ## Copies sourcerces
+        ## Copies sources to tmpdir
         system(f"rsync -avzP . {tmpdir}")
         chdir(tmpdir)
+        
+        
+        # Linux gui. Good for debugging pyinstaller issues from cwd
+        system(f"""pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --add-data="devicesinlan/data:devicesinlan/data"  --windowed --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
+
         ## Check if wine is installed
         if which("wine") is None:
             raise Exception("Wine is not in your system")
@@ -119,15 +118,11 @@ def pyinstaller():
         system (f"{wineprefix} wine python-3.11.8-amd64.exe /passive AppendPath=1")
         system (f"{wineprefix} wine pip install .")
         system (f"{wineprefix} wine pip install pyinstaller")
-        
-        
-        
 
         # Windows gui
-        system(f"""{wineprefix} wine pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --windowed  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
+        system(f"""{wineprefix} wine pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --add-data="devicesinlan/data:devicesinlan/data"   --windowed  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
         
         # Windows console
-        system(f"""{wineprefix} wine pyinstaller {tmpdir}/run.py -n devicesinlan-{__version__} --nowindowed --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --onefile  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
+        system(f"""{wineprefix} wine pyinstaller {tmpdir}/run.py -n devicesinlan-{__version__} --nowindowed --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --add-data="devicesinlan/data:devicesinlan/data"   --onefile  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
         
         system(f"cp {tmpdir}/dist/* {cwd}/dist/")
-            
