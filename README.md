@@ -3,38 +3,22 @@
 Snapshots
 =========
 
-![Snapshot](https://github.com/turulomio/devicesinlan/blob/master/doc/devicesinlan_snapshots_01.png)
+![Snapshot](https://raw.githubusercontent.com/turulomio/devicesinlan/qt5/doc/devicesinlan_snapshots_01.png)
 
 Links
 =====
-Doxygen documentation:
-  * http://turulomio.users.sourceforge.net/doxygen/devicesinlan/
   
-Main developer web page:
-  * https://github.com/turulomio
+Project web page:
+  * https://github.com/turulomio/devicesinlan/
 
 App statistics
   * http://devicesinlan.sourceforge.net/php/devicesinlan_statistics.php
 
-Dependencies
-============
-* https://www.python.org/, as the main programming language.
-* https://pypi.org/project/colorama/, to give console colors.
-* https://pypi.org/project/PyQt5/, as the main library.
-* https://pypi.org/project/pywin32/, to create shortcuts.
-* https://github.com/secdev/scapy, for Scapy scan methods.
-
 Install in Linux
 ================
-If you use Gentoo you can find a ebuild in https://github.com/Turulomio/myportage/tree/master/net-analyzer/devicesinlan
+If you use Gentoo you can find a ebuild in https://github.com/turulomio/myportage/tree/master/net-analyzer/devicesinlan
 
-If you use other distribution compatible con pip, you need to install PyQt5 and devicesinlan with the following commands:
-
-`pip install PyQt5`
-
-`pip install devicesinlan`
-
-You need to install PyQt5 first, because is not in Linux setup.py dependencies due to it doesn't use standard setup tools. So for compatibility reasons with distributions like Gentoo, we use this additional step.
+If you use other distribution compatible con pip: `pip install devicesinlan`
 
 Install in Windows as a python module
 =====================================
@@ -53,11 +37,6 @@ Install in Windows as a standalone application
 You need to download devicesinlan-X.X.X.exe to use console script or devicesinlan_gui-X.X.X.exe to use gui app, from github release
 
 Just execute it. It's an standalone application, it took some time to launch due to it uncompress code first ;)
-
-Authors
-=======
-
-* Turulomio (<turulomio@yahoo.es>). Idea and spanish translation
 
 Changelog
 =========
