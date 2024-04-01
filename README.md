@@ -3,7 +3,7 @@
 Snapshots
 =========
 
-![Snapshot](https://github.com/turulomio/devicesinlan/blob/master/doc/devicesinlan_snapshots_01.png)
+![Snapshot](https://raw.githubusercontent.com/turulomio/devicesinlan/qt5/doc/devicesinlan_snapshots_01.png)
 
 Links
 =====
