@@ -525,7 +525,7 @@ class DeviceManager(QObject, ObjectManager_Selectable):
             return(ip, mac, pinged)
             ###################################
         futures=[]
-        concurrence=int(self.mem.settings.value("frmSettings/concurrence", 50))
+        concurrence=int(self.mem.settings.value("frmSettings/concurrence", 200))
         with ThreadPoolExecutor(max_workers=concurrence) as executor:
             for addr in self.mem.interfaces.selected.addresses():
                 if str(addr)==self.mem.interfaces.selected.ip() :#Adds device if ip is interface ip and jumps it
@@ -565,7 +565,7 @@ class DeviceManager(QObject, ObjectManager_Selectable):
         from scapy.layers.l2 import srp, Ether, ARP
         from scapy.all import  Padding
         futures=[]
-        concurrence=int(self.mem.settings.value("frmSettings/concurrence", 50))
+        concurrence=int(self.mem.settings.value("frmSettings/concurrence", 200))
         with ThreadPoolExecutor(max_workers=concurrence) as executor:
             for addr in self.mem.interfaces.selected.addresses():
                 if str(addr)==self.mem.interfaces.selected.ip() :#Adds device if ip is interface ip and jumps it

@@ -9,7 +9,7 @@ class frmSettings(QDialog, Ui_frmSettings):
         self.setupUi(self) 
         Languages_qcombobox(self.cmbLanguage, self.mem, self.mem.settings.value("frmSettings/language", "en"))
         self.selected_language=self.mem.dod_languages[self.mem.settings.value("frmSettings/language", "en")]
-        self.spnConcurrent.setValue(int(self.mem.settings.value("frmSettings/concurrence", 50)))
+        self.spnConcurrent.setValue(int(self.mem.settings.value("frmSettings/concurrence", 200)))
 
     def on_cmbLanguage_currentIndexChanged(self, index):
         self.selected_language=self.mem.lod_languages[index]
