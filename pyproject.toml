@@ -34,3 +34,4 @@ translate = { script = "devicesinlan.poethepoet:translate" }
 compile = { script = "devicesinlan.poethepoet:compile" }
 reusing = { script = "devicesinlan.poethepoet:reusing" }
 pyinstaller = { script = "devicesinlan.poethepoet:pyinstaller" }
+statistics_server = { script = "devicesinlan.poethepoet:statistics_server" }
