@@ -283,7 +283,7 @@ class MemConsole(MemSetup):
     def setInstallationUUID(self):
         if self.settings.value("frmMain/uuid", "None")=="None":
             self.settings.setValue("frmMain/uuid", str(uuid4()))
-        url='http://devicesinlan.sourceforge.net/php/devicesinlan_installations.php?uuid={}&version={}&platform={}'.format(self.settings.value("frmMain/uuid"), __version__, platform_system())
+        url='https://devicesinlan.sourceforge.net/php/devicesinlan_installations.php?uuid={}&version={}&platform={}'.format(self.settings.value("frmMain/uuid"), __version__, platform_system())
         try:
             web=b2s(urlopen(url).read())
         except:
@@ -525,7 +525,7 @@ class DeviceManager(QObject, ObjectManager_Selectable):
             return(ip, mac, pinged)
             ###################################
         futures=[]
-        concurrence=int(self.mem.settings.value("frmSettings/concurrence", 50))
+        concurrence=int(self.mem.settings.value("frmSettings/concurrence", 200))
         with ThreadPoolExecutor(max_workers=concurrence) as executor:
             for addr in self.mem.interfaces.selected.addresses():
                 if str(addr)==self.mem.interfaces.selected.ip() :#Adds device if ip is interface ip and jumps it
@@ -565,7 +565,7 @@ class DeviceManager(QObject, ObjectManager_Selectable):
         from scapy.layers.l2 import srp, Ether, ARP
         from scapy.all import  Padding
         futures=[]
-        concurrence=int(self.mem.settings.value("frmSettings/concurrence", 50))
+        concurrence=int(self.mem.settings.value("frmSettings/concurrence", 200))
         with ThreadPoolExecutor(max_workers=concurrence) as executor:
             for addr in self.mem.interfaces.selected.addresses():
                 if str(addr)==self.mem.interfaces.selected.ip() :#Adds device if ip is interface ip and jumps it
