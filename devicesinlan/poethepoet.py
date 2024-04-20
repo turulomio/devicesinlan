@@ -126,3 +126,12 @@ def pyinstaller():
         system(f"""{wineprefix} wine pyinstaller {tmpdir}/run.py -n devicesinlan-{__version__} --nowindowed --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --add-data="devicesinlan/data:devicesinlan/data"   --onefile  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
         
         system(f"cp {tmpdir}/dist/* {cwd}/dist/")
+
+def statistics_server():
+    """
+       Publish a statistic server in Sourceforge DevicesInlan Web Project
+    """
+    system("find statistics -type d -exec chmod -c 755 {} \;")
+    system("find statistics -type f -exec chmod -c 644 {} \;")
+    system("rsync -avzP -e 'ssh -l turulomio,devicesinlan' statistics/ web.sourceforge.net:/home/groups/d/de/devicesinlan/htdocs/ --delete-after")
+
