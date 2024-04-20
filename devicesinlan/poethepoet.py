@@ -1,14 +1,17 @@
+from datetime import datetime
 from gettext import translation
 from importlib.resources import files
 from devicesinlan import __version__
 from devicesinlan.reusing.github import download_from_github
 from devicesinlan.libdevicesinlan import MemSetup
-from os import system, listdir, path, chdir, getcwd
+from os import system, listdir, path, chdir, getcwd, makedirs
 from shutil import which
 from sys import argv
 from concurrent.futures import ProcessPoolExecutor
 from multiprocessing import cpu_count
+from subprocess import Popen
 from tempfile import TemporaryDirectory
+from tqdm import tqdm
 
 try:
     t=translation('devicesinlan', files("devicesinlan") / "locale")
@@ -83,8 +86,15 @@ def translate():
 
 
 def pyinstaller():
+    start=datetime.now()
     cwd=getcwd()
     
+    # Download python windows executable
+    url_download_exe="https://www.python.org/ftp/python/3.11.9/python-3.11.9-amd64.exe"
+    url_download_exe_filename=path.basename(url_download_exe)
+    if not path.exists(url_download_exe_filename):
+        system(f"wget {url_download_exe}")
+
     # Create a new wine, install pythonon and the whole devicesinlan dependencies
     with TemporaryDirectory() as tmpdir:
         ## Generate launchers
@@ -100,29 +110,40 @@ def pyinstaller():
         chdir(tmpdir)
         
         
-        # Linux gui. Good for debugging pyinstaller issues from cwd
-        system(f"""pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --add-data="devicesinlan/data:devicesinlan/data"  --windowed --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
-
         ## Check if wine is installed
         if which("wine") is None:
             raise Exception("Wine is not in your system")
     
-        ## Download python executable
-        url_download_exe="https://www.python.org/ftp/python/3.11.8/python-3.11.8-amd64.exe"
-        filename=url_download_exe.split("/")[-1]
-        if not path.exists(filename):
-            system("wget {filename}")
+
             
         ## Install windows environment
         wineprefix=f"WINEPREFIX={tmpdir}"
-        system (f"{wineprefix} wine python-3.11.8-amd64.exe /passive AppendPath=1")
+        system (f"{wineprefix} wine {url_download_exe_filename} /passive AppendPath=1")
         system (f"{wineprefix} wine pip install .")
         system (f"{wineprefix} wine pip install pyinstaller")
 
-        # Windows gui
-        system(f"""{wineprefix} wine pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --add-data="devicesinlan/data:devicesinlan/data"   --windowed  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
-        
-        # Windows console
-        system(f"""{wineprefix} wine pyinstaller {tmpdir}/run.py -n devicesinlan-{__version__} --nowindowed --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --add-data="devicesinlan/data:devicesinlan/data"   --onefile  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""")
-        
+
+
+        # List of commands you want to run in the background. IF SOMETHING GOES WRONG USE SYSTEM WITH THAT PROCESS
+        commands = [
+            f"""pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --add-data="devicesinlan/data:devicesinlan/data"  --windowed --distpath ./dist/""", 
+            f"""pyinstaller {tmpdir}/run.py -n devicesinlan-{__version__} --onefile --nowindowed --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --add-data="devicesinlan/data:devicesinlan/data" --distpath ./dist/""", 
+            f"""{wineprefix} wine pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --add-data="devicesinlan/data:devicesinlan/data"   --windowed  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""", 
+            f"""{wineprefix} wine pyinstaller {tmpdir}/run.py -n devicesinlan-{__version__} --nowindowed --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --add-data="devicesinlan/data:devicesinlan/data"   --onefile  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""", 
+        ]
+
+        # List to keep track of process objects
+        processes = []
+
+        # Start each command as a separate process
+        for cmd in commands:
+            process = Popen(cmd, shell=True)
+            processes.append(process)
+
+        # Wait for all processes to complete
+        for process in tqdm(processes):
+            process.wait()
+
+        makedirs(f"{cwd}/dist/", exist_ok=True)
         system(f"cp {tmpdir}/dist/* {cwd}/dist/")
+        print(f"All processes have finished in {datetime.now()-start}")
