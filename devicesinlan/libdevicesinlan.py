@@ -1,4 +1,3 @@
-import argparse
 import codecs
 from colorama import init as colorama_init,  Style, Fore
 import logging
@@ -13,7 +12,7 @@ from datetime import datetime, date
 from devicesinlan.reusing.casts import string2xml, b2s, xml2string
 from devicesinlan.reusing.decorators import need_administrator
 from devicesinlan.reusing.libmanagers import ObjectManager_With_IdName, ObjectManager_Selectable
-from devicesinlan import __version__, __versiondate__
+from devicesinlan import __version__
 from devicesinlan.reusing.package_resources import package_filename
 from devicesinlan.reusing.text_inputs import input_YN, input_int
 from ipaddress import IPv4Network
@@ -32,9 +31,6 @@ class MemSetup(QObject):
         self.BASE_DIR=path.dirname(__file__)
         colorama_init()
         self.name="DevicesInLAN"
-        self.author=self.tr("Mariano Mu\xf1oz")
-        self.description=self.tr('Show devices in a LAN making an ARP search to find them with a user interface')
-        self.epilog=self.tr("If you like this app, please give me a star in https://github.com/turulomio/devicesinlan.")+"\n" +self.tr("Developed by {} 2015-{} \xa9").format(self.author, __versiondate__.year)
 
 
         self.lod_languages=[
@@ -47,8 +43,6 @@ class MemSetup(QObject):
         ]
 
         self.dod_languages=lod.lod2dod(self.lod_languages,  "code")
-
-
 
     ## Sets QApplication Object to make a Qt application
     def setQApplication(self):        
@@ -156,8 +150,7 @@ class MemSetup(QObject):
             
     ## Changes Qt current Qtranslator
     ## @param language String with en, es .... None by defautt and search in settings
-    def setLanguage(self, language=None):  
-        print("SET LANGUAGE",  language)
+    def setLanguage(self, language=None):
         if language==None:
             language=self.settings.value("frmSettings/language", "en")
         url=package_filename("devicesinlan", "i18n/devicesinlan_{}.qm".format(language))
@@ -181,23 +174,11 @@ class MemConsole(MemSetup):
         self.types.load_all()
         
     ## Sets parser, logging and args confitions. This one is for console command. gui commond overrides this method.
-    def parse_args(self):
-        parser=argparse.ArgumentParser(prog='devicesinlan', description=self.description,  epilog=self.epilog, formatter_class=argparse.RawTextHelpFormatter)
-        parser.add_argument('--version', action='version', version="{} ({})".format(__version__, __versiondate__))
-        parser.add_argument('--method', action='store', choices=['PingArp', 'ScapyArping', 'Scapy'], default='PingArp')
-        group = parser.add_mutually_exclusive_group()
-        group.add_argument('--interface', help=self.tr('Net interface name'))
-        group.add_argument('--add', help=self.tr('Add a known device'), action='store_true')
-        group.add_argument('--remove', help=self.tr('Remove a known device'), action='store_true')
-        group.add_argument('--list', help=self.tr('List known devices'), action='store_true')
-        group.add_argument('--load', help=self.tr('Load known devices list'), action='store')
-        group.add_argument('--save', help=self.tr('Save known devices list'), action='store')
-        group.add_argument('--reset', help=self.tr('Reset known devices list'), action='store_true', default=False)
-        parser.add_argument('--debug', help=self.tr( "Debug program information"))
+    def run(self, args):
+        self.args=args
+        
 
-        self.args=parser.parse_args()
         self.method=ArpScanMethod.string2attribute(self.args.method)
-        setLoggingLevel(self.args.debug)
 
         if self.args.load:
             if os.path.exists(self.args.load):
@@ -854,26 +835,3 @@ class Device(QObject):
             self.app.installTranslator(self.translator)
             logging.info(self.tr("Language changed to {} using {}".format(language, url)))
             
-
-## Sets logging level for the app
-def setLoggingLevel(level):        
-    #Por defecto se pone WARNING y mostrar´ia ERROR y CRITICAL
-    logFormat = "%(asctime)s %(levelname)s %(module)s:%(lineno)d at %(funcName)s. %(message)s"
-    dateFormat='%Y%m%d %I%M%S'
-
-    if level=="DEBUG":#Show detailed information that can help with program diagnosis and troubleshooting. CODE MARKS
-        logging.basicConfig(level=logging.DEBUG, format=logFormat, datefmt=dateFormat)
-    elif level=="INFO":#Everything is running as expected without any problem. TIME BENCHMARCKS
-        logging.basicConfig(level=logging.INFO, format=logFormat, datefmt=dateFormat)
-    elif level=="WARNING":#The program continues running, but something unexpected happened, which may lead to some problem down the road. THINGS TO DO
-        logging.basicConfig(level=logging.WARNING, format=logFormat, datefmt=dateFormat)
-    elif level=="ERROR":#The program fails to perform a certain function due to a bug.  SOMETHING BAD LOGIC
-        logging.basicConfig(level=logging.ERROR, format=logFormat, datefmt=dateFormat)
-    elif level=="CRITICAL":#The program encounters a serious error and may stop running. ERRORS
-        logging.basicConfig(level=logging.CRITICAL, format=logFormat, datefmt=dateFormat)
-    else:
-        if level:#Bad debug parameter
-            logging.basicConfig(level=logging.CRITICAL, format=logFormat, datefmt=dateFormat)
-            logging.critical("--debug parameter must be DEBUG, INFO, WARNING, ERROR or CRITICAL")
-            sys.exit(1)
-#            else:     #No debug parameter

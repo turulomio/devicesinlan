@@ -19,3 +19,6 @@ def get_remote(path):
         if line.find("__version__")!=-1:
             return web.split("'")[1]
     return None
+
+author="Turulomio"
+epilog=f"If you like this app, please give me a star in https://github.com/turulomio/devicesinlan/\nDeveloped by {author} 2015-{__versiondate__.year} \xa9"

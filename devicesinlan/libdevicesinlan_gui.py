@@ -1,27 +1,19 @@
-from PyQt6.QtCore import Qt,  QCoreApplication, QTranslator, QSettings, QDir
+from PyQt6.QtCore import Qt,  QCoreApplication, QTranslator, QSettings
 from PyQt6.QtWidgets import QTableWidgetItem, QMessageBox, QApplication
 from PyQt6.QtGui import QColor,  QPixmap, QIcon
-from argparse import ArgumentParser, RawTextHelpFormatter
-from devicesinlan.libdevicesinlan import MemConsole, setLoggingLevel
-from devicesinlan import __version__,  __versiondate__
+from devicesinlan.libdevicesinlan import MemConsole
+from importlib import import_module
 from sys import argv
 
-import devicesinlan.ui.devicesinlan_rc #Loads resources in memory and works
+import_module("devicesinlan.ui.devicesinlan_rc") #Loads resources in memory and works
 
 ## devicesinlan_gui Mem object
 class MemGUI(MemConsole):
     def __init__(self):
         MemConsole.__init__(self)
 
-    ## Sets parser, logging and args confitions. This one is for devicesinlan_gui  command, that overrides supper method
-    def parse_args(self):
-        parser=ArgumentParser(prog='devicesinlan_gui', description=self.description,  epilog=self.epilog, formatter_class=RawTextHelpFormatter)
-        parser.add_argument('--version', action='version', version="{} ({})".format(__version__, __versiondate__))
-        parser.add_argument('--debug', help=self.tr( "Debug program information"))
-        self.args=parser.parse_args()        
-
-        setLoggingLevel(self.args.debug)
-        
+    def run(self, args):
+        self.args=args
     ## Sets QApplication Object to make a Qt application
     def setQApplication(self):
         self.app=QApplication(argv)
