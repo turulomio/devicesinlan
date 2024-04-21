@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric project file for project devicesinlan",
     "copyright": "Copyright (C) 2024 , ",
-    "saved": "2024-03-30, 21:03:50"
+    "saved": "2024-04-21, 09:00:34"
   },
   "project": {
     "AUTHOR": "",
@@ -93,6 +93,7 @@
       "devicesinlan/reusing/package_resources.py",
       "devicesinlan/reusing/text_inputs.py",
       "devicesinlan/shortcuts.py",
+      "devicesinlan/tests.py",
       "devicesinlan/ui/Ui_frmAbout.py",
       "devicesinlan/ui/Ui_frmDeviceCRUD.py",
       "devicesinlan/ui/Ui_frmHelp.py",

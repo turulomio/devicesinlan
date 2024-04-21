@@ -12,6 +12,7 @@ colorama = "^0.4.6"
 PyQt6 = "^6.6.1"
 scapy = "^2.5.0"
 pydicts = "^0.15.0"
+tqdm = "^4.66.2"
 
 [tool.poetry.group.dev.dependencies]
 poetry = "^1.8.2"
