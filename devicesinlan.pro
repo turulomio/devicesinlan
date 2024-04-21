@@ -1,5 +1,4 @@
-SOURCES         = setup.py \
-                  devicesinlan/libdevicesinlan.py \
+SOURCES         = devicesinlan/libdevicesinlan.py \
                   devicesinlan/libdevicesinlan_gui.py \
                   devicesinlan/devicesinlan.py \
                   devicesinlan/ui/frmMain.py \

@@ -49,24 +49,29 @@ def reusing():
         download_from_github("turulomio", "reusingcode", "python/text_inputs.py", "devicesinlan/reusing")
 
 def release():
-    print("""New Release:
-    * Change version and date in __init__.py"))
-    * Change version and date in pyproject.toml"))
-    * Edit Changelog in README"))
+    print(f"""New Release:
+    * Change version and date in __init__.py
+    * Change version and date in pyproject.toml
+    * poe release
+    * git checkout -b devicesinlan-{__version__}
+    * Edit Changelog in README
     * Update ieee-oui with get-oui from arp-scan package
-    * poe translate")
-    * mcedit devicesinlan/locale/es.po")
-    * poe translate")
-    * poetry install")
-    * git commit -a -m 'devicesinlan-{}'".format(__version__))
-    * git push")
-    * Make a new tag in github"))
+    * poe translate
+    * mcedit devicesinlan/locale/es.po
+    * poe translate
+    * poetry install
+    * git commit -a -m 'devicesinlan-{__version__}'
+    * git push
+    * Make a pull request into main branch
+    * Make a new tag in github
+    * git checkout main
+    * git pull
     * poetry pyinstaller
     * Upload wine created files
-    * poetry build")
-    * poetry publish --username turulomio --password")
-    * Create a new gentoo ebuild with the new version"))
-    * Upload to portage repository")) 
+    * poetry build
+    * poetry publish 
+    * Create a new gentoo ebuild with the new version
+    * Upload to portage repository
 """)
 
 

@@ -182,3 +182,9 @@ devicesinlan 1.9.2 20220713
 ---------------------------
 - Updated to last qt5
 
+devicesinlan 2.0.0 20240421
+---------------------------
+- Updated to qt6
+- Now uses pydicts module
+- Pyinstaller for windows works with wine
+- Improved statistics server page
