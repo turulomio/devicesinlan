@@ -7,11 +7,10 @@ from devicesinlan.libdevicesinlan import MemSetup
 from os import system, listdir, path, chdir, getcwd, makedirs
 from shutil import which
 from sys import argv
-from concurrent.futures import ProcessPoolExecutor
 from multiprocessing import cpu_count
-from subprocess import Popen
 from tempfile import TemporaryDirectory
 from tqdm import tqdm
+from concurrent.futures import ProcessPoolExecutor, as_completed
 
 try:
     t=translation('devicesinlan', files("devicesinlan") / "locale")
@@ -125,28 +124,29 @@ def pyinstaller():
 
 
         # List of commands you want to run in the background. IF SOMETHING GOES WRONG USE SYSTEM WITH THAT PROCESS
+        common_parameters='--onefile --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --add-data="devicesinlan/data:devicesinlan/data" --distpath ./dist/'
         commands = [
-            f"""pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --add-data="devicesinlan/data:devicesinlan/data"  --windowed --distpath ./dist/""", 
-            f"""pyinstaller {tmpdir}/run.py -n devicesinlan-{__version__} --onefile --nowindowed --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --add-data="devicesinlan/data:devicesinlan/data" --distpath ./dist/""", 
-            f"""{wineprefix} wine pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --onefile --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --add-data="devicesinlan/data:devicesinlan/data"   --windowed  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""", 
-            f"""{wineprefix} wine pyinstaller {tmpdir}/run.py -n devicesinlan-{__version__} --nowindowed --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --add-data="devicesinlan/data:devicesinlan/data"   --onefile  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico --distpath ./dist/""", 
+#            f"""pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --windowed --icon {tmpdir}/devicesinlan/images/devicesinlan.ico  {common_parameters} --workpath="linux_ui""", 
+#            f"""pyinstaller {tmpdir}/run.py -n devicesinlan-{__version__} --console  {common_parameters}""", 
+            f"""{wineprefix} wine pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --windowed  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico  {common_parameters}""", 
+            f"""{wineprefix} wine pyinstaller {tmpdir}/run.py -n devicesinlan-{__version__} --console  {common_parameters}""", 
         ]
 
-        # List to keep track of process objects
-        processes = []
+        #Launching concurrent process
+        futures=[]
+        executor = ProcessPoolExecutor(max_workers=cpu_count())
 
         # Start each command as a separate process
         for cmd in commands:
-            process = Popen(cmd, shell=True)
-            processes.append(process)
+            futures.append(executor.submit(system, cmd))
 
-        # Wait for all processes to complete
-        for process in tqdm(processes):
-            process.wait()
+        for f in tqdm(as_completed(futures), total=len(futures)):
+            pass
 
         makedirs(f"{cwd}/dist/", exist_ok=True)
         system(f"cp {tmpdir}/dist/* {cwd}/dist/")
         print(f"All processes have finished in {datetime.now()-start}")
+        print("Windows executables doesn't work in wine due to they use Windows commands. Test in a windows system, because they should work")
 
 
 def statistics_server():
