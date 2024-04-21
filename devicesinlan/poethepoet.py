@@ -131,7 +131,9 @@ def statistics_server():
     """
        Publish a statistic server in Sourceforge DevicesInlan Web Project
     """
-    system("find statistics -type d -exec chmod -c 755 {} \;")
-    system("find statistics -type f -exec chmod -c 644 {} \;")
+    system(r"find statistics -type d -exec chmod -c 755 {} \;")
+    system(r"find statistics -type f -exec chmod -c 644 {} \;")
     system("rsync -avzP -e 'ssh -l turulomio,devicesinlan' statistics/ web.sourceforge.net:/home/groups/d/de/devicesinlan/htdocs/ --delete-after")
 
+def tests():
+    system("pytest devicesinlan/tests.py")

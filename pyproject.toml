@@ -19,6 +19,8 @@ poethepoet = "^0.25.0"
 qt6-tools = "^6.5.0.1.3"
 pyinstaller = "^6.5.0"
 mangenerator = "^0.4.0"
+pytest = "^8.1.1"
+coverage = "^7.4.4"
 
 [build-system]
 requires = ["poetry-core"]
@@ -35,3 +37,4 @@ compile = { script = "devicesinlan.poethepoet:compile" }
 reusing = { script = "devicesinlan.poethepoet:reusing" }
 pyinstaller = { script = "devicesinlan.poethepoet:pyinstaller" }
 statistics_server = { script = "devicesinlan.poethepoet:statistics_server" }
+tests = { script ="devicesinlan.poethepoet:tests" }
