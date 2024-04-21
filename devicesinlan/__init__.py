@@ -1,8 +1,8 @@
 
 from datetime import date
 
-__version__ ='1.9.9999'
-__versiondate__=date(2023,4, 29)
+__version__ ='2.0.0'
+__versiondate__=date(2024, 4, 21)
 
 
 ## This function expectss __version__= 'VERSION' file
