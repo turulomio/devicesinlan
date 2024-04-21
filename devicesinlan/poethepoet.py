@@ -62,6 +62,7 @@ def release():
     * poetry install
     * git commit -a -m 'devicesinlan-{__version__}'
     * git push
+    * Make a pull request into main branch
     * Make a new tag in github
     * poetry pyinstaller
     * Upload wine created files
