@@ -12,7 +12,7 @@ Project web page:
   * https://github.com/turulomio/devicesinlan/
 
 App statistics
-  * http://devicesinlan.sourceforge.net/php/devicesinlan_statistics.php
+  * https://devicesinlan.sourceforge.net/php/devicesinlan_statistics.php
 
 Install in Linux
 ================
