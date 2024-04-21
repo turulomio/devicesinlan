@@ -2,10 +2,9 @@ from PyQt6.QtCore import Qt,  QCoreApplication, QTranslator, QSettings
 from PyQt6.QtWidgets import QTableWidgetItem, QMessageBox, QApplication
 from PyQt6.QtGui import QColor,  QPixmap, QIcon
 from devicesinlan.libdevicesinlan import MemConsole
-from importlib import import_module
 from sys import argv
 
-import_module("devicesinlan.ui.devicesinlan_rc") #Loads resources in memory and works
+import devicesinlan.ui.devicesinlan_rc #Loads resources in memory and works
 
 ## devicesinlan_gui Mem object
 class MemGUI(MemConsole):

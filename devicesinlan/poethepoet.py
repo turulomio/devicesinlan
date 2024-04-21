@@ -146,6 +146,7 @@ def pyinstaller():
         makedirs(f"{cwd}/dist/", exist_ok=True)
         system(f"cp {tmpdir}/dist/* {cwd}/dist/")
         print(f"All processes have finished in {datetime.now()-start}")
+        print("Windows executables doesn't work in wine due to they use Windows commands. Test in a windows system, because they should work")
 
 
 def statistics_server():

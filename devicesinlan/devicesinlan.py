@@ -47,11 +47,12 @@ def main_console():
     group.add_argument('--load', help=_('Load known devices list'), action='store')
     group.add_argument('--save', help=_('Save known devices list'), action='store')
     group.add_argument('--reset', help=_('Reset known devices list'), action='store_true', default=False)
-    parser.add_argument('--debug', help=_( "Debug program information"))
+    parser.add_argument('--debug', help=_( "Debug program information"), default=None)
 
     args=parser.parse_args()
 
-    setLoggingLevel(args.debug)
+    if args.debug is not None:
+        setLoggingLevel(args.debug)
     
     from devicesinlan.libdevicesinlan import MemConsole
     mem=MemConsole()
@@ -70,9 +71,10 @@ def main_gui():
     #Separate to launch logging before QT    
     parser=ArgumentParser(prog='devicesinlan_gui',  epilog=epilog, formatter_class=RawTextHelpFormatter)
     parser.add_argument('--version', action='version', version="{} ({})".format(__version__, __versiondate__))
-    parser.add_argument('--debug', help=_( "Debug program information"))
+    parser.add_argument('--debug', help=_( "Debug program information"), default=None)
     args=parser.parse_args()      
-    setLoggingLevel(args.debug)  
+    if args.debug is not None:
+        setLoggingLevel(args.debug)  
     from devicesinlan.libdevicesinlan_gui import MemGUI
     from devicesinlan.ui.frmMain  import frmMain
     mem=MemGUI()
