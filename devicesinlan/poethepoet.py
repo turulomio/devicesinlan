@@ -64,10 +64,10 @@ def release():
     * git push
     * Make a pull request into main branch
     * Make a new tag in github
-    * poetry pyinstaller
-    * Upload wine created files
     * git checkout main
     * git pull
+    * poetry pyinstaller
+    * Upload wine created files
     * poetry build
     * poetry publish 
     * Create a new gentoo ebuild with the new version
