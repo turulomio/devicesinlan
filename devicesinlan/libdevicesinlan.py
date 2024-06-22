@@ -1,12 +1,7 @@
-import codecs
 from colorama import init as colorama_init,  Style, Fore
-import logging
-import os
-import re
-import subprocess
-import sys
 from PyQt6.QtCore import QCoreApplication, QSettings, QTranslator, QObject
 from PyQt6.QtNetwork import QNetworkInterface, QAbstractSocket,  QTcpSocket
+from codecs import open
 from concurrent.futures import ThreadPoolExecutor,  as_completed                            
 from datetime import datetime, date    
 from importlib.resources import files 
@@ -15,9 +10,13 @@ from devicesinlan.reusing.libmanagers import ObjectManager_With_IdName, ObjectMa
 from devicesinlan import __version__, author
 from devicesinlan.reusing.text_inputs import input_YN, input_int
 from ipaddress import IPv4Network
+from logging import debug,  info
 from os import path
 from platform import system as platform_system
 from pydicts import lod
+from re import match
+from subprocess import check_output
+from sys import exit, argv
 from uuid import  uuid4
 from urllib.request import urlopen
 from xml.dom import minidom
@@ -65,7 +64,7 @@ class MemSetup(QObject):
 
     ## Sets QApplication Object to make a Qt application
     def setQApplication(self):        
-        self.app=QCoreApplication(sys.argv)
+        self.app=QCoreApplication(argv)
         self.app.setOrganizationName(self.name)
         self.app.setOrganizationDomain(self.name)
         self.app.setApplicationName(self.name)
@@ -165,7 +164,7 @@ class MemSetup(QObject):
 
     def signal_handler(self, signal, frame):
             print(Style.BRIGHT+Fore.RED+self.tr("You pressed 'Ctrl+C', exiting..."))
-            sys.exit(0)
+            exit(0)
             
     ## Changes Qt current Qtranslator
     ## @param language String with en, es .... None by defautt and search in settings
@@ -176,13 +175,13 @@ class MemSetup(QObject):
         url=files("devicesinlan") / "i18n/devicesinlan_{}.qm".format(language)
         
         if language=="en":
-            logging.info("Changing to default language: en")
+            info("Changing to default language: en")
             self.app.removeTranslator(self.translator)
             self.translator=QTranslator()
         else:
             self.translator.load(str(url))
             self.app.installTranslator(self.translator)
-            logging.info(self.tr("Language changed to {} using {}".format(language, url)))
+            info(self.tr("Language changed to {} using {}".format(language, url)))
 
 ## Mem object for console
 class MemConsole(MemSetup):
@@ -201,7 +200,7 @@ class MemConsole(MemSetup):
         self.method=ArpScanMethod.string2attribute(self.args.method)
 
         if self.args.load:
-            if os.path.exists(self.args.load):
+            if path.exists(self.args.load):
                 current=DeviceManager(self).init__from_settings()
                 new=DeviceManager(self).init__from_xml(self.args.load)
                 for n in new.arr:
@@ -215,7 +214,7 @@ class MemConsole(MemSetup):
                                 n.link()
             else:
                 print (Style.BRIGHT+Fore.RED+self.tr( "File doesn't exist"))
-            sys.exit(0)
+            exit(0)
 
         if self.args.reset:
             result=input_YN(self.tr( "Are you sure you want to reset known devices database?"),  default=self.tr("N"))
@@ -224,13 +223,13 @@ class MemConsole(MemSetup):
                 set.init__from_settings()
                 set.reset()
                 print (Style.BRIGHT+Fore.RED+self.tr( "Database was reset"))
-            sys.exit(0)
+            exit(0)
 
         if self.args.save:
             set=DeviceManager(self)
             set.init__from_settings()
             set.saveXml(self.args.save)
-            sys.exit(0)
+            exit(0)
 
         if self.args.add==True:
             d=Device(self)
@@ -240,7 +239,7 @@ class MemConsole(MemSetup):
             d.link()
             print (Style.BRIGHT+ Fore.GREEN + self.tr("Device inserted"))
             self.settings.sync()
-            sys.exit(0)
+            exit(0)
 
         if self.args.remove==True:
             d=Device(self)
@@ -249,23 +248,23 @@ class MemConsole(MemSetup):
             print (Style.BRIGHT+Fore.GREEN+self.tr("Mac removed"))
 
             self.settings.sync()
-            sys.exit(0)
+            exit(0)
 
         if self.args.list==True:
             set=DeviceManager(self)
             set.init__from_settings()
             set.print_devices_from_settings()
-            sys.exit(0)
+            exit(0)
         ## Load devices
         if self.args.interface:
             if self.interfaces.find_by_id(self.args.interface)==None:
                 print(Style.BRIGHT+Fore.RED+self.tr( "This interface doesn't exist. Please remove the --interface parameter to use a wizard."))
-                sys.exit(1)
+                exit(1)
             self.interfaces.selected=self.interfaces.find_by_id(self.args.interface)
         else:
             if self.interfaces.length()==0:
                 print(Style.BRIGHT+ Fore.RED+self.tr( "There are not interfaces to scan."))
-                sys.exit(1)
+                exit(1)
             self.interfaces.print()
             while True:
                 id=input_int(self.tr( "Select an interface number"), 1)
@@ -289,7 +288,7 @@ class MemConsole(MemSetup):
             web=bytes2str(urlopen(url).read())
         except:
             web=self.tr("Error collecting statistics")
-        logging.debug("{}, answering {}".format(web, url))
+        debug("{}, answering {}".format(web, url))
 
 
 ## This function checks if currrent user is root or administrator in Windows or Linux
@@ -498,7 +497,7 @@ class DeviceManager(QObject, ObjectManager_Selectable):
             self.arr.append(d)
         self.mem.settings.endGroup()
         
-        logging.debug("Loaded {} devices from settings".format(self.length()))
+        debug("Loaded {} devices from settings".format(self.length()))
         
         #Carga los types antes no se pod´ia
         for d in self.arr:
@@ -529,12 +528,12 @@ class DeviceManager(QObject, ObjectManager_Selectable):
             if pinged==True:
                 if platform_system()=="Windows":
                     CREATE_NO_WINDOW=0x08000000
-                    arpexit=subprocess.check_output(["arp", "-a",  ip], creationflags=CREATE_NO_WINDOW)
+                    arpexit=check_output(["arp", "-a",  ip], creationflags=CREATE_NO_WINDOW)
                     for s in arpexit.split(b" "):
                         if len(s)==17 and s.find(b"-")!=-1:
                             mac=s.decode().replace("-", ":").upper()
                 else:
-                    arpexit=subprocess.check_output(["arp", ip])
+                    arpexit=check_output(["arp", ip])
                     for s in arpexit.decode('utf-8').split(" "):
                         if len(s)==17 and s.find(":")!=-1:
                             mac=s.upper()
@@ -647,7 +646,7 @@ class DeviceManager(QObject, ObjectManager_Selectable):
             todelete.append(o)
             
         for o in todelete:
-            logging.info("Reseting {}".format(o.mac))
+            info("Reseting {}".format(o.mac))
             self.unlink(o, remove_from_arr=True)
         
     def find_by_mac(self, mac):
@@ -737,7 +736,7 @@ class DeviceManager(QObject, ObjectManager_Selectable):
             s=s+'\t\t<device alias="{}" mac="{}" type="{}"/>\n'.format(string2xml(d.alias), d.mac, d.type.id)
         s=s+"\t</devices>\n"
         s=s+"</devicesinlan>\n"
-        with codecs.open(filename, "w", "utf-8") as f:
+        with open(filename, "w", "utf-8") as f:
             f.write(s)
 
 class Device(QObject):
@@ -765,7 +764,7 @@ class Device(QObject):
         if len(s)!=17:
             return False
 
-        if re.match(r'([0-9a-fA-F]{2}[:-]){5}([0-9a-fA-F]{2})', s):
+        if match(r'([0-9a-fA-F]{2}[:-]){5}([0-9a-fA-F]{2})', s):
             return True
         return False
         
@@ -837,7 +836,7 @@ class Device(QObject):
         self.mem.settings.remove("DeviceAlias/{}".format(self.macwithout2points(self.mac.upper())))
         self.mem.settings.remove("DeviceType/{}".format(self.macwithout2points(self.mac.upper())))
         self.mem.settings.sync()
-        logging.debug("Device {} unlinked".format(self.mac))
+        debug("Device {} unlinked".format(self.mac))
         self.type=self.mem.types.find_by_id(0)
         self.alias=None
         
@@ -852,7 +851,7 @@ class Device(QObject):
 
     def signal_handler(self, signal, frame):
             print(Style.BRIGHT+Fore.RED+self.tr("You pressed 'Ctrl+C', exiting..."))
-            sys.exit(0)
+            exit(0)
             
     ## Changes Qt current Qtranslator
     ## @param language String with en, es .... None by defautt and search in settings
@@ -863,11 +862,11 @@ class Device(QObject):
         url=files("devicesinlan") / "i18n/devicesinlan_{}.qm".format(language)
         
         if language=="en":
-            logging.info("Changing to default language: en")
+            info("Changing to default language: en")
             self.app.removeTranslator(self.translator)
             self.translator=QTranslator()
         else:
             self.translator.load(url)
             self.app.installTranslator(self.translator)
-            logging.info(self.tr("Language changed to {} using {}".format(language, url)))
+            info(self.tr("Language changed to {} using {}".format(language, url)))
             

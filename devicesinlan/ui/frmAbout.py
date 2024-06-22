@@ -11,7 +11,7 @@ class frmAbout(QDialog, Ui_frmAbout):
         self.setupUi(self)
         self.lblVersion.setText(self.tr("Version {} ({})".format(__version__,  __versiondate__)))
         self.textBrowser.setHtml(
-            self.tr("""Project web page is in <a href="http://github.com/turulomio/devicesinlan/">http://github.com/turulomio/devicesinlan/</a><p> <p>""")+
+            self.tr("""Project web page is in <a href="https://github.com/turulomio/devicesinlan/">https://github.com/turulomio/devicesinlan/</a><p> <p>""")+
             self.tr("This program has been developed by Mariano Mu\xf1oz.<p>")+
             self.tr("It has been translated by:")+
             "<ul><li>Mariano Mu\xf1oz</li><li>Nadejda Adam</li></ul><p>\n"+
