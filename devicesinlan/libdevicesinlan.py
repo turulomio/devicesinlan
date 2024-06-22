@@ -180,7 +180,7 @@ class MemSetup(QObject):
             self.app.removeTranslator(self.translator)
             self.translator=QTranslator()
         else:
-            self.translator.load(url)
+            self.translator.load(str(url))
             self.app.installTranslator(self.translator)
             logging.info(self.tr("Language changed to {} using {}".format(language, url)))
 
