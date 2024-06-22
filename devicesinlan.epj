@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric project file for project devicesinlan",
     "copyright": "Copyright (C) 2024 , ",
-    "saved": "2024-04-21, 09:00:34"
+    "saved": "2024-06-22, 16:32:46"
   },
   "project": {
     "AUTHOR": "",
@@ -85,12 +85,8 @@
       "devicesinlan/libdevicesinlan.py",
       "devicesinlan/libdevicesinlan_gui.py",
       "devicesinlan/poethepoet.py",
-      "devicesinlan/reusing/casts.py",
-      "devicesinlan/reusing/decorators.py",
-      "devicesinlan/reusing/file_functions.py",
       "devicesinlan/reusing/github.py",
       "devicesinlan/reusing/libmanagers.py",
-      "devicesinlan/reusing/package_resources.py",
       "devicesinlan/reusing/text_inputs.py",
       "devicesinlan/shortcuts.py",
       "devicesinlan/tests.py",
