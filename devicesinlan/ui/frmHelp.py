@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import QDialog
 from devicesinlan.ui.Ui_frmHelp import Ui_frmHelp
-from devicesinlan.libdevicesinlan import package_filename
 from devicesinlan.libdevicesinlan_gui import Languages_qcombobox
+from importlib.resources import files 
 
 class frmHelp(QDialog, Ui_frmHelp):
     def __init__(self, mem, parent = None, name = None, modal = False):
@@ -31,7 +31,9 @@ class frmHelp(QDialog, Ui_frmHelp):
             program="devicesinlan"
         else:
             program="devicesinlan_gui"
-        url=package_filename("devicesinlan", "data/{}.{}.html".format(program, self.selected_language["code"]))
+            
+            
+        url=files("devicesinlan") / "data/{}.{}.html".format(program, self.selected_language["code"])
         with open(url, encoding="UTF-8") as f:
             self.viewer.setHtml(f.read())
 
