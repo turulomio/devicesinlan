@@ -8,12 +8,11 @@ import sys
 from PyQt6.QtCore import QCoreApplication, QSettings, QTranslator, QObject
 from PyQt6.QtNetwork import QNetworkInterface, QAbstractSocket,  QTcpSocket
 from concurrent.futures import ThreadPoolExecutor,  as_completed                            
-from datetime import datetime, date     
-from devicesinlan.reusing.casts import string2xml, b2s, xml2string
-from devicesinlan.reusing.decorators import need_administrator
+from datetime import datetime, date    
+from importlib.resources import files 
+from pydicts.casts import bytes2str
 from devicesinlan.reusing.libmanagers import ObjectManager_With_IdName, ObjectManager_Selectable
 from devicesinlan import __version__, author
-from devicesinlan.reusing.package_resources import package_filename
 from devicesinlan.reusing.text_inputs import input_YN, input_int
 from ipaddress import IPv4Network
 from os import path
@@ -22,6 +21,26 @@ from pydicts import lod
 from uuid import  uuid4
 from urllib.request import urlopen
 from xml.dom import minidom
+
+
+## Converts a string to set inside an XML to a valid XML string
+def string2xml(s):
+    s=s.replace('"','&apos;' )
+    s=s.replace('<','&lt;' )
+    s=s.replace('>','&gt;' )
+    s=s.replace('&','&amp;' )
+    s=s.replace("'",'&apos;' )
+    return s
+
+## Converts a string to set inside an XML to a valid XML string
+def xml2string(s):
+    s=s.replace('&apos;','"')
+    s=s.replace('&lt;','<')
+    s=s.replace('&gt;','>')
+    s=s.replace('&amp;','&')
+    s=s.replace('&apos;',"'")
+    return s
+
 
 ## Mem object for setup
 class MemSetup(QObject):
@@ -153,7 +172,8 @@ class MemSetup(QObject):
     def setLanguage(self, language=None):
         if language==None:
             language=self.settings.value("frmSettings/language", "en")
-        url=package_filename("devicesinlan", "i18n/devicesinlan_{}.qm".format(language))
+            
+        url=files("devicesinlan") / "i18n/devicesinlan_{}.qm".format(language)
         
         if language=="en":
             logging.info("Changing to default language: en")
@@ -266,11 +286,26 @@ class MemConsole(MemSetup):
             self.settings.setValue("frmMain/uuid", str(uuid4()))
         url='https://devicesinlan.sourceforge.net/php/devicesinlan_installations.php?uuid={}&version={}&platform={}'.format(self.settings.value("frmMain/uuid"), __version__, platform_system())
         try:
-            web=b2s(urlopen(url).read())
+            web=bytes2str(urlopen(url).read())
         except:
             web=self.tr("Error collecting statistics")
         logging.debug("{}, answering {}".format(web, url))
 
+
+## This function checks if currrent user is root or administrator in Windows or Linux
+def need_administrator(method):
+    def new_func(*args, **kwargs):
+        if platform_system=='Windows':
+            from ctypes.windll.shell32 import IsUserAnAdmin
+            if IsUserAnAdmin()!=True:
+                print("You need to be an Administrator to execute this code.")
+        else:
+            from os import geteuid
+            if geteuid() !=0:
+                print("You need to be root to execute this code.")
+                exit(-1)
+        return method(*args, **kwargs)
+    return new_func
 
 class DeviceType:
     def __init__(self, mem):
@@ -746,7 +781,7 @@ class Device(QObject):
             print("I can't get oui of a None MAC")
             return self.__oui
 
-        url=package_filename("devicesinlan", "data/ieee-oui.txt")
+        url=files("devicesinlan") / "data/ieee-oui.txt"
 
         self.__oui=""
         mac=self.mac.replace(":", "")[:-6]
@@ -824,7 +859,8 @@ class Device(QObject):
     def setLanguage(self, language=None):
         if language==None:
             language=self.settings.value("frmSettings/language", "en")
-        url=package_filename("devicesinlan", "i18n/devicesinlan_{}.qm".format(language))
+
+        url=files("devicesinlan") / "i18n/devicesinlan_{}.qm".format(language)
         
         if language=="en":
             logging.info("Changing to default language: en")
