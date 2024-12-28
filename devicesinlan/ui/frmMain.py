@@ -143,7 +143,7 @@ class frmMain(QMainWindow, Ui_frmMain):#
             devices.saveXml(filename)
 
     def checkUpdates(self, showdialogwhennoupdates=False):
-        remoteversion=get_remote("https://raw.githubusercontent.com/Turulomio/devicesinlan/master/devicesinlan/version.py")
+        remoteversion=get_remote("https://raw.githubusercontent.com/turulomio/devicesinlan/refs/heads/main/devicesinlan/__init__.py")
         if remoteversion==None:
             qmessagebox(self.tr("I couldn't look for updates. Try it later.."))
             return
