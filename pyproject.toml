@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "devicesinlan"
-version = "2.0.0"
+version = "2.0.1"
 description = "Find devices in a LAN and allows to make a list of known devices in order to detect not allowed ones"
 authors = ["turulomio <turulomio@yahoo.es>"]
 license = "GPL-3.0 license"

@@ -32,12 +32,6 @@ If you want to create a Desktop shortcut to launch Xulpymoney you must write in 
 
 `devicesinlan_shortcut.exe`
 
-Install in Windows as a standalone application
-==============================================
-You need to download devicesinlan-X.X.X.exe to use console script or devicesinlan_gui-X.X.X.exe to use gui app, from github release
-
-Just execute it. It's an standalone application, it took some time to launch due to it uncompress code first ;)
-
 Changelog
 =========
 
@@ -188,3 +182,8 @@ devicesinlan 2.0.0 20240421
 - Now uses pydicts module
 - Pyinstaller for windows works with wine
 - Improved statistics server page
+
+devicesinlan 2.0.1 20241228
+---------------------------
+- Updated dependencies logic
+- Fix remote version bug
