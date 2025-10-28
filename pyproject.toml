@@ -1,18 +1,22 @@
-[tool.poetry]
+[project]
 name = "devicesinlan"
 version = "2.0.1"
 description = "Find devices in a LAN and allows to make a list of known devices in order to detect not allowed ones"
-authors = ["turulomio <turulomio@yahoo.es>"]
-license = "GPL-3.0 license"
+authors = [
+    {name = "turulomio", email = "turulomio@yahoo.es"},
+]
+license = "GPL-3.0-or-later"
 readme = "README.md"
+requires-python = ">=3.10,<4"
+dependencies = [
+    "colorama >=0.4.6",
+    "PyQt6 >=6.10.0",
+    "scapy >=2.6.1",
+    "pydicts >=1.1.0",
+    "tqdm >=4.67.1",
+]
 
-[tool.poetry.dependencies]
-python = ">=3.10,<4"
-colorama =" >=0.4.6"
-PyQt6 = ">=6.10.0"
-scapy = ">=2.6.1"
-pydicts = ">=1.1.0"
-tqdm = ">=4.67.1"
+[tool.poetry]
 
 [tool.poetry.group.dev.dependencies]
 poetry = ">=2.2.1"
@@ -26,7 +30,7 @@ coverage = ">=7.11.0"
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.poetry.scripts]
+[project.scripts]
 devicesinlan = 'devicesinlan.devicesinlan:main_console'
 devicesinlan_gui = 'devicesinlan.devicesinlan:main_gui'
 
