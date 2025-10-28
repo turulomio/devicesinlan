@@ -1,6 +1,6 @@
 [project]
 name = "devicesinlan"
-version = "2.0.1"
+version = "2.0.2"
 description = "Find devices in a LAN and allows to make a list of known devices in order to detect not allowed ones"
 authors = [
     {name = "turulomio", email = "turulomio@yahoo.es"},
