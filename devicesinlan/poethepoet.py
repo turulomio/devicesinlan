@@ -50,24 +50,21 @@ def reusing():
 
 def release():
     print(f"""New Release:
+    * Create an issue with next version 
+    * Create a branch for that issue and paste recommended code to console
     * Change version and date in __init__.py
     * Change version and date in pyproject.toml
     * poe release
-    * git checkout -b devicesinlan-{__version__}
-    * Edit Changelog in README
     * Update ieee-oui with get-oui from arp-scan package
     * poe translate
     * mcedit devicesinlan/locale/es.po
     * poe translate
-    * poetry install
     * git commit -a -m 'devicesinlan-{__version__}'
     * git push
     * Make a pull request into main branch
     * Make a new tag in github
     * git checkout main
     * git pull
-    * poetry pyinstaller
-    * Upload wine created files
     * poetry build
     * poetry publish 
     * Create a new gentoo ebuild with the new version
