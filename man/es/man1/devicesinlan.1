@@ -1,4 +1,4 @@
-.TH DEVICESINLAN 1 2025\-10\-28
+.TH DEVICESINLAN 1 2025\-12\-28
 .SH NAME
 
 .B devicesinlan:
@@ -71,12 +71,12 @@ Borra todos los dispositivos conocidos.
 .SH M\('ETODOS DE ESCANEADO
 
 .PP
-DevicesInLan can use several methods to scan for devices. You just need to add the \-\-method in console mode.
+DevicesInLan puede utilizar varios m\('etodos para buscar dispositivos. Solo necesita agregar \-\-method en modo consola.
 .PP
 .B PingArp
 .PP
 .RS
-It tries to make a socket connection with any device in the lan. Then it searches with 'arp' command the mac information
+Intenta realizar una conexi\('on de socket con cualquier dispositivo en la lan. Luego busca con el comando 'arp' la informaci\('on mac
 .RE
 .PP
 .RS
@@ -90,25 +90,25 @@ Usa Scapy para crear una peticion ARP y capturar su respuesta por cada ip en la 
 .RE
 .PP
 .RS
-This method can be used in windows and linux versions, but it needs to be executed with administrator role.
+Este m\('etodo se puede utilizar en versiones de Windows y Linux, pero debe ejecutarse con rol de administrador.
 .RE
 .PP
 .RS
-Morever, you need to install 'npcap' in order to execute it in Windows.
+Adem\('as, necesita instalar 'npcap' para ejecutarlo en Windows.
 .RE
 .PP
 .B ScapyArping
 .PP
 .RS
-Uses Scapy arping function to create ARP request and capture its answer for each ip in the subnet to get macs information.
+Utiliza la funci\('on arping de Scapy para crear una solicitud ARP y capturar su respuesta para cada ip en la subred para obtener informaci\('on de macs.
 .RE
 .PP
 .RS
-This method can be used in windows and linux versions, but it needs to be executed with administrator role.
+Este m\('etodo se puede utilizar en versiones de Windows y Linux, pero debe ejecutarse con rol de administrador.
 .RE
 .PP
 .RS
-Morever, you need to install 'npcap' in order to execute it in Windows.
+Adem\('as, necesita instalar 'npcap' para ejecutarlo en Windows.
 .RE
 .SH EJEMPLOS
 
