@@ -31,12 +31,12 @@
     <message>
         <location filename="../libdevicesinlan.py" line="853"/>
         <source>You pressed &apos;Ctrl+C&apos;, exiting...</source>
-        <translation type="unfinished">Has pulsado 'Ctrl+C', saliendo...</translation>
+        <translation>Has pulsado 'Ctrl+C', saliendo...</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="871"/>
         <source>Language changed to {} using {}</source>
-        <translation type="unfinished">El idioma cambio a {} usando {}</translation>
+        <translation>El idioma cambio a {} usando {}</translation>
     </message>
 </context>
 <context>
@@ -381,7 +381,7 @@
     <message>
         <location filename="../libdevicesinlan.py" line="91"/>
         <source>Searches all devices in the LAN and show them in a new tab. If some device is not in the known devices list it will be shown with a red background. Devices with a green background are trusted devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Busca todos los dispositivos en la LAN y los muestra en una nueva pestaña. Si algún dispositivo no está en la lista de dispositivos conocidos, se mostrará con un fondo rojo. Los dispositivos con fondo verde son dispositivos de confianza</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="119"/>
@@ -391,7 +391,7 @@
     <message>
         <location filename="../libdevicesinlan.py" line="143"/>
         <source>It tries to make a socket connection with any device in the lan. Then it searches with &apos;arp&apos; command the mac information</source>
-        <translation type="unfinished"></translation>
+        <translation>Intenta realizar una conexión de socket con cualquier dispositivo en la lan. Luego busca con el comando 'arp' la información mac</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="144"/>
@@ -406,17 +406,17 @@
     <message>
         <location filename="../libdevicesinlan.py" line="153"/>
         <source>This method can be used in windows and linux versions, but it needs to be executed with administrator role.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este método se puede utilizar en versiones de Windows y Linux, pero debe ejecutarse con rol de administrador.</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="154"/>
         <source>Morever, you need to install &apos;npcap&apos; in order to execute it in Windows.</source>
-        <translation type="unfinished"></translation>
+        <translation>Además, necesita instalar 'npcap' para ejecutarlo en Windows.</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="152"/>
         <source>Uses Scapy arping function to create ARP request and capture its answer for each ip in the subnet to get macs information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Utiliza la función arping de Scapy para crear una solicitud ARP y capturar su respuesta para cada ip en la subred para obtener información de macs.</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="140"/>
@@ -426,7 +426,7 @@
     <message>
         <location filename="../libdevicesinlan.py" line="141"/>
         <source>DevicesInLan can use several methods to scan for devices. You just need to add the --method in console mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>DevicesInLan puede utilizar varios métodos para buscar dispositivos. Solo necesita agregar --method en modo consola.</translation>
     </message>
     <message>
         <location filename="../libdevicesinlan.py" line="156"/>
@@ -527,7 +527,7 @@
     <message>
         <location filename="../ui/frmAbout.py" line="13"/>
         <source>Project web page is in &lt;a href=&quot;https://github.com/turulomio/devicesinlan/&quot;&gt;https://github.com/turulomio/devicesinlan/&lt;/a&gt;&lt;p&gt; &lt;p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>La página web del proyecto está en &lt;a href=&quot;https://github.com/turulomio/devicesinlan/&quot;&gt;https://github.com/turulomio/devicesinlan/&lt;/a&gt;&lt;p&gt; &lt;p&gt;</translation>
     </message>
     <message>
         <location filename="../ui/frmAbout.py" line="13"/>

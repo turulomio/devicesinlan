@@ -1,126 +1,126 @@
-.TH DEVICESINLAN 1 2025\-10\-28
+.TH DEVICESINLAN 1 2025\-12\-28
 .SH NAME
 
 .B devicesinlan:
-Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net.
+Analyse tous les appareils de votre LAN. Ensuite, vous pouvez d\('efinir un alias pour vos appareils connus afin de d\('etecter de futurs appareils \('etranges dans votre r\('eseau.
 .SH SYNOPSIS
 
 devicesinlan [\-h] [\-\-version] [\-\-method {PingArp,ScapyArping,Scapy}] [\-\-interface INTERFACE | \-\-add | \-\-remove | \-\-list | \-\-load LOAD | \-\-save SAVE | \-\-reset] [\-\-debug DEBUG]
 .SH LA DESCRIPTION
 
 .PP
-If you launch DevicesInLan without parameters a console wizard is launched.
+Si vous lancez DevicesInLan sans paramètres, un assistant de console est lanc\('e.
 .PP
-Morever you can use one of this parameters.
+De plus, vous pouvez utiliser l'un de ces paramètres.
 .PP
 .B \-\-interface
 .PP
 .RS
-Scans the net of the interface parameter and prints a list of the detected devices.
+Analyse le r\('eseau du paramètre d'interface et imprime une liste des appareils d\('etect\('es.
 .RE
 .PP
 .RS
-If a device is not known, it will be showed in red. Devices in green are trusted devices.
+Si un appareil n'est pas connu, il sera affich\('e en rouge. Les appareils en vert sont des appareils de confiance.
 .RE
 .PP
 .B \-\-add
 .PP
 .RS
-Allows to add a known device from console.
+Permet d'ajouter un appareil connu depuis la console.
 .RE
 .PP
 .B \-\-remove
 .PP
 .RS
-Allows to remove a known device from console.
+Permet de supprimer un appareil connu depuis la console.
 .RE
 .PP
 .B \-\-list
 .PP
 .RS
-Shows all known devices in database from console.
+Affiche tous les appareils connus dans la base de donn\('ees depuis la console.
 .RE
 .PP
 .B \-\-load
 .PP
 .RS
-Loads a list of known devices in xml format.
+Charge une liste d'appareils connus au format xml.
 .RE
 .PP
 .B \-\-save
 .PP
 .RS
-Saves the known devices list to a xml file.
+Enregistre la liste des appareils connus dans un fichier xml.
 .RE
 .PP
 .B \-\-debug
 .PP
 .RS
-Gives debugging information when running DevicesInLAN. It's deactivated by default
+Donne des informations de d\('ebogage lors de l'ex\('ecution de DevicesInLAN. C'est d\('esactiv\('e par d\('efaut
 .RE
 .PP
 .RS
-The parameter can take this options: CRITICAL, ERROR, WARNING, INFO, DEBUG.
+Le paramètre peut prendre ces options : CRITICAL, ERROR, WARNING, INFO, DEBUG.
 .RE
 .PP
 .B \-\-reset
 .PP
 .RS
-Removes all known devices.
+Supprime tous les appareils connus.
 .RE
-.SH SCAN METHODS
+.SH M\('ETHODES DE BALAYAGE
 
 .PP
-DevicesInLan can use several methods to scan for devices. You just need to add the \-\-method in console mode.
+DevicesInLan peut utiliser plusieurs m\('ethodes pour rechercher des appareils. Il vous suffit d'ajouter le \-\-method en mode console.
 .PP
 .B PingArp
 .PP
 .RS
-It tries to make a socket connection with any device in the lan. Then it searches with 'arp' command the mac information
+Il essaie d'\('etablir une connexion socket avec n'importe quel appareil du r\('eseau local. Ensuite, il recherche avec la commande 'arp' les informations mac
 .RE
 .PP
 .RS
-PingArp method is used in windows and linux versions by default.
+La m\('ethode PingArp est utilis\('ee par d\('efaut dans les versions Windows et Linux.
 .RE
 .PP
 .B Scapy
 .PP
 .RS
-Uses Scapy to create an ARP request and capture its answer for each ip in the subnet to get macs information.
+Utilise Scapy pour cr\('eer une requête ARP et capturer sa r\('eponse pour chaque ip du sous\-r\('eseau afin d'obtenir des informations sur les macs.
 .RE
 .PP
 .RS
-This method can be used in windows and linux versions, but it needs to be executed with administrator role.
+Cette m\('ethode peut être utilis\('ee dans les versions Windows et Linux, mais elle doit être ex\('ecut\('ee avec le rôle d'administrateur.
 .RE
 .PP
 .RS
-Morever, you need to install 'npcap' in order to execute it in Windows.
+De plus, vous devez installer 'npcap' pour l'ex\('ecuter sous Windows.
 .RE
 .PP
 .B ScapyArping
 .PP
 .RS
-Uses Scapy arping function to create ARP request and capture its answer for each ip in the subnet to get macs information.
+Utilise la fonction arping de Scapy pour cr\('eer une requête ARP et capturer sa r\('eponse pour chaque ip du sous\-r\('eseau afin d'obtenir des informations sur les macs.
 .RE
 .PP
 .RS
-This method can be used in windows and linux versions, but it needs to be executed with administrator role.
+Cette m\('ethode peut être utilis\('ee dans les versions Windows et Linux, mais elle doit être ex\('ecut\('ee avec le rôle d'administrateur.
 .RE
 .PP
 .RS
-Morever, you need to install 'npcap' in order to execute it in Windows.
+De plus, vous devez installer 'npcap' pour l'ex\('ecuter sous Windows.
 .RE
-.SH EXAMPLES
+.SH EXEMPLES
 
 .PP
 .B devicesinlan
 .PP
 .RS
-Default command. It uses PingArp method.
+Commande par d\('efaut. Il utilise la m\('ethode PingArp.
 .RE
 .PP
 .B devicesinlan \-\-method ScapyArping
 .PP
 .RS
-It uses ScapyArping method.
+Il utilise la m\('ethode ScapyArping.
 .RE
