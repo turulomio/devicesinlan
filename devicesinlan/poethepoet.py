@@ -130,7 +130,6 @@ def dist_linux():
         
         cmd_gui = (
             f"python -m nuitka {gui_flags} "
-            f"--linux-icon=devicesinlan/images/devicesinlan.png "
             f"--output-filename=devicesinlan_gui-{__version__}-linux-{bits} "
             f"--output-dir=dist {gui_launcher}"
         )
