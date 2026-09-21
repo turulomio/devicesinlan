@@ -109,44 +109,41 @@ def dist_linux():
             f.write("from devicesinlan.devicesinlan import main_console\n")
             f.write("main_console()\n")
             
-        common_flags = (
+        gui_flags = (
             "--onefile "
             "--standalone "
             "--assume-yes-for-downloads "
+            "--enable-plugin=pyqt6 "
             "--include-data-dir=devicesinlan/data=devicesinlan/data "
             "--include-data-dir=devicesinlan/i18n=devicesinlan/i18n "
         )
         
-        cli_exclusions = (
+        cli_flags = (
+            "--onefile "
+            "--standalone "
+            "--assume-yes-for-downloads "
+            "--include-data-dir=devicesinlan/data=devicesinlan/data "
+            "--nofollow-import-to=PyQt6 "
             "--nofollow-import-to=devicesinlan.libdevicesinlan_gui "
             "--nofollow-import-to=devicesinlan.ui "
-            "--nofollow-import-to=PyQt6.QtWidgets "
-            "--nofollow-import-to=PyQt6.QtGui "
-            "--nofollow-import-to=PyQt6.QtSvg "
-            "--nofollow-import-to=PyQt6.QtOpenGL "
-            "--nofollow-import-to=PyQt6.QtPrintSupport "
-            "--nofollow-import-to=PyQt6.QtSql "
-            "--nofollow-import-to=PyQt6.QtTest "
-            "--nofollow-import-to=PyQt6.QtXml "
-            "--nofollow-import-to=PyQt6.QtDBus "
         )
         
         cmd_gui = (
-            f"python -m nuitka {common_flags} --enable-plugin=pyqt6 "
+            f"python -m nuitka {gui_flags} "
             f"--linux-icon=devicesinlan/images/devicesinlan.png "
             f"--output-filename=devicesinlan_gui-{__version__}-linux-{bits} "
             f"--output-dir=dist {gui_launcher}"
         )
         
         cmd_cli = (
-            f"python -m nuitka {common_flags} --enable-plugin=pyqt6 {cli_exclusions} "
+            f"python -m nuitka {cli_flags} "
             f"--output-filename=devicesinlan-{__version__}-linux-{bits} "
             f"--output-dir=dist {cli_launcher}"
         )
         
         print(f"Building Linux GUI binary ({bits}) with Nuitka...")
         system(cmd_gui)
-        print(f"Building Linux Console binary ({bits}) with Nuitka (GUI excluded)...")
+        print(f"Building Linux Console binary ({bits}) with Nuitka (Zero Qt/GUI dependencies)...")
         system(cmd_cli)
         
     print(f"Linux binaries generated in ./dist/ in {datetime.now() - start}")
@@ -175,46 +172,43 @@ def dist_windows():
             f.write("from devicesinlan.devicesinlan import main_console\n")
             f.write("main_console()\n")
             
-        common_flags = (
+        gui_flags = (
             "--onefile "
             "--standalone "
             "--assume-yes-for-downloads "
+            "--enable-plugin=pyqt6 "
+            "--windows-icon-from-ico=devicesinlan/images/devicesinlan.ico "
+            "--windows-console-mode=disable "
             "--include-data-dir=devicesinlan/data=devicesinlan/data "
             "--include-data-dir=devicesinlan/i18n=devicesinlan/i18n "
         )
         
-        cli_exclusions = (
+        cli_flags = (
+            "--onefile "
+            "--standalone "
+            "--assume-yes-for-downloads "
+            "--windows-console-mode=force "
+            "--include-data-dir=devicesinlan/data=devicesinlan/data "
+            "--nofollow-import-to=PyQt6 "
             "--nofollow-import-to=devicesinlan.libdevicesinlan_gui "
             "--nofollow-import-to=devicesinlan.ui "
-            "--nofollow-import-to=PyQt6.QtWidgets "
-            "--nofollow-import-to=PyQt6.QtGui "
-            "--nofollow-import-to=PyQt6.QtSvg "
-            "--nofollow-import-to=PyQt6.QtOpenGL "
-            "--nofollow-import-to=PyQt6.QtPrintSupport "
-            "--nofollow-import-to=PyQt6.QtSql "
-            "--nofollow-import-to=PyQt6.QtTest "
-            "--nofollow-import-to=PyQt6.QtXml "
-            "--nofollow-import-to=PyQt6.QtDBus "
         )
         
         cmd_gui = (
-            f"python -m nuitka {common_flags} --enable-plugin=pyqt6 "
-            f"--windows-icon-from-ico=devicesinlan/images/devicesinlan.ico "
-            f"--windows-console-mode=disable "
+            f"python -m nuitka {gui_flags} "
             f"--output-filename=devicesinlan_gui-{__version__}-windows-{bits}.exe "
             f"--output-dir=dist {gui_launcher}"
         )
         
         cmd_cli = (
-            f"python -m nuitka {common_flags} --enable-plugin=pyqt6 {cli_exclusions} "
-            f"--windows-console-mode=force "
+            f"python -m nuitka {cli_flags} "
             f"--output-filename=devicesinlan-{__version__}-windows-{bits}.exe "
             f"--output-dir=dist {cli_launcher}"
         )
         
         print(f"Building Windows GUI binary ({bits}) with Nuitka...")
         system(cmd_gui)
-        print(f"Building Windows Console binary ({bits}) with Nuitka (GUI excluded)...")
+        print(f"Building Windows Console binary ({bits}) with Nuitka (Zero Qt/GUI dependencies)...")
         system(cmd_cli)
         
     print(f"Windows binaries generated in ./dist/ in {datetime.now() - start}")

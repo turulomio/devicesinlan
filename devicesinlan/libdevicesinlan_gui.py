@@ -14,17 +14,33 @@ class MemGUI(MemConsole):
 
     def run(self, args):
         self.args=args
+
     ## Sets QApplication Object to make a Qt application
     def setQApplication(self):
         self.app=QApplication(argv)
-        
-#        QDir.addSearchPath("images",  f"{self.BASE_DIR}/images")
         self.app.setQuitOnLastWindowClosed(True)
         self.app.setOrganizationName(self.name)
         self.app.setOrganizationDomain(self.name)
         self.app.setApplicationName(self.name)
         self.translator=QTranslator()
         self.settings=QSettings()
+
+    def setLanguage(self, language=None):
+        from importlib.resources import files
+        from logging import info
+        if language==None:
+            language=self.settings.value("frmSettings/language", "en")
+            
+        url=files("devicesinlan") / "i18n/devicesinlan_{}.qm".format(language)
+        
+        if language=="en":
+            info("Changing to default language: en")
+            self.app.removeTranslator(self.translator)
+            self.translator=QTranslator()
+        else:
+            self.translator.load(str(url))
+            self.app.installTranslator(self.translator)
+            info("Language changed to {} using {}".format(language, url))
 
 def DeviceType_qpixmap(o):
     if o.id==0:
