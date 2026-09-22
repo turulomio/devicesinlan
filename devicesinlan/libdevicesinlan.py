@@ -367,16 +367,16 @@ class MemConsole(MemSetup):
         set.print()
         print (Style.BRIGHT+self.tr("DevicesInLan took {} with method {}.").format (Fore.GREEN+str(datetime.now()-inicio)+ " "+ self.tr( "seconds")+Fore.WHITE, self.args.method))
 
-    def setInstallationUUID(self):
-        if self.settings.value("frmMain/uuid", "None")=="None":
-            self.settings.setValue("frmMain/uuid", str(uuid4()))
-            self.settings.sync()
-        url='https://devicesinlan.sourceforge.net/php/devicesinlan_installations.php?uuid={}&version={}&platform={}'.format(self.settings.value("frmMain/uuid"), __version__, platform_system())
-        try:
-            web = urlopen(url).read().decode('utf-8', errors='ignore')
-        except:
-            web=self.tr("Error collecting statistics")
-        debug("{}, answering {}".format(web, url))
+    # def setInstallationUUID(self):
+    #     if self.settings.value("frmMain/uuid", "None")=="None":
+    #         self.settings.setValue("frmMain/uuid", str(uuid4()))
+    #         self.settings.sync()
+    #     url='https://devicesinlan.sourceforge.net/php/devicesinlan_installations.php?uuid={}&version={}&platform={}'.format(self.settings.value("frmMain/uuid"), __version__, platform_system())
+    #     try:
+    #         web = urlopen(url).read().decode('utf-8', errors='ignore')
+    #     except:
+    #         web=self.tr("Error collecting statistics")
+    #     debug("{}, answering {}".format(web, url))
 
 
 ## This function checks if currrent user is root or administrator in Windows or Linux

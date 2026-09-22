@@ -61,15 +61,15 @@ def test_device_oui_and_mac():
     assert d.macwith2points("84AA9C9E76C1") == "84:AA:9C:9E:76:C1"
 
 
-def test_statistic_server():
-    bad_uuid = "00000000-0000-0000-0000-000000000000"
-    uuid = "d7e6de26-709f-4fcf-bb09-5fec007ce452"
-    baseurl = "https://devicesinlan.sourceforge.net/php/devicesinlan_installations.php"
-
-    try:
-        response = get(f"{baseurl}?uuid={uuid}&version={__version__}&platform={platform_system()}", timeout=5)
-        if response.status_code == 200:
-            assert f"Installation {uuid} updated" in response.text
-    except Exception:
-        pass  # Network check
+# def test_statistic_server():
+#     bad_uuid = "00000000-0000-0000-0000-000000000000"
+#     uuid = "d7e6de26-709f-4fcf-bb09-5fec007ce452"
+#     baseurl = "https://devicesinlan.sourceforge.net/php/devicesinlan_installations.php"
+# 
+#     try:
+#         response = get(f"{baseurl}?uuid={uuid}&version={__version__}&platform={platform_system()}", timeout=5)
+#         if response.status_code == 200:
+#             assert f"Installation {uuid} updated" in response.text
+#     except Exception:
+#         pass  # Network check
 

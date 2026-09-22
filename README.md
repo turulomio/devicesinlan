@@ -1,4 +1,4 @@
-# DevicesInLan [![PyPI - Downloads](https://img.shields.io/pypi/dm/devicesinlan?label=Pypi%20downloads)](https://pypi.org/project/devicesinlan/) [![Github - Downloads](https://shields.io/github/downloads/turulomio/devicesinlan/total?label=Github%20downloads )](https://github.com/turulomio/devicesinlan/)
+# DevicesInLan [![PyPI - Downloads](https://img.shields.io/pypi/dm/devicesinlan?label=Pypi%20downloads)](https://pypi.org/project/devicesinlan/) [![GitHub Downloads](https://img.shields.io/github/downloads/turulomio/devicesinlan/total?label=Github%20downloads)](https://github.com/turulomio/devicesinlan/releases)
 
 Snapshots
 =========
@@ -10,9 +10,6 @@ Links
   
 Project web page:
   * https://github.com/turulomio/devicesinlan/
-
-App statistics
-  * https://devicesinlan.sourceforge.net/php/devicesinlan_statistics.php
 
 Install in Linux
 ================

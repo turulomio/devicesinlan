@@ -63,7 +63,7 @@ def main_console():
     signal(SIGINT, mem.signal_handler)
     mem.setQApplication()
     mem.setLanguage()
-    mem.setInstallationUUID()
+    # mem.setInstallationUUID()
     mem.run(args)
     if platform_system()=="Windows":
         press_key_to_continue()
@@ -85,7 +85,7 @@ def main_gui():
     signal(SIGINT, mem.signal_handler)
     mem.setQApplication()
     mem.setLanguage()
-    mem.setInstallationUUID()
+    # mem.setInstallationUUID()
     mem.run(args)
 
     f = frmMain(mem) 
