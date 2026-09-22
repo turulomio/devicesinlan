@@ -25,6 +25,8 @@ qt6-tools = ">=6.5.0.1.3"
 mangenerator = ">=0.4.0"
 pytest = ">=9.1.1"
 coverage = ">=7.16.1"
+nuitka = ">=2.5.0"
+zstandard = ">=0.23.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -39,6 +41,7 @@ release = { script = "devicesinlan.poethepoet:release" }
 translate = { script = "devicesinlan.poethepoet:translate" }
 compile = { script = "devicesinlan.poethepoet:compile" }
 reusing = { script = "devicesinlan.poethepoet:reusing" }
-pyinstaller = { script = "devicesinlan.poethepoet:pyinstaller" }
+dist_linux = { script = "devicesinlan.poethepoet:dist_linux" }
+dist_windows = { script = "devicesinlan.poethepoet:dist_windows" }
 statistics_server = { script = "devicesinlan.poethepoet:statistics_server" }
 tests = { script ="devicesinlan.poethepoet:tests" }

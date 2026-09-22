@@ -7,10 +7,10 @@ from devicesinlan.libdevicesinlan import MemSetup
 from os import system, listdir, path, chdir, getcwd, makedirs
 from shutil import which
 from sys import argv
+from struct import calcsize
 from multiprocessing import cpu_count
 from tempfile import TemporaryDirectory
-from tqdm import tqdm
-from concurrent.futures import ProcessPoolExecutor, as_completed
+from concurrent.futures import ProcessPoolExecutor
 
 try:
     t=translation('devicesinlan', files("devicesinlan") / "locale")
@@ -55,10 +55,14 @@ def release():
     * Change version and date in __init__.py
     * Change version and date in pyproject.toml
     * poe release
+    * poe compile
     * Update ieee-oui with get-oui from arp-scan package
     * poe translate
     * mcedit devicesinlan/locale/es.po
     * poe translate
+    * poe tests
+    * poe dist_windows
+    * poe dist_linux
     * git commit -a -m 'devicesinlan-{__version__}'
     * git push
     * Make a pull request into main branch
@@ -86,69 +90,142 @@ def translate():
         mem.mangenerator(language)
 
 
-def pyinstaller():
-    start=datetime.now()
-    cwd=getcwd()
+def dist_linux():
+    """
+    Builds standalone Linux executables for CLI and GUI using Nuitka.
+    Output: dist/devicesinlan-<version>-linux-<bits> and dist/devicesinlan_gui-<version>-linux-<bits>
+    """
+    start = datetime.now()
+    cwd = getcwd()
+    makedirs("dist", exist_ok=True)
+    bits = f"{calcsize('P') * 8}bits"
     
-    # Download python windows executable
-    url_download_exe="https://www.python.org/ftp/python/3.11.9/python-3.11.9-amd64.exe"
-    url_download_exe_filename=path.basename(url_download_exe)
-    if not path.exists(url_download_exe_filename):
-        system(f"wget {url_download_exe}")
-
-    # Create a new wine, install pythonon and the whole devicesinlan dependencies
     with TemporaryDirectory() as tmpdir:
-        ## Generate launchers
-        with open(f"{tmpdir}/run_gui.py","w") as f:
-            f.write("import devicesinlan.devicesinlan\n")
-            f.write("devicesinlan.devicesinlan.main_gui()\n")
-        with open(f"{tmpdir}/run.py","w") as f:
-            f.write("import devicesinlan.devicesinlan\n")
-            f.write("devicesinlan.devicesinlan.main_console()\n")
+        # Generate launcher files
+        gui_launcher = path.join(tmpdir, "run_gui.py")
+        cli_launcher = path.join(tmpdir, "run_cli.py")
         
-        ## Copies sources to tmpdir
-        system(f"rsync -avzP . {tmpdir}")
-        chdir(tmpdir)
-        
-        
-        ## Check if wine is installed
-        if which("wine") is None:
-            raise Exception("Wine is not in your system")
-    
-
+        with open(gui_launcher, "w") as f:
+            f.write("from devicesinlan.devicesinlan import main_gui\n")
+            f.write("main_gui()\n")
             
-        ## Install windows environment
-        wineprefix=f"WINEPREFIX={tmpdir}"
-        system (f"{wineprefix} wine {url_download_exe_filename} /passive AppendPath=1")
-        system (f"{wineprefix} wine pip install .")
-        system (f"{wineprefix} wine pip install pyinstaller")
+        with open(cli_launcher, "w") as f:
+            f.write("from devicesinlan.devicesinlan import main_console\n")
+            f.write("main_console()\n")
+            
+        gui_flags = (
+            "--onefile "
+            "--standalone "
+            "--assume-yes-for-downloads "
+            "--enable-plugin=pyqt6 "
+            "--include-data-dir=devicesinlan/data=devicesinlan/data "
+            "--include-data-dir=devicesinlan/i18n=devicesinlan/i18n "
+        )
+        
+        cli_flags = (
+            "--onefile "
+            "--standalone "
+            "--assume-yes-for-downloads "
+            "--include-data-dir=devicesinlan/data=devicesinlan/data "
+            "--nofollow-import-to=PyQt6 "
+            "--nofollow-import-to=devicesinlan.libdevicesinlan_gui "
+            "--nofollow-import-to=devicesinlan.ui "
+        )
+        
+        cmd_gui = (
+            f"python -m nuitka {gui_flags} "
+            f"--output-filename=devicesinlan_gui-{__version__}-linux-{bits} "
+            f"--output-dir={tmpdir}/dist_linux {gui_launcher}"
+        )
+        
+        cmd_cli = (
+            f"python -m nuitka {cli_flags} "
+            f"--output-filename=devicesinlan-{__version__}-linux-{bits} "
+            f"--output-dir={tmpdir}/dist_linux {cli_launcher}"
+        )
+        
+        print(f"Building Linux GUI binary ({bits}) with Nuitka...")
+        system(cmd_gui)
+        print(f"Building Linux Console binary ({bits}) with Nuitka (Zero Qt/GUI dependencies)...")
+        system(cmd_cli)
+        
+        system(f"cp -f {tmpdir}/dist_linux/* {cwd}/dist/")
+        
+    print(f"Linux binaries generated in ./dist/ in {datetime.now() - start}")
 
 
+def dist_windows():
+    """
+    Builds standalone Windows executables (.exe with PE32+ format) for CLI and GUI using Nuitka in Wine.
+    Output: dist/devicesinlan-<version>-windows-64bits.exe and dist/devicesinlan_gui-<version>-windows-64bits.exe
+    """
+    start = datetime.now()
+    cwd = getcwd()
+    makedirs("dist", exist_ok=True)
 
-        # List of commands you want to run in the background. IF SOMETHING GOES WRONG USE SYSTEM WITH THAT PROCESS
-        common_parameters='--onefile --add-data="devicesinlan/i18n/*.qm:devicesinlan/i18n"  --add-data="devicesinlan/data:devicesinlan/data" --distpath ./dist/'
-        commands = [
-#            f"""pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --windowed --icon {tmpdir}/devicesinlan/images/devicesinlan.ico  {common_parameters} --workpath="linux_ui""", 
-#            f"""pyinstaller {tmpdir}/run.py -n devicesinlan-{__version__} --console  {common_parameters}""", 
-            f"""{wineprefix} wine pyinstaller {tmpdir}/run_gui.py -n devicesinlan_gui-{__version__} --windowed  --icon {tmpdir}/devicesinlan/images/devicesinlan.ico  {common_parameters}""", 
-            f"""{wineprefix} wine pyinstaller {tmpdir}/run.py -n devicesinlan-{__version__} --console  {common_parameters}""", 
-        ]
+    if which("wine") is None:
+        raise Exception("Wine is not installed in your system. Please install Wine.")
 
-        #Launching concurrent process
-        futures=[]
-        executor = ProcessPoolExecutor(max_workers=cpu_count())
+    url_download_exe = "https://www.python.org/ftp/python/3.12.9/python-3.12.9-amd64.exe"
+    url_download_exe_filename = path.join(cwd, path.basename(url_download_exe))
+    if not path.exists(url_download_exe_filename):
+        print(f"Downloading {url_download_exe}...")
+        system(f"wget -q --show-progress {url_download_exe} -O {url_download_exe_filename}")
 
-        # Start each command as a separate process
-        for cmd in commands:
-            futures.append(executor.submit(system, cmd))
+    with TemporaryDirectory() as tmpdir:
+        wineprefix = f"WINEPREFIX={tmpdir}/wineprefix WINEDEBUG=-all"
+        wine_python = f"{wineprefix} wine C:\\\\Python312\\\\python.exe"
 
-        for f in tqdm(as_completed(futures), total=len(futures)):
-            pass
+        # Copies sources to tmpdir
+        system(f"rsync -aq --exclude='.git' --exclude='dist' --exclude='.pytest_cache' . {tmpdir}/src")
+        chdir(f"{tmpdir}/src")
 
-        makedirs(f"{cwd}/dist/", exist_ok=True)
-        system(f"cp {tmpdir}/dist/* {cwd}/dist/")
-        print(f"All processes have finished in {datetime.now()-start}")
-        print("Windows executables doesn't work in wine due to they use Windows commands. Test in a windows system, because they should work")
+        # Generate launcher files
+        launcher_header = "import time\nif not hasattr(time, 'tzset'):\n    time.tzset = lambda: None\n"
+        with open(f"{tmpdir}/src/run_gui.py", "w") as f:
+            f.write(launcher_header + "from devicesinlan.devicesinlan import main_gui\nmain_gui()\n")
+        with open(f"{tmpdir}/src/run_cli.py", "w") as f:
+            f.write(launcher_header + "from devicesinlan.devicesinlan import main_console\nmain_console()\n")
+
+        print("Setting up Wine Windows Python environment (Python 3.12)...")
+        system(f"{wineprefix} wine {url_download_exe_filename} /passive AppendPath=1 TargetDir=C:\\\\Python312")
+        system(f"{wine_python} -m pip install --upgrade pip")
+        system(f"{wine_python} -m pip install . nuitka zstandard pefile")
+
+        gui_flags = (
+            "--onefile --standalone --assume-yes-for-downloads --enable-plugin=pyqt6 "
+            "--mingw64 "
+            "--experimental=force-dependencies-pefile "
+            "--include-qt-plugins=platforms,styles,imageformats "
+            "--windows-icon-from-ico=devicesinlan/images/devicesinlan.ico "
+            "--windows-console-mode=disable "
+            "--include-data-dir=devicesinlan/data=devicesinlan/data "
+            "--include-data-dir=devicesinlan/i18n=devicesinlan/i18n "
+        )
+        cli_flags = (
+            "--onefile --standalone --assume-yes-for-downloads "
+            "--mingw64 "
+            "--experimental=force-dependencies-pefile "
+            "--windows-console-mode=force "
+            "--include-data-dir=devicesinlan/data=devicesinlan/data "
+            "--nofollow-import-to=PyQt6 "
+            "--nofollow-import-to=devicesinlan.libdevicesinlan_gui "
+            "--nofollow-import-to=devicesinlan.ui "
+        )
+
+        cmd_gui = f"{wine_python} -m nuitka {gui_flags} --output-filename=devicesinlan_gui-{__version__}-windows-64bits.exe --output-dir=dist_win run_gui.py"
+        cmd_cli = f"{wine_python} -m nuitka {cli_flags} --output-filename=devicesinlan-{__version__}-windows-64bits.exe --output-dir=dist_win run_cli.py"
+
+        print("Building Windows GUI PE binary with Nuitka in Wine...")
+        system(cmd_gui)
+        print("Building Windows Console PE binary with Nuitka in Wine (Zero Qt/GUI dependencies)...")
+        system(cmd_cli)
+
+        chdir(cwd)
+        makedirs(f"{cwd}/dist", exist_ok=True)
+        system(f"cp -f {tmpdir}/src/dist_win/*.exe {cwd}/dist/")
+
+    print(f"Windows binaries generated in ./dist/ in {datetime.now() - start}")
 
 
 def statistics_server():

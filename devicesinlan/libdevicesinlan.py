@@ -1,25 +1,30 @@
-from colorama import init as colorama_init,  Style, Fore
-from PyQt6.QtCore import QCoreApplication, QSettings, QTranslator, QObject
-from PyQt6.QtNetwork import QNetworkInterface, QAbstractSocket,  QTcpSocket
-from codecs import open
-from concurrent.futures import ThreadPoolExecutor,  as_completed                            
-from datetime import datetime, date    
-from importlib.resources import files 
-from pydicts.casts import bytes2str
-from devicesinlan.reusing.libmanagers import ObjectManager_With_IdName, ObjectManager_Selectable
-from devicesinlan import __version__, author
-from devicesinlan.reusing.text_inputs import input_YN, input_int
+import time
+if not hasattr(time, 'tzset'):
+    time.tzset = lambda: None
+
+from colorama import init as colorama_init, Style, Fore
+import configparser
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime, date
+from gettext import translation
+from importlib.resources import files
 from ipaddress import IPv4Network
-from logging import debug,  info
+from logging import debug, info
+import os
 from os import path
 from platform import system as platform_system
-from pydicts import lod
 from re import match
+import socket
+import struct
 from subprocess import check_output
 from sys import exit, argv
-from uuid import  uuid4
 from urllib.request import urlopen
+from uuid import uuid4
 from xml.dom import minidom
+
+from devicesinlan import __version__, author
+from devicesinlan.reusing.libmanagers import ObjectManager_With_IdName, ObjectManager_Selectable
+from devicesinlan.reusing.text_inputs import input_YN, input_int
 
 
 ## Converts a string to set inside an XML to a valid XML string
@@ -41,15 +46,104 @@ def xml2string(s):
     return s
 
 
+## Lightweight INI Settings manager compatible with QSettings format and paths
+class IniSettings:
+    def __init__(self, org_name="DevicesInLAN", app_name="DevicesInLAN"):
+        self.org_name = org_name
+        self.app_name = app_name
+        self.config = configparser.RawConfigParser()
+        self.config.optionxform = str  # Preserve case for MAC addresses / keys
+        self.current_group = ""
+
+        if platform_system() == "Windows":
+            app_data = os.environ.get("APPDATA", os.path.expanduser("~"))
+            self.config_dir = path.join(app_data, self.org_name)
+            self.file_path = path.join(self.config_dir, f"{self.app_name}.ini")
+        else:
+            self.config_dir = path.join(os.path.expanduser("~"), ".config", self.org_name)
+            self.file_path = path.join(self.config_dir, f"{self.app_name}.conf")
+
+        self._load()
+
+    def _load(self):
+        if path.exists(self.file_path):
+            try:
+                self.config.read(self.file_path, encoding="utf-8")
+            except Exception:
+                pass
+
+    def beginGroup(self, group):
+        self.current_group = group
+
+    def endGroup(self):
+        self.current_group = ""
+
+    def _split_key(self, key):
+        if self.current_group:
+            section = self.current_group
+            option = key
+        elif "/" in key:
+            section, option = key.split("/", 1)
+        else:
+            section = "General"
+            option = key
+        return section, option
+
+    def value(self, key, default=None):
+        section, option = self._split_key(key)
+        if self.config.has_section(section) and self.config.has_option(section, option):
+            val = self.config.get(section, option)
+            if default is not None:
+                if isinstance(default, bool):
+                    return val.lower() in ("true", "1", "yes")
+                if isinstance(default, int) and not isinstance(default, bool):
+                    try:
+                        return int(val)
+                    except ValueError:
+                        return default
+                if isinstance(default, float):
+                    try:
+                        return float(val)
+                    except ValueError:
+                        return default
+            return val
+        return default
+
+    def setValue(self, key, value):
+        section, option = self._split_key(key)
+        if not self.config.has_section(section):
+            self.config.add_section(section)
+        self.config.set(section, option, str(value))
+
+    def childKeys(self):
+        if self.current_group and self.config.has_section(self.current_group):
+            return list(self.config.options(self.current_group))
+        return []
+
+    def remove(self, key):
+        section, option = self._split_key(key)
+        if self.config.has_section(section):
+            self.config.remove_option(section, option)
+            if len(self.config.options(section)) == 0:
+                self.config.remove_section(section)
+
+    def sync(self):
+        try:
+            os.makedirs(self.config_dir, exist_ok=True)
+            with open(self.file_path, "w", encoding="utf-8") as f:
+                self.config.write(f)
+        except Exception:
+            pass
+
+
 ## Mem object for setup
-class MemSetup(QObject):
+class MemSetup:
     def __init__(self):
-        QObject.__init__(self)        
-        
         self.BASE_DIR=path.dirname(__file__)
         colorama_init()
         self.name="DevicesInLAN"
-
+        self.settings=IniSettings(self.name, self.name)
+        self._gettext_func=str
 
         self.lod_languages=[
             {"code":"en",  "flag": ":/flags/uk.png", "name":"English"}, 
@@ -57,19 +151,16 @@ class MemSetup(QObject):
             {"code":"fr",  "flag": ":/flags/france.png", "name":"Fran\xe7ais"}, 
             {"code":"ro",  "flag": ":/flags/rumania.png", "name":"Rom\xe2n"}, 
             {"code":"ru",  "flag": ":/flags/rusia.png", "name":"\u0420\u0443\u0441\u0441\u043a\u0438\u0439"}, 
-
         ]
 
-        self.dod_languages=lod.lod2dod(self.lod_languages,  "code")
+        self.dod_languages = {d["code"]: d for d in self.lod_languages}
 
-    ## Sets QApplication Object to make a Qt application
+    def tr(self, text):
+        return self._gettext_func(text)
+
+    ## Sets QApplication Object (overridden in GUI)
     def setQApplication(self):        
-        self.app=QCoreApplication(argv)
-        self.app.setOrganizationName(self.name)
-        self.app.setOrganizationDomain(self.name)
-        self.app.setApplicationName(self.name)
-        self.translator=QTranslator()
-        self.settings=QSettings()
+        pass
 
     def mangenerator(self, language):
         from mangenerator import Man
@@ -166,22 +257,18 @@ class MemSetup(QObject):
             print(Style.BRIGHT+Fore.RED+self.tr("You pressed 'Ctrl+C', exiting..."))
             exit(0)
             
-    ## Changes Qt current Qtranslator
-    ## @param language String with en, es .... None by defautt and search in settings
+    ## Changes current language
+    ## @param language String with en, es .... None by default and search in settings
     def setLanguage(self, language=None):
         if language==None:
             language=self.settings.value("frmSettings/language", "en")
             
-        url=files("devicesinlan") / "i18n/devicesinlan_{}.qm".format(language)
-        
-        if language=="en":
-            info("Changing to default language: en")
-            self.app.removeTranslator(self.translator)
-            self.translator=QTranslator()
-        else:
-            self.translator.load(str(url))
-            self.app.installTranslator(self.translator)
-            info(self.tr("Language changed to {} using {}".format(language, url)))
+        try:
+            locale_dir=files("devicesinlan") / "locale"
+            t=translation('devicesinlan', locale_dir, languages=[language])
+            self._gettext_func=t.gettext
+        except Exception:
+            self._gettext_func=str
 
 ## Mem object for console
 class MemConsole(MemSetup):
@@ -283,9 +370,10 @@ class MemConsole(MemSetup):
     def setInstallationUUID(self):
         if self.settings.value("frmMain/uuid", "None")=="None":
             self.settings.setValue("frmMain/uuid", str(uuid4()))
+            self.settings.sync()
         url='https://devicesinlan.sourceforge.net/php/devicesinlan_installations.php?uuid={}&version={}&platform={}'.format(self.settings.value("frmMain/uuid"), __version__, platform_system())
         try:
-            web=bytes2str(urlopen(url).read())
+            web = urlopen(url).read().decode('utf-8', errors='ignore')
         except:
             web=self.tr("Error collecting statistics")
         debug("{}, answering {}".format(web, url))
@@ -317,11 +405,13 @@ class DeviceType:
         self.name=name
         return self
 
-class DeviceTypeManager(QObject, ObjectManager_With_IdName):
+class DeviceTypeManager(ObjectManager_With_IdName):
     def __init__(self, mem):
-        QObject.__init__(self)
         ObjectManager_With_IdName.__init__(self)
         self.mem=mem
+
+    def tr(self, text):
+        return self.mem.tr(text) if self.mem else text
         
     def load_all(self):            
         self.append(DeviceType(self.mem).init__create(0, self.tr( "Unknown")))
@@ -349,35 +439,43 @@ class DeviceTypeManager(QObject, ObjectManager_With_IdName):
         except:
             return False       
 
-class Interface(QObject):
-    """Union of Interface and networkaddressentry. Remember than a interface can have networkaddressentry. ipaddress is qhostaddress"""
+class Interface:
+    """Union of Interface and network information"""
     def __init__(self, mem):
-        QObject.__init__(self)
         self.mem=mem
+        self._id=None
+        self._name=None
+        self._ip=None
+        self._mac=None
+        self._netmask=None
+        self._broadcast=None
+
+    def tr(self, text):
+        return self.mem.tr(text) if self.mem else text
     
     def addresses(self):
-        """List of strings with all ip addresses in the net of the interface"""
+        """List of ip addresses in the net of the interface"""
         r=[]
         for addr in IPv4Network("{}/{}".format(self.ip(), self.netmask()), strict=False):
             r.append(addr)
         return r
         
     def id(self):
-        return self.qnetworkinterface.name()
+        return self._id
         
     def name(self):
-        return self.qnetworkinterface.humanReadableName()
+        return self._name
         
     def ip(self):
-        return self.qnetworkaddressentry.ip().toString()
+        return self._ip
         
     def mac(self):
-        return self.qnetworkinterface.hardwareAddress()
+        return self._mac
         
     def netmask(self):
-        return self.qnetworkaddressentry.netmask().toString()
+        return self._netmask
         
-    ##Conversts 255.255.255.0 to 24
+    ##Converts 255.255.255.0 to 24
     def netmask_to_int(self):
         sintegers=self.netmask().split(".")
         sbits=""
@@ -405,16 +503,19 @@ class Interface(QObject):
         
         
     def broadcast(self):
-        return self.qnetworkaddressentry.broadcast().toString()
+        return self._broadcast
     
-    def init__create(self, qnetworkinterface, qnetworkaddressentry):
-        self.qnetworkinterface=qnetworkinterface
-        self.qnetworkaddressentry=qnetworkaddressentry
+    def init__create(self, if_id, name, ip, mac, netmask, broadcast=""):
+        self._id=if_id
+        self._name=name or if_id
+        self._ip=ip
+        self._mac=(mac or "").upper()
+        self._netmask=netmask or "255.255.255.0"
+        self._broadcast=broadcast
         return self
 
-
     def __str__(self):
-        return (self.tr("Interface {} ({}) with ip {}/{} and mac {}".format(self.name, self.id(), self.ip(), self.netmask(), self.mac())))
+        return (self.tr("Interface {} ({}) with ip {}/{} and mac {}".format(self.name(), self.id(), self.ip(), self.netmask(), self.mac())))
         
 class InterfaceManager(ObjectManager_Selectable):
     def __init__(self, mem):
@@ -427,12 +528,27 @@ class InterfaceManager(ObjectManager_Selectable):
                 return interface
         return None
 
-                
     def load_all(self):
-        for i in QNetworkInterface.allInterfaces():
-                for e in i.addressEntries():
-                    if e.ip().isLoopback()==False and i.isValid() and e.ip().isMulticast()==False and e.ip().isNull()==False and e.ip().protocol()==QAbstractSocket.NetworkLayerProtocol.IPv4Protocol and e.ip().isLinkLocal()==False:
-                        self.append(Interface(self.mem).init__create(i, e))
+        from scapy.all import conf
+        netmask_map = {}
+        for r in conf.route.routes:
+            try:
+                iface_name = r[3]
+                mask_val = r[1]
+                if mask_val not in (0, 0xFFFFFFFF) and iface_name not in netmask_map:
+                    netmask_map[iface_name] = socket.inet_ntoa(struct.pack('!I', mask_val))
+            except Exception:
+                pass
+
+        for iface in conf.ifaces.values():
+            ip = getattr(iface, "ip", None)
+            if not ip or ip.startswith("127.") or ip == "0.0.0.0" or ip.startswith("169.254."):
+                continue
+            name = getattr(iface, "name", "")
+            description = getattr(iface, "description", name)
+            mac = getattr(iface, "mac", "")
+            netmask = netmask_map.get(name, "255.255.255.0")
+            self.append(Interface(self.mem).init__create(name, description, ip, mac, netmask))
         
     def print(self):
         for i, interface in enumerate(self.arr):
@@ -462,13 +578,15 @@ class ArpScanMethod:
                 return value
         return None
 
-class DeviceManager(QObject, ObjectManager_Selectable):
+class DeviceManager(ObjectManager_Selectable):
     def __init__(self, mem):
         """This constructor load /etc/devicesinlan/known.txt and executes arp-scan and parses its result"""
-        QObject.__init__(self)
         ObjectManager_Selectable.__init__(self)
         self.mem=mem
         self.isDatabase=False#Returns True if is init__from_settings
+
+    def tr(self, text):
+        return self.mem.tr(text) if self.mem else text
 
     def init__from_xml(self, filename):
         """
@@ -520,9 +638,12 @@ class DeviceManager(QObject, ObjectManager_Selectable):
             """
             pinged=True
             mac=None
-            sock=QTcpSocket()
-            sock.connectToHost(ip, 80)
-            sock.close()
+            try:
+                with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+                    sock.settimeout(0.3)
+                    sock.connect((ip, 80))
+            except Exception:
+                pass
 
             #ARP
             if pinged==True:
@@ -739,9 +860,8 @@ class DeviceManager(QObject, ObjectManager_Selectable):
         with open(filename, "w", "utf-8") as f:
             f.write(s)
 
-class Device(QObject):
+class Device:
     def __init__(self, mem):
-        QObject.__init__(self)
         self.mem=mem
         self.ip=None
         self.mac=None
@@ -749,6 +869,9 @@ class Device(QObject):
         self.alias=None
         self.pinged=False
         self.type=None
+
+    def tr(self, text):
+        return self.mem.tr(text) if self.mem else text
         
     def __eq__(self, other):
         if other==None:
@@ -849,24 +972,4 @@ class Device(QObject):
     def macwithout2points(self, macwith):
         return macwith.replace(":", "")
 
-    def signal_handler(self, signal, frame):
-            print(Style.BRIGHT+Fore.RED+self.tr("You pressed 'Ctrl+C', exiting..."))
-            exit(0)
-            
-    ## Changes Qt current Qtranslator
-    ## @param language String with en, es .... None by defautt and search in settings
-    def setLanguage(self, language=None):
-        if language==None:
-            language=self.settings.value("frmSettings/language", "en")
-
-        url=files("devicesinlan") / "i18n/devicesinlan_{}.qm".format(language)
-        
-        if language=="en":
-            info("Changing to default language: en")
-            self.app.removeTranslator(self.translator)
-            self.translator=QTranslator()
-        else:
-            self.translator.load(url)
-            self.app.installTranslator(self.translator)
-            info(self.tr("Language changed to {} using {}".format(language, url)))
             
