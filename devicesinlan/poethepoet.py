@@ -59,6 +59,9 @@ def release():
     * poe translate
     * mcedit devicesinlan/locale/es.po
     * poe translate
+    * poe tests
+    * poe dist_windows
+    * poe dist_linux
     * git commit -a -m 'devicesinlan-{__version__}'
     * git push
     * Make a pull request into main branch
