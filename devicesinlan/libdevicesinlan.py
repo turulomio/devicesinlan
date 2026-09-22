@@ -143,7 +143,8 @@ class MemSetup:
         colorama_init()
         self.name="DevicesInLAN"
         self.settings=IniSettings(self.name, self.name)
-        self._gettext_func=str
+        self.translations = {}
+        self.current_language = "en"
 
         self.lod_languages=[
             {"code":"en",  "flag": ":/flags/uk.png", "name":"English"}, 
@@ -155,8 +156,10 @@ class MemSetup:
 
         self.dod_languages = {d["code"]: d for d in self.lod_languages}
 
-    def tr(self, text):
-        return self._gettext_func(text)
+    def tr(self, text, context=None):
+        if context and (context, text) in self.translations:
+            return self.translations[(context, text)]
+        return self.translations.get(text, text)
 
     ## Sets QApplication Object (overridden in GUI)
     def setQApplication(self):        
@@ -260,15 +263,33 @@ class MemSetup:
     ## Changes current language
     ## @param language String with en, es .... None by default and search in settings
     def setLanguage(self, language=None):
-        if language==None:
-            language=self.settings.value("frmSettings/language", "en")
-            
+        if language is None:
+            language = self.settings.value("frmSettings/language", "en")
+
+        self.current_language = language
+        self.translations = {}
+        if language == "en":
+            return
+
         try:
-            locale_dir=files("devicesinlan") / "locale"
-            t=translation('devicesinlan', locale_dir, languages=[language])
-            self._gettext_func=t.gettext
+            import xml.etree.ElementTree as ET
+            from importlib.resources import files
+            ts_path = str(files("devicesinlan") / f"i18n/devicesinlan_{language}.ts")
+            if path.exists(ts_path):
+                tree = ET.parse(ts_path)
+                root = tree.getroot()
+                for context in root.findall("context"):
+                    c_name_elem = context.find("name")
+                    c_name = c_name_elem.text if c_name_elem is not None and c_name_elem.text else ""
+                    for message in context.findall("message"):
+                        source_elem = message.find("source")
+                        trans_elem = message.find("translation")
+                        if source_elem is not None and source_elem.text and trans_elem is not None and trans_elem.text:
+                            self.translations[(c_name, source_elem.text)] = trans_elem.text
+                            if source_elem.text not in self.translations:
+                                self.translations[source_elem.text] = trans_elem.text
         except Exception:
-            self._gettext_func=str
+            pass
 
 ## Mem object for console
 class MemConsole(MemSetup):

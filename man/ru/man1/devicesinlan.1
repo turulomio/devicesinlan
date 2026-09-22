@@ -2,125 +2,125 @@
 .SH NAME
 
 .B devicesinlan:
-Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net.
+Сканирует все устройства в локальной сети (LAN). Вы можете задать псевдонимы известным устройствам для обнаружения посторонних устройств.
 .SH SYNOPSIS
 
 devicesinlan [\-h] [\-\-version] [\-\-method {PingArp,ScapyArping,Scapy}] [\-\-interface INTERFACE | \-\-add | \-\-remove | \-\-list | \-\-load LOAD | \-\-save SAVE | \-\-reset] [\-\-debug DEBUG]
-.SH DESCRIPTION
+.SH ОПИСАНИЕ
 
 .PP
-If you launch DevicesInLan without parameters a console wizard is launched.
+Если запустить DevicesInLan без параметров, запустится мастер консоли.
 .PP
-Morever you can use one of this parameters.
+Также можно использовать один из следующих параметров.
 .PP
 .B \-\-interface
 .PP
 .RS
-Scans the net of the interface parameter and prints a list of the detected devices.
+Сканирует сеть выбранного интерфейса и выводит список обнаруженных устройств.
 .RE
 .PP
 .RS
-If a device is not known, it will be showed in red. Devices in green are trusted devices.
+Неизвестные устройства отображаются красным цветом. Зеленым отмечены доверенные устройства.
 .RE
 .PP
 .B \-\-add
 .PP
 .RS
-Allows to add a known device from console.
+Позволяет добавить известное устройство через консоль.
 .RE
 .PP
 .B \-\-remove
 .PP
 .RS
-Allows to remove a known device from console.
+Позволяет удалить известное устройство через консоль.
 .RE
 .PP
 .B \-\-list
 .PP
 .RS
-Shows all known devices in database from console.
+Отображает все известные устройства из базы данных в консоли.
 .RE
 .PP
 .B \-\-load
 .PP
 .RS
-Loads a list of known devices in xml format.
+Загружает список известных устройств в формате XML.
 .RE
 .PP
 .B \-\-save
 .PP
 .RS
-Saves the known devices list to a xml file.
+Сохраняет список известных устройств в XML\-файл.
 .RE
 .PP
 .B \-\-debug
 .PP
 .RS
-Gives debugging information when running DevicesInLAN. It's deactivated by default
+Выводит отладочную информацию при работе DevicesInLAN. По умолчанию отключено
 .RE
 .PP
 .RS
-The parameter can take this options: CRITICAL, ERROR, WARNING, INFO, DEBUG.
+Параметр может принимать значения: CRITICAL, ERROR, WARNING, INFO, DEBUG.
 .RE
 .PP
 .B \-\-reset
 .PP
 .RS
-Removes all known devices.
+Удаляет все известные устройства.
 .RE
-.SH SCAN METHODS
+.SH МЕТОДЫ СКАНИРОВАНИЯ
 
 .PP
-DevicesInLan can use several methods to scan for devices. You just need to add the \-\-method in console mode.
+DevicesInLan поддерживает несколько методов сканирования. Добавьте \-\-method в режиме консоли.
 .PP
 .B PingArp
 .PP
 .RS
-It tries to make a socket connection with any device in the lan. Then it searches with 'arp' command the mac information
+Пытается установить сокет\-соединение с каждым устройством в LAN, затем получает MAC с помощью команды 'arp'
 .RE
 .PP
 .RS
-PingArp method is used in windows and linux versions by default.
+Метод PingArp используется по умолчанию в Windows и Linux.
 .RE
 .PP
 .B Scapy
 .PP
 .RS
-Uses Scapy to create an ARP request and capture its answer for each ip in the subnet to get macs information.
+Использует Scapy для отправки ARP\-запросов и получения MAC\-адресов каждого IP в подсети.
 .RE
 .PP
 .RS
-This method can be used in windows and linux versions, but it needs to be executed with administrator role.
+Этот метод доступен в Windows и Linux, но требует прав администратора.
 .RE
 .PP
 .RS
-Morever, you need to install 'npcap' in order to execute it in Windows.
+Кроме того, в Windows необходимо установить 'npcap'.
 .RE
 .PP
 .B ScapyArping
 .PP
 .RS
-Uses Scapy arping function to create ARP request and capture its answer for each ip in the subnet to get macs information.
+Использует функцию arping из Scapy для отправки ARP\-запросов и получения информации о MAC\-адресах.
 .RE
 .PP
 .RS
-This method can be used in windows and linux versions, but it needs to be executed with administrator role.
+Этот метод доступен в Windows и Linux, но требует прав администратора.
 .RE
 .PP
 .RS
-Morever, you need to install 'npcap' in order to execute it in Windows.
+Кроме того, в Windows необходимо установить 'npcap'.
 .RE
-.SH EXAMPLES
+.SH ПРИМЕРЫ
 
 .PP
 .B devicesinlan
 .PP
 .RS
-Default command. It uses PingArp method.
+Команда по умолчанию. Использует метод PingArp.
 .RE
 .PP
 .B devicesinlan \-\-method ScapyArping
 .PP
 .RS
-It uses ScapyArping method.
+Использует метод ScapyArping.
 .RE

@@ -78,13 +78,22 @@ def release():
 
 def translate():
     """
-        I couldn't do it with qt6
+    Updates and compiles Qt6 translations, and generates manual pages
     """
     mem=MemSetup()
     mem.setQApplication()
 
-    system("pylupdate5 -noobsolete -verbose devicesinlan.pro")
-    system("/usr/lib64/qt5/bin/lrelease devicesinlan.pro")
+    pylupdate_cmd = which("pylupdate6") or "pylupdate6"
+    for ts_file in [
+        "devicesinlan/i18n/devicesinlan_es.ts",
+        "devicesinlan/i18n/devicesinlan_fr.ts",
+        "devicesinlan/i18n/devicesinlan_ro.ts",
+        "devicesinlan/i18n/devicesinlan_ru.ts",
+    ]:
+        system(f"{pylupdate_cmd} --no-obsolete --ts {ts_file} devicesinlan")
+
+    lrelease_cmd = which("lrelease") or which("lrelease-qt6") or which("lrelease6") or "/usr/lib64/qt6/bin/lrelease"
+    system(f"{lrelease_cmd} devicesinlan.pro")
     for language in ["en", "fr", "ro", "ru", "es"]:
         mem.setLanguage(language)
         mem.mangenerator(language)
