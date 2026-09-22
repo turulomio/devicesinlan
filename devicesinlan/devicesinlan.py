@@ -1,6 +1,10 @@
 ## @namespace devicesinlan.devicesinlan
 ## @brief Package main functions
 
+import time
+if not hasattr(time, 'tzset'):
+    time.tzset = lambda: None
+
 from signal import signal,  SIGINT
 from sys import exit
 from devicesinlan import __version__, __versiondate__, epilog

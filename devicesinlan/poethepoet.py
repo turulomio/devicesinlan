@@ -10,8 +10,7 @@ from sys import argv
 from struct import calcsize
 from multiprocessing import cpu_count
 from tempfile import TemporaryDirectory
-from tqdm import tqdm
-from concurrent.futures import ProcessPoolExecutor, as_completed
+from concurrent.futures import ProcessPoolExecutor
 
 try:
     t=translation('devicesinlan', files("devicesinlan") / "locale")
@@ -93,6 +92,7 @@ def dist_linux():
     Output: dist/devicesinlan-<version>-linux-<bits> and dist/devicesinlan_gui-<version>-linux-<bits>
     """
     start = datetime.now()
+    cwd = getcwd()
     makedirs("dist", exist_ok=True)
     bits = f"{calcsize('P') * 8}bits"
     
@@ -131,13 +131,13 @@ def dist_linux():
         cmd_gui = (
             f"python -m nuitka {gui_flags} "
             f"--output-filename=devicesinlan_gui-{__version__}-linux-{bits} "
-            f"--output-dir=dist {gui_launcher}"
+            f"--output-dir={tmpdir}/dist_linux {gui_launcher}"
         )
         
         cmd_cli = (
             f"python -m nuitka {cli_flags} "
             f"--output-filename=devicesinlan-{__version__}-linux-{bits} "
-            f"--output-dir=dist {cli_launcher}"
+            f"--output-dir={tmpdir}/dist_linux {cli_launcher}"
         )
         
         print(f"Building Linux GUI binary ({bits}) with Nuitka...")
@@ -145,71 +145,82 @@ def dist_linux():
         print(f"Building Linux Console binary ({bits}) with Nuitka (Zero Qt/GUI dependencies)...")
         system(cmd_cli)
         
+        system(f"cp -f {tmpdir}/dist_linux/* {cwd}/dist/")
+        
     print(f"Linux binaries generated in ./dist/ in {datetime.now() - start}")
 
 
 def dist_windows():
     """
-    Builds standalone Windows executables (.exe) for CLI and GUI using Nuitka.
-    Run on a Windows host/runner or CI.
-    Output: dist/devicesinlan-<version>-windows-<bits>.exe and dist/devicesinlan_gui-<version>-windows-<bits>.exe
+    Builds standalone Windows executables (.exe with PE32+ format) for CLI and GUI using Nuitka in Wine.
+    Output: dist/devicesinlan-<version>-windows-64bits.exe and dist/devicesinlan_gui-<version>-windows-64bits.exe
     """
     start = datetime.now()
+    cwd = getcwd()
     makedirs("dist", exist_ok=True)
-    bits = f"{calcsize('P') * 8}bits"
-    
+
+    if which("wine") is None:
+        raise Exception("Wine is not installed in your system. Please install Wine.")
+
+    url_download_exe = "https://www.python.org/ftp/python/3.12.9/python-3.12.9-amd64.exe"
+    url_download_exe_filename = path.join(cwd, path.basename(url_download_exe))
+    if not path.exists(url_download_exe_filename):
+        print(f"Downloading {url_download_exe}...")
+        system(f"wget -q --show-progress {url_download_exe} -O {url_download_exe_filename}")
+
     with TemporaryDirectory() as tmpdir:
+        wineprefix = f"WINEPREFIX={tmpdir}/wineprefix WINEDEBUG=-all"
+        wine_python = f"{wineprefix} wine C:\\\\Python312\\\\python.exe"
+
+        # Copies sources to tmpdir
+        system(f"rsync -aq --exclude='.git' --exclude='dist' --exclude='.pytest_cache' . {tmpdir}/src")
+        chdir(f"{tmpdir}/src")
+
         # Generate launcher files
-        gui_launcher = path.join(tmpdir, "run_gui.py")
-        cli_launcher = path.join(tmpdir, "run_cli.py")
-        
-        with open(gui_launcher, "w") as f:
-            f.write("from devicesinlan.devicesinlan import main_gui\n")
-            f.write("main_gui()\n")
-            
-        with open(cli_launcher, "w") as f:
-            f.write("from devicesinlan.devicesinlan import main_console\n")
-            f.write("main_console()\n")
-            
+        launcher_header = "import time\nif not hasattr(time, 'tzset'):\n    time.tzset = lambda: None\n"
+        with open(f"{tmpdir}/src/run_gui.py", "w") as f:
+            f.write(launcher_header + "from devicesinlan.devicesinlan import main_gui\nmain_gui()\n")
+        with open(f"{tmpdir}/src/run_cli.py", "w") as f:
+            f.write(launcher_header + "from devicesinlan.devicesinlan import main_console\nmain_console()\n")
+
+        print("Setting up Wine Windows Python environment (Python 3.12)...")
+        system(f"{wineprefix} wine {url_download_exe_filename} /passive AppendPath=1 TargetDir=C:\\\\Python312")
+        system(f"{wine_python} -m pip install --upgrade pip")
+        system(f"{wine_python} -m pip install . nuitka zstandard pefile")
+
         gui_flags = (
-            "--onefile "
-            "--standalone "
-            "--assume-yes-for-downloads "
-            "--enable-plugin=pyqt6 "
+            "--onefile --standalone --assume-yes-for-downloads --enable-plugin=pyqt6 "
+            "--mingw64 "
+            "--experimental=force-dependencies-pefile "
+            "--include-qt-plugins=platforms,styles,imageformats "
             "--windows-icon-from-ico=devicesinlan/images/devicesinlan.ico "
             "--windows-console-mode=disable "
             "--include-data-dir=devicesinlan/data=devicesinlan/data "
             "--include-data-dir=devicesinlan/i18n=devicesinlan/i18n "
         )
-        
         cli_flags = (
-            "--onefile "
-            "--standalone "
-            "--assume-yes-for-downloads "
+            "--onefile --standalone --assume-yes-for-downloads "
+            "--mingw64 "
+            "--experimental=force-dependencies-pefile "
             "--windows-console-mode=force "
             "--include-data-dir=devicesinlan/data=devicesinlan/data "
             "--nofollow-import-to=PyQt6 "
             "--nofollow-import-to=devicesinlan.libdevicesinlan_gui "
             "--nofollow-import-to=devicesinlan.ui "
         )
-        
-        cmd_gui = (
-            f"python -m nuitka {gui_flags} "
-            f"--output-filename=devicesinlan_gui-{__version__}-windows-{bits}.exe "
-            f"--output-dir=dist {gui_launcher}"
-        )
-        
-        cmd_cli = (
-            f"python -m nuitka {cli_flags} "
-            f"--output-filename=devicesinlan-{__version__}-windows-{bits}.exe "
-            f"--output-dir=dist {cli_launcher}"
-        )
-        
-        print(f"Building Windows GUI binary ({bits}) with Nuitka...")
+
+        cmd_gui = f"{wine_python} -m nuitka {gui_flags} --output-filename=devicesinlan_gui-{__version__}-windows-64bits.exe --output-dir=dist_win run_gui.py"
+        cmd_cli = f"{wine_python} -m nuitka {cli_flags} --output-filename=devicesinlan-{__version__}-windows-64bits.exe --output-dir=dist_win run_cli.py"
+
+        print("Building Windows GUI PE binary with Nuitka in Wine...")
         system(cmd_gui)
-        print(f"Building Windows Console binary ({bits}) with Nuitka (Zero Qt/GUI dependencies)...")
+        print("Building Windows Console PE binary with Nuitka in Wine (Zero Qt/GUI dependencies)...")
         system(cmd_cli)
-        
+
+        chdir(cwd)
+        makedirs(f"{cwd}/dist", exist_ok=True)
+        system(f"cp -f {tmpdir}/src/dist_win/*.exe {cwd}/dist/")
+
     print(f"Windows binaries generated in ./dist/ in {datetime.now() - start}")
 
 

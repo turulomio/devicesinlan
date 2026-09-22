@@ -17,3 +17,4 @@ dist/
 doc/html/
 doc/ttyrec/
 .jedi/
+python-*.exe

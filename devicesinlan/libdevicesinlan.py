@@ -1,3 +1,7 @@
+import time
+if not hasattr(time, 'tzset'):
+    time.tzset = lambda: None
+
 from colorama import init as colorama_init, Style, Fore
 import configparser
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -9,8 +13,6 @@ from logging import debug, info
 import os
 from os import path
 from platform import system as platform_system
-from pydicts import lod
-from pydicts.casts import bytes2str
 from re import match
 import socket
 import struct
@@ -151,7 +153,7 @@ class MemSetup:
             {"code":"ru",  "flag": ":/flags/rusia.png", "name":"\u0420\u0443\u0441\u0441\u043a\u0438\u0439"}, 
         ]
 
-        self.dod_languages=lod.lod2dod(self.lod_languages,  "code")
+        self.dod_languages = {d["code"]: d for d in self.lod_languages}
 
     def tr(self, text):
         return self._gettext_func(text)
@@ -371,7 +373,7 @@ class MemConsole(MemSetup):
             self.settings.sync()
         url='https://devicesinlan.sourceforge.net/php/devicesinlan_installations.php?uuid={}&version={}&platform={}'.format(self.settings.value("frmMain/uuid"), __version__, platform_system())
         try:
-            web=bytes2str(urlopen(url).read())
+            web = urlopen(url).read().decode('utf-8', errors='ignore')
         except:
             web=self.tr("Error collecting statistics")
         debug("{}, answering {}".format(web, url))
