@@ -1,32 +1,36 @@
 # DevicesInLan [![PyPI - Downloads](https://img.shields.io/pypi/dm/devicesinlan?label=Pypi%20downloads)](https://pypi.org/project/devicesinlan/) [![GitHub Downloads](https://img.shields.io/github/downloads/turulomio/devicesinlan/total?label=Github%20downloads)](https://github.com/turulomio/devicesinlan/releases)
 
-Snapshots
-=========
+## Snapshots
 
 ![Snapshot](https://raw.githubusercontent.com/turulomio/devicesinlan/qt5/doc/devicesinlan_snapshots_01.png)
 
-Links
-=====
+## Links
   
-Project web page:
-  * https://github.com/turulomio/devicesinlan/
+- **Project web page**: <https://github.com/turulomio/devicesinlan/>
 
-Install in Linux
-================
-If you use Gentoo you can find a ebuild in https://github.com/turulomio/myportage/tree/master/net-analyzer/devicesinlan
+## Installation
 
-If you use other distribution compatible con pip: `pip install devicesinlan`
+### Linux
 
-Install in Windows as a python module
-=====================================
-You need to install Python from https://www.python.org and add it to the PATH
+If you use Gentoo, you can find an ebuild at <https://github.com/turulomio/myportage/tree/master/net-analyzer/devicesinlan>.
 
-You must open a console with Administrator privileges and type:
+If you use another distribution compatible with `pip`:
 
-`pip install devicesinlan`
+```bash
+pip install devicesinlan
+```
 
-If you want to create a Desktop shortcut to launch Xulpymoney you must write in a console:
+### Windows (as a Python module)
 
-`devicesinlan_shortcut.exe`
+1. You need to install Python from <https://www.python.org> and add it to the `PATH`.
+2. Open a console with Administrator privileges and run:
 
-- Fix remote version bug
+```cmd
+pip install devicesinlan
+```
+
+3. If you want to create a Desktop shortcut to launch DevicesInLan, run:
+
+```cmd
+devicesinlan_shortcut.exe
+```
