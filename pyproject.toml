@@ -1,6 +1,6 @@
 [project]
 name = "devicesinlan"
-version = "2.0.3"
+version = "2.1.0"
 description = "Find devices in a LAN and allows to make a list of known devices in order to detect not allowed ones"
 authors = [
     {name = "turulomio", email = "turulomio@yahoo.es"},
@@ -45,3 +45,9 @@ dist_linux = { script = "devicesinlan.poethepoet:dist_linux" }
 dist_windows = { script = "devicesinlan.poethepoet:dist_windows" }
 statistics_server = { script = "devicesinlan.poethepoet:statistics_server" }
 tests = { script ="devicesinlan.poethepoet:tests" }
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore:.*Diffie-Hellman.*:cryptography.utils.CryptographyDeprecationWarning",
+    "ignore::DeprecationWarning",
+]

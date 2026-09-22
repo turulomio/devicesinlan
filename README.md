@@ -1,35 +1,51 @@
-# DevicesInLan [![PyPI - Downloads](https://img.shields.io/pypi/dm/devicesinlan?label=Pypi%20downloads)](https://pypi.org/project/devicesinlan/) [![Github - Downloads](https://shields.io/github/downloads/turulomio/devicesinlan/total?label=Github%20downloads )](https://github.com/turulomio/devicesinlan/)
+# DevicesInLan [![PyPI - Downloads](https://img.shields.io/pypi/dm/devicesinlan?label=Pypi%20downloads)](https://pypi.org/project/devicesinlan/) [![GitHub Downloads](https://img.shields.io/github/downloads/turulomio/devicesinlan/total?label=Github%20downloads)](https://github.com/turulomio/devicesinlan/releases)
 
-Snapshots
-=========
+## Snapshots
 
 ![Snapshot](https://raw.githubusercontent.com/turulomio/devicesinlan/qt5/doc/devicesinlan_snapshots_01.png)
 
-Links
-=====
+## Links
   
-Project web page:
-  * https://github.com/turulomio/devicesinlan/
+- **Project web page**: <https://github.com/turulomio/devicesinlan/>
+- **Releases and Downloads**: <https://github.com/turulomio/devicesinlan/releases>
 
-App statistics
-  * https://devicesinlan.sourceforge.net/php/devicesinlan_statistics.php
+## Installation
 
-Install in Linux
-================
-If you use Gentoo you can find a ebuild in https://github.com/turulomio/myportage/tree/master/net-analyzer/devicesinlan
+### Standalone Binaries (Linux & Windows)
 
-If you use other distribution compatible con pip: `pip install devicesinlan`
+You can download portable standalone executables directly from **[GitHub Releases](https://github.com/turulomio/devicesinlan/releases)** without needing Python or dependencies installed:
 
-Install in Windows as a python module
-=====================================
-You need to install Python from https://www.python.org and add it to the PATH
+- **Linux (64-bit)**:
+  - `devicesinlan-<version>-linux-64bits`: Command-line interface (CLI).
+  - `devicesinlan_gui-<version>-linux-64bits`: Graphical interface (GUI).
+  - *Usage*: Grant execution permissions (`chmod +x <binary>`) and run it.
 
-You must open a console with Administrator privileges and type:
+- **Windows (64-bit)**:
+  - `devicesinlan-<version>-windows-64bits.exe`: Command-line interface (CLI).
+  - `devicesinlan_gui-<version>-windows-64bits.exe`: Graphical interface (GUI).
+  - *Usage*: Run the `.exe` file directly.
 
-`pip install devicesinlan`
+### Linux (pip)
 
-If you want to create a Desktop shortcut to launch Xulpymoney you must write in a console:
+If you use Gentoo, you can find an ebuild at <https://github.com/turulomio/myportage/tree/master/net-analyzer/devicesinlan>.
 
-`devicesinlan_shortcut.exe`
+If you use another distribution compatible with `pip`:
 
-- Fix remote version bug
+```bash
+pip install devicesinlan
+```
+
+### Windows (pip)
+
+1. You need to install Python from <https://www.python.org> and add it to the `PATH`.
+2. Open a console with Administrator privileges and run:
+
+```cmd
+pip install devicesinlan
+```
+
+3. If you want to create a Desktop shortcut to launch DevicesInLan, run:
+
+```cmd
+devicesinlan_shortcut.exe
+```

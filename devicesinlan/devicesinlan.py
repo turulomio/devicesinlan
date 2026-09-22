@@ -1,5 +1,6 @@
-## @namespace devicesinlan.devicesinlan
-## @brief Package main functions
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.filterwarnings("ignore", message=".*Diffie-Hellman.*")
 
 import time
 if not hasattr(time, 'tzset'):
@@ -12,7 +13,7 @@ from devicesinlan.reusing.text_inputs import press_key_to_continue
 from platform import system as platform_system
 from logging import basicConfig, DEBUG, INFO, WARNING, ERROR,  CRITICAL, critical
 from argparse import ArgumentParser, RawTextHelpFormatter
-_=str
+_ = str
 
 ## Sets logging level for the app
 def setLoggingLevel(level):        
@@ -63,7 +64,7 @@ def main_console():
     signal(SIGINT, mem.signal_handler)
     mem.setQApplication()
     mem.setLanguage()
-    mem.setInstallationUUID()
+    # mem.setInstallationUUID()
     mem.run(args)
     if platform_system()=="Windows":
         press_key_to_continue()
@@ -85,7 +86,7 @@ def main_gui():
     signal(SIGINT, mem.signal_handler)
     mem.setQApplication()
     mem.setLanguage()
-    mem.setInstallationUUID()
+    # mem.setInstallationUUID()
     mem.run(args)
 
     f = frmMain(mem) 

@@ -1,126 +1,126 @@
-.TH DEVICESINLAN 1 2025\-12\-28
+.TH DEVICESINLAN 1 2026\-09\-22
 .SH NAME
 
 .B devicesinlan:
-Scans all devices in your LAN. Then you can set an alias to your known devices in order to detect future strange devices in your net.
+Scanează toate dispozitivele din LAN. Apoi puteți seta un alias dispozitivelor cunoscute pentru a detecta dispozitive străine pe rețea.
 .SH SYNOPSIS
 
 devicesinlan [\-h] [\-\-version] [\-\-method {PingArp,ScapyArping,Scapy}] [\-\-interface INTERFACE | \-\-add | \-\-remove | \-\-list | \-\-load LOAD | \-\-save SAVE | \-\-reset] [\-\-debug DEBUG]
 .SH DESCRIERE
 
 .PP
-If you launch DevicesInLan without parameters a console wizard is launched.
+Dacă lansați DevicesInLan fără parametri, este pornit un asistent în consolă.
 .PP
-Morever you can use one of this parameters.
+De asemenea, puteți utiliza unul dintre acești parametri.
 .PP
 .B \-\-interface
 .PP
 .RS
-Scans the net of the interface parameter and prints a list of the detected devices.
+Scanează rețeaua interfeței parametru și afișează o listă a dispozitivelor detectate.
 .RE
 .PP
 .RS
-If a device is not known, it will be showed in red. Devices in green are trusted devices.
+Dacă un dispozitiv nu este cunoscut, va fi afișat în roșu. Dispozitivele în verde sunt de încredere.
 .RE
 .PP
 .B \-\-add
 .PP
 .RS
-Allows to add a known device from console.
+Permite adăugarea unui dispozitiv cunoscut din consolă.
 .RE
 .PP
 .B \-\-remove
 .PP
 .RS
-Allows to remove a known device from console.
+Permite eliminarea unui dispozitiv cunoscut din consolă.
 .RE
 .PP
 .B \-\-list
 .PP
 .RS
-Shows all known devices in database from console.
+Afișează toate dispozitivele cunoscute din baza de date în consolă.
 .RE
 .PP
 .B \-\-load
 .PP
 .RS
-Loads a list of known devices in xml format.
+Încarcă o listă de dispozitive cunoscute în format XML.
 .RE
 .PP
 .B \-\-save
 .PP
 .RS
-Saves the known devices list to a xml file.
+Salvează lista de dispozitive cunoscute într\-un fișier XML.
 .RE
 .PP
 .B \-\-debug
 .PP
 .RS
-Gives debugging information when running DevicesInLAN. It's deactivated by default
+Oferă informații de depanare la rularea DevicesInLAN. Este dezactivat implicit
 .RE
 .PP
 .RS
-The parameter can take this options: CRITICAL, ERROR, WARNING, INFO, DEBUG.
+Parametrul poate lua următoarele opțiuni: CRITICAL, ERROR, WARNING, INFO, DEBUG.
 .RE
 .PP
 .B \-\-reset
 .PP
 .RS
-Removes all known devices.
+Elimină toate dispozitivele cunoscute.
 .RE
-.SH SCAN METHODS
+.SH METODE DE SCANARE
 
 .PP
-DevicesInLan can use several methods to scan for devices. You just need to add the \-\-method in console mode.
+DevicesInLan poate folosi mai multe metode pentru a scana dispozitive. Trebuie doar să adăugați \-\-method în modul consolă.
 .PP
 .B PingArp
 .PP
 .RS
-It tries to make a socket connection with any device in the lan. Then it searches with 'arp' command the mac information
+Încearcă să stabilească o conexiune socket cu orice dispozitiv din LAN. Apoi caută informațiile MAC cu comanda 'arp'
 .RE
 .PP
 .RS
-PingArp method is used in windows and linux versions by default.
+Metoda PingArp este utilizată implicit pe versiunile Windows și Linux.
 .RE
 .PP
 .B Scapy
 .PP
 .RS
-Uses Scapy to create an ARP request and capture its answer for each ip in the subnet to get macs information.
+Utilizează Scapy pentru a crea o cerere ARP și a captura răspunsul pentru fiecare IP din subrețea pentru a obține informațiile MAC.
 .RE
 .PP
 .RS
-This method can be used in windows and linux versions, but it needs to be executed with administrator role.
+Această metodă poate fi utilizată pe Windows și Linux, dar trebuie executată cu drepturi de administrator.
 .RE
 .PP
 .RS
-Morever, you need to install 'npcap' in order to execute it in Windows.
+În plus, trebuie să instalați 'npcap' pentru a rula pe Windows.
 .RE
 .PP
 .B ScapyArping
 .PP
 .RS
-Uses Scapy arping function to create ARP request and capture its answer for each ip in the subnet to get macs information.
+Utilizează funcția arping din Scapy pentru a crea cereri ARP și a captura răspunsurile pentru fiecare IP din subrețea.
 .RE
 .PP
 .RS
-This method can be used in windows and linux versions, but it needs to be executed with administrator role.
+Această metodă poate fi utilizată pe Windows și Linux, dar trebuie executată cu drepturi de administrator.
 .RE
 .PP
 .RS
-Morever, you need to install 'npcap' in order to execute it in Windows.
+În plus, trebuie să instalați 'npcap' pentru a rula pe Windows.
 .RE
-.SH EXAMPLES
+.SH EXEMPLE
 
 .PP
 .B devicesinlan
 .PP
 .RS
-Default command. It uses PingArp method.
+Comandă implicită. Utilizează metoda PingArp.
 .RE
 .PP
 .B devicesinlan \-\-method ScapyArping
 .PP
 .RS
-It uses ScapyArping method.
+Utilizează metoda ScapyArping.
 .RE

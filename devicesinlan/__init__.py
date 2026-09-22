@@ -1,8 +1,16 @@
 
+import warnings
+warnings.filterwarnings("ignore", module="scapy")
+try:
+    from cryptography.utils import CryptographyDeprecationWarning
+    warnings.filterwarnings("ignore", category=CryptographyDeprecationWarning)
+except Exception:
+    pass
+
 from datetime import date
 
-__version__ ='2.0.3'
-__versiondate__=date(2025, 12, 28)
+__version__ ='2.1.0'
+__versiondate__=date(2026, 9, 22)
 
 
 ## This function expectss __version__= 'VERSION' file
