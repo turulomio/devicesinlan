@@ -1,4 +1,12 @@
 
+import warnings
+warnings.filterwarnings("ignore", module="scapy")
+try:
+    from cryptography.utils import CryptographyDeprecationWarning
+    warnings.filterwarnings("ignore", category=CryptographyDeprecationWarning)
+except Exception:
+    pass
+
 from datetime import date
 
 __version__ ='2.1.0'

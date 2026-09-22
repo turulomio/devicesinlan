@@ -45,3 +45,9 @@ dist_linux = { script = "devicesinlan.poethepoet:dist_linux" }
 dist_windows = { script = "devicesinlan.poethepoet:dist_windows" }
 statistics_server = { script = "devicesinlan.poethepoet:statistics_server" }
 tests = { script ="devicesinlan.poethepoet:tests" }
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore:.*Diffie-Hellman.*:cryptography.utils.CryptographyDeprecationWarning",
+    "ignore::DeprecationWarning",
+]
