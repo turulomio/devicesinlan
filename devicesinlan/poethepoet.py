@@ -55,6 +55,7 @@ def release():
     * Change version and date in __init__.py
     * Change version and date in pyproject.toml
     * poe release
+    * poe compile
     * Update ieee-oui with get-oui from arp-scan package
     * poe translate
     * mcedit devicesinlan/locale/es.po
